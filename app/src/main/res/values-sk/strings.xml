@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Pridať prah</string>
     <string name="alarms_edit_threshold">Upraviť prah</string>
     <string name="alarms_edit_existing">Upraviť existujúci prah</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Klepnutím na ikonu ceruzky vedľa hodnoty prahu ju upravíte. Úprava zachová stav zapnuté/vypnuté. Ak chcete alarm vymazať, otvorte jeho editor, vyberte „Vymazať alarm“ a vymazanie potvrďte. Budú odstránené všetky kópie tohto prahu. Ak sa uložené alarmy počas úprav zmenia, použite „Obnoviť“ a pred zmenou prah znova otvorte.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Klepnutím na ikonu ceruzky vedľa hodnoty prahu ju upravíte. Úprava zachová stav zapnuté/vypnuté. Ak chcete alarm vymazať, otvorte jeho editor, vyberte „Vymazať alarm“ a vymazanie potvrďte. Budú odstránené všetky kópie tohto prahu.</string>
     <string name="alarms_new_enabled">Alarm sa po pridaní zapne.</string>
     <string name="alarms_edit_keeps_enabled">Úprava zachová aktuálny stav zapnuté/vypnuté.</string>
     <string name="alarms_enabled">Zapnuté</string>
@@ -328,7 +328,7 @@
     <string name="alarms_monitor_unconfirmed">Žiadne aktuálne spojenie s monitorovaním. Vyhodnocovanie alarmov nie je potvrdené.</string>
     <string name="alarms_state_unknown">Nastavenia alarmov nie sú dostupné</string>
     <string name="alarms_stale">Sú zobrazené predchádzajúce nastavenia. Pred zmenami obnovte.</string>
-    <string name="alarms_conflict">Uložené alarmy sa zmenili. Pred úpravami obnovte a znova otvorte prah.</string>
+    <string name="alarms_conflict">Uložené alarmy sa zmenili. Pred úpravami obnovte zoznam. Ak upravujete prah, zrušte úpravy a znova ho otvorte.</string>
     <string name="alarms_missing_rule">Tento alarm chýba alebo je neplatný. Skontrolujte katalóg alarmov.</string>
     <string name="alarms_invalid_records">Niektoré uložené alarmy sú neplatné. Skontrolujte tieto záznamy; neboli odstránené.</string>
     <string name="alarms_database_error">Nemožno pristúpiť k databáze alarmov. Skúste to znova.</string>

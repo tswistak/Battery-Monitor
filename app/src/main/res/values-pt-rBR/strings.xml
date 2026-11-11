@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">Adicionar limiar</string>
     <string name="alarms_edit_threshold">Editar limiar</string>
     <string name="alarms_edit_existing">Editar limiar existente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Toque no ícone de lápis ao lado do valor do limiar para editá-lo. A edição mantém o estado de ativado ou desativado. Para apagar um alarme, abra o editor do alarme, escolha “Apagar Alarme” e confirme a exclusão. Todas as cópias deste limiar serão removidas. Se os alarmes salvos mudarem durante a edição, use “Atualizar” e reabra o limiar antes de alterá-lo.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Toque no ícone de lápis ao lado do valor do limiar para editá-lo. A edição mantém o estado de ativado ou desativado. Para apagar um alarme, abra o editor do alarme, escolha “Apagar Alarme” e confirme a exclusão. Todas as cópias deste limiar serão removidas.</string>
     <string name="alarms_new_enabled">O alarme será ativado quando for adicionado.</string>
     <string name="alarms_edit_keeps_enabled">A edição mantém o estado atual de ativado ou desativado.</string>
     <string name="alarms_enabled">Ativado</string>
@@ -324,7 +324,7 @@
     <string name="alarms_monitor_unconfirmed">Sem conexão atual ao monitor. A avaliação dos alarmes não está confirmada.</string>
     <string name="alarms_state_unknown">Configurações de alarme indisponíveis</string>
     <string name="alarms_stale">São mostradas as configurações anteriores. Atualize antes de fazer alterações.</string>
-    <string name="alarms_conflict">Os alarmes salvos mudaram. Atualize e abra novamente o limiar antes de fazer alterações.</string>
+    <string name="alarms_conflict">Os alarmes salvos mudaram. Atualize antes de fazer alterações. Se estiver editando um limiar, cancele a edição e abra-o novamente.</string>
     <string name="alarms_missing_rule">Este alarme está em falta ou é inválido. Revise o catálogo de alarmes.</string>
     <string name="alarms_invalid_records">Alguns alarmes salvos são inválidos. Revise estes registros; não foram removidos.</string>
     <string name="alarms_database_error">Não foi possível acessar o banco de dados de alarmes. Tente novamente.</string>

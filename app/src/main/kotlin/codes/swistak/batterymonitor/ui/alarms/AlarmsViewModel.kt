@@ -304,9 +304,11 @@ internal class AlarmsViewModel(
                 mutableState.update { old ->
                     old.copy(
                         busy = false,
-                        error = if (failure is AlarmCollisionException) null else text(
-                            if (failure is AlarmConflictException) R.string.alarms_conflict else R.string.alarms_database_error
-                        ),
+                        error = when (failure) {
+                            is AlarmCollisionException -> null
+                            is AlarmConflictException -> if (old.draft == null) text(R.string.alarms_conflict) else null
+                            else -> text(R.string.alarms_database_error)
+                        },
                         draftConflict = old.draftConflict || failure is AlarmConflictException,
                         collisionId = (failure as? AlarmCollisionException)?.existing?.id
                             ?: old.collisionId

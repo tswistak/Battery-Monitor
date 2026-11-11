@@ -534,6 +534,12 @@ class AlarmDatabaseInstrumentedTest {
         main { model.refresh() }
         idle(model)
         assertEquals(1, model.state.value.enabledCount)
+        val thresholdId = rows().single().id
+        main {
+            model.beginDraft(thresholdId, false, Locale.US)
+            model.changeDraftInput("19")
+        }
+        val draft = requireNotNull(model.state.value.draft)
         database.close()
         assertTrue(path.renameTo(saved))
         assertTrue(path.mkdir())
@@ -541,6 +547,8 @@ class AlarmDatabaseInstrumentedTest {
         idle(model)
         assertEquals(1, model.state.value.enabledCount)
         assertFalse(model.state.value.canMutate)
+        assertNotNull(model.state.value.readError)
+        assertEquals(draft, model.state.value.draft)
         main {
             model.setEnabled(
                 "fully_charged", null, true
@@ -550,9 +558,63 @@ class AlarmDatabaseInstrumentedTest {
         assertTrue(saved.renameTo(path))
         database = AlarmDatabase(context)
         assertEquals(1, rows().size)
+        database.setLogicalEnabled("fully_charged", emptyList(), true)
+        val savedRules = rows()
         main { model.refresh() }
         idle(model)
         assertTrue(model.state.value.canMutate)
+        assertEquals(2, model.state.value.enabledCount)
+        assertEquals(draft, model.state.value.draft)
+        assertEquals(savedRules, rows())
     }
 
+    @Test
+    fun conflict_refresh_preserves_the_draft_and_reopening_uses_the_current_saved_threshold() {
+        val type = "charge_drops"
+        val id = database.saveThreshold(type, "17", emptyList())
+        database.setLogicalEnabled(type, group(type).members, false)
+        val model = model()
+        main { model.refresh() }
+        idle(model)
+        main {
+            model.beginDraft(id, false, Locale.US)
+            model.changeDraftInput("19")
+        }
+        val draft = requireNotNull(model.state.value.draft)
+        database.saveThreshold(type, "23", group(type).members)
+        val changed = rows()
+
+        main { model.saveDraft { fail("Stale draft must not save") } }
+        idle(model) { it.draftConflict && !it.loading && !it.busy }
+        assertNull(model.state.value.error)
+        main { model.refresh() }
+        idle(model)
+        assertTrue(model.state.value.draftConflict)
+        assertEquals(draft, model.state.value.draft)
+        assertEquals(changed, model.state.value.rules)
+        main {
+            model.saveDraft { fail("Conflicting draft must not save") }
+            model.deleteDraft { fail("Conflicting draft must not delete") }
+            model.discardDraft()
+        }
+        assertNull(model.state.value.draft)
+        assertEquals(changed, rows())
+
+        main { model.beginDraft(id, false, Locale.US) }
+        val reopened = requireNotNull(model.state.value.draft)
+        assertEquals("23", reopened.thresholdInput)
+        assertFalse(reopened.enabled)
+        database.deleteLogicalAlarm(group(type).members)
+        main { model.refresh() }
+        idle(model)
+        assertTrue(model.state.value.draftConflict)
+        assertEquals(reopened, model.state.value.draft)
+        main {
+            model.discardDraft()
+            model.openLegacyAlarm(id)
+        }
+        assertEquals(R.string.alarms_missing_rule, model.state.value.notice)
+        assertNull(model.state.value.draft)
+        assertTrue(rows().isEmpty())
+    }
 }

@@ -287,7 +287,7 @@
     <string name="alarms_add_threshold">新增臨界點</string>
     <string name="alarms_edit_threshold">編輯臨界點</string>
     <string name="alarms_edit_existing">編輯現有臨界點</string>
-    <string name="alarms_threshold_edit_help" formatted="false">點選臨界點數值旁的鉛筆圖示即可編輯。編輯會保留開關狀態。若要刪除警報，請開啟其編輯畫面，選擇「刪除警報」並確認刪除。此臨界點的所有副本都會移除。若編輯期間已儲存的警報發生變更，請使用「重新整理」，並重新開啟臨界點後再變更。</string>
+    <string name="alarms_threshold_edit_help" formatted="false">點選臨界點數值旁的鉛筆圖示即可編輯。編輯會保留開關狀態。若要刪除警報，請開啟其編輯畫面，選擇「刪除警報」並確認刪除。此臨界點的所有副本都會移除。</string>
     <string name="alarms_new_enabled">新增後會啟用此警報。</string>
     <string name="alarms_edit_keeps_enabled">編輯會保留目前的開關狀態。</string>
     <string name="alarms_enabled">已啟用</string>
@@ -316,7 +316,7 @@
     <string name="alarms_monitor_unconfirmed">目前未連線至監測服務。無法確認警報是否正在評估。</string>
     <string name="alarms_state_unknown">警報設定無法取得</string>
     <string name="alarms_stale">目前顯示先前的設定。請重新整理後再變更。</string>
-    <string name="alarms_conflict">儲存的警報已變更。請重新整理並重新開啟臨界點後再變更。</string>
+    <string name="alarms_conflict">儲存的警報已變更。請先重新整理，再進行變更。若正在編輯臨界點，請取消編輯並重新開啟。</string>
     <string name="alarms_missing_rule">此警報遺失或無效。請檢查警報清單。</string>
     <string name="alarms_invalid_records">部分儲存的警報無效。請檢查這些記錄；它們尚未被移除。</string>
     <string name="alarms_database_error">無法存取警報資料庫。請再試一次。</string>

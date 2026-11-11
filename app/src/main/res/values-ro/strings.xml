@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">Adaugă prag</string>
     <string name="alarms_edit_threshold">Editează pragul</string>
     <string name="alarms_edit_existing">Editează pragul existent</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Atinge pictograma creionului de lângă valoarea pragului pentru a o edita. Editarea păstrează starea activată sau dezactivată. Pentru a șterge o alarmă, deschide editorul alarmei, alege „Sterge Alarma” și confirmă ștergerea. Toate copiile acestui prag vor fi eliminate. Dacă alarmele salvate se schimbă în timpul editării, folosește „Reîmprospătează” și redeschide pragul înainte de a-l modifica.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Atinge pictograma creionului de lângă valoarea pragului pentru a o edita. Editarea păstrează starea activată sau dezactivată. Pentru a șterge o alarmă, deschide editorul alarmei, alege „Sterge Alarma” și confirmă ștergerea. Toate copiile acestui prag vor fi eliminate.</string>
     <string name="alarms_new_enabled">Alarma va fi activată când este adăugată.</string>
     <string name="alarms_edit_keeps_enabled">Editarea păstrează starea actuală, activată sau dezactivată.</string>
     <string name="alarms_enabled">Activată</string>
@@ -324,7 +324,7 @@
     <string name="alarms_monitor_unconfirmed">Nicio conexiune actuală cu monitorul. Evaluarea alarmelor nu este confirmată.</string>
     <string name="alarms_state_unknown">Setările alarmelor nu sunt disponibile</string>
     <string name="alarms_stale">Sunt afișate setările anterioare. Reîmprospătează înainte de a face modificări.</string>
-    <string name="alarms_conflict">Alarmele salvate s-au schimbat. Reîmprospătează și redeschide pragul înainte de a face modificări.</string>
+    <string name="alarms_conflict">Alarmele salvate s-au schimbat. Reîmprospătează înainte de a face modificări. Dacă editezi un prag, anulează editarea și redeschide-l.</string>
     <string name="alarms_missing_rule">Această alarmă lipsește sau este nevalidă. Verifică lista alarmelor.</string>
     <string name="alarms_invalid_records">Unele alarme salvate sunt nevalide. Verifică aceste înregistrări; nu au fost eliminate.</string>
     <string name="alarms_database_error">Baza de date a alarmelor nu a putut fi accesată. Încearcă din nou.</string>

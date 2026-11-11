@@ -287,7 +287,7 @@
     <string name="alarms_add_threshold">添加临界值</string>
     <string name="alarms_edit_threshold">编辑临界值</string>
     <string name="alarms_edit_existing">编辑现有临界值</string>
-    <string name="alarms_threshold_edit_help" formatted="false">点击临界值数值旁的铅笔图标即可编辑。编辑会保留开关状态。要删除警报，请打开其编辑界面，选择“删除警报”并确认删除。此临界值的所有副本都会移除。如果编辑期间已保存的警报发生变化，请使用“刷新”，并重新打开临界值后再更改。</string>
+    <string name="alarms_threshold_edit_help" formatted="false">点击临界值数值旁的铅笔图标即可编辑。编辑会保留开关状态。要删除警报，请打开其编辑界面，选择“删除警报”并确认删除。此临界值的所有副本都会移除。</string>
     <string name="alarms_new_enabled">添加后会启用此警报。</string>
     <string name="alarms_edit_keeps_enabled">编辑会保留当前的开关状态。</string>
     <string name="alarms_enabled">已启用</string>
@@ -316,7 +316,7 @@
     <string name="alarms_monitor_unconfirmed">当前未连接至监测服务。无法确认警报是否正在评估。</string>
     <string name="alarms_state_unknown">警报设置无法取得</string>
     <string name="alarms_stale">当前显示先前的设置。请刷新后再变更。</string>
-    <string name="alarms_conflict">保存的警报已变更。请刷新并重新打开临界值后再变更。</string>
+    <string name="alarms_conflict">保存的警报已变更。请先刷新，再进行更改。如果正在编辑临界值，请取消编辑并重新打开临界值。</string>
     <string name="alarms_missing_rule">此警报遗失或无效。请检查警报列表。</string>
     <string name="alarms_invalid_records">部分保存的警报无效。请检查这些记录；它们尚未被移除。</string>
     <string name="alarms_database_error">无法访问警报数据库。请再试一次。</string>

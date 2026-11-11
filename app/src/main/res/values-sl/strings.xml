@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Dodaj prag</string>
     <string name="alarms_edit_threshold">Uredi prag</string>
     <string name="alarms_edit_existing">Uredi obstoječi prag</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tapnite ikono svinčnika ob vrednosti praga, da jo uredite. Urejanje ohrani stanje vklopa/izklopa. Če želite izbrisati alarm, odprite urejevalnik alarma, izberite „Zbriši alarm“ in potrdite brisanje. Vse kopije tega praga bodo odstranjene. Če se shranjeni alarmi med urejanjem spremenijo, uporabite „Osveži“ in prag znova odprite, preden ga spremenite.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tapnite ikono svinčnika ob vrednosti praga, da jo uredite. Urejanje ohrani stanje vklopa/izklopa. Če želite izbrisati alarm, odprite urejevalnik alarma, izberite „Zbriši alarm“ in potrdite brisanje. Vse kopije tega praga bodo odstranjene.</string>
     <string name="alarms_new_enabled">Alarm bo omogočen po dodajanju.</string>
     <string name="alarms_edit_keeps_enabled">Urejanje ohrani trenutno stanje vklopa/izklopa.</string>
     <string name="alarms_enabled">Omogočeno</string>
@@ -328,7 +328,7 @@
     <string name="alarms_monitor_unconfirmed">Ni trenutne povezave s spremljanjem. Preverjanje alarmov ni potrjeno.</string>
     <string name="alarms_state_unknown">Nastavitve alarmov niso na voljo</string>
     <string name="alarms_stale">Prikazane so prejšnje nastavitve. Pred spremembami osvežite.</string>
-    <string name="alarms_conflict">Shranjeni alarmi so se spremenili. Pred spremembami osvežite in znova odprite prag.</string>
+    <string name="alarms_conflict">Shranjeni alarmi so se spremenili. Pred spremembami osvežite seznam. Če urejate prag, prekličite urejanje in ga znova odprite.</string>
     <string name="alarms_missing_rule">Ta alarm manjka ali je neveljaven. Preglejte katalog alarmov.</string>
     <string name="alarms_invalid_records">Nekateri shranjeni alarmi so neveljavni. Preglejte te zapise; niso bili odstranjeni.</string>
     <string name="alarms_database_error">Do zbirke alarmov ni bilo mogoče dostopati. Poskusite znova.</string>

@@ -291,7 +291,7 @@
     <string name="alarms_add_threshold">Add threshold</string>
     <string name="alarms_edit_threshold">Edit threshold</string>
     <string name="alarms_edit_existing">Edit existing threshold</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tap the pencil icon next to a threshold value to edit it. Editing keeps its on/off state. To delete an alarm, open its editor, choose “Delete alarm”, and confirm the deletion. All copies of this threshold will be removed. If saved alarms change while editing, use “Refresh” and reopen the threshold before changing it.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tap the pencil icon next to a threshold value to edit it. Editing keeps its on/off state. To delete an alarm, open its editor, choose “Delete alarm”, and confirm the deletion. All copies of this threshold will be removed.</string>
     <string name="alarms_new_enabled">The alarm will be enabled when added.</string>
     <string name="alarms_edit_keeps_enabled">Editing keeps the current on/off setting.</string>
     <string name="alarms_enabled">Enabled</string>
@@ -320,7 +320,7 @@
     <string name="alarms_monitor_unconfirmed">No current monitor connection. Alarm evaluation is not confirmed.</string>
     <string name="alarms_state_unknown">Alarm settings unavailable</string>
     <string name="alarms_stale">Previous settings are shown. Refresh before making changes.</string>
-    <string name="alarms_conflict">Saved alarms changed. Refresh and reopen the threshold before making changes.</string>
+    <string name="alarms_conflict">Saved alarms changed. Refresh before making changes. If you’re editing a threshold, cancel and reopen it.</string>
     <string name="alarms_missing_rule">This alarm is missing or invalid. Review the alarm catalog.</string>
     <string name="alarms_invalid_records">Some saved alarms are invalid. Review these records; they have not been removed.</string>
     <string name="alarms_database_error">Could not access the alarm database. Try again.</string>

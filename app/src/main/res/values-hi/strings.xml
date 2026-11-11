@@ -291,7 +291,7 @@
     <string name="alarms_add_threshold">सीमा जोड़ें</string>
     <string name="alarms_edit_threshold">सीमा बदलें</string>
     <string name="alarms_edit_existing">मौजूदा सीमा बदलें</string>
-    <string name="alarms_threshold_edit_help" formatted="false">सीमा का मान बदलने के लिए उसके बगल में पेंसिल के आइकन पर टैप करें। बदलने पर चालू/बंद स्थिति बनी रहती है। अलार्म हटाने के लिए उसका एडिटर खोलें, “अलार्म हटाएँ” चुनें और हटाने की पुष्टि करें। इस सीमा की सभी प्रतियाँ हट जाएँगी। अगर बदलाव करते समय सहेजे गए अलार्म बदल जाएँ, तो “रीफ़्रेश” इस्तेमाल करें और सीमा बदलने से पहले उसे फिर से खोलें।</string>
+    <string name="alarms_threshold_edit_help" formatted="false">सीमा का मान बदलने के लिए उसके बगल में पेंसिल के आइकन पर टैप करें। बदलने पर चालू/बंद स्थिति बनी रहती है। अलार्म हटाने के लिए उसका एडिटर खोलें, “अलार्म हटाएँ” चुनें और हटाने की पुष्टि करें। इस सीमा की सभी प्रतियाँ हट जाएँगी।</string>
     <string name="alarms_new_enabled">जोड़ते ही अलार्म सक्षम हो जाएगा।</string>
     <string name="alarms_edit_keeps_enabled">बदलने पर चालू/बंद की वर्तमान स्थिति बनी रहती है।</string>
     <string name="alarms_enabled">सक्षम</string>
@@ -320,7 +320,7 @@
     <string name="alarms_monitor_unconfirmed">निगरानी से वर्तमान कनेक्शन नहीं है। अलार्म की जाँच की पुष्टि नहीं हुई है।</string>
     <string name="alarms_state_unknown">अलार्म सेटिंग उपलब्ध नहीं है</string>
     <string name="alarms_stale">पिछली सेटिंग दिखाई जा रही है। बदलाव करने से पहले रीफ़्रेश करें।</string>
-    <string name="alarms_conflict">सहेजे गए अलार्म बदल गए हैं। बदलाव करने से पहले रीफ़्रेश करके सीमा फिर खोलें।</string>
+    <string name="alarms_conflict">सहेजे गए अलार्म बदल गए हैं। बदलाव करने से पहले रीफ़्रेश करें। अगर आप किसी सीमा को बदल रहे हैं, तो बदलाव रद्द करें और उसे फिर से खोलें।</string>
     <string name="alarms_missing_rule">यह अलार्म गायब या अमान्य है। अलार्म सूची जाँचें।</string>
     <string name="alarms_invalid_records">कुछ सहेजे गए अलार्म अमान्य हैं। इन रिकॉर्ड की जाँच करें; इन्हें हटाया नहीं गया है।</string>
     <string name="alarms_database_error">अलार्म डेटाबेस तक पहुँच नहीं मिली। फिर कोशिश करें।</string>

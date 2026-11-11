@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">Ajouter un seuil</string>
     <string name="alarms_edit_threshold">Modifier le seuil</string>
     <string name="alarms_edit_existing">Modifier le seuil existant</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Touchez l’icône en forme de crayon à côté de la valeur d’un seuil pour la modifier. La modification conserve son état activé ou désactivé. Pour supprimer une alarme, ouvrez-la en mode édition, choisissez «\u00A0Supprimer l\'alarme\u00A0» et confirmez la suppression. Toutes les copies de ce seuil seront supprimées. Si les alarmes enregistrées changent pendant la modification, utilisez « Actualiser » et rouvrez le seuil avant de le modifier.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Touchez l’icône en forme de crayon à côté de la valeur d’un seuil pour la modifier. La modification conserve son état activé ou désactivé. Pour supprimer une alarme, ouvrez-la en mode édition, choisissez «\u00A0Supprimer l\'alarme\u00A0» et confirmez la suppression. Toutes les copies de ce seuil seront supprimées.</string>
     <string name="alarms_new_enabled">L’alarme sera activée lors de l’ajout.</string>
     <string name="alarms_edit_keeps_enabled">La modification conserve l’état activé ou désactivé actuel.</string>
     <string name="alarms_enabled">Activée</string>
@@ -324,7 +324,7 @@
     <string name="alarms_monitor_unconfirmed">Aucune connexion actuelle à la surveillance. L’évaluation des alarmes n’est pas confirmée.</string>
     <string name="alarms_state_unknown">Paramètres d’alarme indisponibles</string>
     <string name="alarms_stale">Les paramètres précédents sont affichés. Actualisez avant de les modifier.</string>
-    <string name="alarms_conflict">Les alarmes enregistrées ont changé. Actualisez et rouvrez le seuil avant de le modifier.</string>
+    <string name="alarms_conflict">Les alarmes enregistrées ont changé. Actualisez avant de faire des modifications. Si vous modifiez un seuil, annulez la modification et rouvrez-le.</string>
     <string name="alarms_missing_rule">Cette alarme est absente ou non valide. Vérifiez le catalogue d’alarmes.</string>
     <string name="alarms_invalid_records">Certaines alarmes enregistrées ne sont pas valides. Vérifiez ces entrées ; elles n’ont pas été supprimées.</string>
     <string name="alarms_database_error">Impossible d’accéder à la base de données des alarmes. Réessayez.</string>

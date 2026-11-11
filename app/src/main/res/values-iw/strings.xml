@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">הוספת סף</string>
     <string name="alarms_edit_threshold">עריכת סף</string>
     <string name="alarms_edit_existing">עריכת סף קיים</string>
-    <string name="alarms_threshold_edit_help" formatted="false">הקישו על סמל העיפרון ליד ערך הסף כדי לערוך אותו. העריכה שומרת על מצב ההפעלה שלו. כדי למחוק התרעה, פתחו אותה לעריכה, בחרו ב״מחיקת התרעה״ ואשרו את המחיקה. כל העותקים של סף זה יוסרו. אם ההתרעות השמורות משתנות בזמן העריכה, השתמשו ב״רענון״ ופתחו שוב את הסף לפני שתשנו אותו.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">הקישו על סמל העיפרון ליד ערך הסף כדי לערוך אותו. העריכה שומרת על מצב ההפעלה שלו. כדי למחוק התרעה, פתחו אותה לעריכה, בחרו ב״מחיקת התרעה״ ואשרו את המחיקה. כל העותקים של סף זה יוסרו.</string>
     <string name="alarms_new_enabled">ההתרעה תופעל בעת הוספתה.</string>
     <string name="alarms_edit_keeps_enabled">עריכה שומרת על מצב ההפעלה או הכיבוי הנוכחי.</string>
     <string name="alarms_enabled">מופעל</string>
@@ -324,7 +324,7 @@
     <string name="alarms_monitor_unconfirmed">אין חיבור נוכחי לרכיב הניטור. בדיקת ההתרעות אינה מאושרת.</string>
     <string name="alarms_state_unknown">הגדרות ההתרעות אינן זמינות</string>
     <string name="alarms_stale">מוצגות ההגדרות הקודמות. יש לרענן לפני ביצוע שינויים.</string>
-    <string name="alarms_conflict">ההתרעות השמורות השתנו. יש לרענן ולפתוח שוב את הסף לפני ביצוע שינויים.</string>
+    <string name="alarms_conflict">ההתרעות השמורות השתנו. יש לרענן לפני ביצוע שינויים. אם אתם עורכים סף, בטלו את העריכה ופתחו אותו שוב.</string>
     <string name="alarms_missing_rule">התרעה זו חסרה או אינה תקינה. יש לבדוק את קטלוג ההתרעות.</string>
     <string name="alarms_invalid_records">חלק מההתרעות השמורות אינן תקינות. יש לבדוק את הרשומות האלו; הן לא הוסרו.</string>
     <string name="alarms_database_error">לא ניתן לגשת למסד נתוני ההתרעות. יש לנסות שוב.</string>

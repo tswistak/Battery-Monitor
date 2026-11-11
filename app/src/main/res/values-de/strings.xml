@@ -291,7 +291,7 @@
     <string name="alarms_add_threshold">Schwellenwert hinzufügen</string>
     <string name="alarms_edit_threshold">Schwellenwert bearbeiten</string>
     <string name="alarms_edit_existing">Vorhandenen Schwellenwert bearbeiten</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tippen Sie auf das Stiftsymbol neben einem Schwellenwert, um ihn zu bearbeiten. Sein Ein-/Aus-Zustand bleibt erhalten. Öffnen Sie zum Löschen eines Alarms den Editor, wählen Sie „Alarm löschen“ und bestätigen Sie das Löschen. Alle Kopien dieses Schwellenwerts werden entfernt. Wenn sich gespeicherte Alarme während der Bearbeitung ändern, verwenden Sie „Aktualisieren“ und öffnen Sie den Schwellenwert vor Änderungen erneut.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tippen Sie auf das Stiftsymbol neben einem Schwellenwert, um ihn zu bearbeiten. Sein Ein-/Aus-Zustand bleibt erhalten. Öffnen Sie zum Löschen eines Alarms den Editor, wählen Sie „Alarm löschen“ und bestätigen Sie das Löschen. Alle Kopien dieses Schwellenwerts werden entfernt.</string>
     <string name="alarms_new_enabled">Der Alarm wird beim Hinzufügen aktiviert.</string>
     <string name="alarms_edit_keeps_enabled">Beim Bearbeiten bleibt die aktuelle Ein-/Aus-Einstellung erhalten.</string>
     <string name="alarms_enabled">Aktiviert</string>
@@ -320,7 +320,7 @@
     <string name="alarms_monitor_unconfirmed">Keine aktuelle Verbindung zur Überwachung. Die Alarmauswertung ist nicht bestätigt.</string>
     <string name="alarms_state_unknown">Alarmeinstellungen nicht verfügbar</string>
     <string name="alarms_stale">Vorherige Einstellungen werden angezeigt. Aktualisieren Sie, bevor Sie Änderungen vornehmen.</string>
-    <string name="alarms_conflict">Gespeicherte Alarme wurden geändert. Aktualisieren Sie und öffnen Sie den Schwellenwert erneut, bevor Sie Änderungen vornehmen.</string>
+    <string name="alarms_conflict">Gespeicherte Alarme wurden geändert. Aktualisieren Sie, bevor Sie Änderungen vornehmen. Wenn Sie einen Schwellenwert bearbeiten, brechen Sie die Bearbeitung ab und öffnen Sie ihn erneut.</string>
     <string name="alarms_missing_rule">Dieser Alarm fehlt oder ist ungültig. Prüfen Sie den Alarmkatalog.</string>
     <string name="alarms_invalid_records">Einige gespeicherte Alarme sind ungültig. Prüfen Sie diese Einträge; sie wurden nicht entfernt.</string>
     <string name="alarms_database_error">Zugriff auf die Alarmdatenbank fehlgeschlagen. Versuchen Sie es erneut.</string>

@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">Adicionar limiar</string>
     <string name="alarms_edit_threshold">Editar limiar</string>
     <string name="alarms_edit_existing">Editar limiar existente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Toque no ícone de lápis junto ao valor do limiar para o editar. A edição mantém o estado de ativado ou desativado. Para apagar um alarme, abra o respetivo editor, escolha «Apagar alarme» e confirme a eliminação. Todas as cópias deste limiar serão removidas. Se os alarmes guardados mudarem durante a edição, use «Atualizar» e volte a abrir o limiar antes de o alterar.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Toque no ícone de lápis junto ao valor do limiar para o editar. A edição mantém o estado de ativado ou desativado. Para apagar um alarme, abra o respetivo editor, escolha «Apagar alarme» e confirme a eliminação. Todas as cópias deste limiar serão removidas.</string>
     <string name="alarms_new_enabled">O alarme será ativado quando for adicionado.</string>
     <string name="alarms_edit_keeps_enabled">A edição mantém o estado atual de ativado ou desativado.</string>
     <string name="alarms_enabled">Ativado</string>
@@ -324,7 +324,7 @@
     <string name="alarms_monitor_unconfirmed">Sem ligação atual ao monitor. A avaliação dos alarmes não está confirmada.</string>
     <string name="alarms_state_unknown">Definições de alarme indisponíveis</string>
     <string name="alarms_stale">São mostradas as definições anteriores. Atualize antes de fazer alterações.</string>
-    <string name="alarms_conflict">Os alarmes guardados mudaram. Atualize e volte a abrir o limiar antes de fazer alterações.</string>
+    <string name="alarms_conflict">Os alarmes guardados mudaram. Atualize antes de fazer alterações. Se estiver a editar um limiar, cancele a edição e volte a abri-lo.</string>
     <string name="alarms_missing_rule">Este alarme está em falta ou é inválido. Reveja o catálogo de alarmes.</string>
     <string name="alarms_invalid_records">Alguns alarmes guardados são inválidos. Reveja estes registos; não foram removidos.</string>
     <string name="alarms_database_error">Não foi possível aceder à base de dados de alarmes. Tente novamente.</string>

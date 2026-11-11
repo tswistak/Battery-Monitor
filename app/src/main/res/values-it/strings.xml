@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">Aggiungi soglia</string>
     <string name="alarms_edit_threshold">Modifica soglia</string>
     <string name="alarms_edit_existing">Modifica soglia esistente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tocca l’icona della matita accanto al valore della soglia per modificarlo. La modifica ne mantiene lo stato di attivazione. Per eliminare un allarme, apri il relativo editor, scegli «Elimina allarme» e conferma l’eliminazione. Saranno rimosse tutte le copie di questa soglia. Se gli allarmi salvati cambiano durante la modifica, usa «Aggiorna» e riapri la soglia prima di modificarla.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tocca l’icona della matita accanto al valore della soglia per modificarlo. La modifica ne mantiene lo stato di attivazione. Per eliminare un allarme, apri il relativo editor, scegli «Elimina allarme» e conferma l’eliminazione. Saranno rimosse tutte le copie di questa soglia.</string>
     <string name="alarms_new_enabled">L’allarme sarà abilitato quando viene aggiunto.</string>
     <string name="alarms_edit_keeps_enabled">La modifica mantiene l’attuale stato di attivazione.</string>
     <string name="alarms_enabled">Abilitato</string>
@@ -324,7 +324,7 @@
     <string name="alarms_monitor_unconfirmed">Nessuna connessione attuale al monitoraggio. La valutazione degli allarmi non è confermata.</string>
     <string name="alarms_state_unknown">Impostazioni allarmi non disponibili</string>
     <string name="alarms_stale">Sono mostrate le impostazioni precedenti. Aggiorna prima di modificarle.</string>
-    <string name="alarms_conflict">Gli allarmi salvati sono cambiati. Aggiorna e riapri la soglia prima di modificarla.</string>
+    <string name="alarms_conflict">Gli allarmi salvati sono cambiati. Aggiorna prima di apportare modifiche. Se stai modificando una soglia, annulla la modifica e riaprila.</string>
     <string name="alarms_missing_rule">Questo allarme è mancante o non valido. Controlla il catalogo degli allarmi.</string>
     <string name="alarms_invalid_records">Alcuni allarmi salvati non sono validi. Controlla queste voci; non sono state rimosse.</string>
     <string name="alarms_database_error">Impossibile accedere al database degli allarmi. Riprova.</string>

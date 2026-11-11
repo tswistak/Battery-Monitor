@@ -291,7 +291,7 @@
     <string name="alarms_add_threshold">افزودن آستانه</string>
     <string name="alarms_edit_threshold">ویرایش آستانه</string>
     <string name="alarms_edit_existing">ویرایش آستانه موجود</string>
-    <string name="alarms_threshold_edit_help" formatted="false">برای ویرایش آستانه، روی نماد مداد کنار مقدار آن بزنید. ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. برای حذف آلارم، ویرایشگر آن را باز کنید، «حذف آلارم» را انتخاب کنید و حذف را تأیید کنید. همه نسخه‌های این آستانه حذف می‌شوند. اگر آلارم‌های ذخیره‌شده هنگام ویرایش تغییر کردند، از «نوسازی» استفاده کنید و پیش از تغییر آستانه، آن را دوباره باز کنید.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">برای ویرایش آستانه، روی نماد مداد کنار مقدار آن بزنید. ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. برای حذف آلارم، ویرایشگر آن را باز کنید، «حذف آلارم» را انتخاب کنید و حذف را تأیید کنید. همه نسخه‌های این آستانه حذف می‌شوند.</string>
     <string name="alarms_new_enabled">آلارم هنگام افزودن فعال می‌شود.</string>
     <string name="alarms_edit_keeps_enabled">ویرایش، وضعیت روشن یا خاموش فعلی را حفظ می‌کند.</string>
     <string name="alarms_enabled">فعال</string>
@@ -320,7 +320,7 @@
     <string name="alarms_monitor_unconfirmed">اتصال فعالی به پایشگر نیست. ارزیابی آلارمها تأیید نشده است.</string>
     <string name="alarms_state_unknown">تنظیمات آلارم در دسترس نیست</string>
     <string name="alarms_stale">تنظیمات قبلی نمایش داده می‌شوند. پیش از تغییر تازه‌سازی کنید.</string>
-    <string name="alarms_conflict">آلارمهای ذخیره‌شده تغییر کردند. پیش از تغییر، تازه‌سازی کنید و آستانه را دوباره باز کنید.</string>
+    <string name="alarms_conflict">آلارمهای ذخیره‌شده تغییر کردند. پیش از تغییر، تازه‌سازی کنید. اگر آستانه‌ای را ویرایش می‌کنید، ویرایش را لغو کنید و آن را دوباره باز کنید.</string>
     <string name="alarms_missing_rule">این آلارم موجود نیست یا نامعتبر است. فهرست آلارمها را بررسی کنید.</string>
     <string name="alarms_invalid_records">برخی آلارمهای ذخیره‌شده نامعتبرند. این رکوردها را بررسی کنید؛ حذف نشده‌اند.</string>
     <string name="alarms_database_error">دسترسی به پایگاه داده آلارمها ممکن نشد. دوباره تلاش کنید.</string>

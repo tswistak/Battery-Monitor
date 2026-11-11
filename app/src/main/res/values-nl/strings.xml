@@ -291,7 +291,7 @@
     <string name="alarms_add_threshold">Drempel toevoegen</string>
     <string name="alarms_edit_threshold">Drempel bewerken</string>
     <string name="alarms_edit_existing">Bestaande drempel bewerken</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tik op het potloodpictogram naast de drempelwaarde om deze te bewerken. Bewerken behoudt de aan-uitstatus. Open de editor van het alarm, kies “Alarm verwijderen” en bevestig de verwijdering. Alle kopieën van deze drempel worden verwijderd. Als opgeslagen alarmen tijdens het bewerken veranderen, gebruik je “Vernieuwen” en open je de drempel opnieuw voordat je deze wijzigt.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tik op het potloodpictogram naast de drempelwaarde om deze te bewerken. Bewerken behoudt de aan-uitstatus. Open de editor van het alarm, kies “Alarm verwijderen” en bevestig de verwijdering. Alle kopieën van deze drempel worden verwijderd.</string>
     <string name="alarms_new_enabled">Het alarm wordt ingeschakeld wanneer het wordt toegevoegd.</string>
     <string name="alarms_edit_keeps_enabled">Bewerken behoudt de huidige aan-uitinstelling.</string>
     <string name="alarms_enabled">Ingeschakeld</string>
@@ -320,7 +320,7 @@
     <string name="alarms_monitor_unconfirmed">Geen actuele verbinding met de bewaking. Alarmbeoordeling is niet bevestigd.</string>
     <string name="alarms_state_unknown">Alarminstellingen niet beschikbaar</string>
     <string name="alarms_stale">De vorige instellingen worden getoond. Vernieuw voordat je wijzigingen aanbrengt.</string>
-    <string name="alarms_conflict">Opgeslagen alarmen zijn gewijzigd. Vernieuw en open de drempel opnieuw voordat je wijzigingen aanbrengt.</string>
+    <string name="alarms_conflict">Opgeslagen alarmen zijn gewijzigd. Vernieuw voordat je wijzigingen aanbrengt. Als je een drempel bewerkt, annuleer je de bewerking en open je de drempel opnieuw.</string>
     <string name="alarms_missing_rule">Dit alarm ontbreekt of is ongeldig. Controleer het alarmoverzicht.</string>
     <string name="alarms_invalid_records">Sommige opgeslagen alarmen zijn ongeldig. Controleer deze vermeldingen; ze zijn niet verwijderd.</string>
     <string name="alarms_database_error">De alarmdatabase kon niet worden geopend. Probeer het opnieuw.</string>

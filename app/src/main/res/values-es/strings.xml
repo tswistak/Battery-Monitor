@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">Añadir umbral</string>
     <string name="alarms_edit_threshold">Editar umbral</string>
     <string name="alarms_edit_existing">Editar umbral existente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Toca el icono del lápiz junto al valor de un umbral para editarlo. La edición conserva su estado activado o desactivado. Para borrar una alarma, abre su editor, selecciona «Borrar alarma» y confirma el borrado. Se eliminarán todas las copias de este umbral. Si las alarmas guardadas cambian durante la edición, usa «Actualizar» y vuelve a abrir el umbral antes de modificarlo.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Toca el icono del lápiz junto al valor de un umbral para editarlo. La edición conserva su estado activado o desactivado. Para borrar una alarma, abre su editor, selecciona «Borrar alarma» y confirma el borrado. Se eliminarán todas las copias de este umbral.</string>
     <string name="alarms_new_enabled">La alarma se activará al añadirla.</string>
     <string name="alarms_edit_keeps_enabled">La edición mantiene el estado activado o desactivado actual.</string>
     <string name="alarms_enabled">Activada</string>
@@ -324,7 +324,7 @@
     <string name="alarms_monitor_unconfirmed">No hay conexión actual con el monitor. La evaluación de las alarmas no está confirmada.</string>
     <string name="alarms_state_unknown">Ajustes de alarma no disponibles</string>
     <string name="alarms_stale">Se muestran los ajustes anteriores. Actualiza antes de hacer cambios.</string>
-    <string name="alarms_conflict">Las alarmas guardadas han cambiado. Actualiza y vuelve a abrir el umbral antes de hacer cambios.</string>
+    <string name="alarms_conflict">Las alarmas guardadas han cambiado. Actualiza antes de hacer cambios. Si estás editando un umbral, cancela la edición y vuelve a abrirlo.</string>
     <string name="alarms_missing_rule">Esta alarma falta o no es válida. Revisa el catálogo de alarmas.</string>
     <string name="alarms_invalid_records">Algunas alarmas guardadas no son válidas. Revisa estos registros; no se han eliminado.</string>
     <string name="alarms_database_error">No se ha podido acceder a la base de datos de alarmas. Inténtalo de nuevo.</string>

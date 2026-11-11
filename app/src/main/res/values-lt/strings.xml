@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Pridėti ribą</string>
     <string name="alarms_edit_threshold">Keisti ribą</string>
     <string name="alarms_edit_existing">Keisti esamą ribą</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Norėdami keisti ribą, palieskite pieštuko piktogramą šalia jos vertės. Įjungimo ar išjungimo būsena išlieka. Norėdami ištrinti aliarmą, atverkite jo redagavimo langą, pasirinkite „Ištrinti Aliarmą“ ir patvirtinkite ištrynimą. Visos šios ribos kopijos bus pašalintos. Jei išsaugoti įspėjimai pasikeičia redaguojant, naudokite „Atnaujinti“ ir prieš keisdami ribą atverkite ją iš naujo.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Norėdami keisti ribą, palieskite pieštuko piktogramą šalia jos vertės. Įjungimo ar išjungimo būsena išlieka. Norėdami ištrinti aliarmą, atverkite jo redagavimo langą, pasirinkite „Ištrinti Aliarmą“ ir patvirtinkite ištrynimą. Visos šios ribos kopijos bus pašalintos.</string>
     <string name="alarms_new_enabled">Aliarmas bus įjungtas jį pridėjus.</string>
     <string name="alarms_edit_keeps_enabled">Keičiant išlaikoma dabartinė įjungimo ar išjungimo būsena.</string>
     <string name="alarms_enabled">Įjungta</string>
@@ -328,7 +328,7 @@
     <string name="alarms_monitor_unconfirmed">Nėra dabartinio ryšio su stebėjimo tarnyba. Aliarmų tikrinimas nepatvirtintas.</string>
     <string name="alarms_state_unknown">Aliarmų nustatymai nepasiekiami</string>
     <string name="alarms_stale">Rodomi ankstesni nustatymai. Prieš keisdami atnaujinkite.</string>
-    <string name="alarms_conflict">Išsaugoti aliarmai pasikeitė. Prieš keisdami atnaujinkite ir vėl atverkite ribą.</string>
+    <string name="alarms_conflict">Išsaugoti aliarmai pasikeitė. Prieš atlikdami pakeitimus, atnaujinkite sąrašą. Jei redaguojate ribą, nutraukite redagavimą ir vėl ją atverkite.</string>
     <string name="alarms_missing_rule">Šio aliarmo nėra arba jis netinkamas. Peržiūrėkite aliarmų katalogą.</string>
     <string name="alarms_invalid_records">Kai kurie išsaugoti aliarmai netinkami. Peržiūrėkite šiuos įrašus; jie nebuvo pašalinti.</string>
     <string name="alarms_database_error">Nepavyko pasiekti aliarmų duomenų bazės. Bandykite dar kartą.</string>

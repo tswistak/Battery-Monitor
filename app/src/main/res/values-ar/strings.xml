@@ -307,7 +307,7 @@
     <string name="alarms_add_threshold">إضافة عتبة</string>
     <string name="alarms_edit_threshold">تعديل العتبة</string>
     <string name="alarms_edit_existing">تعديل العتبة الموجودة</string>
-    <string name="alarms_threshold_edit_help" formatted="false">اضغط على أيقونة القلم بجوار قيمة العتبة لتعديلها. يحتفظ التعديل بحالة التشغيل أو الإيقاف. لحذف منبه، افتح محرره واختر «حذف المنبه» ثم أكّد الحذف. ستُزال كل نسخ هذه العتبة. إذا تغيّرت المنبّهات المحفوظة أثناء التعديل، فاستخدم «تحديث» وأعد فتح العتبة قبل تغييرها.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">اضغط على أيقونة القلم بجوار قيمة العتبة لتعديلها. يحتفظ التعديل بحالة التشغيل أو الإيقاف. لحذف منبه، افتح محرره واختر «حذف المنبه» ثم أكّد الحذف. ستُزال كل نسخ هذه العتبة.</string>
     <string name="alarms_new_enabled">سيُفعّل المنبه عند إضافته.</string>
     <string name="alarms_edit_keeps_enabled">يحافظ التعديل على حالة التشغيل أو الإيقاف الحالية.</string>
     <string name="alarms_enabled">مفعل</string>
@@ -336,7 +336,7 @@
     <string name="alarms_monitor_unconfirmed">لا يوجد اتصال حالي بالمراقبة. تقييم المنبهات غير مؤكد.</string>
     <string name="alarms_state_unknown">إعدادات المنبهات غير متاحة</string>
     <string name="alarms_stale">تُعرض الإعدادات السابقة. حدّث قبل إجراء تغييرات.</string>
-    <string name="alarms_conflict">تغيرت المنبهات المحفوظة. حدّث وأعد فتح العتبة قبل إجراء تغييرات.</string>
+    <string name="alarms_conflict">تغيرت المنبهات المحفوظة. حدّث قبل إجراء تغييرات. إذا كنت تعدّل عتبة، فألغِ التعديل وأعد فتحها.</string>
     <string name="alarms_missing_rule">هذا المنبه مفقود أو غير صالح. راجع قائمة المنبهات.</string>
     <string name="alarms_invalid_records">بعض المنبهات المحفوظة غير صالحة. راجع هذه السجلات؛ لم تتم إزالتها.</string>
     <string name="alarms_database_error">تعذر الوصول إلى قاعدة بيانات المنبهات. أعد المحاولة.</string>

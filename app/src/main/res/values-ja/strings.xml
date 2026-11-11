@@ -287,7 +287,7 @@
     <string name="alarms_add_threshold">しきい値を追加</string>
     <string name="alarms_edit_threshold">しきい値を編集</string>
     <string name="alarms_edit_existing">既存のしきい値を編集</string>
-    <string name="alarms_threshold_edit_help" formatted="false">しきい値を編集するには、値の横にある鉛筆アイコンをタップします。編集しても、オン・オフ状態は維持します。アラームを削除するには、編集画面を開いて「アラームを削除」を選び、削除を確定します。このしきい値のすべてのコピーが削除されます。編集中に保存済みのアラームが変更された場合は、「更新」を使用し、しきい値を再度開いてから変更してください。</string>
+    <string name="alarms_threshold_edit_help" formatted="false">しきい値を編集するには、値の横にある鉛筆アイコンをタップします。編集しても、オン・オフ状態は維持します。アラームを削除するには、編集画面を開いて「アラームを削除」を選び、削除を確定します。このしきい値のすべてのコピーが削除されます。</string>
     <string name="alarms_new_enabled">追加するとアラームが有効になります。</string>
     <string name="alarms_edit_keeps_enabled">編集しても、現在のオン・オフ状態は維持されます。</string>
     <string name="alarms_enabled">有効</string>
@@ -316,7 +316,7 @@
     <string name="alarms_monitor_unconfirmed">現在、監視サービスに接続されていません。アラームの判定状況は確認できません。</string>
     <string name="alarms_state_unknown">アラーム設定を取得できません</string>
     <string name="alarms_stale">以前の設定を表示しています。変更する前に更新してください。</string>
-    <string name="alarms_conflict">保存済みアラームが変更されました。更新してしきい値を開き直してから変更してください。</string>
+    <string name="alarms_conflict">保存済みアラームが変更されました。変更を加える前に更新してください。しきい値を編集中の場合は、キャンセルしてから開き直してください。</string>
     <string name="alarms_missing_rule">このアラームは存在しないか無効です。アラーム一覧を確認してください。</string>
     <string name="alarms_invalid_records">一部の保存済みアラームが無効です。記録を確認してください。削除はされていません。</string>
     <string name="alarms_database_error">アラームのデータベースにアクセスできませんでした。再試行してください。</string>

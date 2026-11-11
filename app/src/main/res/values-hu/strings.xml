@@ -291,7 +291,7 @@
     <string name="alarms_add_threshold">Küszöb hozzáadása</string>
     <string name="alarms_edit_threshold">Küszöb szerkesztése</string>
     <string name="alarms_edit_existing">Meglévő küszöb szerkesztése</string>
-    <string name="alarms_threshold_edit_help" formatted="false">A szerkesztéshez koppintson a küszöbérték melletti ceruzaikonra. A be- vagy kikapcsolt állapota megmarad. A riasztás törléséhez nyissa meg a szerkesztőjét, válassza a „Risztás törlése” lehetőséget, majd erősítse meg a törlést. A küszöb összes példánya törlődik. Ha a mentett riasztások szerkesztés közben megváltoznak, használja a „Frissítés” lehetőséget, és a módosítás előtt nyissa meg újra a küszöböt.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">A szerkesztéshez koppintson a küszöbérték melletti ceruzaikonra. A be- vagy kikapcsolt állapota megmarad. A riasztás törléséhez nyissa meg a szerkesztőjét, válassza a „Risztás törlése” lehetőséget, majd erősítse meg a törlést. A küszöb összes példánya törlődik.</string>
     <string name="alarms_new_enabled">A riasztás hozzáadáskor engedélyezve lesz.</string>
     <string name="alarms_edit_keeps_enabled">A szerkesztés megőrzi a jelenlegi be- vagy kikapcsolt állapotot.</string>
     <string name="alarms_enabled">Engedélyezve</string>
@@ -320,7 +320,7 @@
     <string name="alarms_monitor_unconfirmed">Nincs aktív kapcsolat a figyeléssel. A riasztások kiértékelése nincs megerősítve.</string>
     <string name="alarms_state_unknown">A riasztási beállítások nem érhetők el</string>
     <string name="alarms_stale">A korábbi beállítások láthatók. Módosítás előtt frissítsen.</string>
-    <string name="alarms_conflict">A mentett riasztások megváltoztak. Módosítás előtt frissítsen, és nyissa meg újra a küszöböt.</string>
+    <string name="alarms_conflict">A mentett riasztások megváltoztak. Módosítás előtt frissítsen. Ha egy küszöböt szerkeszt, szakítsa meg a szerkesztést, és nyissa meg újra a küszöböt.</string>
     <string name="alarms_missing_rule">Ez a riasztás hiányzik vagy érvénytelen. Ellenőrizze a riasztáskatalógust.</string>
     <string name="alarms_invalid_records">Néhány mentett riasztás érvénytelen. Ellenőrizze ezeket a bejegyzéseket; nem lettek eltávolítva.</string>
     <string name="alarms_database_error">A riasztási adatbázis nem érhető el. Próbálja újra.</string>

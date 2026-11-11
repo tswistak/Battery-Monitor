@@ -291,7 +291,7 @@
     <string name="alarms_add_threshold">Eşik ekle</string>
     <string name="alarms_edit_threshold">Eşiği düzenle</string>
     <string name="alarms_edit_existing">Mevcut eşiği düzenle</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Düzenlemek için eşik değerinin yanındaki kalem simgesine dokunun. Düzenleme açık/kapalı durumunu korur. Bir alarmı silmek için düzenleyicisini açın, “Alarm Sil” seçeneğini seçin ve silmeyi onaylayın. Bu eşiğin tüm kopyaları kaldırılacak. Kayıtlı alarmlar düzenleme sırasında değişirse “Yenile” seçeneğini kullanın ve değiştirmeden önce eşiği yeniden açın.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Düzenlemek için eşik değerinin yanındaki kalem simgesine dokunun. Düzenleme açık/kapalı durumunu korur. Bir alarmı silmek için düzenleyicisini açın, “Alarm Sil” seçeneğini seçin ve silmeyi onaylayın. Bu eşiğin tüm kopyaları kaldırılacak.</string>
     <string name="alarms_new_enabled">Alarm eklendiğinde etkinleştirilecek.</string>
     <string name="alarms_edit_keeps_enabled">Düzenleme, geçerli açık/kapalı ayarını korur.</string>
     <string name="alarms_enabled">Etkin</string>
@@ -320,7 +320,7 @@
     <string name="alarms_monitor_unconfirmed">İzleme hizmetiyle güncel bağlantı yok. Alarm değerlendirmesi doğrulanmadı.</string>
     <string name="alarms_state_unknown">Alarm ayarları mevcut değil</string>
     <string name="alarms_stale">Önceki ayarlar gösteriliyor. Değişiklik yapmadan önce yenileyin.</string>
-    <string name="alarms_conflict">Kaydedilen alarmlar değişti. Değişiklik yapmadan önce yenileyip eşiği yeniden açın.</string>
+    <string name="alarms_conflict">Kaydedilen alarmlar değişti. Değişiklik yapmadan önce yenileyin. Bir eşiği düzenliyorsanız düzenlemeyi iptal edip eşiği yeniden açın.</string>
     <string name="alarms_missing_rule">Bu alarm eksik veya geçersiz. Alarm kataloğunu gözden geçirin.</string>
     <string name="alarms_invalid_records">Kaydedilen bazı alarmlar geçersiz. Bu kayıtları gözden geçirin; kaldırılmadılar.</string>
     <string name="alarms_database_error">Alarm veritabanına erişilemedi. Yeniden deneyin.</string>

@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Dodaj próg</string>
     <string name="alarms_edit_threshold">Edytuj próg</string>
     <string name="alarms_edit_existing">Edytuj istniejący próg</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Naciśnij ikonę ołówka obok wartości progu, aby ją zedytować. Edycja zachowuje swój stan włączenia. Aby usunąć alarm, otwórz jego edytor, wybierz „Usuń alarm” i potwierdź usunięcie. Usunięte zostaną wszystkie kopie tego progu. Jeśli zapisane alarmy zmieniają się podczas edycji, użyj „Odśwież” i ponownie otwórz próg przed jego zmianą.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Naciśnij ikonę ołówka obok wartości progu, aby ją zedytować. Edycja zachowuje swój stan włączenia. Aby usunąć alarm, otwórz jego edytor, wybierz „Usuń alarm” i potwierdź usunięcie. Usunięte zostaną wszystkie kopie tego progu.</string>
     <string name="alarms_new_enabled">Alarm zostanie włączony po dodaniu.</string>
     <string name="alarms_edit_keeps_enabled">Edycja zachowuje bieżące ustawienie włączenia/wyłączenia.</string>
     <string name="alarms_enabled">Włączony</string>
@@ -328,7 +328,7 @@
     <string name="alarms_monitor_unconfirmed">Brak bieżącego połączenia z monitorem. Ocena alarmów nie jest potwierdzana.</string>
     <string name="alarms_state_unknown">Ustawienia alarmów niedostępne</string>
     <string name="alarms_stale">Wyświetlane są poprzednie ustawienia. Odśwież przed wprowadzeniem zmian.</string>
-    <string name="alarms_conflict">Zmieniono zapisane alarmy. Odśwież i ponownie otwórz próg przed wprowadzeniem zmian.</string>
+    <string name="alarms_conflict">Zmieniono zapisane alarmy. Odśwież przed wprowadzeniem zmian. Jeśli edytujesz próg, wybierz „Anuluj” i otwórz go ponownie.</string>
     <string name="alarms_missing_rule">Tego alarmu brakuje lub jest nieprawidłowy. Przejrzyj katalog alarmów.</string>
     <string name="alarms_invalid_records">Niektóre zapisane alarmy są nieprawidłowe. Przejrzyj te wpisy; nie zostały usunięte.</string>
     <string name="alarms_database_error">Nie udało się uzyskać dostępu do bazy danych alarmów. Spróbuj ponownie.</string>
