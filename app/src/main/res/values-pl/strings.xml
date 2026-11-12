@@ -313,8 +313,8 @@
     <string name="alarms_discard">Odrzuć</string>
     <string name="menu_delete_alarm" formatted="false">Usuń alarm</string>
     <string name="alarms_delete_threshold_confirmation">Czy usunąć %1$s — %2$s? Wszystkie kopie tego progu zostaną usunięte.</string>
-    <string name="alarms_notifications_disabled">Powiadomienia są wyłączone. Włącz je w ustawieniach Androida, aby otrzymywać powiadomienia o alarmach.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) grupę powiadomień alarmów dla tej aplikacji. Włącz ją w ustawieniach Androida, aby otrzymywać powiadomienia o alarmach.</string>
+    <string name="alarms_notifications_disabled">Powiadomienia są wyłączone. Włącz je w ustawieniach Androida, aby otrzymywać powiadomienia alarmów.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) grupę powiadomień alarmów dla tej aplikacji. Włącz ją w ustawieniach Androida, aby otrzymywać powiadomienia alarmów</string>
     <string name="alarms_open_notification_settings">Otwórz ustawienia powiadomień Androida</string>
     <string name="alarm_chan_disabled" formatted="false">Wyłączyłeś(-aś) powiadomienia dla tego typu alarmu. Włącz je, aby używać tego typu alarmu.</string>
     <string name="alarm_chan_settings_b" formatted="false">Zarządzaj tym typem alarmu</string>
@@ -328,7 +328,7 @@
     <string name="alarms_monitor_unconfirmed">Brak bieżącego połączenia z monitorem. Ocena alarmów nie jest potwierdzana.</string>
     <string name="alarms_state_unknown">Ustawienia alarmów niedostępne</string>
     <string name="alarms_stale">Wyświetlane są poprzednie ustawienia. Odśwież przed wprowadzeniem zmian.</string>
-    <string name="alarms_conflict">Zmieniono zapisane alarmy. Odśwież przed wprowadzeniem zmian. Jeśli edytujesz próg, wybierz „Anuluj” i otwórz go ponownie.</string>
+    <string name="alarms_conflict">Zmieniono zapisane alarmy. Odśwież przed wprowadzeniem zmian. Jeśli edytujesz próg, naciśnij „Anuluj” i otwórz go ponownie.</string>
     <string name="alarms_missing_rule">Tego alarmu brakuje lub jest nieprawidłowy. Przejrzyj katalog alarmów.</string>
     <string name="alarms_invalid_records">Niektóre zapisane alarmy są nieprawidłowe. Przejrzyj te wpisy; nie zostały usunięte.</string>
     <string name="alarms_database_error">Nie udało się uzyskać dostępu do bazy danych alarmów. Spróbuj ponownie.</string>
@@ -349,7 +349,7 @@
     <string name="history_invalid_range">Wprowadź prawidłowy zakres dat.</string>
     <string name="history_invalid_month">Wprowadź prawidłowy miesiąc (1–12).</string>
     <string name="history_invalid_year">Wprowadź prawidłowy rok (1970–9999).</string>
-    <string name="history_calendar_period_unavailable">Ten okres kalendarzowy rozpoczyna się przed najwcześniejszą obsługiwaną datą w historii.</string>
+    <string name="history_calendar_period_unavailable">Ten okres kalendarzowy rozpoczyna się przed obsługiwaną historią.</string>
     <string name="history_change_range">Zmień</string>
     <string name="history_charts">Wykresy</string>
     <string name="history_level">Poziom</string>
