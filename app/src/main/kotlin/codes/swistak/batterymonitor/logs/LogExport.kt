@@ -19,12 +19,19 @@ import android.util.Log
 import androidx.core.text.BidiFormatter
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.devicebackup.BackupExportOutputStream
+import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
+import codes.swistak.batterymonitor.devicebackup.GeneralBackup
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import codes.swistak.batterymonitor.settings.SettingsContract
 import java.io.BufferedWriter
+import java.io.DataInputStream
+import java.io.EOFException
 import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.io.RandomAccessFile
@@ -67,7 +74,10 @@ internal object LogExport {
     }
 
     fun appendJson(context: Context, uri: Uri, records: Sequence<LogRecord>) =
-        withDocumentLock(context) { JsonLogAppend.append(context, uri, records) }
+        withDocumentLock(context) {
+            recoverCsv(context, uri, csvRecoveryCopy(context, uri))
+            JsonLogAppend.append(context, uri, records)
+        }
 
     internal fun hasMeasurementCsvHeader(columns: List<String>): Boolean =
         columns.size == 10 && columns[7].contains("µA") && columns[8].contains("µAh") && columns[9].contains(
@@ -110,78 +120,171 @@ internal object LogExport {
         writer.flush()
     }
 
-    internal fun needsCsvSeparator(input: InputStream): Boolean {
+    internal data class CsvTail(val size: Int, val needsSeparator: Boolean)
+
+    internal fun readCsvTail(input: InputStream): CsvTail {
+        val bounded = BackupImportInputStream(input)
         val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var size = 0
         var last = -1
         while (true) {
-            val count = input.read(buffer)
+            val count = bounded.read(buffer)
             if (count == -1) break
-            if (count > 0) last = buffer[count - 1].toInt() and 0xff
+            if (count > 0) {
+                size += count
+                last = buffer[count - 1].toInt() and 0xff
+            }
         }
-        return last != -1 && last != '\r'.code && last != '\n'.code
+        return CsvTail(size, last != -1 && last != '\r'.code && last != '\n'.code)
     }
 
     fun appendCsv(context: Context, uri: Uri, records: Sequence<LogRecord>) =
         withDocumentLock(context) {
             val resolver = context.contentResolver
-            val header = (resolver.openInputStream(uri)
-                ?: error("Could not read append target")).bufferedReader(
-                StandardCharsets.UTF_8
-            ).use { CsvLogImporter.readCsvRows(it).firstOrNull().orEmpty() }
-            if (header.isNotEmpty() && !hasMeasurementCsvHeader(header)) migrateCsv(context, uri)
-            val needsSeparator = header.isNotEmpty() && (resolver.openInputStream(uri)
-                ?: error("Could not read append target")).use(::needsCsvSeparator)
-            resolver.openOutputStream(uri, if (header.isEmpty()) "wt" else "wa")?.use { output ->
-                if (needsSeparator) output.write("\r\n".toByteArray(StandardCharsets.UTF_8))
-                writeCsv(context, output, records, includeHeader = header.isEmpty())
-            } ?: error("Could not open append target")
+            val original = csvRecoveryCopy(context, uri)
+            recoverCsv(context, uri, original)
+            val header = csvInput(context, uri).use { input ->
+                BackupImportInputStream(input).bufferedReader(StandardCharsets.UTF_8).use {
+                    CsvLogImporter.readCsvRows(it).firstOrNull().orEmpty()
+                }
+            }
+            val prepared = File(context.cacheDir, "csv-append.prepared")
+            try {
+                if (header.isNotEmpty() && !hasMeasurementCsvHeader(header)) {
+                    migrateCsv(context, uri, records, original, prepared)
+                } else {
+                    val rows = records.iterator()
+                    if (header.isNotEmpty() && !rows.hasNext()) return@withDocumentLock
+                    val tail = if (header.isEmpty()) CsvTail(0, false)
+                    else csvInput(context, uri).use(::readCsvTail)
+                    prepared.outputStream().use { file ->
+                        val output = BackupExportOutputStream(
+                            file, GeneralBackup.MAX_ENTRY_BYTES - tail.size
+                        )
+                        if (tail.needsSeparator) output.write("\r\n".toByteArray(StandardCharsets.UTF_8))
+                        writeCsv(
+                            context, output, rows.asSequence(), includeHeader = header.isEmpty()
+                        )
+                    }
+                    resolver.openOutputStream(uri, if (header.isEmpty()) "wt" else "wa")
+                        ?.use { output ->
+                            prepared.inputStream().use { it.copyTo(output) }
+                        } ?: error("Could not open append target")
+                }
+            } finally {
+                prepared.delete()
+            }
         }
 
-    private fun migrateCsv(context: Context, uri: Uri) {
-        val resolver = context.contentResolver
-        val original = File.createTempFile("csv-recovery-", ".csv", context.filesDir)
-        val upgraded = File.createTempFile("csv-upgrade-", ".csv", context.cacheDir)
-        var retainRecovery = false
+    internal fun <T> withReadableCsv(context: Context, uri: Uri, read: () -> T): T =
+        withDocumentLock(context) {
+            val original = csvRecoveryCopy(context, uri)
+            if (original.exists()) {
+                throw csvRecoveryException(
+                    context,
+                    original,
+                    IllegalStateException("CSV history replacement is incomplete")
+                )
+            }
+            read()
+        }
+
+    private fun csvRecoveryCopy(context: Context, uri: Uri): File =
+        File(context.filesDir, "export-recovery/${exportRecoveryKey(uri)}.csv-original")
+
+    private fun csvInput(context: Context, uri: Uri): InputStream =
+        context.contentResolver.openInputStream(uri) ?: error("Could not read append target")
+
+    private fun migrateCsv(
+        context: Context, uri: Uri, records: Sequence<LogRecord>, original: File, prepared: File
+    ) {
+        val directory = requireNotNull(original.parentFile)
+        check(directory.isDirectory || directory.mkdirs()) { "Could not create export recovery directory" }
+        val reading = File(directory, "csv.read")
         try {
-            resolver.openInputStream(uri)
-                ?.use { input -> original.outputStream().use { output -> input.copyTo(output) } }
-                ?: error("Could not read append target")
-            upgraded.outputStream().use { output ->
-                original.bufferedReader(StandardCharsets.UTF_8).use { input ->
+            csvInput(context, uri).use { input ->
+                FileOutputStream(reading).use { output ->
+                    BackupImportInputStream(input).copyTo(output)
+                    output.fd.sync()
+                }
+            }
+            prepared.outputStream().use { file ->
+                val output = BackupExportOutputStream(file)
+                InputStreamReader(
+                    reading.inputStream(), StandardCharsets.UTF_8.newDecoder()
+                ).buffered().use { input ->
                     val writer = OutputStreamWriter(output, StandardCharsets.UTF_8).buffered()
                     upgradeLegacyCsv(input, writer, measurementColumns(context))
                 }
+                writeCsv(context, output, records, includeHeader = false)
             }
+            // Only the renamed copy marks a migration that may have modified the SAF document.
+            check(reading.renameTo(original)) { "Could not preserve CSV history" }
             try {
-                resolver.openOutputStream(uri, "wt")?.use { output ->
-                    upgraded.inputStream().use { it.copyTo(output) }
-                } ?: error("Could not replace append target")
+                replaceCsv(context, uri, prepared)
             } catch (failure: Exception) {
                 try {
-                    resolver.openOutputStream(uri, "wt")?.use { output ->
-                        original.inputStream().use { it.copyTo(output) }
-                    } ?: error("Could not restore append target")
-                } catch (recoveryFailure: Exception) {
-                    retainRecovery = true
-                    failure.addSuppressed(recoveryFailure)
-                    Log.e("LogExport", "Original CSV retained at $original", recoveryFailure)
+                    recoverCsv(context, uri, original)
+                } catch (recoveryFailure: LogExportRecoveryException) {
+                    recoveryFailure.addSuppressed(failure)
+                    throw recoveryFailure
                 }
                 throw failure
             }
+            if (!original.delete()) csvRecoveryFailure(
+                context, original, IllegalStateException("Could not finish CSV history replacement")
+            )
         } finally {
-            upgraded.delete()
-            if (!retainRecovery) original.delete()
+            reading.delete()
         }
     }
 
-    fun loadRecords(
-        context: Context, afterExclusive: Long? = null, throughInclusive: Long? = null
-    ): List<LogRecord> {
-        val database = LogDatabase(context.applicationContext)
-        return try {
-            database.getLogRecordsInRange(afterExclusive, throughInclusive)
-        } finally {
-            database.close()
+    private fun recoverCsv(context: Context, uri: Uri, original: File) {
+        if (!original.exists()) return
+        try {
+            if (!csvMatches(context, uri, original)) replaceCsv(context, uri, original)
+            check(original.delete()) { "Could not finish CSV history recovery" }
+        } catch (failure: Exception) {
+            csvRecoveryFailure(context, original, failure)
+        }
+    }
+
+    private fun csvRecoveryFailure(context: Context, original: File, failure: Exception): Nothing {
+        Log.e("LogExport", "Original CSV retained in ${original.name}", failure)
+        throw csvRecoveryException(context, original, failure)
+    }
+
+    private fun csvRecoveryException(context: Context, original: File, failure: Exception) =
+        LogExportRecoveryException(
+            context.getString(R.string.log_export_recovery_required, original.name), failure
+        )
+
+    private fun replaceCsv(context: Context, uri: Uri, source: File) {
+        context.contentResolver.openOutputStream(uri, "wt")?.use { output ->
+            source.inputStream().use { it.copyTo(output) }
+        } ?: error("Could not replace CSV history")
+        check(csvMatches(context, uri, source)) { "CSV history did not match the prepared file" }
+    }
+
+    private fun csvMatches(context: Context, uri: Uri, source: File): Boolean {
+        DataInputStream(csvInput(context, uri)).use { actual ->
+            source.inputStream().use { expected ->
+                val expectedBytes = ByteArray(DEFAULT_BUFFER_SIZE)
+                val actualBytes = ByteArray(DEFAULT_BUFFER_SIZE)
+                var count = expected.read(expectedBytes)
+                while (count != -1) {
+                    try {
+                        actual.readFully(actualBytes, 0, count)
+                    } catch (_: EOFException) {
+                        return false
+                    }
+                    for (index in 0 until count) {
+                        if (actualBytes[index] != expectedBytes[index]) return false
+                    }
+                    count = expected.read(expectedBytes)
+                }
+                return actual.read() == -1
+            }
         }
     }
 

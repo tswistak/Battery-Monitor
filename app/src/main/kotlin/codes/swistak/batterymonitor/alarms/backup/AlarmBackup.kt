@@ -31,9 +31,6 @@ internal object AlarmBackup {
     const val SCHEMA_VERSION: Int = Version2AlarmImporter.VERSION
 
     @Throws(JSONException::class)
-    fun getSchemaVersion(jsonString: String): Int = JSONObject(jsonString).optInt("version", 0)
-
-    @Throws(JSONException::class)
     fun exportToJson(database: AlarmDatabase): JSONObject {
         val alarms = JSONArray()
         for ((enabled, type, threshold) in database.getAllAlarmRecords()) {
@@ -47,18 +44,15 @@ internal object AlarmBackup {
     }
 
     @Throws(JSONException::class, IllegalArgumentException::class)
-    fun importFromJson(database: AlarmDatabase, jsonString: String): Int {
-        val restored = validatedRecords(jsonString)
+    fun importFromJson(database: AlarmDatabase, jsonString: String): Int =
+        restore(database, validatedRecords(JSONObject(jsonString)))
+
+    fun restore(database: AlarmDatabase, restored: List<AlarmRecord>): Int {
         check(database.replaceAllAlarms(restored)) { "Could not restore alarms" }
         return restored.size
     }
 
-    fun validateJson(jsonString: String) {
-        validatedRecords(jsonString)
-    }
-
-    private fun validatedRecords(jsonString: String): List<AlarmRecord> {
-        val root = JSONObject(jsonString)
+    fun validatedRecords(root: JSONObject): List<AlarmRecord> {
         val importer = alarmImporterForVersion(root.optInt("version", 0))
         val alarms = root.getJSONArray("alarms")
         val restored = buildList {

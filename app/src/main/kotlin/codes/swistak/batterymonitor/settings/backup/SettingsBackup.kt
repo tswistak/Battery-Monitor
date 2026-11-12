@@ -34,8 +34,7 @@ import java.nio.charset.StandardCharsets
 internal object SettingsBackup {
     const val SCHEMA_VERSION: Int = Version4SettingsImporter.VERSION
 
-    private fun parsedSettings(jsonString: String): Pair<Int, Map<String, Any>> {
-        val root = JSONObject(jsonString)
+    fun parsedSettings(root: JSONObject): Pair<Int, Map<String, Any>> {
         val version = root.optInt("version", 0)
         val importer = settingsImporterForVersion(version)
         val settings = root.getJSONObject("settings")
@@ -55,7 +54,7 @@ internal object SettingsBackup {
     }
 
     fun validateJson(jsonString: String) {
-        parsedSettings(jsonString)
+        parsedSettings(JSONObject(jsonString))
     }
 
     @Throws(JSONException::class)
@@ -105,8 +104,11 @@ internal object SettingsBackup {
     }
 
     @Throws(JSONException::class, IllegalArgumentException::class)
-    fun importFromJson(editor: SharedPreferences.Editor, jsonString: String) {
-        val (version, validatedSettings) = parsedSettings(jsonString)
+    fun importFromJson(editor: SharedPreferences.Editor, jsonString: String) =
+        restore(editor, parsedSettings(JSONObject(jsonString)))
+
+    fun restore(editor: SharedPreferences.Editor, parsed: Pair<Int, Map<String, Any>>) {
+        val (version, validatedSettings) = parsed
         settingsImporterForVersion(version).restore(editor, validatedSettings)
         TemperatureUnitPreferencesMigration.restoreImportedSettings(editor, validatedSettings)
         if (version < Version3SettingsImporter.VERSION) {

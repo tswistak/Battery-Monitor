@@ -31,7 +31,8 @@ import android.content.ServiceConnection
 import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
 import android.content.res.Resources
-import android.database.Cursor
+import android.database.ContentObserver
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -39,6 +40,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
+import android.os.PatternMatcher
 import android.os.RemoteException
 import android.os.ResultReceiver
 import android.os.SystemClock
@@ -47,7 +49,9 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
+import androidx.core.content.edit
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmRule
@@ -64,6 +68,10 @@ import codes.swistak.batterymonitor.logs.LogResult
 import codes.swistak.batterymonitor.logs.maintainHistory
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageResolver
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageSource
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitAccess
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitContentProvider
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitSnapshot
+import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceProfileSignals
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_CDROP
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_CHARGED
@@ -94,6 +102,13 @@ import codes.swistak.batterymonitor.widgets.LegacyWidgetRenderer
 import codes.swistak.batterymonitor.widgets.WidgetSnapshot
 import codes.swistak.batterymonitor.widgets.WidgetSnapshotStore
 import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asExecutor
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
@@ -117,6 +132,10 @@ class BatteryInfoService : Service() {
 
     companion object {
         private const val LOG_TAG = "BatteryInfoService"
+        internal val monitoringPersistence = Executors.newSingleThreadExecutor { task ->
+            Thread(task, "MonitoringPersistence").apply { isDaemon = true }
+        }
+
         private var clientMessengers: HashMap<Messenger, ClientRegistration>? = null
 
         private var messenger: Messenger? = null
@@ -285,24 +304,28 @@ class BatteryInfoService : Service() {
 
     private var alarms: AlarmDatabase? = null
     private var logDb: LogDatabase? = null
-    private lateinit var historySampler: BatteryHistorySampler
+
+    @Volatile
+    private var historySampler: BatteryHistorySampler? = null
+
     private var historyBootCount = -1
     private var lastHistoryMaintenance: Long? = null
     private val historyMaintenance = Executors.newSingleThreadExecutor { task ->
         Thread(task, "HistoryMaintenance").apply { isDaemon = true }
     }
 
-    private var bl: BatteryLevel? = null
-    private var cwbg: CircleWidgetBackground? = null
+    private val batteryLevel by lazy(LazyThreadSafetyMode.NONE) { BatteryLevel() }
+    private val circleBackground by lazy(LazyThreadSafetyMode.NONE) { CircleWidgetBackground(this) }
+
     private var currentMicroAmps: Long? = null
     private val currentWorker = Executors.newSingleThreadExecutor { task ->
         Thread(task, "CurrentAcquisition").apply { isDaemon = true }
     }
     private val currentAcquisition = CurrentAcquisition(
         readNow = {
-            BatteryCurrent.readWithSource(
-                false, readPrivileged = { null })
-        },
+        BatteryCurrent.readWithSource(
+            false, readPrivileged = { null })
+    },
         readAverage = { BatteryCurrent.readWithSource(true, readPrivileged = { null }) },
         executor = currentWorker,
         deliver = { callback -> mHandler.post { callback() } })
@@ -342,7 +365,7 @@ class BatteryInfoService : Service() {
         }
     }
 
-    private var voltageResolver: BatteryVoltageResolver? = null
+    private val voltageResolver = BatteryVoltageResolver()
 
     private lateinit var remainingChargeReader: RemainingChargeReader
 
@@ -355,6 +378,8 @@ class BatteryInfoService : Service() {
     private val pendingBatteryUpdates = java.util.ArrayDeque<PendingBatteryUpdate>()
 
     private var resolvingBatteryUpdate = false
+
+    @Volatile
     private var destroyed = false
 
     private var now: Long = 0
@@ -370,18 +395,67 @@ class BatteryInfoService : Service() {
 
     private val mHandler = Handler(Looper.getMainLooper())
 
+    private val chargingLimitScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private var chargingProviderEpoch = 0L
+    private val chargingLimit = ChargingLimitSnapshot(
+        worker = Dispatchers.IO.asExecutor(),
+        deliver = { task -> mHandler.post { task() } },
+        clock = SystemClock::elapsedRealtime,
+        currentAccess = {
+            if (destroyed || settings.getString(
+                    SettingsContract.KEY_CHARGING_TARGET_MODE,
+                    SettingsContract.CHARGING_TARGET_MODE_AUTOMATIC
+                ) == SettingsContract.CHARGING_TARGET_MODE_CUSTOM
+            ) null else ChargingLimitAccess(
+                privileged = settings.getBoolean(
+                    SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
+                ) && PrivilegedAccess.isEnabled(),
+                revision = PrivilegedAccess.accessRevision,
+                changes = PrivilegedAccess.accessChanges.value,
+                providerEpoch = chargingProviderEpoch
+            )
+        },
+        read = {
+            ChargingLimitContentProvider.read(applicationContext)
+        },
+        onTargetChanged = { update(null) })
+    private val chargingLimitObserver = object : ContentObserver(mHandler) {
+        override fun onChange(selfChange: Boolean) {
+            chargingProviderEpoch++
+            chargingLimit.refresh()
+            if (mainNotificationForegroundStarted) update(null)
+        }
+    }
+    private val lineageProviderReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            chargingProviderEpoch++
+            chargingLimit.refresh()
+            if (mainNotificationForegroundStarted) update(null)
+        }
+    }
+
     private val runPredictorUpdate = Runnable { update(null) }
+    private var chipSwitchScheduled = false
     private val runChipSwitch: Runnable = object : Runnable {
         override fun run() {
+            chipSwitchScheduled = false
+            if (!mainNotificationForegroundStarted) return
+            if (!shouldRequestLiveUpdateChip()) {
+                startForegroundWithRetry()
+                return
+            }
             val selectedContent = selectedChipContent()
             if (selectedContent.size < 2) return
             chipContentIndex = (chipContentIndex + 1) % selectedContent.size
-            val mainNotification = prepareNotification()
-            if (mainNotificationForegroundStarted) {
-                mNotificationManager!!.notify(NOTIFICATION_PRIMARY, mainNotification)
-            }
-
-            mHandler.postDelayed(this, chipSwitchingIntervalMillis())
+            mNotificationManager!!.notify(NOTIFICATION_PRIMARY, prepareNotification(true))
+            updateChipSwitcher(true)
+        }
+    }
+    private val notificationBlockReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P || monitoringSequence == 0L) return
+            val channel = intent.getStringExtra(NotificationManager.EXTRA_NOTIFICATION_CHANNEL_ID)
+            if (intent.action == NotificationManager.ACTION_APP_BLOCK_STATE_CHANGED || channel == CHAN_ID_MAIN || channel == CHAN_ID_LIVE_UPDATE) startForegroundWithRetry()
         }
     }
 
@@ -411,12 +485,8 @@ class BatteryInfoService : Service() {
 
         res = resources
         DisplayStrings.setResources(res)
-        logDb = LogDatabase(this)
 
         info = BatteryInfo()
-
-        // Privileged voltage is collected together with current and charge on the shared worker.
-        voltageResolver = BatteryVoltageResolver(privilegedEnabled = { false })
 
         remainingChargeReader = RemainingChargeReader(applicationContext)
 
@@ -424,34 +494,17 @@ class BatteryInfoService : Service() {
         clientMessengers = HashMap()
 
         predictor = Predictor(this)
-        bl = BatteryLevel.getSmallInstance()
-        cwbg = CircleWidgetBackground(this)
-
-        alarms = AlarmDatabase(this)
 
         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager?
 
         loadSettingsFiles()
         historyBootCount = Settings.Global.getInt(contentResolver, Settings.Global.BOOT_COUNT, -1)
-        historySampler = BatteryHistorySampler(
-            BatteryHistorySampler.restoreElapsed(
-                spService.getLong("history_sample_elapsed", -1),
-                spService.getInt("history_sample_boot", -1),
-                historyBootCount,
-                SystemClock.elapsedRealtime()
-            )
-        )
         setUpChannels()
 
         sdkVersioning()
 
         BatteryCurrent.setContext(this)
         PrivilegedAccess.initialize(this)
-        PrivilegedAccess.setReadyListener {
-            mHandler.post {
-                if (mainNotificationForegroundStarted) update(null)
-            }
-        }
         configureBatteryCurrent()
         configureChipContent()
 
@@ -486,6 +539,35 @@ class BatteryInfoService : Service() {
 
         val bcIntent = registerReceiver(mBatteryInfoReceiver, batteryChanged)
         applyBatteryIntent(bcIntent)
+        chargingLimitScope.launch {
+            PrivilegedAccess.accessChanges.drop(1).collect {
+                chargingLimit.refresh()
+                if (mainNotificationForegroundStarted) update(null)
+            }
+        }
+        contentResolver.registerContentObserver(
+            ChargingLimitContentProvider.uri(this), false, chargingLimitObserver
+        )
+        ContextCompat.registerReceiver(
+            this, lineageProviderReceiver, IntentFilter().apply {
+                addAction(Intent.ACTION_PACKAGE_ADDED)
+                addAction(Intent.ACTION_PACKAGE_REMOVED)
+                addAction(Intent.ACTION_PACKAGE_REPLACED)
+                addAction(Intent.ACTION_PACKAGE_CHANGED)
+                addDataScheme("package")
+                addDataSchemeSpecificPart(
+                    DeviceProfileSignals.LINEAGE_PROVIDER_PACKAGE, PatternMatcher.PATTERN_LITERAL
+                )
+            }, ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+        if (supportsLiveUpdates()) {
+            ContextCompat.registerReceiver(
+                this, notificationBlockReceiver, IntentFilter().apply {
+                    addAction(NotificationManager.ACTION_APP_BLOCK_STATE_CHANGED)
+                    addAction(NotificationManager.ACTION_NOTIFICATION_CHANNEL_BLOCK_STATE_CHANGED)
+                }, ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+        }
     }
 
     override fun onTimeout(startId: Int, fgsType: Int) {
@@ -494,23 +576,35 @@ class BatteryInfoService : Service() {
     }
 
     override fun onDestroy() {
-        PrivilegedAccess.setReadyListener(null)
+        chargingLimitScope.cancel()
+        contentResolver.unregisterContentObserver(chargingLimitObserver)
         stopAcquisition()
         pendingBatteryUpdates.clear()
-        historyMaintenance.shutdown()
-        voltageResolver?.shutdown()
-        voltageResolver = null
-        if (alarms != null) alarms!!.close()
+        // Accepted history writes finish before closing their database, even if this service stops.
+        monitoringPersistence.execute {
+            try {
+                logDb?.close()
+            } finally {
+                historyMaintenance.shutdown()
+            }
+        }
         try {
             unregisterReceiver(mBatteryInfoReceiver)
+        } catch (_: IllegalArgumentException) {
+        }
+        try {
+            unregisterReceiver(notificationBlockReceiver)
+        } catch (_: IllegalArgumentException) {
+        }
+        try {
+            unregisterReceiver(lineageProviderReceiver)
         } catch (_: IllegalArgumentException) {
         }
         mHandler.removeCallbacks(runRenotify)
         mHandler.removeCallbacks(runChipSwitch)
         mHandler.removeCallbacks(runPredictorUpdate)
         if (mNotificationManager != null) mNotificationManager!!.cancelAll()
-        if (logDb != null) logDb!!.close()
-        if (cwbg != null) {
+        if (currentInfoPendingIntent != null && widgetIds.isNotEmpty()) {
             if (BackgroundServiceWatchdog.isServiceDesired(this)) updateWidgets(null)
             else LegacyWidgetRenderer.renderStopped(this, widgetIds.toIntArray())
         }
@@ -530,7 +624,8 @@ class BatteryInfoService : Service() {
         PrivilegedAccess.setEnabled(false)
         mHandler.removeCallbacks(currentTick)
         currentAcquisition.close()
-        currentWorker.shutdownNow()
+        currentWorker.execute { alarms?.close() }
+        currentWorker.shutdown()
         clientMessengers?.keys?.toList()?.forEach(::removeClient)
     }
 
@@ -550,8 +645,8 @@ class BatteryInfoService : Service() {
             stopSelf(startId)
             return START_NOT_STICKY
         }
-        if (diagnosticsReceiver != null && !BackgroundServiceWatchdog.isServiceDesired(this)) {
-            diagnosticsReceiver.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
+        if (!BackgroundServiceWatchdog.isServiceDesired(this)) {
+            diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
             stopSelf(startId)
             return START_NOT_STICKY
         }
@@ -566,8 +661,8 @@ class BatteryInfoService : Service() {
         }
         configureBatteryCurrent()
         configureChipContent()
+        updateChipSwitcher(false)
         update(null)
-        restartChipSwitcher()
         return START_STICKY
     }
 
@@ -767,17 +862,11 @@ class BatteryInfoService : Service() {
                     ) bis.refreshCurrent()
                 }
 
-                RemoteConnection.SERVICE_RELOAD_SETTINGS -> bis.reloadSettings(
-                    false, incoming.data
-                )
-
-                RemoteConnection.SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS -> bis.reloadSettings(
-                    true, incoming.data
-                )
+                RemoteConnection.SERVICE_RELOAD_SETTINGS -> bis.reloadSettings(incoming.data)
 
                 RemoteConnection.SERVICE_RELOAD_DEVICE_DATA -> {
                     bis.reloadPredictor(incoming.data.getBundle(EXTRA_PREDICTOR_SNAPSHOT))
-                    bis.reloadSettings(false, incoming.data)
+                    bis.reloadSettings(incoming.data)
                 }
 
                 else -> super.handleMessage(incoming)
@@ -796,7 +885,6 @@ class BatteryInfoService : Service() {
             const val SERVICE_REGISTER_CLIENT: Int = 1
             const val SERVICE_UNREGISTER_CLIENT: Int = 2
             const val SERVICE_RELOAD_SETTINGS: Int = 3
-            const val SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS: Int = 4
             const val SERVICE_RELOAD_DEVICE_DATA: Int = 5
             const val SERVICE_SET_CURRENT_DEMAND: Int = 6
             const val SERVICE_REFRESH_CURRENT: Int = 7
@@ -833,7 +921,7 @@ class BatteryInfoService : Service() {
         spService = getSharedPreferences(SettingsContract.SP_SERVICE_FILE, MODE_PRIVATE)
     }
 
-    private fun reloadSettings(cancelFirst: Boolean, settingsSnapshot: Bundle?) {
+    private fun reloadSettings(settingsSnapshot: Bundle?) {
         thresholdAlarmEvaluator.reset()
         loadSettingsFiles()
         settingsSnapshot?.let(::applySettingsSnapshot)
@@ -842,7 +930,7 @@ class BatteryInfoService : Service() {
 
         DisplayStrings.setResources(res)
 
-        applyNewSettings(cancelFirst)
+        applyNewSettings()
     }
 
     private fun reloadPredictor(snapshot: Bundle?) {
@@ -884,6 +972,7 @@ class BatteryInfoService : Service() {
         }
         val multiplier = settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
         BatteryCurrent.setMultiplier(multiplier?.toIntOrNull() ?: 1)
+        chargingLimit.refresh()
     }
 
     private fun configureChipContent() {
@@ -897,27 +986,20 @@ class BatteryInfoService : Service() {
         )
     }
 
-    private fun applyNewSettings(cancelFirst: Boolean) {
-        if (cancelFirst) {
-            stopForeground(STOP_FOREGROUND_REMOVE)
-            mainNotificationForegroundStarted = false
-            if (!startForegroundImmediately()) {
-                stopSelf()
-                return
-            }
-        }
-
+    private fun applyNewSettings() {
         chipContentIndex = 0
         setUpChannels()
         registerReceiver(mBatteryInfoReceiver, batteryChanged)
+        updateChipSwitcher(false)
         update(null)
-
-        restartChipSwitcher()
     }
 
-    private fun restartChipSwitcher() {
-        mHandler.removeCallbacks(runChipSwitch)
-        if (shouldRunChipSwitcher()) {
+    private fun updateChipSwitcher(chipActive: Boolean) {
+        if (!chipActive || selectedChipContent().size < 2) {
+            mHandler.removeCallbacks(runChipSwitch)
+            chipSwitchScheduled = false
+        } else if (!chipSwitchScheduled) {
+            chipSwitchScheduled = true
             mHandler.postDelayed(runChipSwitch, chipSwitchingIntervalMillis())
         }
     }
@@ -941,7 +1023,7 @@ class BatteryInfoService : Service() {
     }
 
     private fun batteryFields(
-        intent: Intent?, acquiredAt: BatteryMeasurementTime = BatteryMeasurementTime.now()
+        intent: Intent?, acquiredAt: BatteryMeasurementTime, includeSysfs: Boolean
     ): Triple<Map<String, Int>, String?, Map<String, BatteryMeasurementTime>> {
         val fields = BATTERY_READING_FIELDS.filter { intent?.hasExtra(it) == true }
             .associateWith { intent!!.getIntExtra(it, Int.MIN_VALUE) }.toMutableMap()
@@ -950,7 +1032,7 @@ class BatteryInfoService : Service() {
         }
         val times = fields.keys.associateWith { acquiredAt }.toMutableMap()
         val voltageReadAt = BatteryMeasurementTime.now()
-        voltageResolver?.resolve(fields[BatteryInfo.EXTRA_VOLTAGE] ?: 0)?.let {
+        if (includeSysfs) voltageResolver.resolve(fields[BatteryInfo.EXTRA_VOLTAGE] ?: 0)?.let {
             fields[BatteryInfo.EXTRA_VOLTAGE] = it.millivolts
             voltageSource = it.sourceDetail
             times[BatteryInfo.EXTRA_VOLTAGE] =
@@ -961,7 +1043,9 @@ class BatteryInfoService : Service() {
 
     private fun applyBatteryIntent(intent: Intent?) {
         if (intent != null) {
-            val (fields, voltageSource, times) = batteryFields(intent)
+            val (fields, voltageSource, times) = batteryFields(
+                intent, BatteryMeasurementTime.now(), includeSysfs = false
+            )
             applyBatteryFields(fields, null, voltageSource, times)
         }
     }
@@ -1011,16 +1095,56 @@ class BatteryInfoService : Service() {
     }
 
     private fun processNextBatteryUpdate() {
-        if (resolvingBatteryUpdate || pendingBatteryUpdates.isEmpty()) return
+        if (destroyed || resolvingBatteryUpdate || pendingBatteryUpdates.isEmpty()) return
         resolvingBatteryUpdate = true
-        val observedAt = System.currentTimeMillis()
-        val observedElapsed = SystemClock.elapsedRealtime()
         val pending = pendingBatteryUpdates.removeFirst()
-        val (fields, voltageSource, fieldTimes) = batteryFields(pending.intent, pending.acquiredAt)
-        val remainingChargeTime = BatteryMeasurementTime.now()
-        val remainingCharge = remainingChargeReader.readMicroAmpHours()
-        val times =
-            fieldTimes + if (remainingCharge != null) mapOf("charge_counter" to remainingChargeTime) else emptyMap()
+        currentWorker.execute {
+            if (destroyed) return@execute
+            try {
+                val (fields, voltageSource, fieldTimes) = batteryFields(
+                    pending.intent, pending.acquiredAt, includeSysfs = true
+                )
+                val remainingChargeTime = BatteryMeasurementTime.now()
+                val remainingCharge = remainingChargeReader.readMicroAmpHours()
+                val times = if (remainingCharge != null) {
+                    fieldTimes + ("charge_counter" to remainingChargeTime)
+                } else fieldTimes
+                val alarmRules = try {
+                    val database = alarms ?: AlarmDatabase(applicationContext).also { alarms = it }
+                    database.getAlarmRules()
+                } catch (error: Exception) {
+                    Log.e(LOG_TAG, "Could not read alarm rules", error)
+                    emptyList()
+                }
+                mHandler.post {
+                    if (destroyed) pending.diagnosticsReceiver?.send(
+                        DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY
+                    )
+                    else completeBatteryUpdate(
+                        pending, fields, voltageSource, times, remainingCharge, alarmRules
+                    )
+                }
+            } catch (error: Exception) {
+                Log.e(LOG_TAG, "Could not acquire battery readings", error)
+                mHandler.post {
+                    pending.diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
+                    resolvingBatteryUpdate = false
+                    if (!destroyed) processNextBatteryUpdate()
+                }
+            }
+        }
+    }
+
+    private fun completeBatteryUpdate(
+        pending: PendingBatteryUpdate,
+        fields: Map<String, Int>,
+        voltageSource: String?,
+        times: Map<String, BatteryMeasurementTime>,
+        remainingCharge: Long?,
+        alarmRules: List<AlarmRule>
+    ) {
+        val observedAt = pending.acquiredAt.wallMillis
+        val observedElapsed = pending.acquiredAt.elapsedMillis ?: SystemClock.elapsedRealtime()
         currentAcquisition.read(wantsAverageCurrent()) { direct ->
             if (destroyed) {
                 pending.diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
@@ -1059,7 +1183,8 @@ class BatteryInfoService : Service() {
                             observedAt,
                             observedElapsed,
                             voltageSource,
-                            times
+                            times,
+                            alarmRules
                         )
                         pending.diagnosticsReceiver?.send(
                             DIAGNOSTICS_RESULT_OK, Bundle().apply {
@@ -1097,7 +1222,8 @@ class BatteryInfoService : Service() {
         observedAt: Long,
         observedElapsed: Long,
         voltageSource: String?,
-        times: Map<String, BatteryMeasurementTime>
+        times: Map<String, BatteryMeasurementTime>,
+        alarmRules: List<AlarmRule>
     ) {
         currentMicroAmps = rawCurrent ?: fallback?.currentNowUa
         now = observedAt
@@ -1124,7 +1250,7 @@ class BatteryInfoService : Service() {
                 SettingsContract.KEY_PREDICTION_TYPE, DisplayStrings.defaultPredictionType
             )!!
         )
-        val resolvedTargets = predictor!!.update(info!!)
+        val resolvedTargets = predictor!!.update(info!!, chargingLimit.refresh())
         val targetAlarmResult = targetAlarmEvaluator.evaluate(
             TargetAlarmUpdate(
                 percent = info!!.percent,
@@ -1136,12 +1262,6 @@ class BatteryInfoService : Service() {
         info!!.prediction.updateRelativeTime()
         info!!.fullRangePrediction.updateRelativeTime()
 
-        val alarmRules = try {
-            alarms!!.getAlarmRules()
-        } catch (error: Exception) {
-            Log.e(LOG_TAG, "Could not read alarm rules", error)
-            emptyList()
-        }
         val thresholdAlarms = thresholdAlarmEvaluator.evaluate(
             info!!.percent, info!!.temperature, alarmRules
         )
@@ -1149,13 +1269,10 @@ class BatteryInfoService : Service() {
         if (statusHasChanged()) handleUpdateWithChangedStatus()
         else handleUpdateWithSameStatus()
 
-        prepareNotification()
         startForegroundWithRetry()
 
         dismissRecoveredLowBatteryAlarm()
-        if (alarms!!.anyActiveAlarms()) handleAlarms(
-            targetAlarmResult, resolvedTargets, thresholdAlarms
-        )
+        handleAlarms(targetAlarmResult, resolvedTargets, thresholdAlarms, alarmRules)
 
         updateWidgets(info)
         val prediction = info!!.prediction
@@ -1188,13 +1305,13 @@ class BatteryInfoService : Service() {
             ) removeClient(messenger)
         }
 
-        BackgroundServiceWatchdog.recordHeartbeat(this)
-        BackgroundServiceWatchdog.schedule(this)
+        recordServiceHeartbeat()
         mHandler.removeCallbacks(runPredictorUpdate)
         if (pendingBatteryUpdates.isEmpty()) {
             val nextUpdateDelay =
                 if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
-                    historySampler.nextUpdateDelay(SystemClock.elapsedRealtime(), observedElapsed)
+                    historySampler?.nextUpdateDelay(SystemClock.elapsedRealtime(), observedElapsed)
+                        ?: HISTORY_SAMPLE_INTERVAL_MS
                 } else HISTORY_SAMPLE_INTERVAL_MS
             mHandler.postDelayed(runPredictorUpdate, nextUpdateDelay)
         }
@@ -1230,7 +1347,8 @@ class BatteryInfoService : Service() {
     }
 
     private fun startForegroundWithRetry() {
-        var mainNotification = prepareNotification()
+        var requestLiveUpdate = shouldRequestLiveUpdateChip()
+        var mainNotification = prepareNotification(requestLiveUpdate)
 
         try {
             if (mainNotificationForegroundStarted) {
@@ -1242,7 +1360,8 @@ class BatteryInfoService : Service() {
         } catch (_: RuntimeException) {
             try {
                 setUpChannels()
-                mainNotification = prepareNotification()
+                requestLiveUpdate = shouldRequestLiveUpdateChip()
+                mainNotification = prepareNotification(requestLiveUpdate)
 
                 if (mainNotificationForegroundStarted) {
                     mNotificationManager!!.notify(NOTIFICATION_PRIMARY, mainNotification)
@@ -1255,7 +1374,8 @@ class BatteryInfoService : Service() {
             }
         }
 
-        updateCompanionMainNotification()
+        updateCompanionMainNotification(requestLiveUpdate)
+        updateChipSwitcher(requestLiveUpdate && mainNotificationForegroundStarted)
     }
 
     private fun startForegroundWithNotification(notification: Notification) {
@@ -1269,15 +1389,8 @@ class BatteryInfoService : Service() {
     }
 
     private fun updateWidgets(info: BatteryInfo?) {
-        if (info == null) {
-            cwbg!!.setLevel(0)
-        } else {
-            bl!!.setColor(DisplayStrings.accentColor)
-            cwbg!!.setColor(-0x865c01)
-
-            bl!!.setLevel(info.percent)
-            cwbg!!.setLevel(info.percent)
-        }
+        var circleBitmap: Bitmap? = null
+        var batteryBitmap: Bitmap? = null
 
         for (widgetId in widgetIds) {
             val rv: RemoteViews?
@@ -1297,7 +1410,11 @@ class BatteryInfoService : Service() {
                 if (info == null) rv.setImageViewResource(
                     R.id.circle_widget_image_view, R.drawable.empty
                 )
-                else rv.setImageViewBitmap(R.id.circle_widget_image_view, cwbg!!.bitmap)
+                else {
+                    val bitmap = circleBitmap ?: circleBackground.draw(info.percent, -0x865c01)
+                        .also { circleBitmap = it }
+                    rv.setImageViewBitmap(R.id.circle_widget_image_view, bitmap)
+                }
             } else {
                 rv = RemoteViews(packageName, R.layout.full_app_widget)
 
@@ -1307,7 +1424,10 @@ class BatteryInfoService : Service() {
                     rv.setTextViewText(R.id.time_remaining, "")
                     rv.setTextViewText(R.id.until_what, "")
                 } else {
-                    rv.setImageViewBitmap(R.id.battery_level_view, bl!!.getBitmap())
+                    val bitmap =
+                        batteryBitmap ?: batteryLevel.draw(info.percent, DisplayStrings.accentColor)
+                            .also { batteryBitmap = it }
+                    rv.setImageViewBitmap(R.id.battery_level_view, bitmap)
 
                     if (info.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
                         rv.setTextViewText(
@@ -1349,15 +1469,16 @@ class BatteryInfoService : Service() {
         }
     }
 
-    private fun prepareNotification(): Notification {
+    private fun prepareNotification(requestLiveUpdateChip: Boolean): Notification {
         mainNotificationTopLine = lineFor(SettingsContract.KEY_TOP_LINE)
         mainNotificationBottomLine = lineFor(SettingsContract.KEY_BOTTOM_LINE)
 
-        val requestLiveUpdateChip = shouldRequestLiveUpdateChip()
         val channelId: String = if (requestLiveUpdateChip) CHAN_ID_LIVE_UPDATE else CHAN_ID_MAIN
         val nb = NotificationCompat.Builder(this, channelId)
 
-        nb.setSmallIcon(iconFor()).setOngoing(true).setWhen(0).setShowWhen(false)
+        val icon =
+            if (requestLiveUpdateChip) R.drawable.ic_notification_brand else iconForLegacyMainNotification()
+        nb.setSmallIcon(icon).setOngoing(true).setWhen(0).setShowWhen(false)
             .setContentIntent(currentInfoPendingIntent)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
@@ -1415,8 +1536,8 @@ class BatteryInfoService : Service() {
         return nb.build()
     }
 
-    private fun updateCompanionMainNotification() {
-        if (!shouldShowCompanionMainNotification()) {
+    private fun updateCompanionMainNotification(requestLiveUpdate: Boolean) {
+        if (!requestLiveUpdate || !shouldKeepMainNotificationWithLiveUpdate()) {
             mNotificationManager!!.cancel(NOTIFICATION_MAIN_COMPANION)
             return
         }
@@ -1516,9 +1637,16 @@ class BatteryInfoService : Service() {
         get() = info!!.status == BatteryInfo.STATUS_CHARGING || info!!.status == BatteryInfo.STATUS_FULLY_CHARGED
 
     private fun shouldRequestLiveUpdateChip(): Boolean {
+        if (!supportsLiveUpdates()) return false
+        val manager = mNotificationManager ?: return false
         return shouldRequestLiveUpdate(
-            supported = supportsLiveUpdates(),
-            enabledInSystem = isLiveUpdateEnabledInSystem(this),
+            supported = true,
+            enabledInSystem = manager.areNotificationsEnabled() && (manager.getNotificationChannel(
+                CHAN_ID_LIVE_UPDATE
+            )?.importance
+                ?: NotificationManager.IMPORTANCE_NONE) != NotificationManager.IMPORTANCE_NONE && isLiveUpdateEnabledInSystem(
+                this
+            ),
             mode = liveUpdateMode(),
             chargingOrFull = isChargingOrFull
         )
@@ -1528,16 +1656,6 @@ class BatteryInfoService : Service() {
         return settings.getBoolean(
             SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION, false
         )
-    }
-
-    private fun shouldShowCompanionMainNotification(): Boolean {
-        return shouldRequestLiveUpdateChip() && shouldKeepMainNotificationWithLiveUpdate()
-    }
-
-    private fun shouldRunChipSwitcher(): Boolean {
-        if (!supportsLiveUpdates()) return false
-        if (LIVE_UPDATE_MODE_NEVER == liveUpdateMode()) return false
-        return selectedChipContent().size > 1
     }
 
     private fun shouldShowChipChargingIndicator(): Boolean {
@@ -1687,14 +1805,6 @@ class BatteryInfoService : Service() {
         settings.getString(SettingsContract.KEY_LONG_DURATION_FORMAT, null)
     )
 
-    private fun iconFor(): Int {
-        if (shouldRequestLiveUpdateChip()) {
-            return R.drawable.ic_notification_brand
-        }
-
-        return iconForLegacyMainNotification()
-    }
-
     @SuppressLint("DiscouragedApi")
     private fun iconForLegacyMainNotification(): Int {
         val content = contentPreference()
@@ -1774,36 +1884,89 @@ class BatteryInfoService : Service() {
     }
 
 
+    private fun recordServiceHeartbeat() {
+        val elapsed = SystemClock.elapsedRealtime()
+        val context = applicationContext
+        currentWorker.execute { MonitoringHealthStore.record(context, serviceElapsed = elapsed) }
+    }
+
     private fun recordHistory(fields: Map<String, Int>, elapsed: Long) {
-        val result = logDb!!.logObservation(
-            batteryHistoryObservation(
-                fields, now, currentMicroAmps, info!!.remainingChargeUah, info!!.percent
-            ),
-            elapsed,
-            historySampler,
-            settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true),
-            newStatus = statusHasChanged() && info!!.lastStatusCtm <= now
+        val logging = settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
+        if (!logging) return
+        val observation = batteryHistoryObservation(
+            fields, now, currentMicroAmps, info!!.remainingChargeUah, info!!.percent
         )
-        result?.let(::recordLogResult)
-        if (result != LogResult.Inserted) return
-        spsEditor!!.putLong("history_sample_elapsed", elapsed)
-        spsEditor!!.putInt("history_sample_boot", historyBootCount)
+        val newStatus = statusHasChanged() && info!!.lastStatusCtm <= now
+        val maxAge = settings.getString(
+            SettingsContract.KEY_MAX_LOG_AGE, DisplayStrings.defaultMaxLogAge
+        )?.toIntOrNull() ?: -1
+        val context = applicationContext
+        monitoringPersistence.execute {
+            var databaseHealthy = false
+            try {
+                val sampler = historySampler ?: BatteryHistorySampler(
+                    BatteryHistorySampler.restoreElapsed(
+                        spService.getLong("history_sample_elapsed", -1),
+                        spService.getInt("history_sample_boot", -1),
+                        historyBootCount,
+                        SystemClock.elapsedRealtime()
+                    )
+                ).also { historySampler = it }
+                val database = logDb ?: LogDatabase(context).also { logDb = it }
+                when (val result =
+                    database.logObservation(observation, elapsed, sampler, true, newStatus)) {
+                    LogResult.Inserted -> {
+                        databaseHealthy = true
+                        spService.edit {
+                            putLong("history_sample_elapsed", elapsed)
+                            putInt("history_sample_boot", historyBootCount)
+                        }
+                        scheduleHistoryMaintenance(context, elapsed, maxAge)
+                    }
+
+                    LogResult.Duplicate -> databaseHealthy = true
+                    is LogResult.Failed -> Log.e(
+                        LOG_TAG,
+                        "Battery status logging failed after database recovery attempt",
+                        result.error
+                    )
+
+                    null -> Unit
+                }
+            } catch (error: Exception) {
+                Log.e(LOG_TAG, "Battery history persistence failed", error)
+            } finally {
+                if (databaseHealthy) {
+                    MonitoringHealthStore.record(
+                        context, databaseElapsed = SystemClock.elapsedRealtime()
+                    )
+                }
+            }
+        }
+    }
+
+    private fun scheduleHistoryMaintenance(context: Context, elapsed: Long, maxAge: Int) {
+        if (maxAge < 0) return
         val lastMaintenance = lastHistoryMaintenance
         if (lastMaintenance != null && elapsed - lastMaintenance in 0..<HISTORY_MAINTENANCE_INTERVAL_MS) return
         lastHistoryMaintenance = elapsed
-        val maxAge =
-            settings.getString(SettingsContract.KEY_MAX_LOG_AGE, DisplayStrings.defaultMaxLogAge)
-                ?.toIntOrNull() ?: return
-        if (maxAge < 0) return
         historyMaintenance.execute {
-            val database = LogDatabase(applicationContext)
+            val database = LogDatabase(context)
             try {
                 if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) maintainHistory(
                     maxAge,
                     database::hasLogsOlderThan,
-                    { AutoLogExporter.exportBeforeAutomaticLogPruning(applicationContext) },
-                    database::prune
-                )
+                    { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
+                    { cutoff ->
+                        monitoringPersistence.execute {
+                            val pruning = LogDatabase(context)
+                            try {
+                                pruning.prune(cutoff)
+                            } finally {
+                                pruning.close()
+                            }
+                        }
+                    })
             } catch (error: Exception) {
                 Log.e(LOG_TAG, "History maintenance failed; retaining history", error)
             } finally {
@@ -1812,74 +1975,41 @@ class BatteryInfoService : Service() {
         }
     }
 
-    private fun recordLogResult(result: LogResult) {
-        when (result) {
-            LogResult.Inserted, LogResult.Duplicate -> BackgroundServiceWatchdog.recordSuccessfulLogCheck(
-                this
-            )
-
-            is LogResult.Failed -> Log.e(
-                LOG_TAG,
-                "Battery status logging failed after database recovery attempt",
-                result.error
-            )
-        }
-    }
-
     private fun handleAlarms(
         targetAlarmResult: TargetAlarmResult,
         resolvedTargets: ResolvedPredictionTargets,
-        thresholdAlarms: List<AlarmRule>
+        thresholdAlarms: List<AlarmRule>,
+        alarmRules: List<AlarmRule>
     ) {
-        var c: Cursor?
-        var nb: Notification.Builder?
+        fun active(type: String) = alarmRules.any { it.enabled && it.type == type }
 
-        if (info!!.status == BatteryInfo.STATUS_FULLY_CHARGED && info!!.status != info!!.lastStatus) {
-            c = alarms!!.activeAlarmFull()
-            if (c != null) {
-                nb = alarmNotificationBuilder()
-                nb.setContentTitle(DisplayStrings.alarmFullyCharged).setChannelId(CHAN_ID_A_CHARGED)
-
-                nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-                notifyAlarm(nb.build())
-                c.close()
-            }
+        if (info!!.status == BatteryInfo.STATUS_FULLY_CHARGED && info!!.status != info!!.lastStatus && active(
+                CHAN_ID_A_CHARGED
+            )
+        ) {
+            val notification =
+                alarmNotificationBuilder().setContentTitle(DisplayStrings.alarmFullyCharged)
+                    .setChannelId(CHAN_ID_A_CHARGED).setVisibility(Notification.VISIBILITY_PUBLIC)
+            notifyAlarm(notification.build())
         }
 
-        if (targetAlarmResult.chargingLimitReached) {
-            c = alarms!!.activeAlarmChargingLimitMet()
-            if (c != null) {
-                nb = alarmNotificationBuilder()
-                nb.setContentTitle(
-                    getString(
-                        R.string.alarm_charging_target_reached, resolvedTargets.charging.percent
-                    )
-                ).setChannelId(CHAN_ID_A_CHARGING_LIMIT)
-
-                nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-                notifyAlarm(nb.build())
-                c.close()
-            }
+        if (targetAlarmResult.chargingLimitReached && active(CHAN_ID_A_CHARGING_LIMIT)) {
+            val notification = alarmNotificationBuilder().setContentTitle(
+                getString(
+                    R.string.alarm_charging_target_reached, resolvedTargets.charging.percent
+                )
+            ).setChannelId(CHAN_ID_A_CHARGING_LIMIT).setVisibility(Notification.VISIBILITY_PUBLIC)
+            notifyAlarm(notification.build())
         }
 
-        if (targetAlarmResult.dischargingLimitReached) {
-            c = alarms!!.activeAlarmDischargingLimitMet()
-            if (c != null) {
-                nb = alarmNotificationBuilder()
-                nb.setContentTitle(
-                    getString(
-                        R.string.alarm_discharging_target_reached,
-                        resolvedTargets.discharging.percent
-                    )
-                ).setChannelId(CHAN_ID_A_DISCHARGING_LIMIT)
-
-                nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-                notifyAlarm(nb.build())
-                c.close()
-            }
+        if (targetAlarmResult.dischargingLimitReached && active(CHAN_ID_A_DISCHARGING_LIMIT)) {
+            val notification = alarmNotificationBuilder().setContentTitle(
+                getString(
+                    R.string.alarm_discharging_target_reached, resolvedTargets.discharging.percent
+                )
+            ).setChannelId(CHAN_ID_A_DISCHARGING_LIMIT)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+            notifyAlarm(notification.build())
         }
 
         for (type in listOf(CHAN_ID_A_CDROP, CHAN_ID_A_CRISE, CHAN_ID_A_TRISE, CHAN_ID_A_TDROP)) {
@@ -1899,7 +2029,7 @@ class BatteryInfoService : Service() {
                     )
                 }
             }
-            nb = alarmNotificationBuilder().setContentTitle(title).setChannelId(type)
+            val nb = alarmNotificationBuilder().setContentTitle(title).setChannelId(type)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
             if (type == CHAN_ID_A_CDROP) nb.addExtras(Bundle().apply {
                 putInt(EXTRA_LOW_BATTERY_THRESHOLD, threshold)
@@ -1909,20 +2039,13 @@ class BatteryInfoService : Service() {
 
         if (info!!.health > BatteryInfo.HEALTH_GOOD && info!!.health != spService.getInt(
                 KEY_PREVIOUS_HEALTH, BatteryInfo.HEALTH_GOOD
-            )
+            ) && active(CHAN_ID_A_HFAIL)
         ) {
-            c = alarms!!.activeAlarmFailure()
-            if (c != null) {
-                spsEditor!!.putInt(KEY_PREVIOUS_HEALTH, info!!.health)
-                nb = alarmNotificationBuilder()
-                nb.setContentTitle(DisplayStrings.alarmHealthFailure + DisplayStrings.healths[info!!.health])
-                    .setChannelId(CHAN_ID_A_HFAIL)
-
-                nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-                notifyAlarm(nb.build())
-                c.close()
-            }
+            spsEditor!!.putInt(KEY_PREVIOUS_HEALTH, info!!.health)
+            val notification =
+                alarmNotificationBuilder().setContentTitle(DisplayStrings.alarmHealthFailure + DisplayStrings.healths[info!!.health])
+                    .setChannelId(CHAN_ID_A_HFAIL).setVisibility(Notification.VISIBILITY_PUBLIC)
+            notifyAlarm(notification.build())
         }
     }
 

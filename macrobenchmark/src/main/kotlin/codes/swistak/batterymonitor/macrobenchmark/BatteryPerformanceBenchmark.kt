@@ -364,7 +364,7 @@ class BatteryPerformanceBenchmark {
         awaitText("diag_action_refresh")
         goBack()
     }
-    
+
     @Test
     fun currentIdleUpdates() = frames {
         SystemClock.sleep(IDLE_WINDOW_MILLIS)
@@ -450,13 +450,15 @@ class BatteryPerformanceBenchmark {
             "Raw chart panning requires input injection; accessibility controls are benchmarked separately",
             accessibilityActions
         )
-        frames(section = "history") { fullscreenChartInteractions(pan = true) }
+        fullscreenChartFrames(pan = true)
     }
 
     @Test
-    fun fullscreenChartControlsAndSettings() = frames(section = "history") {
-        fullscreenChartInteractions(pan = false)
-    }
+    fun fullscreenChartControlsAndSettings() = fullscreenChartFrames(pan = false)
+
+    private fun fullscreenChartFrames(pan: Boolean) = frames(
+        section = "history",
+        beforeLaunch = { fixture("HISTORY_WATCH") }) { fullscreenChartInteractions(pan) }
 
     private fun fullscreenChartInteractions(pan: Boolean) {
         clickDescription("history_open_fullscreen")
@@ -470,8 +472,14 @@ class BatteryPerformanceBenchmark {
         }
         chartAction("history_chart_settings")
         clickText("history_chart_points")
+        clickText("okay")
+        awaitChartSettingsClosed()
+        assertChartStyle("POINTS")
         chartAction("history_chart_settings")
         clickText("history_chart_connected")
+        clickText("okay")
+        awaitChartSettingsClosed()
+        assertChartStyle("CONNECTED")
         chartAction("history_chart_reset")
         clickDescription("nav_up")
         awaitText("history_charts")
@@ -482,7 +490,7 @@ class BatteryPerformanceBenchmark {
         clickText("other_settings")
         awaitText("settings_color_palette")
         clickDescription("nav_up")
-        clickText("settings_notification")
+        clickText("notification_settings")
         awaitText("pref_cat_channel_settings")
         scroll(Direction.DOWN)
         scroll(Direction.UP)
@@ -499,7 +507,8 @@ class BatteryPerformanceBenchmark {
         ) ?: error("Alarm draft missing")
         setText(input, "47")
         dismissKeyboard()
-        clickText("cancel")
+        device.waitForIdle(IDLE_TIMEOUT)
+        goBack()
         awaitText("alarms_discard_confirmation")
         clickText("cancel")
         val restoredInput = device.wait(
@@ -507,8 +516,17 @@ class BatteryPerformanceBenchmark {
             UI_TIMEOUT
         ) ?: error("Alarm draft did not return after canceling discard")
         assertEquals("47", restoredInput.text)
-        clickText("cancel")
+        dismissKeyboard()
+        device.waitForIdle(IDLE_TIMEOUT)
+        goBack()
+        awaitText("alarms_discard_confirmation")
         clickText("alarms_discard")
+        check(
+            device.wait(
+                Until.gone(By.pkg(TARGET).clazz("android.widget.EditText")), UI_TIMEOUT
+            )
+        ) { "Alarm editor stayed open after discarding its draft" }
+        awaitText("alarms_add_threshold")
         selectSection("current")
         goHome()
         startActivityAndWait(sectionIntent("current"))
@@ -562,13 +580,19 @@ class BatteryPerformanceBenchmark {
         }
     }
 
-    private fun frames(section: String = "current", interaction: () -> Unit) {
+    private fun frames(
+        section: String = "current", beforeLaunch: () -> Unit = {}, interaction: () -> Unit
+    ) {
+        fun prepare() {
+            resetFixture()
+            beforeLaunch()
+            launch(section)
+        }
         if (legacyAtrace) {
             withLauncher(legacy::launch) {
-                legacy.measure(testName.methodName, iterations, setup = {
-                    resetFixture()
-                    launch(section)
-                }, action = interaction)
+                legacy.measure(
+                    testName.methodName, iterations, setup = ::prepare, action = interaction
+                )
             }
         } else {
             benchmark.measureRepeated(
@@ -578,10 +602,7 @@ class BatteryPerformanceBenchmark {
                 iterations = iterations,
                 setupBlock = {
                     val scope = this
-                    withLauncher({ scope.startActivityAndWait(it) }) {
-                        resetFixture()
-                        launch(section)
-                    }
+                    withLauncher({ scope.startActivityAndWait(it) }, ::prepare)
                 },
                 measureBlock = {
                     val scope = this
@@ -708,7 +729,28 @@ class BatteryPerformanceBenchmark {
     private fun chooseHistoryRange(label: String) {
         clickText("history_change_range")
         clickText(label, last = true)
-        awaitText("history_change_range")
+        clickText("okay")
+        check(device.wait(Until.gone(By.pkg(TARGET).text(text("history_range"))), UI_TIMEOUT)) {
+            "History range dialog stayed open after confirming $label"
+        }
+        awaitText(label)
+    }
+
+    private fun assertChartStyle(expected: String) {
+        val snapshot = JSONObject(checkNotNull(fixture("HISTORY_STATE").getString("reportJson")))
+        assertEquals(
+            "Fullscreen chart did not apply the confirmed display style",
+            expected,
+            snapshot.getJSONObject("fullscreen").getString("style")
+        )
+    }
+
+    private fun awaitChartSettingsClosed() {
+        check(
+            device.wait(
+                Until.gone(By.pkg(TARGET).text(text("history_chart_display_style"))), UI_TIMEOUT
+            )
+        ) { "Fullscreen chart settings dialog stayed open" }
     }
 
     private fun chartAction(label: String) {
@@ -884,7 +926,7 @@ class BatteryPerformanceBenchmark {
             "text",
             ArrayList(
                 device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
-                    .filter { it.isNotBlank() }.distinct()
+                .filter { it.isNotBlank() }.distinct()
             )
         )
     })

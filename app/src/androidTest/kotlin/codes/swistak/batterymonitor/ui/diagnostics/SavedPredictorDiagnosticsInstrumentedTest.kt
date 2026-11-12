@@ -15,13 +15,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
-import android.view.View
-import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.core.content.pm.PackageInfoCompat
@@ -38,12 +34,15 @@ import codes.swistak.batterymonitor.monitoring.Predictor
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeNodes
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class SavedPredictorDiagnosticsInstrumentedTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
@@ -90,8 +89,9 @@ class SavedPredictorDiagnosticsInstrumentedTest {
                     .putInt(Predictor.KEY_STATE_VERSION, 2).commit()
             )
             scenario = ActivityScenario.launch(
-                Intent(context, BatteryInfoActivity::class.java)
-                    .putExtra(BatteryInfoActivity.EXTRA_SECTION, "diagnostics")
+                Intent(
+                    context, BatteryInfoActivity::class.java
+                ).putExtra(BatteryInfoActivity.EXTRA_SECTION, "diagnostics")
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )
             lateinit var fragment: PersistentFragment
@@ -124,16 +124,10 @@ class SavedPredictorDiagnosticsInstrumentedTest {
         } finally {
             scenario?.close()
             context.stopService(Intent(context, BatteryInfoService::class.java))
+            assertTrue(MonitoringDesiredState.write(context, desiredBefore))
             originals.forEach { (preferences, snapshot) ->
                 assertTrue(SettingsSnapshot.apply(preferences, snapshot))
             }
-            assertTrue(
-                MonitoringDesiredState.write(
-                    context,
-                    desiredBefore,
-                    mirrorPreferences = false
-                )
-            )
             instrumentation.runOnMainSync {
                 originalClip?.let(clipboard::setPrimaryClip) ?: clipboard.clearPrimaryClip()
             }
@@ -157,14 +151,11 @@ class SavedPredictorDiagnosticsInstrumentedTest {
         await("Raw search field was not available") { find { it.isEditable } != null }
         assertTrue(
             find { it.isEditable }?.performAction(
-                AccessibilityNodeInfo.ACTION_SET_TEXT,
-                Bundle().apply {
+                AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
                     putCharSequence(
-                        AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE,
-                        query
+                        AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, query
                     )
-                }
-            ) == true
+                }) == true
         )
         instrumentation.waitForIdleSync()
     }
@@ -172,21 +163,22 @@ class SavedPredictorDiagnosticsInstrumentedTest {
     private fun scrollToAndClick(label: Int) {
         val text = context.getString(label)
         fun button(): SemanticsNode? = semanticsNodes().firstOrNull { node ->
-            node.config.getOrNull(SemanticsProperties.Text)?.any { it.text == text } == true &&
-                    node.config.contains(SemanticsActions.OnClick) &&
-                    !node.config.contains(SemanticsProperties.Disabled)
+            node.config.getOrNull(SemanticsProperties.Text)
+                ?.any { it.text == text } == true && node.config.contains(SemanticsActions.OnClick) && !node.config.contains(
+                SemanticsProperties.Disabled
+            )
         }
 
         fun list(): SemanticsNode? = semanticsNodes().firstOrNull { node ->
-            node.config.contains(SemanticsProperties.VerticalScrollAxisRange) &&
-                    node.config.contains(SemanticsActions.ScrollBy) &&
-                    node.config.getOrNull(SemanticsProperties.IndexForKey)?.invoke("operation") == 0
+            node.config.contains(SemanticsProperties.VerticalScrollAxisRange) && node.config.contains(
+                SemanticsActions.ScrollBy
+            ) && node.config.getOrNull(SemanticsProperties.IndexForKey)?.invoke("operation") == 0
         }
         await("App operation did not finish composing after the tab change") {
             var ready = false
             main {
-                ready = semanticsNodes().none { it.config.contains(SemanticsActions.SetText) } &&
-                        list() != null
+                ready =
+                    semanticsNodes().none { it.config.contains(SemanticsActions.SetText) } && list() != null
             }
             ready
         }
@@ -223,46 +215,22 @@ class SavedPredictorDiagnosticsInstrumentedTest {
         throw AssertionError("Refresh was not reachable after 20 vertical scrolls")
     }
 
-    private fun semanticsNodes(): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
-
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            return if (view is ViewGroup) (0 until view.childCount).flatMap {
-                owners(view.getChildAt(it))
-            } else emptyList()
-        }
-        return owners(activity.window.decorView).flatMap { descendants(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) {
-        var failure: Throwable? = null
-        instrumentation.runOnMainSync {
-            try {
-                action()
-            } catch (error: Throwable) {
-                failure = error
-            }
-        }
-        failure?.let { throw it }
-    }
+    private fun semanticsNodes(): List<SemanticsNode> = composeNodes(activity.window.decorView)
 
     private fun click(label: Int) = clickText(context.getString(label))
 
     private fun clickText(text: String) {
-        await("Action was not available: $text") { find { hasText(it, text) } != null }
-        var node = find { hasText(it, text) }
-        while (node != null && !node.isClickable) node = node.parent
-        assertTrue(node?.performAction(AccessibilityNodeInfo.ACTION_CLICK) == true)
+        await("The accessibility action could not be clicked: $text") {
+            var node = find { hasText(it, text) }
+            while (node != null && !node.isClickable) node = node.parent
+            node?.performAction(AccessibilityNodeInfo.ACTION_CLICK) == true
+        }
         instrumentation.waitForIdleSync()
     }
 
     private fun hasText(node: AccessibilityNodeInfo, text: String): Boolean =
-        node.text?.toString()?.lines()?.contains(text) == true ||
-                node.contentDescription?.toString() == text
+        node.text?.toString()?.lines()
+            ?.contains(text) == true || node.contentDescription?.toString() == text
 
     private fun find(matches: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo? {
         fun search(node: AccessibilityNodeInfo): AccessibilityNodeInfo? {
@@ -275,9 +243,5 @@ class SavedPredictorDiagnosticsInstrumentedTest {
         return instrumentation.uiAutomation.rootInActiveWindow?.let(::search)
     }
 
-    private fun await(message: String, ready: () -> Boolean) {
-        val deadline = SystemClock.elapsedRealtime() + 10_000L
-        while (!ready() && SystemClock.elapsedRealtime() < deadline) Thread.sleep(25)
-        assertTrue(message, ready())
-    }
+    private fun await(message: String, ready: () -> Boolean) = awaitCondition({ message }, ready)
 }

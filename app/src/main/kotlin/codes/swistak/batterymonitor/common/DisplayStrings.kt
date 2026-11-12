@@ -82,28 +82,6 @@ internal object DisplayStrings {
         pluggeds = res.getStringArray(R.array.pluggeds)
     }
 
-    fun nHoursMMinutesLong(n: Int, m: Int): String {
-        return (String.format(
-            res.getQuantityString(R.plurals.n_hours_long, n), n
-        ) + String.format(res.getQuantityString(R.plurals.n_minutes_long, m), m))
-    }
-
-    fun nMinutesLong(n: Int): String {
-        return String.format(res.getQuantityString(R.plurals.n_minutes_long, n), n)
-    }
-
-    fun nHoursMMinutesMedium(n: Int, m: Int): String {
-        return (String.format(
-            res.getQuantityString(R.plurals.n_hours_medium, n), n
-        ) + String.format(res.getQuantityString(R.plurals.n_minutes_medium, m), m))
-    }
-
-    fun nHoursLongMMinutesMedium(n: Int, m: Int): String {
-        return (String.format(
-            res.getQuantityString(R.plurals.n_hours_long, n), n
-        ) + String.format(res.getQuantityString(R.plurals.n_minutes_medium, m), m))
-    }
-
     @JvmOverloads
     fun formatTemp(temperature: Int, convertF: Boolean, includeTenths: Boolean = true): String {
         return formatTemp(temperature, convertF, includeTenths, resourceLocale())
@@ -134,13 +112,6 @@ internal object DisplayStrings {
 
     internal fun formatVoltage(voltage: Int, locale: Locale): String {
         return formatDecimal(voltage / 1000.0, 1, 3, locale) + "\u00A0" + voltSymbol
-    }
-
-    internal fun formatChargeDetailed(microAmpHours: Long, locale: Locale): String {
-        return NumberFormat.getNumberInstance(locale).apply {
-            minimumFractionDigits = 1
-            maximumFractionDigits = 1
-        }.format(microAmpHours / 1000.0)
     }
 
     fun formatChargeCompact(microAmpHours: Long): String {

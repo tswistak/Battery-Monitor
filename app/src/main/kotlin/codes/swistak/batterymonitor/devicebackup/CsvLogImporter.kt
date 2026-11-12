@@ -18,9 +18,9 @@ import android.content.res.Configuration
 import android.net.Uri
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogExport
 import codes.swistak.batterymonitor.logs.LogRecord
 import java.io.BufferedReader
-import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.Reader
@@ -68,12 +68,13 @@ internal object CsvLogImporter {
     )
 
     @Throws(IllegalArgumentException::class, IllegalStateException::class)
-    fun importFromCsv(context: Context, csv: String, logImportMode: LogImportMode): Int {
+    fun importFromReader(context: Context, reader: Reader, logImportMode: LogImportMode): Int {
         val statusCodes = localizedStatusCodes(context)
         val timestampFormats = timestampFormats(context)
         var selectedTimestampFormat: DateFormat? = null
-        val records = parseRecords(
-            csv = csv,
+        var restored = 0
+        val records = decodeRecords(
+            rows = readCsvRows(reader),
             statusCodeFor = { statusCodes[it.trim()] },
             timestampFor = { date, time ->
                 val value = "$date $time"
@@ -81,33 +82,40 @@ internal object CsvLogImporter {
                     ?: timestampFormats.firstNotNullOfOrNull { format ->
                         format.parseFully(value)?.also { selectedTimestampFormat = format }
                     }
-            })
+            }).onEach { restored++ }.iterator()
+        if (!records.hasNext()) return 0
 
         val database = LogDatabase(context)
         try {
             when (logImportMode) {
-                LogImportMode.REPLACE -> database.replaceAllLogs(records)
-                LogImportMode.ADD -> database.addLogs(records)
+                LogImportMode.REPLACE -> database.replaceAllLogs(records.asSequence())
+                LogImportMode.ADD -> database.addLogs(records.asSequence())
             }
         } finally {
             database.close()
         }
-        return records.size
+        return restored
     }
 
-    internal fun parseRecords(
-        csv: String, statusCodeFor: (String) -> Int?, timestampFor: (String, String) -> Long?
-    ): List<LogRecord> {
-        val rows = parseCsv(csv).filterNot { row -> row.all(String::isBlank) }
-        require(rows.size > 1) { "The CSV file contains no log entries" }
-
-        val columnCount = rows.first().size
+    internal fun decodeRecords(
+        rows: Sequence<List<String>>,
+        statusCodeFor: (String) -> Int?,
+        timestampFor: (String, String) -> Long?
+    ): Sequence<LogRecord> {
+        val source = rows.filterNot { row -> row.all(String::isBlank) }.iterator()
+        require(source.hasNext()) { "The CSV file contains no log header" }
+        val header = source.next()
+        val columnCount = header.size
         require(columnCount == LEGACY_COLUMN_COUNT || columnCount == COLUMN_COUNT) {
             "Unsupported CSV columns"
         }
+        // Current empty exports contain a header. Importing one must not clear existing history.
+        require(source.hasNext() || LogExport.hasMeasurementCsvHeader(header)) {
+            "The CSV file contains no log entries"
+        }
         val hasMeasurements = columnCount == COLUMN_COUNT
         val trailingColumnCount = columnCount - 3
-        return rows.drop(1).mapIndexed { index, row ->
+        return source.asSequence().mapIndexed { index, row ->
             require(row.size >= columnCount) { "Invalid CSV row ${index + 2}" }
             val trailingColumnStart = row.size - trailingColumnCount
             val statusLabel = row.subList(2, trailingColumnStart).joinToString(",")
@@ -150,20 +158,14 @@ internal object CsvLogImporter {
     }
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
-            ?: throw IOException("Could not open CSV source")
-        pfd.use {
+    fun <T> withCsvReader(context: Context, uri: Uri, read: (Reader) -> T): T =
+        LogExport.withReadableCsv(context, uri) {
+            val input = context.contentResolver.openInputStream(uri)
+                ?: throw IOException("Could not open CSV source")
             BufferedReader(
-                InputStreamReader(
-                    BackupImportInputStream(FileInputStream(it.fileDescriptor)),
-                    StandardCharsets.UTF_8
-                )
-            ).use { reader ->
-                return reader.readText()
-            }
+                InputStreamReader(BackupImportInputStream(input), StandardCharsets.UTF_8)
+            ).use(read)
         }
-    }
 
     // Historical CSV labels need each bundled locale; releases ship a universal APK.
     @SuppressLint("AppBundleLocaleChanges")
@@ -276,7 +278,10 @@ internal object CsvLogImporter {
             if (!quoted && (character == '\r' || character == '\n')) {
                 if (record.isNotBlank()) yield(parseCsv(record.toString()).single())
                 record.clear()
-            } else record.append(character)
+            } else {
+                require(record.length < 64 * 1024) { "CSV record is too large" }
+                record.append(character)
+            }
         }
         require(!quoted) { "Unterminated quoted CSV field" }
         if (record.isNotBlank()) yield(parseCsv(record.toString()).single())

@@ -9,6 +9,7 @@ package codes.swistak.batterymonitor.ui.current
 
 import androidx.lifecycle.ViewModel
 import codes.swistak.batterymonitor.logs.HistoryChartModel
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.LogsRepository
 import codes.swistak.batterymonitor.monitoring.BatteryCurrentReading
@@ -32,7 +33,7 @@ internal class CurrentStateViewModel : ViewModel() {
                 trendRevision = changes.revision
                 return trend
             }
-            trend = repository.chart(range)
+            trend = repository.chart(range, metrics = listOf(HistoryMetric.LEVEL))
             trendRevision = changes.revision
             activation = false
             if (repository.historyChanges(

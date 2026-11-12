@@ -224,10 +224,15 @@
         </receiver>
 
         <provider
+            android:name=".monitoring.charginglimit.ChargingLimitContentProvider"
+            android:authorities="${applicationId}.charging-limit"
+            android:exported="false" />
+
+        <provider
             android:name=".logs.AutoLogExportProvider"
             android:authorities="${applicationId}.log-export"
             android:exported="false" />
-        
+
         <provider
             android:name=".advancedstats.BatteryMonitorShizukuProvider"
             android:authorities="${applicationId}.shizuku"

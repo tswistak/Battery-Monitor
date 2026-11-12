@@ -46,9 +46,6 @@ internal object SettingsBackupValidation {
             val valid = when (key) {
                 SettingsContract.KEY_CUSTOM_CHARGING_TARGET -> value as Int in 1..100
                 SettingsContract.KEY_DISCHARGING_TARGET -> value as Int in 0..99
-                SettingsContract.KEY_RED_THRESH, SettingsContract.KEY_AMBER_THRESH, SettingsContract.KEY_GREEN_THRESH -> (value as String).toIntOrNull()
-                    ?.let { it in 0..100 } == true
-
                 SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL, SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> (value as String).toIntOrNull()
                     ?.let { it in 1..3600 } == true
 

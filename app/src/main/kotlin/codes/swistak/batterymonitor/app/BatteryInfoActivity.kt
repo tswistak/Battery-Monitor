@@ -303,7 +303,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
                                     LicenseScreen(
                                         componentId = topic.substringAfter(':', "")
-                                            .ifEmpty { null },
+                                        .ifEmpty { null },
                                         onOpenComponent = { openHelp("licenses:$it") })
                                 } else {
                                     HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })
@@ -353,7 +353,6 @@ class BatteryInfoActivity : AppCompatActivity() {
                         if (selected == SectionOwner.HISTORY) sections.SaveableStateProvider("history") {
                             HistoryRoute(
                                 history,
-                                persistent.monitoring.state,
                                 requestedAction = historyAction,
                                 onActionHandled = { historyAction = null },
                                 onOpenFullscreen = { metric, range, label ->

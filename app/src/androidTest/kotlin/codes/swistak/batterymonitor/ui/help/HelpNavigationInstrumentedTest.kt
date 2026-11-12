@@ -13,11 +13,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.core.content.pm.PackageInfoCompat
@@ -35,6 +32,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeNodes
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
+
 
 class HelpNavigationInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -139,46 +140,8 @@ class HelpNavigationInstrumentedTest {
     private fun hidden(node: SemanticsNode): Boolean =
         node.config.contains(SemanticsProperties.HideFromAccessibility) || node.parent?.let(::hidden) == true
 
-    private fun nodes(): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
+    private fun nodes(): List<SemanticsNode> = composeNodes(activity.window.decorView)
 
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            return if (view is ViewGroup) (0 until view.childCount).flatMap {
-                owners(
-                    view.getChildAt(
-                        it
-                    )
-                )
-            } else emptyList()
-        }
-        return owners(activity.window.decorView).flatMap { descendants(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) {
-        var failure: Throwable? = null
-        instrumentation.runOnMainSync {
-            try {
-                action()
-            } catch (error: Throwable) {
-                failure = error
-            }
-        }
-        failure?.let { throw it }
-    }
-
-    private fun await(ready: () -> Boolean) {
-        fun reached(): Boolean {
-            var result = false
-            main { result = ready() }
-            return result
-        }
-
-        val deadline = System.nanoTime() + 10_000_000_000L
-        while (!reached() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue("Help routing did not reach the expected screen", reached())
-    }
+    private fun await(ready: () -> Boolean) =
+        awaitCondition({ "Help routing did not reach the expected screen" }) { main(ready) }
 }

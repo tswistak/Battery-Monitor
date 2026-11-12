@@ -33,7 +33,8 @@ import codes.swistak.batterymonitor.alarms.requireAlarmMembers
 import codes.swistak.batterymonitor.alarms.thresholdCollision
 import codes.swistak.batterymonitor.alarms.validStoredAlarm
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
-import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitContentProvider
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitProvider
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -87,9 +88,7 @@ internal class AlarmsViewModel(
     )
     private val chargingTargetState =
         AlarmChargingTargetState(preferences = settings, scope = viewModelScope, createProvider = {
-            DeviceChargingLimitProvider(application, privilegedAccessEnabled = {
-                settings.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
-            })
+            ChargingLimitProvider { ChargingLimitContentProvider.read(application) }
         }, accessChanges = PrivilegedAccess.accessChanges, prepareAccess = {
             PrivilegedAccess.initialize(application)
             PrivilegedAccess.setEnabled(

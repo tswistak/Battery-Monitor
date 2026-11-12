@@ -7,71 +7,67 @@
 */
 package codes.swistak.batterymonitor.ui.settings
 
-import androidx.preference.Preference
-import androidx.preference.PreferenceGroup
+import android.content.res.Resources
+import android.icu.text.MeasureFormat
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsControl
+import codes.swistak.batterymonitor.settings.SettingsDefinitions
 import java.text.Normalizer
 import java.util.Locale
 
 internal enum class SettingsCategory(
-    val route: String, val title: Int, val summary: Int, val icon: Int, val legacyTitle: Int
+    val route: String, val title: Int, val summary: Int, val icon: Int, val legacyKey: String
 ) {
     General(
         "general",
         R.string.other_settings,
         R.string.settings_general_summary,
         R.drawable.ui_settings,
-        R.string.other_settings
+        SettingsContract.KEY_OTHER_SETTINGS
     ),
     Current(
         "current",
         R.string.tab_current_info,
         R.string.current_state_settings_summary,
         R.drawable.ui_battery,
-        R.string.tab_current_info
+        SettingsContract.KEY_CURRENT_STATE_SETTINGS
     ),
     Time(
         "time",
         R.string.time_estimates_settings,
         R.string.time_estimates_settings_summary,
         R.drawable.ui_clock,
-        R.string.time_estimates_settings
+        SettingsContract.KEY_TIME_ESTIMATES_SETTINGS
     ),
     Notification(
         "notification",
         R.string.notification_settings,
         R.string.notification_settings_summary,
         R.drawable.ui_bell,
-        R.string.notification_settings
+        SettingsContract.KEY_NOTIFICATION_SETTINGS
     ),
     Advanced(
         "advanced",
         R.string.advanced_settings,
         R.string.advanced_settings_summary,
         R.drawable.ui_shield,
-        R.string.advanced_settings
+        SettingsContract.KEY_ADVANCED_SETTINGS
     ),
     Backup(
         "backup",
         R.string.pref_backup_restore,
         R.string.backup_restore_settings_summary,
         R.drawable.ui_storage,
-        R.string.pref_backup_restore
+        SettingsContract.KEY_BACKUP_RESTORE_SETTINGS
     );
 
     companion object {
         fun fromRoute(route: String?) = entries.firstOrNull { it.route == route }
 
-        fun fromLegacy(key: String?) = when (key) {
-            SettingsContract.KEY_OTHER_SETTINGS -> General
-            SettingsContract.KEY_CURRENT_STATE_SETTINGS -> Current
-            SettingsContract.KEY_TIME_ESTIMATES_SETTINGS -> Time
-            SettingsContract.KEY_NOTIFICATION_SETTINGS -> Notification
-            SettingsContract.KEY_ADVANCED_SETTINGS -> Advanced
-            SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> Backup
-            else -> null
-        }
+        fun fromLegacy(key: String?) = entries.firstOrNull { it.legacyKey == key }
     }
 }
 
@@ -82,13 +78,16 @@ internal data class SettingDescriptor(
     val summary: String,
     val group: String,
     val aliases: List<String>,
-    val preference: Preference? = null,
+    val control: SettingsControl = SettingsControl.Action,
+    val value: Any? = null,
+    val unavailable: String? = null,
     val diagnosticDetail: String? = null
 ) {
     fun matches(query: String): Boolean = matchesSettingQuery(
         query, listOf(key, title, summary, group) + aliases
     )
 }
+
 
 internal fun matchesSettingQuery(query: String, fields: List<String>): Boolean {
     fun normalize(value: String) =
@@ -98,6 +97,12 @@ internal fun matchesSettingQuery(query: String, fields: List<String>): Boolean {
     val text = normalize(fields.joinToString(" "))
     return normalize(query).split(Regex("\\s+")).filter(String::isNotEmpty).all { it in text }
 }
+
+internal data class NotificationAvailability(
+    val appEnabled: Boolean,
+    val mainEnabled: Boolean,
+    val liveEnabled: Boolean,
+)
 
 internal object SettingCatalog {
     private data class DiagnosticEntry(val key: String, val title: Int, val summary: Int? = null)
@@ -156,60 +161,9 @@ internal object SettingCatalog {
     val diagnosticRoutes: Map<String, String> = diagnosticEntries.associate {
         it.key to if (it.key.startsWith("charging_diagnostics_")) "charging-tools" else "monitor"
     }
-    private val groups = linkedMapOf(
-        SettingsCategory.General to listOf(
-            SettingsContract.KEY_CHANGE_APP_LANGUAGE,
-            SettingsContract.KEY_TEMPERATURE_UNIT,
-            SettingsContract.KEY_LONG_DURATION_FORMAT,
-            SettingsContract.KEY_AUTOSTART,
-            SettingsContract.KEY_COLOR_SOURCE,
-            SettingsContract.KEY_BRIGHTNESS
-        ), SettingsCategory.Current to listOf(
-            SettingsContract.KEY_SHOW_REMAINING_CHARGE,
-            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT
-        ), SettingsCategory.Time to listOf(
-            SettingsContract.KEY_PREDICTION_TYPE,
-            SettingsContract.KEY_CHARGING_TARGET_MODE,
-            SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
-            SettingsContract.KEY_DISCHARGING_TARGET
-        ), SettingsCategory.Notification to listOf(
-            SettingsContract.KEY_ENABLE_NOTIFS_B,
-            SettingsContract.KEY_TOP_LINE,
-            SettingsContract.KEY_BOTTOM_LINE,
-            SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
-            SettingsContract.KEY_VITAL_SIGNS_CONTENT,
-            SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS,
-            SettingsContract.KEY_ICON_CONTENT,
-            SettingsContract.KEY_SHOW_ICON_UNIT,
-            SettingsContract.KEY_INDICATE_CHARGING,
-            SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS,
-            SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
-            SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
-            SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
-            SettingsContract.KEY_CHIP_CONTENT,
-            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
-            SettingsContract.KEY_CHIP_INDICATE_CHARGING
-        ), SettingsCategory.Advanced to listOf(
-            SettingsContract.KEY_USE_PRIVILEGED_ACCESS,
-            SettingsContract.KEY_ENABLE_LOGGING,
-            SettingsContract.KEY_MAX_LOG_AGE,
-            SettingsContract.KEY_AUTO_LOG_EXPORT
-        ), SettingsCategory.Backup to listOf(
-            SettingsContract.KEY_EXPORT_GENERAL_BACKUP,
-            SettingsContract.KEY_IMPORT_GENERAL_BACKUP,
-            SettingsContract.KEY_EXPORT_SETTINGS,
-            SettingsContract.KEY_IMPORT_SETTINGS,
-            SettingsContract.KEY_EXPORT_ALARMS,
-            SettingsContract.KEY_IMPORT_ALARMS,
-            SettingsContract.KEY_EXPORT_DEVICE_DATA,
-            SettingsContract.KEY_IMPORT_DEVICE_DATA,
-            SettingsContract.KEY_IMPORT_LOGS_CSV,
-            SettingsContract.KEY_RESET_DEFAULT_SETTINGS
-        )
-    )
-    val routes: Map<String, SettingsCategory> = groups.flatMap { (category, keys) ->
-        keys.map { it to category }
+    val routes: Map<String, SettingsCategory> = SettingsCategory.entries.flatMap { category ->
+        SettingsDefinitions.categories.getValue(category.legacyKey)
+            .flatMap { group -> group.preferences.map { it.key to category } }
     }.toMap() + diagnosticRoutes.keys.associateWith { SettingsCategory.Advanced }
 
     private val chipKeys = setOf(
@@ -234,60 +188,131 @@ internal object SettingCatalog {
         if (key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) listOf("diagnostics_live_updates") else emptyList()
 
 
-    fun entries(screen: PreferenceGroup, text: (Int) -> String): List<SettingDescriptor> {
-        val result = mutableListOf(
-            SettingDescriptor(
-                SettingsContract.KEY_COLOR_SOURCE,
-                SettingsCategory.General,
-                text(R.string.settings_color_palette),
-                text(R.string.settings_color_palette_summary),
-                text(R.string.settings_appearance),
-                listOf(text(R.string.settings_appearance), text(SettingsCategory.General.title))
-            ), SettingDescriptor(
-                SettingsContract.KEY_BRIGHTNESS,
-                SettingsCategory.General,
-                text(R.string.settings_brightness),
-                text(R.string.settings_brightness_summary),
-                text(R.string.settings_appearance),
-                listOf(text(R.string.settings_appearance), text(SettingsCategory.General.title))
-            )
-        )
+    private val sharedNotificationKeys = setOf(
+        SettingsContract.KEY_TOP_LINE,
+        SettingsContract.KEY_BOTTOM_LINE,
+        SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
+        SettingsContract.KEY_VITAL_SIGNS_CONTENT,
+    )
 
-        fun visit(group: PreferenceGroup, heading: String) {
-            for (index in 0 until group.preferenceCount) {
-                val preference = group.getPreference(index)
-                if (preference is PreferenceGroup) visit(
-                    preference, preference.title?.toString() ?: heading
+    fun notificationDisabledReason(
+        key: String, sdkInt: Int, availability: NotificationAvailability
+    ): Int? {
+        if (routes[key] != SettingsCategory.Notification || key == SettingsContract.KEY_ENABLE_NOTIFS_B || key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) return null
+        if (!availability.appEnabled) return R.string.app_notifs_disabled_summary
+        val liveEnabled = sdkInt >= 36 && availability.liveEnabled
+        return when (key) {
+            in chipKeys -> if (liveEnabled) null else R.string.settings_live_update_summary
+            in sharedNotificationKeys -> if (availability.mainEnabled || liveEnabled) null
+            else if (sdkInt >= 36) R.string.settings_dependency_disabled
+            else R.string.settings_notification_disabled
+
+            else -> if (availability.mainEnabled) null else R.string.settings_notification_disabled
+        }
+    }
+
+    fun entries(
+        resources: Resources,
+        values: Map<String, *> = emptyMap<String, Any>(),
+        sdkInt: Int,
+        notification: NotificationAvailability,
+        chargingTargetSummary: String? = null,
+        autoExportSummary: String? = null,
+    ): List<SettingDescriptor> = buildList {
+        val text: (Int) -> String = resources::getString
+        val logging = values[SettingsContract.KEY_ENABLE_LOGGING] as? Boolean ?: true
+        val chargingTargetMode = values[SettingsContract.KEY_CHARGING_TARGET_MODE] as? String
+        val chipMetrics = values[SettingsContract.KEY_CHIP_CONTENT] as? Set<*>
+            ?: SettingsContract.DEFAULT_CHIP_CONTENT
+        val liveDisplay = values[SettingsContract.KEY_LIVE_UPDATE_DISPLAY] as? String
+            ?: text(R.string.default_live_update_display_mode)
+        for (category in SettingsCategory.entries) {
+            val aliases = listOf(text(category.title)) + when (category) {
+                SettingsCategory.General -> listOf(text(R.string.settings_legacy_general))
+                SettingsCategory.Advanced -> listOf(
+                    text(R.string.pref_cat_logging), text(R.string.settings_data_permissions)
                 )
-                else {
-                    val key = preference.key ?: continue
-                    val category = routes[key] ?: continue
-                    result += SettingDescriptor(
-                        key, category, preference.title?.toString().orEmpty().ifBlank {
-                            if (key == SettingsContract.KEY_ENABLE_NOTIFS_B) text(R.string.pref_cat_channel_settings) else key
-                        }, preference.summary?.toString().orEmpty(), if (key in setOf(
-                                SettingsContract.KEY_ENABLE_LOGGING,
-                                SettingsContract.KEY_MAX_LOG_AGE,
-                                SettingsContract.KEY_AUTO_LOG_EXPORT
-                            )
-                        ) text(R.string.pref_cat_logging) else heading, listOf(
-                            text(category.title), text(category.legacyTitle)
-                        ) + (when (category) {
-                            SettingsCategory.General -> listOf(text(R.string.settings_legacy_general))
-                            SettingsCategory.Advanced -> listOf(
-                                text(R.string.pref_cat_logging),
-                                text(R.string.settings_data_permissions)
-                            )
 
-                            else -> emptyList()
-                        }) + aliasesFor(key), preference
+                else -> emptyList()
+            }
+            for ((title1, preferences) in SettingsDefinitions.categories.getValue(category.legacyKey)) {
+                for ((key, title, summaryResource, control) in preferences) {
+                    if (!isVisible(key, sdkInt, chargingTargetMode)) continue
+                    val value = values[key] ?: control.defaultValue(text)
+                    val summary = when (key) {
+                        SettingsContract.KEY_ENABLE_NOTIFS_B -> text(
+                            when {
+                                !notification.appEnabled -> R.string.app_notifs_disabled_summary
+                                !notification.mainEnabled -> R.string.main_notifs_disabled_summary
+                                else -> R.string.pref_manage_main_channel_summary
+                            }
+                        )
+
+                        SettingsContract.KEY_CHANGE_APP_LANGUAGE -> text(R.string.currently_set_to) + Locale.getDefault().displayLanguage
+
+                        SettingsContract.KEY_AUTO_LOG_EXPORT -> autoExportSummary
+                        SettingsContract.KEY_CHARGING_TARGET_MODE -> chargingTargetSummary
+                        SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> {
+                            val seconds = (value as? String)?.toIntOrNull()?.coerceIn(1, 3600) ?: 5
+                            val choice = control as SettingsControl.Choice
+                            val index = resources.getStringArray(choice.entryValues)
+                                .indexOf(seconds.toString())
+                            val label = resources.getTextArray(choice.entries).getOrNull(index)
+                                ?: MeasureFormat.getInstance(
+                                    resources.configuration.locales[0],
+                                    MeasureFormat.FormatWidth.WIDE
+                                ).formatMeasures(Measure(seconds, MeasureUnit.SECOND))
+                            text(R.string.currently_set_to) + label
+                        }
+
+                        SettingsContract.KEY_MAX_LOG_AGE -> if (logging) null else text(R.string.currently_disabled)
+
+                        else -> null
+                    } ?: when (control) {
+                        is SettingsControl.Choice -> {
+                            val index = resources.getStringArray(control.entryValues)
+                                .indexOf(value as? String)
+                            resources.getTextArray(control.entries).getOrNull(index)?.let {
+                                text(R.string.currently_set_to) + it
+                            }
+                        }
+
+                        is SettingsControl.Number -> resources.getString(
+                            R.string.pref_target_level_summary,
+                            ((value as? Int) ?: control.defaultValue).coerceIn(
+                                control.min, control.max
+                            )
+                        )
+
+                        else -> null
+                    } ?: summaryResource?.let(text).orEmpty()
+                    val unavailable =
+                        notificationDisabledReason(key, sdkInt, notification) ?: when (key) {
+                            SettingsContract.KEY_CHANGE_APP_LANGUAGE -> R.string.settings_app_language_unavailable.takeIf { sdkInt < 33 }
+
+                            SettingsContract.KEY_MAX_LOG_AGE, SettingsContract.KEY_AUTO_LOG_EXPORT -> R.string.settings_dependency_disabled.takeUnless { logging }
+
+                            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> R.string.settings_dependency_disabled.takeIf { chipMetrics.size < 2 || liveDisplay == "never" }
+
+                            else -> null
+                        }
+                    add(
+                        SettingDescriptor(
+                            key,
+                            category,
+                            text(title),
+                            summary,
+                            text(title1),
+                            aliases + aliasesFor(key),
+                            control,
+                            value,
+                            unavailable?.let(text)
+                        )
                     )
                 }
             }
         }
-        visit(screen, "")
-        result += diagnosticEntries(text)
-        return result
+        addAll(diagnosticEntries(text))
     }
 
     internal fun diagnosticEntries(text: (Int) -> String): List<SettingDescriptor> =

@@ -15,36 +15,32 @@ package codes.swistak.batterymonitor.diagnostics
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
-import android.view.inspector.WindowInspector
 import android.widget.FrameLayout
 import androidx.activity.compose.setContent
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.logs.HistoryMetric
-import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticStore
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.clickSemantics
+import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticReportDialog
-import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
@@ -60,11 +56,13 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class DiagnosticsDialogsInstrumentedTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
     private val context get() = instrumentation.targetContext
-    private lateinit var activity: FullscreenChartActivity
+    private lateinit var activity: ComposeTestActivity
+
     private lateinit var fragment: DiagnosticsFragment
     private lateinit var state: DiagnosticsDialogState
 
@@ -327,8 +325,10 @@ class DiagnosticsDialogsInstrumentedTest {
             }
             await { dialogs() == 1 && fieldOrNull() != null }
             main { assertEquals("90", field().config[SemanticsProperties.EditableText].text) }
-            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-            await { dialogs() == 0 }
+            click(R.string.cancel)
+            await("Cancel must dismiss the restored fixed-limit draft (actionsOnly=$actionsOnly)") {
+                dialogs() == 0 && main { state.dialog == null }
+            }
             assertFalse(state.capturing)
             assertEquals(snapshots, ChargingDiagnosticStore.read(context).size)
         }
@@ -348,19 +348,9 @@ class DiagnosticsDialogsInstrumentedTest {
         preferences.edit()
             .putString(SettingsContract.KEY_COLOR_SOURCE, ColorSource.BatteryBlue.name)
             .putString(SettingsContract.KEY_BRIGHTNESS, Brightness.Light.name).commit()
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                context, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         try {
-            await {
-                val host = monitor.lastActivity as? FullscreenChartActivity
-                host != null && !host.isDestroyed && host.lifecycle.currentState == Lifecycle.State.RESUMED && host.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-            }
-            activity = monitor.lastActivity as FullscreenChartActivity
+            scenario.onActivity { activity = it }
             main {
                 fragment = DiagnosticsFragment().apply {
                     arguments = Bundle().apply {
@@ -383,9 +373,7 @@ class DiagnosticsDialogsInstrumentedTest {
             instrumentation.waitForIdleSync()
             test()
         } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(monitor)
+            scenario.close()
             preferences.edit().apply {
                 for ((key, value) in previous) {
                     when (value) {
@@ -422,7 +410,7 @@ class DiagnosticsDialogsInstrumentedTest {
 
     private fun click(label: Int) {
         await { buttonDisabled(label) == false }
-        main { assertTrue(button(label).config[SemanticsActions.OnClick].action?.invoke() == true) }
+        main { button(label).clickSemantics() }
         instrumentation.waitForIdleSync()
     }
 
@@ -462,43 +450,11 @@ class DiagnosticsDialogsInstrumentedTest {
         return count
     }
 
-    private fun nodes(): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
-
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            if (view !is ViewGroup) return emptyList()
-            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
-        }
-        return WindowInspector.getGlobalWindowViews().flatMap(::owners)
-            .flatMap { descendants(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) {
-        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) action()
-        else {
-            var failure: Throwable? = null
-            instrumentation.runOnMainSync {
-                try {
-                    action()
-                } catch (error: Throwable) {
-                    failure = error
-                }
-            }
-            failure?.let { throw it }
-        }
-    }
+    private fun nodes(): List<SemanticsNode> = composeWindowNodes()
 
     private fun await(
         message: String = "Diagnostics dialog did not reach the expected state",
         ready: () -> Boolean
-    ) {
-        val deadline = System.nanoTime() + 10_000_000_000
-        while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue(message, ready())
-    }
+    ) = awaitCondition({ message }, ready)
 
 }

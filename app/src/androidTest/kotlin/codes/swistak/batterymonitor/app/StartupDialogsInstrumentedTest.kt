@@ -14,18 +14,15 @@ package codes.swistak.batterymonitor.app
 
 import android.Manifest
 import android.accessibilityservice.AccessibilityServiceInfo
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 import androidx.activity.compose.setContent
@@ -38,23 +35,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.logs.HistoryMetric
-import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeNodes
+import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
-import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
@@ -64,7 +61,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class StartupDialogsInstrumentedTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
@@ -532,9 +529,7 @@ class StartupDialogsInstrumentedTest {
         baseline(acknowledged = installedVersion - 1)
         val controller = controller()
         main { controller.advance(granted) }
-        val target = instrumentation.targetContext
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         val automation = instrumentation.uiAutomation
         val info = automation.serviceInfo
         val oldFlags = info.flags
@@ -542,16 +537,7 @@ class StartupDialogsInstrumentedTest {
         automation.serviceInfo = info
         var confirmations = 0
         try {
-            instrumentation.startActivitySync(
-                FullscreenChartActivity.intent(
-                    target, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-            await {
-                monitor.lastActivity != null && !monitor.lastActivity.isDestroyed && monitor.lastActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-            }
-            val activity = monitor.lastActivity as FullscreenChartActivity
-            main {
+            scenario.onActivity { activity ->
                 activity.setContent {
                     CompositionLocalProvider(LocalContext provides context) {
                         AppBatteryTheme {
@@ -597,8 +583,7 @@ class StartupDialogsInstrumentedTest {
             assertEquals(StartupPresentation.NONE, nextLaunch.presentation)
             assertEquals("Acknowledgement prevents another dialog", 0, dialogs())
         } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.removeMonitor(monitor)
+            scenario.close()
             info.flags = oldFlags
             automation.serviceInfo = info
         }
@@ -621,26 +606,8 @@ class StartupDialogsInstrumentedTest {
         it.type == AccessibilityWindowInfo.TYPE_APPLICATION && it.root?.packageName?.toString() == instrumentation.targetContext.packageName
     }
 
-    @SuppressLint("RestrictedApi")
-    private fun dialogs(): Int {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
-
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            if (view !is ViewGroup) return emptyList()
-            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
-        }
-
-        var count = 0
-        main {
-            count = WindowInspectorCompat.getGlobalWindowViews().flatMap(::owners)
-                .flatMap { descendants(it.rootSemanticsNode) }
-                .count { it.config.contains(SemanticsProperties.IsDialog) }
-        }
-        return count
+    private fun dialogs(): Int = main {
+        composeWindowNodes().count { it.config.contains(SemanticsProperties.IsDialog) }
     }
 
     private fun activityNavigationState(activity: BatteryInfoActivity): Bundle {
@@ -656,19 +623,7 @@ class StartupDialogsInstrumentedTest {
         }
     }
 
-    private fun activitySemantics(root: View): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
-
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            if (view !is ViewGroup) return emptyList()
-            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
-        }
-        return owners(root).flatMap { descendants(it.rootSemanticsNode) }
-    }
+    private fun activitySemantics(root: View): List<SemanticsNode> = composeNodes(root)
 
     private fun openActivityDrawer(
         activity: BatteryInfoActivity, stage: String, diagnostics: () -> String
@@ -741,30 +696,12 @@ class StartupDialogsInstrumentedTest {
         instrumentation.waitForIdleSync()
     }
 
-    private fun main(action: () -> Unit) {
-        var failure: Throwable? = null
-        instrumentation.runOnMainSync {
-            try {
-                action()
-            } catch (error: Throwable) {
-                failure = error
-            }
-        }
-        failure?.let { throw it }
-    }
-
     private fun await(
         stage: String = "Startup dialogs did not reach the expected state",
         diagnostics: () -> String = { "" },
         condition: () -> Boolean
-    ) {
-        val until = android.os.SystemClock.uptimeMillis() + 10_000
-        while (!condition() && android.os.SystemClock.uptimeMillis() < until) {
-            android.os.SystemClock.sleep(50)
-        }
-        if (!condition()) {
-            val details = runCatching(diagnostics).getOrElse { "Diagnostics unavailable: $it" }
-            throw AssertionError("$stage: $details")
-        }
-    }
+    ) = awaitCondition({
+        val details = runCatching(diagnostics).getOrElse { "Diagnostics unavailable: $it" }
+        "$stage: $details"
+    }, condition)
 }

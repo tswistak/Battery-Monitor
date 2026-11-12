@@ -52,7 +52,7 @@ internal object ProfileHistoryIoVerification {
         val report = JSONObject().put("complete", false).put("appPid", Process.myPid())
             .put("exportPath", output.path).put("ownedRestoreDirectory", owner.path).put(
                 "scope",
-                "real profile history exportHistory(JSON) and DeviceDataBackup.importFromJson(REPLACE) into empty isolated database; excludes SAF UI"
+                "real profile history exportHistory(JSON) and DeviceDataBackup.restore(REPLACE) into empty isolated database; excludes SAF UI"
             )
         try {
             val through = System.currentTimeMillis()
@@ -76,8 +76,10 @@ internal object ProfileHistoryIoVerification {
                     HistoryExportRequest(null, through, LogExportFormat.JSON)
                 )
             }
-            val json = output.readText()
-            val decoded = DeviceDataBackup.readLogsFromJson(json)
+            val backup = DeviceDataBackup.readFromUri(
+                context, Uri.fromFile(output), File(owner, "restore.logs")
+            )
+            val decoded = requireNotNull(backup.logs).getOrThrow().read { it.toList() }
             check(decoded == records) { "Export did not preserve all seven record fields and duplicate rows" }
             val restore = LogDatabase(isolated)
             try {
@@ -85,8 +87,8 @@ internal object ProfileHistoryIoVerification {
             } finally {
                 restore.close()
             }
-            DeviceDataBackup.importFromJson(
-                isolated, json, setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
+            DeviceDataBackup.restore(
+                isolated, backup, setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
             )
             val restored = LogDatabase(isolated)
             val result = try {
@@ -141,9 +143,6 @@ internal object ProfileHistoryIoVerification {
         val bytes = input.readBytes()
         val actual = sha256(bytes)
         check(actual == expected) { "Owned export checksum mismatch" }
-        val json = bytes.toString(Charsets.UTF_8)
-        val records = DeviceDataBackup.readLogsFromJson(json)
-        check(records.isNotEmpty())
         val before = LogDatabase(context)
         try {
             check(before.getAllLogRecords().isEmpty()) { "Actual profile history must be empty" }
@@ -155,9 +154,18 @@ internal object ProfileHistoryIoVerification {
         ).use { it.version }
         check(schema == 7)
         check(!MonitoringDesiredState.read(context))
-        DeviceDataBackup.importFromJson(
-            context, json, setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
-        )
+        val prepared = File.createTempFile("profile-restore-", ".logs", context.cacheDir)
+        val records = try {
+            val backup = DeviceDataBackup.read(bytes.inputStream(), prepared)
+            val records = requireNotNull(backup.logs).getOrThrow().read { it.toList() }
+            check(records.isNotEmpty())
+            DeviceDataBackup.restore(
+                context, backup, setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
+            )
+            records
+        } finally {
+            prepared.delete()
+        }
         val database = LogDatabase(context)
         val restored = try {
             database.getAllLogRecords()

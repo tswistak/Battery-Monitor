@@ -11,6 +11,7 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.MalformedJsonException
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,6 +28,7 @@ import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.HistoryRecord
 import codes.swistak.batterymonitor.logs.LogExportFormat
+import codes.swistak.batterymonitor.logs.LogExportRecoveryException
 import codes.swistak.batterymonitor.logs.LogsRepository
 import codes.swistak.batterymonitor.logs.exportHistory
 import codes.swistak.batterymonitor.logs.historyFilterKeys
@@ -38,6 +40,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.EOFException
+import java.io.File
+import java.io.IOException
 
 internal data class HistoryUiState(
     val range: HistoryRangeState = HistoryRangeState.lastHours(24),
@@ -84,22 +89,23 @@ internal class HistoryViewModel(
 
     private var isTwoPane = false
     private var retainExactRange = false
+    private var activationKeepsRange: Boolean? = null
 
     fun retainExactRange() {
         retainExactRange = true
     }
 
-    fun resume(change: Triple<Int?, Int?, Int?>? = null) {
-        if (change != null) lastMonitoredChange = change
-        checkFreshness(activated = true, keepRange = retainExactRange)
+    fun resume() {
+        activationKeepsRange = retainExactRange || activationKeepsRange == true
         retainExactRange = false
+        mutable.value = mutable.value.copy(loading = true, error = false)
+        checkFreshness()
     }
 
-    fun historyChanged() = checkFreshness(activated = false)
+    fun historyChanged() = checkFreshness()
 
-    private fun checkFreshness(activated: Boolean, keepRange: Boolean = false) {
+    private fun checkFreshness() {
         freshnessJob?.cancel()
-        if (activated) mutable.value = mutable.value.copy(loading = true, error = false)
         val generation = queryGeneration
         freshnessJob = viewModelScope.launch {
             queryJob?.join()
@@ -109,6 +115,10 @@ internal class HistoryViewModel(
                 val changes = repository.historyChanges(
                     appliedRevision, current.range.takeUnless { current.rangeLabel == "all" })
                 if (generation != queryGeneration) return@launch
+                // A database broadcast can replace a pending freshness check before it runs.
+                val activated = activationKeepsRange != null
+                val keepRange = retainExactRange || activationKeepsRange == true
+                activationKeepsRange = null
                 val rolling = current.rangeLabel in setOf("24h", "72h", "7d") && !keepRange
                 if (changes.affectsRange || (rolling && (activated || changes.revision != appliedRevision))) {
                     refresh(keepRange = keepRange)
@@ -122,18 +132,11 @@ internal class HistoryViewModel(
                 throw exception
             } catch (_: Exception) {
                 if (generation == queryGeneration) {
+                    activationKeepsRange = null
                     mutable.value = mutable.value.copy(loading = false, error = true)
                 }
             }
         }
-    }
-
-    private var lastMonitoredChange: Triple<Int?, Int?, Int?>? = null
-
-    fun monitoringChanged(change: Triple<Int?, Int?, Int?>) {
-        val before = lastMonitoredChange
-        lastMonitoredChange = change
-        if (before != null && before != change) refresh()
     }
 
     private var restored = false
@@ -208,7 +211,7 @@ internal class HistoryViewModel(
 
     fun save(): Bundle = Bundle().apply {
         val value = mutable.value
-        putBoolean("retainExactRange", retainExactRange)
+        putBoolean("retainExactRange", retainExactRange || activationKeepsRange == true)
         putLong("start", value.range.start)
         putLong("end", value.range.end)
         putString("label", value.rangeLabel)
@@ -245,7 +248,7 @@ internal class HistoryViewModel(
         backwards: Boolean = mutable.value.backwards,
         forceChart: Boolean = true,
         includeAnchor: Boolean = mutable.value.includeAnchor,
-        keepRange: Boolean = retainExactRange
+        keepRange: Boolean = retainExactRange || activationKeepsRange == true
     ) {
         queryJob?.cancel()
         val generation = ++queryGeneration
@@ -356,6 +359,7 @@ internal class HistoryViewModel(
 
     fun range(range: HistoryRangeState, label: String) {
         retainExactRange = false
+        activationKeepsRange = null
         scroll(0, 0)
         mutable.value = mutable.value.copy(
             range = range,
@@ -493,19 +497,36 @@ internal class HistoryViewModel(
         }) {
             withContext(Dispatchers.IO) {
                 val context = getApplication<Application>()
-                // Reading stays outside format validation: denied access is not a malformed file.
-                val text = if (json) DeviceDataBackup.readFromUri(context, uri)
-                else CsvLogImporter.readFromUri(context, uri)
                 try {
                     if (json) {
-                        if (DeviceDataBackup.getAvailableData(text).isEmpty()) {
-                            restoreError = context.getString(R.string.device_data_file_empty)
-                            throw IllegalArgumentException("No supported device data")
+                        val prepared =
+                            File.createTempFile("history-restore-", ".logs", context.cacheDir)
+                        try {
+                            val source = context.contentResolver.openInputStream(uri)
+                                ?: throw IOException("Could not open backup source")
+                            val backup = try {
+                                source.use { DeviceDataBackup.read(it, prepared) }
+                            } catch (failure: Exception) {
+                                if (failure is MalformedJsonException || failure is EOFException || failure is CharacterCodingException || failure is IllegalStateException) restoreError =
+                                    context.getString(R.string.invalid_device_data_file)
+                                throw failure
+                            }
+                            if (backup.available.isEmpty()) {
+                                restoreError = context.getString(R.string.device_data_file_empty)
+                                throw IllegalArgumentException("No supported device data")
+                            }
+                            DeviceDataBackup.restore(
+                                context, backup, setOf(DeviceDataType.LOGS), mode
+                            )
+                        } finally {
+                            prepared.delete()
                         }
-                        DeviceDataBackup.importFromJson(
-                            context, text, setOf(DeviceDataType.LOGS), mode
-                        )
-                    } else CsvLogImporter.importFromCsv(context, text, mode)
+                    } else CsvLogImporter.withCsvReader(context, uri) { reader ->
+                        CsvLogImporter.importFromReader(context, reader, mode)
+                    }
+                } catch (failure: LogExportRecoveryException) {
+                    restoreError = failure.message
+                    throw failure
                 } catch (failure: GeneralBackupRestoreException) {
                     partialRestore = true
                     restoreError = context.getString(

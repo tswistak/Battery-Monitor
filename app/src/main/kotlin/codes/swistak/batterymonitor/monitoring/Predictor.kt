@@ -18,7 +18,7 @@ import android.content.SharedPreferences
 import android.os.SystemClock
 import androidx.core.content.edit
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingTargetResolver
-import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitState
 import codes.swistak.batterymonitor.monitoring.charginglimit.ResolvedTarget
 import codes.swistak.batterymonitor.settings.SettingsContract
 
@@ -69,12 +69,7 @@ internal class Predictor(context: Context) {
 
     private val settings =
         context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-    private val targetResolver = ChargingTargetResolver(
-        settings, DeviceChargingLimitProvider(
-            context, privilegedAccessEnabled = {
-                settings.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
-            })
-    )
+    private val targetResolver = ChargingTargetResolver(settings)
 
     private val editor: SharedPreferences.Editor = spPredictor.edit()
 
@@ -93,8 +88,8 @@ internal class Predictor(context: Context) {
         pc.setPredictionType(type.toInt())
     }
 
-    fun update(info: BatteryInfo): ResolvedPredictionTargets {
-        val chargingTarget = targetResolver.resolveChargingTarget()
+    fun update(info: BatteryInfo, chargingLimit: ChargingLimitState?): ResolvedPredictionTargets {
+        val chargingTarget = targetResolver.resolveChargingTarget(chargingLimit)
         val dischargingTarget = targetResolver.resolveDischargingTarget()
         pc.setTargets(chargingTarget.percent, dischargingTarget.percent)
         val now = SystemClock.elapsedRealtime()

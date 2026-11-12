@@ -14,6 +14,8 @@ package codes.swistak.batterymonitor.monitoring
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.provider.Settings
 import android.util.AtomicFile
 import android.util.Log
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -30,62 +32,135 @@ internal object MonitoringDesiredState {
     private const val LOG_TAG = "MonitoringDesiredState"
     private const val FILE_NAME = "monitoring_desired_state"
     private const val MAGIC = 0x424D4453
-    private const val VERSION = 1
-    private const val ENCODED_SIZE = 9
+    private const val VERSION = 2
+    private const val LEGACY_ENCODED_SIZE = 9
+    private const val ENCODED_SIZE = 13
+    const val ACTION_CHANGED = "codes.swistak.batterymonitor.MONITORING_DESIRED_CHANGED"
 
-    fun read(context: Context): Boolean = try {
-        locked(context) { readFile(it) } ?: readLegacy(context)
-    } catch (error: Exception) {
-        Log.w(LOG_TAG, "Unable to read monitoring state", error)
-        readLegacy(context)
+    internal data class Session(val desired: Boolean, val bootCount: Int?)
+
+    fun read(context: Context): Boolean = resolve(context)
+
+    fun afterSystemEvent(context: Context, action: String?): Boolean = resolve(context, action)
+
+    private fun resolve(context: Context, action: String? = null): Boolean {
+        return try {
+            val bootCount = bootCount(context)
+            var changed = false
+            val desired = locked(context) { file ->
+                val previous = readFile(file)
+                if (previous != null && previous.bootCount == bootCount && (bootCount >= 0 || action != Intent.ACTION_BOOT_COMPLETED)) return@locked previous.desired
+
+                val autostart = readAutostart(context)
+                val wasDesired = previous?.desired ?: readLegacy(context, autostart)
+                val effective = when {
+                    previous?.bootCount != null || action == Intent.ACTION_BOOT_COMPLETED -> shouldStartMonitoringAfterSystemEvent(
+                        Intent.ACTION_BOOT_COMPLETED, autostart, wasDesired
+                    )
+
+                    action == Intent.ACTION_MY_PACKAGE_REPLACED -> shouldStartMonitoringAfterSystemEvent(
+                        action, autostart, wasDesired
+                    )
+
+                    else -> return@locked autostart != "never" && wasDesired
+                }
+                store(file, Session(effective, bootCount))
+                changed = true
+                effective
+            }
+            if (changed) notifyChanged(context)
+            desired
+        } catch (error: Exception) {
+            Log.w(LOG_TAG, "Unable to reconcile monitoring state", error)
+            false
+        }
     }
 
-    fun initialize(context: Context): Boolean =
-        update(context, desired = true, initializeOnly = true)
+    fun initialize(context: Context): Boolean = update(context, desired = null)
 
-    fun write(context: Context, desired: Boolean, mirrorPreferences: Boolean = true): Boolean =
-        update(context, desired, mirrorPreferences = mirrorPreferences)
+    fun write(context: Context, desired: Boolean): Boolean = update(context, desired)
 
-    private fun update(
-        context: Context,
-        desired: Boolean,
-        initializeOnly: Boolean = false,
-        mirrorPreferences: Boolean = true
-    ): Boolean = try {
+    private fun update(context: Context, desired: Boolean?): Boolean = try {
+        val bootCount = bootCount(context)
+        var changed = false
         locked(context) { file ->
-            val existing = if (initializeOnly) readFile(file) else null
-            val value = existing ?: desired
-            if (existing == null) {
-                val stream = file.startWrite()
-                try {
-                    stream.write(encode(value))
-                    stream.fd.sync()
-                    file.finishWrite(stream)
-                    if (readFile(file) != value) throw IOException("Monitoring state was not committed")
-                } catch (error: Exception) {
-                    file.failWrite(stream)
-                    throw error
-                }
-            }
-            if (mirrorPreferences) {
-                try {
-                    // KTX edit discards the commit result used to diagnose a failed mirror.
-                    @SuppressLint("UseKtx") val committed = context.getSharedPreferences(
-                        SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
-                    ).edit().putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, value)
-                        .putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true).commit()
-                    if (!committed) Log.w(
-                        LOG_TAG, "Monitoring state saved; legacy preference mirror failed"
+            val existing = readFile(file)
+            if (desired == null && existing?.bootCount == null) {
+                val service = context.getSharedPreferences(
+                    SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
+                )
+                val main = context.getSharedPreferences(
+                    SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
+                )
+                if (existing != null || service.contains(BatteryInfoService.KEY_SERVICE_DESIRED) || main.getBoolean(
+                        SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
                     )
-                } catch (error: Exception) {
-                    Log.w(LOG_TAG, "Monitoring state saved; legacy preference mirror failed", error)
+                ) {
+                    mirror(
+                        context, existing?.desired ?: readLegacy(context, readAutostart(context))
+                    )
+                    return@locked
                 }
             }
-            true
+            val value = desired ?: existing?.let {
+                if (it.bootCount == bootCount) it.desired else {
+                    val autostart = readAutostart(context)
+                    shouldStartMonitoringAfterSystemEvent(
+                        Intent.ACTION_BOOT_COMPLETED, autostart, it.desired
+                    )
+                }
+            } ?: (readAutostart(context) != "never")
+            val session = Session(value, bootCount)
+            if (existing != session) {
+                store(file, session)
+                changed = true
+            }
+            mirror(context, value)
         }
+        if (changed) notifyChanged(context)
+        true
     } catch (error: Exception) {
         Log.e(LOG_TAG, "Unable to save monitoring state", error)
         false
+    }
+
+    private fun bootCount(context: Context): Int =
+        Settings.Global.getInt(context.contentResolver, Settings.Global.BOOT_COUNT, -1)
+
+    private fun store(file: AtomicFile, session: Session) {
+        val stream = file.startWrite()
+        try {
+            stream.write(encode(session))
+            stream.fd.sync()
+            file.finishWrite(stream)
+        } catch (error: Exception) {
+            file.failWrite(stream)
+            throw error
+        }
+        if (readFile(file) != session) throw IOException("Monitoring state was not committed")
+    }
+
+    @SuppressLint("UseKtx")
+    private fun mirror(context: Context, desired: Boolean) {
+        try {
+            val committed = context.getSharedPreferences(
+                SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
+            ).edit().putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, desired)
+                .putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true).commit()
+            if (!committed) Log.w(
+                LOG_TAG, "Monitoring state saved; legacy preference mirror failed"
+            )
+        } catch (error: Exception) {
+            Log.w(LOG_TAG, "Monitoring state saved; legacy preference mirror failed", error)
+        }
+    }
+
+    private fun notifyChanged(context: Context) {
+        try {
+            context.sendBroadcast(Intent(ACTION_CHANGED).setPackage(context.packageName))
+        } catch (error: RuntimeException) {
+            Log.w(LOG_TAG, "Unable to notify monitoring state consumers", error)
+        }
     }
 
     @Synchronized
@@ -96,11 +171,16 @@ internal object MonitoringDesiredState {
             }
         }
 
-    private fun readFile(file: AtomicFile): Boolean? = try {
+    private fun readFile(file: AtomicFile): Session? = try {
         file.openRead().use { stream ->
-            val bytes = ByteArray(ENCODED_SIZE)
-            DataInputStream(stream).readFully(bytes)
-            if (stream.read() == -1) decode(bytes) else null
+            val bytes = ByteArray(ENCODED_SIZE + 1)
+            var size = 0
+            while (size < bytes.size) {
+                val read = stream.read(bytes, size, bytes.size - size)
+                if (read == -1) break
+                size += read
+            }
+            decode(bytes.copyOf(size))
         }
     } catch (_: FileNotFoundException) {
         null
@@ -109,14 +189,16 @@ internal object MonitoringDesiredState {
         null
     }
 
-    private fun readLegacy(context: Context): Boolean {
+    private fun readAutostart(context: Context): String? =
+        context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+            .getString(SettingsContract.KEY_AUTOSTART, "auto")
+
+    private fun readLegacy(context: Context, autostart: String?): Boolean {
         val main = context.getSharedPreferences(SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE)
         return legacyDesired(
             migrated = main.getBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false),
             mainDesired = main.getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false),
-            autostart = context.getSharedPreferences(
-                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-            ).getString(SettingsContract.KEY_AUTOSTART, "auto"),
+            autostart = autostart,
             serviceDesired = context.getSharedPreferences(
                 SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
             ).getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
@@ -127,23 +209,27 @@ internal object MonitoringDesiredState {
         migrated: Boolean, mainDesired: Boolean, autostart: String?, serviceDesired: Boolean
     ): Boolean = if (migrated) mainDesired else autostart == "always" || serviceDesired
 
-    internal fun encode(desired: Boolean): ByteArray = ByteArrayOutputStream(ENCODED_SIZE).also {
+    internal fun encode(session: Session): ByteArray = ByteArrayOutputStream(ENCODED_SIZE).also {
         DataOutputStream(it).use { output ->
             output.writeInt(MAGIC)
             output.writeInt(VERSION)
-            output.writeBoolean(desired)
+            output.writeBoolean(session.desired)
+            output.writeInt(requireNotNull(session.bootCount))
         }
     }.toByteArray()
 
-    internal fun decode(bytes: ByteArray): Boolean? {
-        if (bytes.size != ENCODED_SIZE) return null
+    internal fun decode(bytes: ByteArray): Session? {
+        if (bytes.size != ENCODED_SIZE && bytes.size != LEGACY_ENCODED_SIZE) return null
         return DataInputStream(ByteArrayInputStream(bytes)).use { input ->
-            if (input.readInt() != MAGIC || input.readInt() != VERSION) return null
-            when (input.readUnsignedByte()) {
+            if (input.readInt() != MAGIC) return null
+            val version = input.readInt()
+            if (version != if (bytes.size == ENCODED_SIZE) VERSION else 1) return null
+            val desired = when (input.readUnsignedByte()) {
                 0 -> false
                 1 -> true
-                else -> null
+                else -> return null
             }
+            Session(desired, if (version == VERSION) input.readInt() else null)
         }
     }
 }

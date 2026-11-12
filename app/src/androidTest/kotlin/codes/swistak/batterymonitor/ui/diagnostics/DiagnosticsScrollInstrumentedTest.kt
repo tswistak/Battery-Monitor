@@ -15,9 +15,6 @@
 */
 package codes.swistak.batterymonitor.ui.diagnostics
 
-import android.content.Intent
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,39 +27,35 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.unit.dp
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
-import codes.swistak.batterymonitor.logs.HistoryMetric
-import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.Predictor
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
-import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeNodes
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class DiagnosticsScrollInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
-    private lateinit var activity: FullscreenChartActivity
+    private lateinit var activity: ComposeTestActivity
 
     @Test
     fun staged_raw_groups_keep_entry_at_top_but_preserve_a_readers_position() {
         val context = instrumentation.targetContext
-        val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                context, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         var tab by mutableIntStateOf(0)
         var visible by mutableStateOf(true)
         var stopped by mutableStateOf(false)
@@ -71,12 +64,8 @@ class DiagnosticsScrollInstrumentedTest {
         val monitor = MonitoringSnapshot.fromBundle(BatteryInfo().toBundle()).copy(
             predictorData = PredictorStoredState(mapOf(Predictor.KEY_AVERAGE[0] to 864000f), 2)
         )
-        try {
-            await {
-                val hostActivity = host.lastActivity as? FullscreenChartActivity
-                hostActivity != null && !hostActivity.isDestroyed && hostActivity.lifecycle.currentState == androidx.lifecycle.Lifecycle.State.RESUMED && (hostActivity.resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && hostActivity.resources.configuration.smallestScreenWidthDp >= 600 || hostActivity.isInMultiWindowMode)
-            }
-            activity = host.lastActivity as FullscreenChartActivity
+        scenario.use { scenario ->
+            scenario.onActivity { activity = it }
             main {
                 activity.setContent {
                     AppBatteryTheme {
@@ -186,10 +175,6 @@ class DiagnosticsScrollInstrumentedTest {
             instrumentation.waitForIdleSync()
             main { tab = 3 }
             assertTop()
-        } finally {
-            main { host.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(host)
         }
     }
 
@@ -259,29 +244,8 @@ class DiagnosticsScrollInstrumentedTest {
         return values
     }
 
-    private fun nodes(): List<SemanticsNode> {
-        fun children(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::children)
+    private fun nodes(): List<SemanticsNode> = composeNodes(activity.window.decorView)
 
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            return if (view is ViewGroup) (0 until view.childCount).flatMap {
-                owners(
-                    view.getChildAt(
-                        it
-                    )
-                )
-            } else emptyList()
-        }
-        return owners(activity.window.decorView).flatMap { children(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) = instrumentation.runOnMainSync(action)
-    private fun await(ready: () -> Boolean) {
-        val deadline = System.nanoTime() + 10_000_000_000L
-        while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue("Diagnostics did not reach the expected staged scroll position", ready())
-    }
+    private fun await(ready: () -> Boolean) =
+        awaitCondition({ "Diagnostics did not reach the expected staged scroll position" }, ready)
 }

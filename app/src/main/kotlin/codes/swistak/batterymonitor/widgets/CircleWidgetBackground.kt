@@ -26,11 +26,9 @@ internal class CircleWidgetBackground(context: Context) {
     private val dimension: Int
     private val arcStrokeWidth: Float
 
-    val bitmap: Bitmap
+    private val bitmap: Bitmap
     private val canvas: Canvas = Canvas()
     private val arcPaint: Paint
-    private var mLevel = 0
-    private var mColor = 0
 
     init {
         val metrics = context.resources.displayMetrics
@@ -47,16 +45,8 @@ internal class CircleWidgetBackground(context: Context) {
         arcPaint.isDither = true
     }
 
-    fun setColor(color: Int) {
-        mColor = color
-        setLevel(mLevel)
-    }
-
-    fun setLevel(level: Int) {
-        var level = level
-        if (level < 0) level = 0
-
-        mLevel = level
+    fun draw(percent: Int, color: Int): Bitmap {
+        val level = percent.coerceAtLeast(0)
 
         val topLeft = (arcStrokeWidth / 2).toInt()
         val bottomRight = dimension - (arcStrokeWidth / 2).toInt()
@@ -67,7 +57,8 @@ internal class CircleWidgetBackground(context: Context) {
 
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 
-        arcPaint.setColor(mColor)
+        arcPaint.color = color
         canvas.drawArc(oval, -90.0f, level * 360.0f / 100.0f, false, arcPaint)
+        return bitmap
     }
 }

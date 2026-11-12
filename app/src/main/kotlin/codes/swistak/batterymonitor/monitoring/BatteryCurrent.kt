@@ -29,7 +29,6 @@ import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.log10
 
-
 internal data class BatteryCurrentReading(
     val microAmps: Long, val source: String?, val acquiredAt: BatteryMeasurementTime? = null
 )
@@ -53,9 +52,6 @@ internal object BatteryCurrent {
     fun setMultiplier(value: Int) {
         multiplier = value
     }
-
-    val current: Double?
-        get() = readWithSource(false)?.let { scaleMicroAmps(it.microAmps) }
 
     internal fun readWithSource(
         average: Boolean,

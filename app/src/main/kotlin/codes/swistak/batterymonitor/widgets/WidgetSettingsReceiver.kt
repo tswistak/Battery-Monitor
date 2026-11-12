@@ -18,6 +18,11 @@ import codes.swistak.batterymonitor.settings.SettingsSnapshot
 
 class WidgetSettingsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == ACTION_HISTORY_CHANGED) {
+            val pending = goAsync()
+            WidgetUpdateDispatcher.historyChanged(context) { pending.finish() }
+            return
+        }
         val snapshot = intent.getBundleExtra(EXTRA_SETTINGS)
         if (snapshot != null && !applyMonitoringSnapshot(
                 context,
@@ -34,6 +39,14 @@ class WidgetSettingsReceiver : BroadcastReceiver() {
 
     companion object {
         private const val EXTRA_SETTINGS = "widget_settings"
+        internal const val ACTION_HISTORY_CHANGED =
+            "codes.swistak.batterymonitor.WIDGET_HISTORY_CHANGED"
+
+        internal fun historyChanged(context: Context) {
+            context.sendBroadcast(Intent(context, WidgetSettingsReceiver::class.java).apply {
+                action = ACTION_HISTORY_CHANGED
+            })
+        }
 
         internal fun refresh(context: Context) {
             context.sendBroadcast(Intent(context, WidgetSettingsReceiver::class.java))

@@ -37,16 +37,6 @@ internal data class DiagnosticRow(
 
 internal data class DiagnosticGroup(val title: Int, val rows: List<DiagnosticRow>)
 
-internal fun diagnosticGroups(
-    snapshot: AdvancedBatterySnapshot,
-    multiplier: Int,
-    fahrenheit: Boolean = false,
-    locale: Locale = Locale.getDefault()
-): List<DiagnosticGroup> =
-    normalizedDiagnosticGroups(snapshot, multiplier, fahrenheit, locale) + rawDiagnosticGroups(
-        snapshot
-    )
-
 internal fun normalizedDiagnosticGroups(
     snapshot: AdvancedBatterySnapshot,
     multiplier: Int,

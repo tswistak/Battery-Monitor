@@ -91,12 +91,12 @@ class ChargingTargetsTest {
     @Test
     fun `Lineage detects fixed limit and scheduled modes independently of version`() {
         val fixed = detect(
-            lineageProfile("20.0-20231021-UNOFFICIAL-oneplus2"),
+            lineageProfile(33),
             LineageOsChargingLimitAdapter,
             settings = lineageSettings(enabled = "1", mode = "3", limit = "80")
         )
         val scheduled = detect(
-            lineageProfile("99.0-future"),
+            lineageProfile(99),
             LineageOsChargingLimitAdapter,
             settings = lineageSettings(enabled = "1", mode = "2", limit = "80")
         )
@@ -108,7 +108,7 @@ class ChargingTargetsTest {
     @Test
     fun `Lineage disabled mode does not report a fixed limit`() {
         val disabled = detect(
-            lineageProfile("20.0"),
+            lineageProfile(33),
             LineageOsChargingLimitAdapter,
             settings = lineageSettings(enabled = "0", mode = "3", limit = "80")
         )
@@ -116,31 +116,33 @@ class ChargingTargetsTest {
     }
 
     @Test
-    fun `Lineage system feature works on an unknown version and requires its provider`() {
-        val supported = DeviceProfile(
-            "Example",
-            "Future",
-            "future",
-            99,
-            hasLineageOsFeature = true,
-            hasLineageSettingsProvider = true
-        )
-        val missingProvider = supported.copy(hasLineageSettingsProvider = false)
-
+    fun `without a trusted Lineage provider the detector falls back to the OEM adapter`() {
+        val settings = SettingReader { namespace, key ->
+            check(namespace != SettingNamespace.LINEAGE_SYSTEM)
+            when (key) {
+                "protect_battery" -> value("1")
+                "battery_protection_threshold" -> value("85")
+                else -> absent()
+            }
+        }
         assertFixed(
-            90, detect(
-                supported, LineageOsChargingLimitAdapter, settings = lineageSettings("1", "3", "90")
-            )
+            85, ChargingLimitDetector(
+                samsungProfile(),
+                settings,
+                noBattery(),
+                noPowerSupply(),
+                DEFAULT_CHARGING_LIMIT_ADAPTERS
+            ).readState()
         )
+    }
+
+    @Test
+    fun `out of range Lineage setting does not become a fixed target`() {
         assertUnavailable(
-            ChargingLimitUnavailableReason.SETTING_ABSENT,
-            detect(missingProvider, LineageOsChargingLimitAdapter)
-        )
-        assertTrue(
-            LineageOsChargingLimitAdapter.supports(
-                DeviceProfile(
-                    "Example", "Derivative", "future", 99, hasLineageSettingsProvider = true
-                )
+            ChargingLimitUnavailableReason.INVALID_PERCENT, detect(
+                lineageProfile(35),
+                LineageOsChargingLimitAdapter,
+                settings = lineageSettings("1", "3", "101")
             )
         )
     }
@@ -467,14 +469,12 @@ class ChargingTargetsTest {
         manufacturer = "Google", model = "Pixel 8", device = "shiba", sdkInt = 35
     )
 
-    private fun lineageProfile(version: String): DeviceProfile = DeviceProfile(
+    private fun lineageProfile(sdk: Int): DeviceProfile = DeviceProfile(
         manufacturer = "OnePlus",
         model = "ONE A2003",
         device = "OnePlus2",
-        sdkInt = 33,
-        properties = mapOf(
-            ChargingLimitPropertyKeys.LINEAGE_VERSION to value(version, ReadSource.APP_SHELL)
-        )
+        sdkInt = sdk,
+        hasLineageSettingsProvider = true
     )
 
     private fun samsungProfile(): DeviceProfile = DeviceProfile(

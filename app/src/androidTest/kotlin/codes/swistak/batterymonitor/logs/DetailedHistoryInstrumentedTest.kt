@@ -18,6 +18,7 @@ import android.content.Intent
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import androidx.test.platform.app.InstrumentationRegistry
+import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -84,17 +85,20 @@ class DetailedHistoryInstrumentedTest {
                     observation.copy(time = 1_000, charge = 0)
                 )
             )
-            val model = LogsRepository(context).detailedChart(
-                HistoryRangeState(0, 1_000), HistoryMetric.LEVEL, HistoryRangeState(100, 200), 800
-            )
+            val model = LogsRepository(context).detailedCharts(
+                HistoryRangeState(0, 1_000),
+                listOf(HistoryMetric.LEVEL),
+                HistoryRangeState(100, 200),
+                800
+            ).getValue(HistoryMetric.LEVEL)
             assertEquals(2L, model.count)
             assertEquals(20.0, model.min!!, 0.0)
             assertEquals(30.0, model.max!!, 0.0)
             assertEquals(listOf(4L, 2L, 3L, 1L), model.points.map { it.key.id })
             assertEquals(listOf(99L, 100L, 100L, 200L), model.points.map { it.key.time })
-            val exact = LogsRepository(context).detailedChart(
-                HistoryRangeState(100, 200), HistoryMetric.LEVEL, pixelWidth = 800
-            )
+            val exact = LogsRepository(context).detailedCharts(
+                HistoryRangeState(100, 200), listOf(HistoryMetric.LEVEL), pixelWidth = 800
+            ).getValue(HistoryMetric.LEVEL)
             assertEquals(listOf(2L, 3L), exact.points.map { it.key.id })
         }
 
@@ -229,11 +233,15 @@ class DetailedHistoryInstrumentedTest {
             val range = HistoryRangeState(0, 28 * 86_400_000L + 1_000)
             val repository = LogsRepository(context)
             val start = android.os.SystemClock.elapsedRealtimeNanos()
-            val wide = repository.detailedChart(range, HistoryMetric.CURRENT, pixelWidth = 300)
+            val wide =
+                repository.detailedCharts(range, listOf(HistoryMetric.CURRENT), pixelWidth = 300)
+                    .getValue(HistoryMetric.CURRENT)
             val overviewNanos = android.os.SystemClock.elapsedRealtimeNanos() - start
             val viewport = HistoryRangeState(1_200_001_000, 1_200_901_000)
             val zoomStart = android.os.SystemClock.elapsedRealtimeNanos()
-            val narrow = repository.detailedChart(range, HistoryMetric.CURRENT, viewport, 300)
+            val narrow =
+                repository.detailedCharts(range, listOf(HistoryMetric.CURRENT), viewport, 300)
+                    .getValue(HistoryMetric.CURRENT)
             val zoomNanos = android.os.SystemClock.elapsedRealtimeNanos() - zoomStart
             val expected =
                 database.readHistory(historyQuery(viewport)) { it.map { row -> row.key }.toList() }
@@ -267,14 +275,15 @@ class DetailedHistoryInstrumentedTest {
             )
             val range = HistoryRangeState(0, 300)
             val repository = LogsRepository(context)
-            val model = repository.detailedChart(
-                range, HistoryMetric.VOLTAGE, HistoryRangeState(100, 200), 800
-            )
+            val model = repository.detailedCharts(
+                range, listOf(HistoryMetric.VOLTAGE), HistoryRangeState(100, 200), 800
+            ).getValue(HistoryMetric.VOLTAGE)
             assertEquals(4L, model.count)
             assertEquals(listOf(null, 4.0, null, null, 4.0, null), model.points.map { it.value })
             assertNotEquals(model.points[1].segment, model.points[4].segment)
             assertEquals(-1, model.events.single().code)
-            val bounds = repository.detailedBounds(range, HistoryMetric.VOLTAGE)
+            val bounds = repository.detailedBounds(range, listOf(HistoryMetric.VOLTAGE))
+                .getValue(HistoryMetric.VOLTAGE)
             assertEquals(6L, bounds.count)
             assertEquals(4.0, bounds.min!!, 0.0)
             assertEquals(4.0, bounds.max!!, 0.0)
@@ -362,7 +371,9 @@ class DetailedHistoryInstrumentedTest {
             val saturated = repository.historyRange()!!
             assertEquals(HistoryRangeState(Long.MAX_VALUE - 1, Long.MAX_VALUE), saturated)
             assertEquals(
-                1L, repository.detailedChart(saturated, HistoryMetric.LEVEL, pixelWidth = 800).count
+                1L,
+                repository.detailedCharts(saturated, listOf(HistoryMetric.LEVEL), pixelWidth = 800)
+                    .getValue(HistoryMetric.LEVEL).count
             )
             assertEquals(1, repository.page(saturated, null, true, null).size)
             database.deleteHistory(saturated)
@@ -422,13 +433,16 @@ class DetailedHistoryInstrumentedTest {
         assertEquals(LogResult.Inserted, database.logBoot())
         assertEquals(4, notifications.size)
         database.replaceAllLogs(listOf(observation))
-        assertEquals(5, notifications.size)
-        database.addLogs(listOf(observation.copy(time = 2_000)))
         assertEquals(6, notifications.size)
+        database.addLogs(listOf(observation.copy(time = 2_000)))
+        assertEquals(8, notifications.size)
         database.deleteHistory(null)
-        assertEquals(7, notifications.size)
-        assertTrue(notifications.all {
-            it.action == LogDatabase.ACTION_HISTORY_CHANGED && it.`package` == context.packageName
+        assertEquals(10, notifications.size)
+        val (history, widgets) = notifications.partition { it.action == LogDatabase.ACTION_HISTORY_CHANGED }
+        assertEquals(7, history.size)
+        assertTrue(history.all { it.`package` == context.packageName })
+        assertTrue(widgets.all {
+            it.action == WidgetSettingsReceiver.ACTION_HISTORY_CHANGED && it.component?.className == WidgetSettingsReceiver::class.java.name && it.component?.packageName == context.packageName
         })
     }
 
@@ -442,9 +456,9 @@ class DetailedHistoryInstrumentedTest {
             )
             assertEquals(1_000L, sampler.lastRecordedElapsed)
             assertEquals(
-                1L, LogsRepository(context).detailedChart(
-                    HistoryRangeState(0, 2_000), HistoryMetric.LEVEL, pixelWidth = 800
-                ).count
+                1L, LogsRepository(context).detailedCharts(
+                    HistoryRangeState(0, 2_000), listOf(HistoryMetric.LEVEL), pixelWidth = 800
+                ).getValue(HistoryMetric.LEVEL).count
             )
         }
 

@@ -20,26 +20,19 @@ internal class LogsRepository(context: Context) {
         withContext(Dispatchers.IO) { database { historyChanges(since, range) } }
 
     suspend fun chart(
-        range: HistoryRangeState, selectedKey: HistoryKey? = null
+        range: HistoryRangeState,
+        selectedKey: HistoryKey? = null,
+        metrics: Collection<HistoryMetric> = HistoryMetric.entries
     ): HistoryChartModel = withContext(Dispatchers.IO) {
         val coroutine = currentCoroutineContext()
         database {
             readHistory(historyQuery(range)) {
                 historyChart(
-                    range, it.onEach { coroutine.ensureActive() }, selectedKey
+                    range, it.onEach { coroutine.ensureActive() }, selectedKey, metrics
                 )
             }
         }
     }
-
-    suspend fun detailedChart(
-        range: HistoryRangeState,
-        metric: HistoryMetric,
-        viewport: HistoryRangeState = range,
-        pixelWidth: Int
-    ): DetailedHistoryChartModel = detailedCharts(
-        range, listOf(metric), viewport, pixelWidth
-    ).getValue(metric)
 
     suspend fun detailedCharts(
         range: HistoryRangeState,
@@ -69,10 +62,6 @@ internal class LogsRepository(context: Context) {
             }
         }
     }
-
-    suspend fun detailedBounds(
-        range: HistoryRangeState, metric: HistoryMetric
-    ): DetailedHistoryBounds = detailedBounds(range, listOf(metric)).getValue(metric)
 
     suspend fun detailedBounds(
         range: HistoryRangeState, metrics: List<HistoryMetric>
@@ -152,18 +141,6 @@ internal class LogsRepository(context: Context) {
             block()
         } finally {
             close()
-        }
-    }
-
-    suspend fun read(
-        afterExclusive: Long? = null, throughInclusive: Long? = null
-    ): List<LogRecord> = withContext(Dispatchers.IO) {
-        LogDatabase(appContext).run {
-            try {
-                getLogRecordsInRange(afterExclusive, throughInclusive)
-            } finally {
-                close()
-            }
         }
     }
 }

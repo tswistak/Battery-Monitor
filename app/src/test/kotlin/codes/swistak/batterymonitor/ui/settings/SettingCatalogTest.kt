@@ -8,6 +8,7 @@
 package codes.swistak.batterymonitor.ui.settings
 
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_BRIGHTNESS
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_COLOR_SOURCE
 import codes.swistak.batterymonitor.settings.SettingsDefinitions
@@ -25,9 +26,7 @@ class SettingCatalogTest {
     fun `every existing settings control and appearance control has a searchable destination`() {
         val keys = preferenceKeys()
         assertEquals(
-            (keys - "dismiss_low_battery_on_recovery") + setOf(
-                KEY_COLOR_SOURCE, KEY_BRIGHTNESS
-            ) + SettingCatalog.diagnosticRoutes.keys, SettingCatalog.routes.keys
+            keys + SettingCatalog.diagnosticRoutes.keys, SettingCatalog.routes.keys
         )
         assertEquals(SettingsCategory.entries.toSet(), SettingCatalog.routes.values.toSet())
         assertEquals(6, SettingsCategory.entries.map { it.route }.distinct().size)
@@ -169,7 +168,7 @@ class SettingCatalogTest {
     }
 
     @Test
-    fun `diagnostics search uses translated titles and opens the existing control without a preference copy`() {
+    fun `diagnostics search uses translated titles and opens the existing control`() {
         val names = R.string::class.java.fields.associate { it.getInt(null) to it.name }
         val queries = mapOf(
             "values" to "COLLECT debug",
@@ -182,7 +181,6 @@ class SettingCatalogTest {
             val debug = entries.single { it.key == "debug_logging" }
             assertTrue("$directory: $query", debug.matches(query))
             assertEquals("monitor", debug.diagnosticDetail)
-            assertNull(debug.preference)
             assertEquals(
                 "charging-tools",
                 entries.single { it.key == "charging_diagnostics_capture" }.diagnosticDetail
@@ -234,6 +232,47 @@ class SettingCatalogTest {
             assertTrue(SettingCatalog.isVisible("icon_content", sdk, "automatic"))
             assertTrue(SettingCatalog.isVisible("expanded_notification_details", sdk, "automatic"))
         }
+    }
+
+    @Test
+    fun notificationControlsFollowTheChannelsThatUseThem() {
+        val mainOnly = listOf(
+            SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS,
+            SettingsContract.KEY_ICON_CONTENT,
+            SettingsContract.KEY_SHOW_ICON_UNIT,
+            SettingsContract.KEY_INDICATE_CHARGING
+        )
+        val liveOnly = listOf(
+            SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
+            SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
+            SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
+            SettingsContract.KEY_CHIP_CONTENT,
+            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
+            SettingsContract.KEY_CHIP_INDICATE_CHARGING
+        )
+        val shared = SettingsContract.KEY_TOP_LINE
+        for (app in listOf(false, true)) {
+            for (main in listOf(false, true)) {
+                for (live in listOf(false, true)) {
+                    val availability = NotificationAvailability(app, main, live)
+                    fun enabled(key: String) =
+                        SettingCatalog.notificationDisabledReason(key, 36, availability) == null
+                    assertTrue(mainOnly.all { enabled(it) == (app && main) })
+                    assertTrue(liveOnly.all { enabled(it) == (app && live) })
+                    assertEquals(app && (main || live), enabled(shared))
+                    assertTrue(enabled(SettingsContract.KEY_ENABLE_NOTIFS_B))
+                    assertTrue(enabled(SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS))
+                }
+            }
+        }
+
+        val legacy =
+            NotificationAvailability(appEnabled = true, mainEnabled = false, liveEnabled = true)
+        assertTrue(liveOnly.none { SettingCatalog.isVisible(it, 35, "automatic") })
+        assertEquals(
+            R.string.settings_notification_disabled,
+            SettingCatalog.notificationDisabledReason(shared, 35, legacy)
+        )
     }
 
     private fun preferenceKeys(): Set<String> =

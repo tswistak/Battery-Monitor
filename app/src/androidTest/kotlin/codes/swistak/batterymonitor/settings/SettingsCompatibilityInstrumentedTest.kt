@@ -186,7 +186,16 @@ class SettingsCompatibilityInstrumentedTest {
             SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT to "csv",
             SettingsContract.KEY_LAST_LOG_EXPORT_TIME to 123L,
             SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME to 456L,
-            SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME to 789L
+            SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME to 789L,
+            "ui_color" to "blue",
+            "use_red" to true,
+            "red_threshold" to "15",
+            "use_amber" to true,
+            "amber_threshold" to "30",
+            "use_green" to true,
+            "green_threshold" to "75",
+            "notify_status_duration" to true,
+            "status_dur_est" to "0",
         )
         write(source, portable + excluded)
         val exported = SettingsBackup.exportToJson(source).toString()
@@ -239,7 +248,7 @@ class SettingsCompatibilityInstrumentedTest {
                 )
             )
         )
-        for ((key, _, _, _, _, control) in SettingsDefinitions.preferences) {
+        for ((key, _, _, control) in SettingsDefinitions.preferences) {
             val expected = portable[key] ?: continue
             val effective = when (control) {
                 is SettingsControl.Toggle -> restored.getBoolean(
@@ -251,7 +260,7 @@ class SettingsCompatibilityInstrumentedTest {
                     key, control.defaultValue.resolve(context::getString)
                 )
 
-                SettingsControl.Action -> restored.getStringSet(key, emptySet())
+                SettingsControl.Action -> restored.all[key]
             }
             assertEquals("Effective $key", expected, effective)
         }
@@ -260,13 +269,15 @@ class SettingsCompatibilityInstrumentedTest {
     @Test
     fun historical_json_schemas_restore_through_the_real_parser_and_current_readers() {
         val backups = listOf(
-            """{"version":1,"settings":{"convert_to_fahrenheit":true,"current_hack_multiplier":"-1000","prefer_current_avg_in_main_window":true,"chip_content":"switching","autostart":"never"}}""",
+            """{"version":1,"settings":{"convert_to_fahrenheit":true,"current_hack_multiplier":"-1000","prefer_current_avg_in_main_window":true,"chip_content":"switching","autostart":"never","red_threshold":"invalid","ui_color":"blue"}}""",
             """{"version":2,"settings":{"convert_to_fahrenheit":true,"battery_current_multiplier":"-1000","prefer_average_battery_current":true,"chip_content":"switching","autostart":"never"}}""",
             """{"version":3,"settings":{"convert_to_fahrenheit":true,"battery_current_multiplier":"-1000","prefer_average_battery_current":true,"chip_content_percentage":true,"chip_content_temperature":true,"autostart":"never"}}"""
         )
         for (backup in backups) {
             assertTrue(restored.edit().clear().commit())
             assertTrue(restored.edit().also { SettingsBackup.importFromJson(it, backup) }.commit())
+            assertFalse(restored.contains("red_threshold"))
+            assertFalse(restored.contains("ui_color"))
             assertEquals(TemperatureUnit.FAHRENHEIT, restored.temperatureUnit("celsius"))
             assertEquals(
                 "-1000", restored.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, null)

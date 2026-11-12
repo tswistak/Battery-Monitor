@@ -282,7 +282,7 @@ public final class StorageProbe extends Probe {
     }
 
     private void stopCurrentMonitoring(Context context) throws Exception {
-        require(Boolean.TRUE.equals(invoke(singleton(context, "monitoring.MonitoringDesiredState"), "write", new Class<?>[]{Context.class, boolean.class, boolean.class}, context, false, true)), "Could not persist explicitly stopped monitoring");
+        require(Boolean.TRUE.equals(invoke(singleton(context, "monitoring.MonitoringDesiredState"), "write", new Class<?>[]{Context.class, boolean.class}, context, false)), "Could not persist explicitly stopped monitoring");
         Object watchdog = type(context, "monitoring.BackgroundServiceWatchdog").getField("Companion").get(null);
         invoke(watchdog, "cancel", Context.class, context);
         stopService(context);
@@ -297,7 +297,7 @@ public final class StorageProbe extends Probe {
         NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         require(notifications != null, "Notification service is unavailable");
         notifications.cancelAll();
-        require(Boolean.TRUE.equals(invoke(singleton(context, "monitoring.MonitoringDesiredState"), "write", new Class<?>[]{Context.class, boolean.class, boolean.class}, context, true, true)), "Could not persist requested monitoring start");
+        require(Boolean.TRUE.equals(invoke(singleton(context, "monitoring.MonitoringDesiredState"), "write", new Class<?>[]{Context.class, boolean.class}, context, true)), "Could not persist requested monitoring start");
         startService(context);
     }
 

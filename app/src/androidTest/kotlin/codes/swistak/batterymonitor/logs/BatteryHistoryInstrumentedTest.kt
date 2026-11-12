@@ -15,7 +15,9 @@ package codes.swistak.batterymonitor.logs
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.net.Uri
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
 import androidx.test.platform.app.InstrumentationRegistry
@@ -23,15 +25,21 @@ import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
 import codes.swistak.batterymonitor.devicebackup.LogImportMode
+import codes.swistak.batterymonitor.devicebackup.PreparedDeviceDataBackup
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
 import codes.swistak.batterymonitor.ui.history.HistoryViewModel
+import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
+import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withTimeout
+import org.json.JSONObject
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -43,6 +51,8 @@ import org.junit.Before
 import org.junit.Test
 import java.io.ByteArrayOutputStream
 import java.io.File
+import kotlin.coroutines.resume
+import kotlin.time.Duration.Companion.milliseconds
 
 class BatteryHistoryInstrumentedTest {
     private lateinit var context: Context
@@ -50,6 +60,8 @@ class BatteryHistoryInstrumentedTest {
     private lateinit var database: LogDatabase
     private val range = HistoryRangeState(0, Long.MAX_VALUE)
     private val observation = LogRecord(0, 50, 1_000, 300, 4000, -100_000, 2_500_000)
+    private var widgetHistoryNotifications = 0
+    private var onWidgetHistoryChanged: (() -> Unit)? = null
 
     @Before
     fun setUp() {
@@ -57,6 +69,13 @@ class BatteryHistoryInstrumentedTest {
         directory = File(target.cacheDir, "battery-history-${System.nanoTime()}").apply { mkdirs() }
         context = object : ContextWrapper(target) {
             override fun getApplicationContext(): Context = this
+            override fun sendBroadcast(intent: Intent) {
+                if (intent.action == WidgetSettingsReceiver.ACTION_HISTORY_CHANGED && intent.component?.className == WidgetSettingsReceiver::class.java.name) {
+                    widgetHistoryNotifications++
+                    onWidgetHistoryChanged?.invoke()
+                } else super.sendBroadcast(intent)
+            }
+
             override fun getSharedPreferences(name: String, mode: Int) =
                 target.getSharedPreferences("${directory.name}-$name", mode)
 
@@ -88,6 +107,71 @@ class BatteryHistoryInstrumentedTest {
 
     private fun rows(filters: Set<String>? = null, revealed: Long? = null) =
         database.readHistory(historyQuery(range, filters, revealedId = revealed)) { it.toList() }
+
+    @Test
+    fun explicit_history_mutations_refresh_a_cached_widget_trend_only_after_commit() = runBlocking {
+        val previewContext = object : ContextWrapper(context) {
+            override fun getApplicationContext(): Context = this
+            override fun getPackageName(): String = "${super.getPackageName()}.history_test"
+            override fun getNoBackupFilesDir() = directory
+            override fun getFilesDir() = directory
+        }
+
+        suspend fun invalidate() = withTimeout(5_000.milliseconds) {
+            suspendCancellableCoroutine { continuation ->
+                WidgetUpdateDispatcher.historyChanged(previewContext) { continuation.resume(Unit) }
+            }
+        }
+        onWidgetHistoryChanged = { WidgetUpdateDispatcher.historyChanged(previewContext) {} }
+        suspend fun trendLevels() = requireNotNull(
+            WidgetUpdateDispatcher.previewData(previewContext, 24).trend
+        ).points.mapNotNull { it.value }.toSet()
+
+        val now = System.currentTimeMillis() - 60_000
+        val original = observation.copy(status = 200, charge = 50, time = now)
+        val appended = original.copy(charge = 60, time = now + 1_000)
+        val replacement = original.copy(charge = 70, time = now + 2_000)
+        invalidate()
+        try {
+            database.addLogs(listOf(original))
+            assertEquals(setOf(50.0), trendLevels())
+            database.addLogs(listOf(appended))
+            assertEquals(setOf(50.0, 60.0), trendLevels())
+            assertThrows(IllegalStateException::class.java) {
+                database.replaceAllLogs(sequence {
+                    yield(replacement)
+                    error("Invalid record after first write")
+                })
+            }
+            assertEquals(2, widgetHistoryNotifications)
+            assertEquals(setOf(50.0, 60.0), trendLevels())
+            database.replaceAllLogs(listOf(replacement, appended))
+            assertEquals(setOf(60.0, 70.0), trendLevels())
+            database.deleteHistory(HistoryRangeState(appended.time, replacement.time))
+            assertEquals(setOf(70.0), trendLevels())
+            database.deleteHistory(null)
+            assertTrue(trendLevels().isEmpty())
+            assertEquals(5, widgetHistoryNotifications)
+        } finally {
+            onWidgetHistoryChanged = null
+            invalidate()
+        }
+    }
+
+    private fun writeDeviceHistory(records: List<LogRecord>): String =
+        ByteArrayOutputStream().also {
+            DeviceDataBackup.writeHistory(
+                context, it, records.asSequence()
+            )
+        }.toString("UTF-8")
+
+    private fun prepareDeviceHistory(json: String): PreparedDeviceDataBackup =
+        DeviceDataBackup.read(
+            json.byteInputStream(), File.createTempFile("restore-", ".logs", directory)
+        )
+
+    private fun readDeviceHistory(json: String): List<LogRecord> =
+        requireNotNull(prepareDeviceHistory(json).logs).getOrThrow().read { it.toList() }
 
     private fun log(
         record: LogRecord, elapsed: Long, sampler: BatteryHistorySampler, enabled: Boolean = true
@@ -159,7 +243,7 @@ class BatteryHistoryInstrumentedTest {
                 val original = model()
                 var successCallbacks = 0
                 main {
-                    original.pendingImportUri = android.net.Uri.fromFile(source).toString()
+                    original.pendingImportUri = Uri.fromFile(source).toString()
                     original.pendingImportJson = json
                     original.import(LogImportMode.REPLACE) { successCallbacks++ }
                 }
@@ -180,16 +264,13 @@ class BatteryHistoryInstrumentedTest {
                 assertNull(acknowledged.state.value.importError)
                 assertEquals(initial, rows())
             }
-            val valid = File(directory, "valid.json").apply {
-                writeText(
-                    DeviceDataBackup.exportToJson(context, setOf(DeviceDataType.LOGS)).toString()
-                )
-            }
+            val valid = File(directory, "valid.json")
+            DeviceDataBackup.exportToUri(context, Uri.fromFile(valid), setOf(DeviceDataType.LOGS))
             sql("CREATE TRIGGER fail_history_import BEFORE INSERT ON logs BEGIN SELECT RAISE(ABORT, 'synthetic restore failure'); END")
             val partial = model()
             var successful = 0
             main {
-                partial.pendingImportUri = android.net.Uri.fromFile(valid).toString()
+                partial.pendingImportUri = Uri.fromFile(valid).toString()
                 partial.pendingImportJson = true
                 partial.import(LogImportMode.REPLACE) { successful++ }
             }
@@ -206,7 +287,7 @@ class BatteryHistoryInstrumentedTest {
             sql("DROP TRIGGER fail_history_import")
             val successfulImport = model()
             main {
-                successfulImport.pendingImportUri = android.net.Uri.fromFile(valid).toString()
+                successfulImport.pendingImportUri = Uri.fromFile(valid).toString()
                 successfulImport.pendingImportJson = true
                 successfulImport.import(LogImportMode.REPLACE) { successful++ }
             }
@@ -415,17 +496,20 @@ class BatteryHistoryInstrumentedTest {
                 remainingChargeMicroampHours = null
             )
         )
-        val json = DeviceDataBackup.exportLogsToJson(context, records).toString()
-        assertEquals(records, DeviceDataBackup.readLogsFromJson(json))
+        val json = writeDeviceHistory(records)
+        assertEquals(records, readDeviceHistory(json))
         val csv = ByteArrayOutputStream().also { LogExport.writeCsv(context, it, records, true) }
             .toString("UTF-8")
-        val restored = CsvLogImporter.parseRecords(csv, { 0 }, { _, _ -> 1000 })
+        val restored = CsvLogImporter.decodeRecords(
+            CsvLogImporter.readCsvRows(csv.reader()),
+            { 0 },
+            { _, _ -> 1000 }).toList()
         assertEquals(records, restored)
         val legacy = """{"version":1,"logs":[{"status":100,"charge":50,"time":1000}]}"""
-        assertEquals(
-            DeviceDataBackup.readLogsFromJson(legacy), listOf(LogRecord(100, 50, 1000, null, null))
+        assertEquals(listOf(LogRecord(100, 50, 1000, null, null)), readDeviceHistory(legacy))
+        DeviceDataBackup.restore(
+            context, prepareDeviceHistory(json), setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
         )
-        database.replaceAllLogs(DeviceDataBackup.readLogsFromJson(json))
         assertEquals(records, database.getAllLogRecords())
     }
 
@@ -443,30 +527,59 @@ class BatteryHistoryInstrumentedTest {
             context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
         preferences.edit().putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 1234).commit()
         database.addLogs(records)
-        val backup = DeviceDataBackup.exportToJson(context, selected)
-        val logExport = DeviceDataBackup.exportLogsToJson(context, records)
-        assertEquals(2, backup.getInt("version"))
-        assertEquals(logExport.toString(), backup.toString())
-        DeviceDataBackup.validateJson(backup.toString(), selected)
-        assertEquals(records, DeviceDataBackup.readLogsFromJson(backup.toString()))
+        val export = File(directory, "device.json")
+        DeviceDataBackup.exportToUri(context, Uri.fromFile(export), selected)
+        val backup = export.readText()
+        assertEquals(2, JSONObject(backup).getInt("version"))
+        assertEquals(
+            JSONObject(writeDeviceHistory(records)).toString(), JSONObject(backup).toString()
+        )
+        assertEquals(records, readDeviceHistory(backup))
 
         database.replaceAllLogs(emptyList())
         preferences.edit().remove(SettingsContract.KEY_LAST_LOG_EXPORT_TIME).commit()
-        DeviceDataBackup.importFromJson(context, backup.toString(), selected, LogImportMode.REPLACE)
+        DeviceDataBackup.restore(
+            context, prepareDeviceHistory(backup), selected, LogImportMode.REPLACE
+        )
         assertEquals(records, database.getAllLogRecords())
         assertEquals(1234L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, -1))
 
         database.replaceAllLogs(records.dropLast(1))
-        val sampleExport =
-            DeviceDataBackup.exportLogsToJson(context, records.takeLast(1)).toString()
-        DeviceDataBackup.importFromJson(context, sampleExport, selected, LogImportMode.ADD)
+        val sampleExport = writeDeviceHistory(records.takeLast(1))
+        DeviceDataBackup.restore(
+            context, prepareDeviceHistory(sampleExport), selected, LogImportMode.ADD
+        )
         assertEquals(records, database.getAllLogRecords())
 
         for (version in listOf(1, 2)) {
             val legacy = """{"version":$version,"logs":[{"status":112,"charge":50,"time":1000}]}"""
-            DeviceDataBackup.importFromJson(context, legacy, selected, LogImportMode.REPLACE)
+            DeviceDataBackup.restore(
+                context, prepareDeviceHistory(legacy), selected, LogImportMode.REPLACE
+            )
             assertEquals(listOf(LogRecord(112, 50, 1000, null, null)), database.getAllLogRecords())
         }
+    }
+
+    @Test
+    fun csv_replace_rolls_back_a_late_invalid_row_and_empty_export_keeps_existing_history() {
+        database.addLogs(listOf(observation))
+        val empty = ByteArrayOutputStream().also {
+            LogExport.writeCsv(context, it, emptySequence(), includeHeader = true)
+        }.toString("UTF-8")
+        assertEquals(
+            0, CsvLogImporter.importFromReader(context, empty.reader(), LogImportMode.REPLACE)
+        )
+        assertEquals(listOf(observation), database.getAllLogRecords())
+
+        val partial = ByteArrayOutputStream().also {
+            LogExport.writeCsv(
+                context, it, sequenceOf(observation.copy(time = 10000)), includeHeader = true
+            )
+        }.toString("UTF-8") + "invalid,record\r\n"
+        assertThrows(IllegalArgumentException::class.java) {
+            CsvLogImporter.importFromReader(context, partial.reader(), LogImportMode.REPLACE)
+        }
+        assertEquals(listOf(observation), database.getAllLogRecords())
     }
 
     @Test
@@ -655,11 +768,16 @@ class BatteryHistoryInstrumentedTest {
             val file = File(directory, "append-$columns.csv")
             file.writeText(header.joinToString(",") + "\r\n" + oldRow.joinToString(","))
             val sample = observation.copy(status = 200, time = 121_000)
-            LogExport.appendCsv(context, android.net.Uri.fromFile(file), sequenceOf(sample))
+            LogExport.appendCsv(context, Uri.fromFile(file), sequenceOf(sample))
             val rows = CsvLogImporter.parseCsv(file.readText())
             assertEquals(3, rows.size)
             assertTrue(LogExport.hasMeasurementCsvHeader(rows.first()))
-            val records = CsvLogImporter.parseRecords(file.readText(), { 100 }, { _, _ -> 121_000 })
+            val records = file.bufferedReader().use {
+                CsvLogImporter.decodeRecords(
+                    CsvLogImporter.readCsvRows(it),
+                    { 100 },
+                    { _, _ -> 121_000 }).toList()
+            }
             assertEquals(100, records.first().status)
             assertEquals(sample, records.last())
         }

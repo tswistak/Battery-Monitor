@@ -26,6 +26,30 @@ import java.util.Locale
 
 class HistoryModelTest {
     @Test
+    fun `level trends keep the same data gaps and events as a full chart`() {
+        val range = HistoryRangeState(0, 60_000)
+        val level = listOf(HistoryMetric.LEVEL)
+        val samples = (1L..50_000L).asSequence().map { id ->
+            val status = when (id) {
+                10_000L -> 2
+                20_000L -> LogDatabase.STATUS_BOOT_COMPLETED
+                30_000L -> 0
+                else -> 200
+            }
+            val charge = (id % 101).toInt().takeUnless { id % 3_000 == 0L }
+            HistoryRecord(id, LogRecord(status, charge, id, 300, 4_000, -100_000, 2_500_000))
+        }
+        for (records in listOf(emptySequence(), samples)) {
+            val full = historyChart(range, records)
+            val trend = historyChart(range, records, metrics = level)
+            assertEquals(
+                full.copy(series = mapOf(HistoryMetric.LEVEL to full.series.getValue(HistoryMetric.LEVEL))),
+                trend
+            )
+        }
+    }
+
+    @Test
     fun `refresh keeps an exact selected observation that downsampling would otherwise omit`() {
         val range = HistoryRangeState(0, 42_000)
         val records = (1L..100L).map { id ->
@@ -425,7 +449,7 @@ class HistoryModelTest {
 
     @Test
     fun `a failed or cancelled write cannot advance the export watermark`() {
-        var watermark = 10L
+        var watermark = HistoryKey(10, 1)
         val request = HistoryExportRequest(10, 20, LogExportFormat.CSV, advanceWatermark = true)
         for (failure in listOf(
             IOException("write or close failed"),
@@ -437,15 +461,17 @@ class HistoryModelTest {
             } catch (exception: Exception) {
                 assertSame(failure, exception)
             }
-            assertEquals(10, watermark)
+            assertEquals(HistoryKey(10, 1), watermark)
         }
-        completeHistoryExport(request, {}, { watermark = it })
-        assertEquals(20, watermark)
+        completeHistoryExport(request, { null }, { watermark = it })
+        assertEquals(HistoryKey(10, 1), watermark)
+        completeHistoryExport(request, { HistoryKey(17, 2) }, { watermark = it })
+        assertEquals(HistoryKey(17, 2), watermark)
         completeHistoryExport(
             request.copy(through = 100, advanceWatermark = false),
-            {},
+            { HistoryKey(100, 3) },
             { watermark = it })
-        assertEquals(20, watermark)
+        assertEquals(HistoryKey(17, 2), watermark)
     }
 
     @Test

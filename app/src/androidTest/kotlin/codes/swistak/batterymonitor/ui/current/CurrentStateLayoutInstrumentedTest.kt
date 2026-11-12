@@ -15,13 +15,9 @@
 */
 package codes.swistak.batterymonitor.ui.current
 
-import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.KeyEvent
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,15 +38,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.logs.HistoryChartModel
@@ -65,8 +59,10 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
 import codes.swistak.batterymonitor.monitoring.presentation.PredictionSnapshot
 import codes.swistak.batterymonitor.settings.LongDurationFormat
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
-import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import org.junit.Assert.assertEquals
@@ -74,27 +70,19 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import kotlin.math.roundToInt
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class CurrentStateLayoutInstrumentedTest {
 
     @Test
     fun overview_percentage_points_keep_their_physical_height_as_samples_arrive() {
-        val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                context, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         var values by mutableStateOf<List<Double>>(emptyList())
         var origin = Offset.Zero
         var plotWidth = 0
         var color = 0
-        try {
-            await {
-                val hostActivity = host.lastActivity as? FullscreenChartActivity
-                hostActivity != null && !hostActivity.isDestroyed && hostActivity.lifecycle.currentState == Lifecycle.State.RESUMED && (hostActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && hostActivity.resources.configuration.smallestScreenWidthDp >= 600 || hostActivity.isInMultiWindowMode)
-            }
-            activity = host.lastActivity as FullscreenChartActivity
+        scenario.use { scenario ->
+            scenario.onActivity { activity = it }
             val width = 390
             main {
                 density = minOf(
@@ -176,21 +164,12 @@ class CurrentStateLayoutInstrumentedTest {
                     }
                 }
             }
-        } finally {
-            main { host.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(host)
         }
     }
 
     @Test
     fun paused_target_card_switches_without_a_zero_target_duplicate_or_invented_ETA() {
-        val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                context, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         val reached = PredictionSnapshot(BatteryInfo.Prediction.NONE, 80, true, 0, 0, 0)
         val cleared = PredictionSnapshot(BatteryInfo.Prediction.NONE, 0, false, 2, 12, 30)
         var reading by mutableStateOf(
@@ -213,12 +192,8 @@ class CurrentStateLayoutInstrumentedTest {
         )
         var availability by mutableStateOf(MonitoringAvailability.LIVE)
         var available by mutableStateOf(true)
-        try {
-            await {
-                val hostActivity = host.lastActivity as? FullscreenChartActivity
-                hostActivity != null && !hostActivity.isDestroyed && hostActivity.lifecycle.currentState == Lifecycle.State.RESUMED && (hostActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && hostActivity.resources.configuration.smallestScreenWidthDp >= 600 || hostActivity.isInMultiWindowMode)
-            }
-            activity = host.lastActivity as FullscreenChartActivity
+        scenario.use { scenario ->
+            scenario.onActivity { activity = it }
             main { DisplayStrings.setResources(activity.resources) }
             for (width in listOf(390, 1000)) {
                 render(width, 850, monitorOverride = {
@@ -264,8 +239,13 @@ class CurrentStateLayoutInstrumentedTest {
                         )
                     )
                 }
-                await { hasText(context.getString(R.string.current_show_to_target, 80)) }
-                assertFalse(hasText(paused100))
+                await {
+                    !hasText(paused100) && hasText(
+                        context.getString(
+                            R.string.current_show_to_target, 80
+                        )
+                    )
+                }
                 click(context.getString(R.string.current_show_to_target, 80))
                 await { hasText(reachedText) }
                 main {
@@ -289,16 +269,13 @@ class CurrentStateLayoutInstrumentedTest {
                         reading.copy(status = BatteryInfo.STATUS_NOT_CHARGING, levelPercent = 88)
                 }
             }
-        } finally {
-            main { host.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(host)
         }
     }
 
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context = instrumentation.targetContext
-    private lateinit var activity: FullscreenChartActivity
+    private lateinit var activity: ComposeTestActivity
+
     private var density = 1f
     private var selectedSection: SectionOwner? = null
     private var batteryUsageRequests = 0
@@ -307,20 +284,9 @@ class CurrentStateLayoutInstrumentedTest {
 
     @Test
     fun current_actions_remain_usable_on_small_wide_large_font_and_rtl_layouts() {
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                context, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
-        try {
-            await {
-                val host = monitor.lastActivity as? FullscreenChartActivity
-                host != null && !host.isDestroyed && (host.resources.configuration.smallestScreenWidthDp >= 600 || host.isInMultiWindowMode || host.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) && host.lifecycle.currentState == Lifecycle.State.RESUMED
-            }
-            instrumentation.waitForIdleSync()
-            activity = monitor.lastActivity as FullscreenChartActivity
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
+        scenario.use { scenario ->
+            scenario.onActivity { activity = it }
             main { DisplayStrings.setResources(activity.resources) }
             render(390, 280)
             await { hasHero() }
@@ -400,10 +366,6 @@ class CurrentStateLayoutInstrumentedTest {
                 instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
                 await { !hasText(detailSource) }
             }
-        } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(monitor)
         }
     }
 
@@ -555,39 +517,8 @@ class CurrentStateLayoutInstrumentedTest {
         return found
     }
 
-    private fun nodes(): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
+    private fun nodes(): List<SemanticsNode> = composeWindowNodes()
 
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            if (view !is ViewGroup) return emptyList()
-            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
-        }
-        return WindowInspectorCompat.getGlobalWindowViews().flatMap(::owners)
-            .flatMap { descendants(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) {
-        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) action()
-        else {
-            var failure: Throwable? = null
-            instrumentation.runOnMainSync {
-                try {
-                    action()
-                } catch (error: Throwable) {
-                    failure = error
-                }
-            }
-            failure?.let { throw it }
-        }
-    }
-
-    private fun await(ready: () -> Boolean) {
-        val deadline = System.nanoTime() + 10_000_000_000
-        while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue("Current state did not reach the expected layout", ready())
-    }
+    private fun await(ready: () -> Boolean) =
+        awaitCondition({ "Current state did not reach the expected layout" }, ready)
 }

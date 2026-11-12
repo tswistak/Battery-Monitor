@@ -42,6 +42,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowContentResolver
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.concurrent.CountDownLatch
@@ -79,8 +80,22 @@ class JsonLogAppendTest {
         ShadowContentResolver.registerProviderInternal("json-append", provider)
     }
 
-    private fun document(vararg records: LogRecord) =
-        DeviceDataBackup.exportLogsToJson(context, records.toList()).toString()
+    private fun document(vararg records: LogRecord): String = ByteArrayOutputStream().also {
+        DeviceDataBackup.writeHistory(context, it, records.asSequence())
+    }.toString("UTF-8")
+
+    private fun decodedLogs(json: String): List<LogRecord> {
+        val backup = DeviceDataBackup.read(json.byteInputStream(), temporary.newFile())
+        return requireNotNull(backup.logs).getOrThrow().read { it.toList() }
+    }
+
+    private fun storedLogs(): List<LogRecord> = LogDatabase(context).let { database ->
+        try {
+            database.getAllLogRecords()
+        } finally {
+            database.close()
+        }
+    }
 
     private fun addObservation() {
         val database = LogDatabase(context)
@@ -142,6 +157,8 @@ class JsonLogAppendTest {
             if (version == 1) {
                 oldJson.remove(Version2DeviceDataImporter.KEY_LOG_CURRENT)
                 oldJson.remove(Version2DeviceDataImporter.KEY_LOG_REMAINING_CHARGE)
+                original.remove("version")
+                original.put("version", version)
             }
             val preservedOld =
                 if (version == 1) old.copy(remainingChargeMicroampHours = null) else old
@@ -154,7 +171,7 @@ class JsonLogAppendTest {
 
             val result = JSONObject(file.readText())
             assertEquals(2, result.getInt("version"))
-            assertEquals(expected, DeviceDataBackup.readLogsFromJson(file.readText()))
+            assertEquals(expected, decodedLogs(file.readText()))
             if (version == 1) {
                 val preserved = result.getJSONArray("logs").getJSONObject(0)
                 assertFalse(preserved.has(Version2DeviceDataImporter.KEY_LOG_CURRENT))
@@ -169,10 +186,12 @@ class JsonLogAppendTest {
             if (version == 1) assertEquals(
                 1, result.getJSONObject("predictor").getInt("stateVersion")
             )
-            DeviceDataBackup.importFromJson(
-                context, file.readText(), setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
+            val backup =
+                DeviceDataBackup.readFromUri(context, Uri.fromFile(file), temporary.newFile())
+            DeviceDataBackup.restore(
+                context, backup, setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
             )
-            assertEquals(expected, LogExport.loadRecords(context))
+            assertEquals(expected, storedLogs())
         }
     }
 
@@ -181,14 +200,32 @@ class JsonLogAppendTest {
         for (initial in listOf("", document())) {
             file.writeText(initial)
             LogExport.appendJson(context, uri, sequenceOf(observation))
-            assertEquals(listOf(observation), DeviceDataBackup.readLogsFromJson(file.readText()))
+            assertEquals(listOf(observation), decodedLogs(file.readText()))
         }
         file.writeText("")
         LogExport.appendJson(context, uri, emptySequence())
-        assertEquals(emptyList<LogRecord>(), DeviceDataBackup.readLogsFromJson(file.readText()))
+        assertEquals(emptyList<LogRecord>(), decodedLogs(file.readText()))
         file.writeText(JSONObject(document()).put("predictor", JSONObject.NULL).toString())
         LogExport.appendJson(context, uri, sequenceOf(observation))
         assertTrue(JSONObject(file.readText()).isNull("predictor"))
+    }
+
+    @Test
+    fun large_streamed_history_remains_importable_after_append() {
+        val count = 20_000L
+        val records = (1L..count).asSequence().map { old.copy(time = it) }
+        file.outputStream().use { DeviceDataBackup.writeHistory(context, it, records) }
+        val last = observation.copy(time = count + 1)
+
+        LogExport.appendJson(context, uri, sequenceOf(last))
+
+        val backup = DeviceDataBackup.readFromUri(context, Uri.fromFile(file), temporary.newFile())
+        requireNotNull(backup.logs).getOrThrow().read { rows ->
+            val iterator = rows.iterator()
+            for (time in 1L..count) assertEquals(old.copy(time = time), iterator.next())
+            assertEquals(last, iterator.next())
+            assertFalse(iterator.hasNext())
+        }
     }
 
     @Test
@@ -260,16 +297,23 @@ class JsonLogAppendTest {
     @Test
     fun bounded_input_and_output_fail_before_replacement() {
         val original = document(old)
-        file.writeText(original + " ".repeat(JsonLogAppend.MAX_BYTES))
+        java.io.RandomAccessFile(file, "rw")
+            .use { it.setLength(JsonLogAppend.MAX_BYTES.toLong() + 1) }
         val length = file.length()
         assertThrows(IllegalArgumentException::class.java) {
             LogExport.appendJson(context, uri, sequenceOf(observation))
         }
         assertEquals(length, file.length())
         assertEquals(0, provider.writes)
-        assertThrows(IllegalArgumentException::class.java) {
-            DeviceDataBackup.prepareLogsAppend(original, sequenceOf(observation), original.length)
+        file.writeText(original)
+        assertThrows(java.io.IOException::class.java) {
+            temporary.newFile().outputStream().use {
+                DeviceDataBackup.prepareLogsAppend(
+                    file, it, sequenceOf(observation), original.length
+                )
+            }
         }
+        assertEquals(original, file.readText())
     }
 
     @Test
@@ -322,16 +366,15 @@ class JsonLogAppendTest {
             100, 200, LogExportFormat.JSON, append = true, advanceWatermark = true
         )
         assertThrows(IllegalStateException::class.java) {
-            completeHistoryExport(
-                request,
-                write = { LogExport.appendJson(context, uri, sequenceOf(observation)) },
-                saveWatermark = { error("Watermark storage unavailable") })
+            completeHistoryExport(request, write = {
+                LogExport.appendJson(context, uri, sequenceOf(observation))
+                HistoryKey(observation.time, 1)
+            }, saveWatermark = { error("Watermark storage unavailable") })
         }
-        assertEquals(listOf(old, observation), DeviceDataBackup.readLogsFromJson(file.readText()))
+        assertEquals(listOf(old, observation), decodedLogs(file.readText()))
         LogExport.appendJson(context, uri, sequenceOf(observation))
         assertEquals(
-            listOf(old, observation, observation),
-            DeviceDataBackup.readLogsFromJson(file.readText())
+            listOf(old, observation, observation), decodedLogs(file.readText())
         )
     }
 
@@ -358,8 +401,7 @@ class JsonLogAppendTest {
         assertEquals(100L, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0))
         AutoLogExporter.exportInMainProcess(context)
         assertEquals(
-            listOf(old, observation, observation),
-            DeviceDataBackup.readLogsFromJson(file.readText())
+            listOf(old, observation, observation), decodedLogs(file.readText())
         )
         assertEquals(200L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0))
         val automatic = preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0)
@@ -398,6 +440,32 @@ class JsonLogAppendTest {
                     SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0
                 ) >= repeatedWatermark
             )
+        } finally {
+            database.close()
+        }
+    }
+
+    @Test
+    fun automatic_export_retries_rows_committed_after_a_previous_run_including_timestamp_ties() {
+        file.writeText(document())
+        preferences.edit().putBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
+            .putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, "24").putString(
+                SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, "content://json-append/tree/root"
+            ).putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, "json")
+            .putString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, "append").commit()
+        val database = LogDatabase(context)
+        try {
+            database.addLogs(listOf(old))
+            AutoLogExporter.exportInMainProcess(context)
+            assertEquals(
+                old.time, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1)
+            )
+
+            val tied = old.copy(charge = 49)
+            database.addLogs(listOf(tied, observation))
+            AutoLogExporter.exportInMainProcess(context)
+            AutoLogExporter.exportInMainProcess(context)
+            assertEquals(listOf(old, tied, observation), decodedLogs(file.readText()))
         } finally {
             database.close()
         }

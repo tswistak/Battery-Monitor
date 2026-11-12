@@ -53,10 +53,10 @@ class SettingsBackupSchemaTest {
         )
         assertEquals(
             "Classify each new user setting as portable or intentionally device-specific",
-            (SettingCatalog.routes.keys - SettingCatalog.diagnosticRoutes.keys) + SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
+            SettingCatalog.routes.keys - SettingCatalog.diagnosticRoutes.keys,
             scalarSettings.map { it.key }.toSet() + appearanceSettings + encodedSettings + actions
         )
-        for ((key, _, _, _, _, control) in scalarSettings) {
+        for ((key, _, _, control) in scalarSettings) {
             val expectedType = when (control) {
                 is SettingsControl.Toggle -> Boolean::class.java
                 is SettingsControl.Number -> Int::class.java

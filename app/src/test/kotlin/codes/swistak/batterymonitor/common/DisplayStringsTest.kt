@@ -82,16 +82,6 @@ class DisplayStringsTest {
     }
 
     @Test
-    fun `detailed charge format uses one decimal place and locale separators`() {
-        assertEquals("2,847.3", DisplayStrings.formatChargeDetailed(2_847_300L, Locale.US))
-        assertEquals(
-            "2 847,3", DisplayStrings.formatChargeDetailed(
-                2_847_300L, Locale.forLanguageTag("pl-PL")
-            ).replace('\u00a0', ' ').replace('\u202f', ' ')
-        )
-    }
-
-    @Test
     fun `12 hour time excludes seconds when not requested`() {
         assertTimeFormatting(
             is24Hour = false,

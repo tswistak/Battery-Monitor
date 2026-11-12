@@ -147,6 +147,7 @@ internal object ProfileHistoryObserver : Application.ActivityLifecycleCallbacks 
                 "fullscreen",
                 JSONObject().put("range", range(state.range)).put("viewport", range(state.viewport))
                     .put("rangeLabel", state.rangeLabel).put("metric", state.metric.name)
+                    .put("style", state.style.name)
                     .put("comparison", state.comparison?.name ?: JSONObject.NULL)
                     .put("selectedKey", state.selectedKey?.let(::key) ?: JSONObject.NULL).put(
                         "selectedRecordKey",

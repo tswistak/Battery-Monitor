@@ -14,13 +14,8 @@ package codes.swistak.batterymonitor.ui.dialogs
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
-import android.content.res.Configuration
 import android.os.Build
 import android.view.KeyEvent
-import android.view.View
-import android.view.ViewGroup
-import android.view.inspector.WindowInspector
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -30,22 +25,22 @@ import androidx.compose.runtime.saveable.SaveableStateRegistry
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
-import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.logs.HistoryMetric
-import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.clickSemantics
+import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.alarms.AlarmDraft
 import codes.swistak.batterymonitor.ui.alarms.AlarmsState
 import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
 import codes.swistak.batterymonitor.ui.alarms.editThresholdInput
 import codes.swistak.batterymonitor.ui.components.NumericValueDialog
-import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -53,11 +48,13 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class DialogEditingInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val target = instrumentation.targetContext
-    private lateinit var activity: FullscreenChartActivity
+    private lateinit var activity: ComposeTestActivity
+
     private lateinit var registry: SaveableStateRegistry
     private lateinit var fixture: @Composable () -> Unit
     private lateinit var themedContext: Context
@@ -280,26 +277,13 @@ class DialogEditingInstrumentedTest {
             override fun getSharedPreferences(name: String, mode: Int) =
                 target.getSharedPreferences("$preferencesName-$name", mode)
         }
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                target, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         try {
-            await {
-                val latest = monitor.lastActivity as? FullscreenChartActivity
-                latest != null && !latest.isDestroyed && latest.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && latest.lifecycle.currentState == Lifecycle.State.RESUMED
-            }
-            instrumentation.waitForIdleSync()
-            activity = monitor.lastActivity as FullscreenChartActivity
+            scenario.onActivity { activity = it }
             registry = SaveableStateRegistry(null) { true }
             test()
         } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(monitor)
+            scenario.close()
             themedContext.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
                 .edit().clear().commit()
         }
@@ -372,7 +356,7 @@ class DialogEditingInstrumentedTest {
     }
 
     private fun click(text: String) {
-        main { assertTrue(button(text).config[SemanticsActions.OnClick].action?.invoke() == true) }
+        main { button(text).clickSemantics() }
         instrumentation.waitForIdleSync()
     }
 
@@ -397,41 +381,9 @@ class DialogEditingInstrumentedTest {
 
     private fun dialogNodes() = nodes().filter { it.config.contains(SemanticsProperties.IsDialog) }
 
-    private fun nodes(): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
-
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            if (view !is ViewGroup) return emptyList()
-            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
-        }
-        return WindowInspector.getGlobalWindowViews().flatMap(::owners)
-            .flatMap { descendants(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) {
-        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) action()
-        else {
-            var failure: Throwable? = null
-            instrumentation.runOnMainSync {
-                try {
-                    action()
-                } catch (error: Throwable) {
-                    failure = error
-                }
-            }
-            failure?.let { throw it }
-        }
-    }
+    private fun nodes(): List<SemanticsNode> = composeWindowNodes()
 
     private fun await(
         message: String = "Dialog did not reach the expected state", ready: () -> Boolean
-    ) {
-        val deadline = System.nanoTime() + 10_000_000_000
-        while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue(message, ready())
-    }
+    ) = awaitCondition({ message }, ready)
 }

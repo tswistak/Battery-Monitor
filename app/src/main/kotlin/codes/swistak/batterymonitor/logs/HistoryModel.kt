@@ -37,7 +37,6 @@ internal data class HistoryRangeState(val start: Long, val end: Long) {
     }
 }
 
-
 internal data class HistoryKey(val time: Long, val id: Long)
 internal data class HistoryChanges(val revision: Long, val affectsRange: Boolean)
 
@@ -94,8 +93,8 @@ internal fun historyEventCode(status: Int): Int? = when (historyFilterKey(status
 
 internal fun historyObservationValue(metric: HistoryMetric, record: LogRecord): Double? {
     if (record.status == LogDatabase.STATUS_BOOT_COMPLETED) return null
-    val voltage = record.voltage?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
-    return metric.value(record.copy(voltage = voltage))?.takeIf(Double::isFinite)
+    if (metric == HistoryMetric.VOLTAGE && record.voltage?.let(BatteryVoltageValidator::isValidBroadcastMillivolts) != true) return null
+    return metric.value(record)?.takeIf(Double::isFinite)
 }
 
 internal enum class HistoryMetric {
@@ -144,7 +143,10 @@ internal data class HistoryChartModel(
 )
 
 internal fun historyChart(
-    range: HistoryRangeState, records: Sequence<HistoryRecord>, selectedKey: HistoryKey? = null
+    range: HistoryRangeState,
+    records: Sequence<HistoryRecord>,
+    selectedKey: HistoryKey? = null,
+    metrics: Collection<HistoryMetric> = HistoryMetric.entries
 ): HistoryChartModel {
     class Bucket {
         var selected: HistoryPoint? = null
@@ -177,7 +179,7 @@ internal fun historyChart(
         ) + eventFirst.filterNotNull() + eventLast.filterNotNull()).distinctBy { it.key }
     }
 
-    val buckets = HistoryMetric.entries.associateWith { Array(42) { Bucket() } }
+    val buckets = metrics.associateWith { Array(42) { Bucket() } }
     val events = mutableMapOf<Pair<Int, Int>, HistoryEvent>()
     val segments = LongArray(HistoryMetric.entries.size)
     var count = 0L
@@ -190,13 +192,14 @@ internal fun historyChart(
                 .coerceIn(0, 41)
         val eventCode = historyEventCode(record.status)
         val event = HistoryEvent.indexFor(eventCode)
-        for (metric in HistoryMetric.entries) {
+        val key = entry.key
+        for ((metric, metricBuckets) in buckets) {
             val value = historyObservationValue(metric, record)
             if (value == null) segments[metric.ordinal]++
-            val point = HistoryPoint(entry.key, value, segments[metric.ordinal])
-            buckets.getValue(metric)[bucket].apply {
+            val point = HistoryPoint(key, value, segments[metric.ordinal])
+            metricBuckets[bucket].apply {
                 add(point, event)
-                if (entry.key == selectedKey) selected = point
+                if (key == selectedKey) selected = point
             }
         }
         if (eventCode != null) {
@@ -279,9 +282,9 @@ internal fun historyQuery(
     require(limit == null || limit in 1..129)
     return HistoryQuery(
         "SELECT _id, status, charge, time, temperature, voltage, current, remaining_charge_uah FROM logs WHERE ${
-            where.joinToString(
-                " AND "
-            )
-        } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
+        where.joinToString(
+            " AND "
+        )
+    } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
         args.toTypedArray())
 }

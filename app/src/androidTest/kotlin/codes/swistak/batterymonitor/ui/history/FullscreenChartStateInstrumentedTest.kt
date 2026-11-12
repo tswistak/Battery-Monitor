@@ -13,6 +13,7 @@
 package codes.swistak.batterymonitor.ui.history
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.ComponentCallbacks
 import android.content.Context
@@ -40,7 +41,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.core.view.WindowInsetsCompat
@@ -50,8 +50,8 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.DetailedHistoryChartModel
 import codes.swistak.batterymonitor.logs.DetailedHistoryTimeAxis
@@ -63,6 +63,9 @@ import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.YAxis
@@ -71,7 +74,6 @@ import com.github.mikephil.charting.jobs.MoveViewJob
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
@@ -82,6 +84,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class FullscreenChartStateInstrumentedTest {
     @SuppressLint("RestrictedApi")
@@ -94,21 +97,7 @@ class FullscreenChartStateInstrumentedTest {
             FullscreenChartActivity.intent(target, HistoryMetric.LEVEL, range, "custom")
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
-        fun nodes(): List<SemanticsNode> {
-            fun descendants(node: SemanticsNode): List<SemanticsNode> =
-                listOf(node) + node.children.flatMap(::descendants)
-
-            fun owners(view: View): List<SemanticsOwner> {
-                val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                    ?.invoke(view) as? SemanticsOwner
-                if (owner != null) return listOf(owner)
-                return if (view is ViewGroup) (0 until view.childCount).flatMap {
-                    owners(view.getChildAt(it))
-                } else emptyList()
-            }
-            return WindowInspectorCompat.getGlobalWindowViews().filter { it.hasWindowFocus() }
-                .flatMap(::owners).flatMap { descendants(it.rootSemanticsNode) }
-        }
+        fun nodes(): List<SemanticsNode> = composeWindowNodes { it.hasWindowFocus() }
 
         fun labelNode(label: Int): SemanticsNode? {
             val text = target.getString(label)
@@ -156,10 +145,25 @@ class FullscreenChartStateInstrumentedTest {
             tap(R.string.history_chart_settings)
             await { visible(R.string.history_chart_display_style) && visible(R.string.cancel) }
         }
+
+        fun editComparison(opener: Int, choice: Int) {
+            await({ "The previous chart dialog must close before reopening comparison" }) {
+                !visible(R.string.cancel)
+            }
+            tap(opener)
+            await({ "The comparison editor did not open" }) {
+                visible(R.string.history_chart_no_comparison) && visible(R.string.cancel)
+            }
+            tap(choice)
+            await({ "Comparison draft did not select '${target.getString(choice)}'" }) {
+                main { control(choice)?.config?.getOrNull(SemanticsProperties.Selected) == true }
+            }
+        }
+
         try {
             await {
                 val activity = host.lastActivity as? FullscreenChartActivity
-                activity != null && !activity.isDestroyed && activity.hasWindowFocus() && activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                activity != null && !activity.isDestroyed && activity.hasWindowFocus()
             }
             lateinit var viewer: FullscreenChartViewModel
             main {
@@ -194,25 +198,23 @@ class FullscreenChartStateInstrumentedTest {
             tap(R.string.cancel)
             assertEquals(ChartDrawingStyle.POINTS, viewer.state.value!!.style)
 
-            tap(R.string.history_chart_compare)
-            tap(R.string.current_temperature)
+            editComparison(R.string.history_chart_compare, R.string.current_temperature)
             assertNull(viewer.state.value!!.comparison)
             tap(R.string.cancel)
             assertNull(viewer.state.value!!.comparison)
-            tap(R.string.history_chart_compare)
-            tap(R.string.current_voltage)
+            editComparison(R.string.history_chart_compare, R.string.current_voltage)
             assertNull(viewer.state.value!!.comparison)
             tap(R.string.okay)
             await { viewer.state.value!!.comparison == HistoryMetric.VOLTAGE }
-            tap(R.string.current_voltage)
-            tap(R.string.history_chart_no_comparison)
+            editComparison(R.string.current_voltage, R.string.history_chart_no_comparison)
             assertEquals(HistoryMetric.VOLTAGE, viewer.state.value!!.comparison)
             tap(R.string.cancel)
             assertEquals(HistoryMetric.VOLTAGE, viewer.state.value!!.comparison)
-            tap(R.string.current_voltage)
-            tap(R.string.history_chart_no_comparison)
+            editComparison(R.string.current_voltage, R.string.history_chart_no_comparison)
             tap(R.string.okay)
-            await { viewer.state.value!!.comparison == null }
+            await({ "The confirmed comparison draft did not remove voltage" }) {
+                viewer.state.value!!.comparison == null
+            }
         } finally {
             main { host.lastActivity?.finish() }
             instrumentation.removeMonitor(host)
@@ -405,18 +407,10 @@ class FullscreenChartStateInstrumentedTest {
         main { model.viewport(initialViewport, 1000) }
         loaded(model)
         val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                instrumentation.targetContext, HistoryMetric.LEVEL, retained, "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         try {
-            await {
-                val hostActivity = host.lastActivity as? FullscreenChartActivity
-                hostActivity != null && !hostActivity.isDestroyed && hostActivity.lifecycle.currentState == Lifecycle.State.RESUMED && (hostActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && hostActivity.resources.configuration.smallestScreenWidthDp >= 600 || hostActivity.isInMultiWindowMode)
-            }
-            val activity = host.lastActivity as FullscreenChartActivity
+            lateinit var activity: ComposeTestActivity
+            scenario.onActivity { activity = it }
             main {
                 activity.setContent {
                     CompositionLocalProvider(LocalContext provides context) {
@@ -582,9 +576,7 @@ class FullscreenChartStateInstrumentedTest {
             touch(chart, down, MotionEvent.ACTION_UP, 0.2f)
         } finally {
             reportFixtureViewportCallbacks("Touch-pan fixture")
-            main { host.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(host)
+            scenario.close()
         }
     }
 
@@ -734,12 +726,7 @@ class FullscreenChartStateInstrumentedTest {
     fun history_observation_coalesces_bursts_and_checks_again_after_inactive_changes() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val target = instrumentation.targetContext
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(target, HistoryMetric.LEVEL, range, "custom")
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         val activated = AtomicInteger()
         val changed = AtomicInteger()
         val owner = object : LifecycleOwner {
@@ -747,9 +734,7 @@ class FullscreenChartStateInstrumentedTest {
             override val lifecycle: Lifecycle get() = registry
         }
         try {
-            await { monitor.lastActivity != null && !monitor.lastActivity.isDestroyed }
-            val activity = monitor.lastActivity as FullscreenChartActivity
-            main {
+            scenario.onActivity { activity ->
                 owner.registry.currentState = Lifecycle.State.RESUMED
                 activity.setContent {
                     CompositionLocalProvider(LocalLifecycleOwner provides owner) {
@@ -781,12 +766,8 @@ class FullscreenChartStateInstrumentedTest {
             main { owner.registry.currentState = Lifecycle.State.RESUMED }
             await { activated.get() == 2 }
         } finally {
-            main {
-                owner.registry.currentState = Lifecycle.State.DESTROYED
-                monitor.lastActivity?.finish()
-            }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(monitor)
+            main { owner.registry.currentState = Lifecycle.State.DESTROYED }
+            scenario.close()
         }
     }
 
@@ -1320,21 +1301,10 @@ class FullscreenChartStateInstrumentedTest {
         }
         loaded(model)
         await { model.state.value!!.selectedRecord?.key == selected }
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                instrumentation.targetContext, HistoryMetric.VOLTAGE, fullRange, "custom"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         try {
-            await {
-                val activity = monitor.lastActivity
-                activity != null && !activity.isDestroyed && (activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && activity.resources.configuration.smallestScreenWidthDp >= 600 || activity.isInMultiWindowMode)
-            }
-            instrumentation.waitForIdleSync()
-            val activity = monitor.lastActivity as FullscreenChartActivity
+            lateinit var activity: ComposeTestActivity
+            scenario.onActivity { activity = it }
             main {
                 activity.setContent {
                     CompositionLocalProvider(LocalContext provides context) {
@@ -1438,8 +1408,7 @@ class FullscreenChartStateInstrumentedTest {
             }
         } finally {
             reportFixtureViewportCallbacks("Voltage refresh fixture")
-            main { monitor.lastActivity?.finish() }
-            instrumentation.removeMonitor(monitor)
+            scenario.close()
         }
     }
 
@@ -1475,21 +1444,10 @@ class FullscreenChartStateInstrumentedTest {
             .putString(SettingsContract.KEY_COLOR_SOURCE, "Dynamic").commit()
         val model = model(HistoryMetric.LEVEL, fullRange, "24h")
         loaded(model)
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                instrumentation.targetContext, HistoryMetric.LEVEL, fullRange, "24h"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         try {
-            await {
-                val activity = monitor.lastActivity
-                activity != null && !activity.isDestroyed && (activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && activity.resources.configuration.smallestScreenWidthDp >= 600 || activity.isInMultiWindowMode)
-            }
-            instrumentation.waitForIdleSync()
-            val activity = monitor.lastActivity as FullscreenChartActivity
+            lateinit var activity: ComposeTestActivity
+            scenario.onActivity { activity = it }
             main {
                 activity.setContent {
                     CompositionLocalProvider(LocalContext provides context) {
@@ -1636,13 +1594,12 @@ class FullscreenChartStateInstrumentedTest {
             }
             assertFixtureRendered(activity, model)
         } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.removeMonitor(monitor)
+            scenario.close()
         }
     }
 
     @Test
-    fun returning_to_history_preserves_exact_range_once_regardless_of_initial_monitor_effect_order() {
+    fun returning_to_restored_history_preserves_exact_range_during_a_revision_notification() {
         val initial = Bundle().apply {
             putLong("start", range.start)
             putLong("end", range.end)
@@ -1652,86 +1609,75 @@ class FullscreenChartStateInstrumentedTest {
             putInt("scrollIndex", 7)
             putInt("scrollOffset", 34)
         }
-        val monitored = Triple<Int?, Int?, Int?>(50, 300, 4000)
-        for (effectOrder in listOf("before", "during", "after")) {
-            lateinit var history: HistoryViewModel
-            lateinit var saved: Bundle
-            main {
-                history = HistoryViewModel(application)
-                store.put("history-$effectOrder", history)
-                history.restore(initial)
-                history.retainExactRange()
-                saved = history.save()
-            }
-            lateinit var restored: HistoryViewModel
-            main {
-                restored = HistoryViewModel(application)
-                store.put("restored-history-$effectOrder", restored)
-                restored.restore(saved)
-                if (effectOrder == "before") restored.monitoringChanged(monitored)
-                restored.resume()
-                if (effectOrder == "during") restored.monitoringChanged(monitored)
-            }
-            await { !restored.state.value.loading }
-            if (effectOrder == "after") {
-                main { restored.monitoringChanged(monitored) }
-                await { !restored.state.value.loading }
-            }
-            assertFalse(restored.state.value.error)
-            assertEquals(effectOrder, range, restored.state.value.range)
-            assertEquals("24h", restored.state.value.rangeLabel)
-            assertEquals("logs", restored.state.value.tab)
-            assertEquals(HistoryMetric.CURRENT, restored.state.value.metric)
-            assertEquals(7, restored.scrollIndex)
-            assertEquals(34, restored.scrollOffset)
-
-            val before = System.currentTimeMillis()
-            main { restored.resume() }
-            await { !restored.state.value.loading }
-            val after = System.currentTimeMillis()
-            val refreshed = restored.state.value.range
-            assertFalse(restored.state.value.error)
-            assertNotEquals(range, refreshed)
-            assertTrue(refreshed.end in before..after + 1)
-            assertEquals(24 * 3_600_000L, refreshed.end - refreshed.start)
-            assertEquals("logs", restored.state.value.tab)
-            assertEquals(7, restored.scrollIndex)
-            assertEquals(34, restored.scrollOffset)
+        lateinit var saved: Bundle
+        main {
+            val history = HistoryViewModel(application)
+            store.put("history-before-recreation", history)
+            history.restore(initial)
+            history.retainExactRange()
+            saved = history.save()
         }
+        database.addLogs(listOf(observation))
+        val now = 3 * 24 * 3_600_000L
+        lateinit var restored: HistoryViewModel
+        main {
+            restored = HistoryViewModel(application) { now }
+            store.put("restored-history", restored)
+            restored.restore(saved)
+            restored.resume()
+            restored.historyChanged()
+        }
+        await { !restored.state.value.loading }
+        assertFalse(restored.state.value.error)
+        assertEquals(range, restored.state.value.range)
+        assertEquals(listOf(observation), restored.state.value.page.map { it.record })
+        assertEquals("24h", restored.state.value.rangeLabel)
+        assertEquals("logs", restored.state.value.tab)
+        assertEquals(HistoryMetric.CURRENT, restored.state.value.metric)
+        assertEquals(7, restored.scrollIndex)
+        assertEquals(34, restored.scrollOffset)
+
+        main { restored.resume() }
+        await { !restored.state.value.loading }
+        assertFalse(restored.state.value.error)
+        assertEquals(HistoryRangeState.lastHours(24, now), restored.state.value.range)
+        assertEquals("logs", restored.state.value.tab)
+        assertEquals(0, restored.scrollIndex)
+        assertEquals(0, restored.scrollOffset)
     }
 
     @Test
-    fun surviving_history_model_keeps_return_range_when_monitoring_changed_in_the_viewer() {
-        val oldReading = Triple<Int?, Int?, Int?>(50, 300, 4000)
-        val viewerReading = Triple<Int?, Int?, Int?>(49, 310, 4100)
-        val nextReading = Triple<Int?, Int?, Int?>(48, 320, 4200)
+    fun surviving_history_model_loads_viewer_time_revision_without_moving_return_range() {
+        var now = range.end - 1
         lateinit var history: HistoryViewModel
         main {
-            history = HistoryViewModel(application)
+            history = HistoryViewModel(application) { now }
             store.put("surviving-history", history)
-            history.restore(Bundle().apply {
-                putLong("start", range.start)
-                putLong("end", range.end)
-                putString("label", "24h")
-            })
-            history.monitoringChanged(oldReading)
-            history.retainExactRange()
-            history.resume(viewerReading)
-            history.monitoringChanged(viewerReading)
+            history.resume()
         }
+        await { !history.state.value.loading }
+        assertEquals(range, history.state.value.range)
+        val initialRevision = history.state.value.revision
+        main {
+            history.retainExactRange()
+            now = 30_000
+        }
+        database.addLogs(listOf(observation))
+        main { history.resume() }
         await { !history.state.value.loading }
         assertFalse(history.state.value.error)
         assertEquals(range, history.state.value.range)
+        assertTrue(history.state.value.revision > initialRevision)
+        assertEquals(listOf(observation), history.state.value.page.map { it.record })
 
-        val before = System.currentTimeMillis()
-        main { history.monitoringChanged(nextReading) }
-        await { !history.state.value.loading }
-        val after = System.currentTimeMillis()
-        val refreshed = history.state.value.range
+        val resumedRevision = history.state.value.revision
+        val laterObservation = observation.copy(time = now)
+        database.addLogs(listOf(laterObservation))
+        main { history.historyChanged() }
+        await { history.state.value.revision > resumedRevision && !history.state.value.loading }
         assertFalse(history.state.value.error)
-        assertNotEquals(range, refreshed)
-        assertTrue(refreshed.end in before..(after + 1))
-        assertEquals(24 * 3_600_000L, refreshed.end - refreshed.start)
+        assertEquals(HistoryRangeState.lastHours(24, now), history.state.value.range)
+        assertTrue(history.state.value.page.any { it.record == laterObservation })
     }
 
     @Test
@@ -1891,9 +1837,6 @@ class FullscreenChartStateInstrumentedTest {
         return model
     }
 
-    private fun main(action: () -> Unit) =
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
-
     private fun nativeChart(view: View): LineChart? {
         if (view is LineChart) return view
         if (view is ViewGroup) {
@@ -1903,7 +1846,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun assertFixtureRendered(
-        activity: FullscreenChartActivity,
+        activity: Activity,
         model: FullscreenChartViewModel,
         phase: String = "Native chart rendering",
         requestedViewport: HistoryRangeState? = null
@@ -1946,7 +1889,7 @@ class FullscreenChartStateInstrumentedTest {
                         )
                     )
                 }
-                val failure = fixtureRenderedMismatch(activity, state, chart)
+                val failure = fixtureRenderedMismatch(state, chart)
                 val viewportMatches =
                     state != null && chart != null && requested != null && fixtureViewportMatches(
                         state, chart, requested
@@ -1976,7 +1919,7 @@ class FullscreenChartStateInstrumentedTest {
                 }
                 val stage = when {
                     state == null || state.loading -> "initial loading or width-triggered reload"
-                    failure != null -> "layout, fullscreen rendering or dataset publication"
+                    failure != null -> "chart layout or dataset publication"
                     !viewportMatches -> "requested viewport restoration mismatch"
                     else -> "awaiting stable UI frames and settled chart width"
                 }
@@ -1993,7 +1936,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun fixtureRenderedMismatch(
-        activity: FullscreenChartActivity, state: FullscreenChartUiState?, chart: LineChart?
+        state: FullscreenChartUiState?, chart: LineChart?
     ): String? {
         if (state == null) return "Model state is unavailable"
         if (state.loading) return "Model is still loading"
@@ -2055,18 +1998,11 @@ class FullscreenChartStateInstrumentedTest {
                 }
             }
         }
-        val decor = activity.window.decorView
-        val statusBarHidden = decor.rootWindowInsets?.let {
-            !WindowInsetsCompat.toWindowInsetsCompat(it, decor)
-                .isVisible(WindowInsetsCompat.Type.statusBars())
-        } == true
-        return if (statusBarHidden) null else "Fullscreen status bar is still visible or insets are unavailable"
+        return null
     }
 
     private fun assertFixtureViewport(
-        activity: FullscreenChartActivity,
-        model: FullscreenChartViewModel,
-        requested: HistoryRangeState
+        activity: Activity, model: FullscreenChartViewModel, requested: HistoryRangeState
     ) {
         awaitFixtureChart(activity, model, "Requested viewport was not applied") { state, chart ->
             !state.loading && !state.error && fixtureViewportMatches(state, chart, requested)
@@ -2126,7 +2062,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun awaitFixtureChart(
-        activity: FullscreenChartActivity,
+        activity: Activity,
         model: FullscreenChartViewModel,
         phase: String,
         ready: (FullscreenChartUiState, LineChart) -> Boolean
@@ -2143,7 +2079,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun observeFixtureViewport(
-        activity: FullscreenChartActivity,
+        activity: Activity,
         model: FullscreenChartViewModel,
         observed: HistoryRangeState,
         width: Int,
@@ -2174,7 +2110,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun fixtureChartDiagnostic(
-        activity: FullscreenChartActivity, model: FullscreenChartViewModel
+        activity: Activity, model: FullscreenChartViewModel
     ): String {
         var diagnostic = ""
         main {
@@ -2277,12 +2213,5 @@ class FullscreenChartStateInstrumentedTest {
 
     private fun await(
         diagnostic: () -> String = { "History loading did not finish" }, ready: () -> Boolean
-    ) {
-        val deadline = System.nanoTime() + 10_000_000_000
-        while (true) {
-            if (ready()) return
-            if (System.nanoTime() >= deadline) throw AssertionError(diagnostic())
-            Thread.sleep(20)
-        }
-    }
+    ) = awaitCondition(diagnostic, ready)
 }

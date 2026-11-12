@@ -15,12 +15,7 @@
 */
 package codes.swistak.batterymonitor.ui.navigation
 
-import android.content.Intent
-import android.content.res.Configuration
-import android.os.Looper
 import android.view.KeyEvent
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -37,26 +32,28 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.logs.HistoryMetric
-import codes.swistak.batterymonitor.logs.HistoryRangeState
-import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.clickSemantics
+import codes.swistak.batterymonitor.testsupport.composeNodes
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class SideNavigationShellInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val target = instrumentation.targetContext
-    private lateinit var activity: FullscreenChartActivity
+    private lateinit var activity: ComposeTestActivity
+
     private lateinit var inputModeManager: InputModeManager
     private val selected = mutableStateOf(SectionOwner.CURRENT)
     private val externalRequest = mutableStateOf(0)
@@ -231,24 +228,9 @@ class SideNavigationShellInstrumentedTest {
         }
 
     private fun withHost(test: () -> Unit) {
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        try {
-            instrumentation.startActivitySync(
-                FullscreenChartActivity.intent(
-                    target, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-            awaitMain {
-                val latest = monitor.lastActivity as? FullscreenChartActivity
-                latest != null && !latest.isDestroyed && latest.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && latest.lifecycle.currentState == Lifecycle.State.RESUMED
-            }
-            activity = monitor.lastActivity as FullscreenChartActivity
+        ActivityScenario.launch(ComposeTestActivity::class.java).use { scenario ->
+            scenario.onActivity { activity = it }
             test()
-        } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(monitor)
         }
     }
 
@@ -297,7 +279,7 @@ class SideNavigationShellInstrumentedTest {
     }
 
     private fun click(node: SemanticsNode) {
-        assertTrue(node.config[SemanticsActions.OnClick].action?.invoke() == true)
+        node.clickSemantics()
     }
 
     private fun menu() = nodes().first {
@@ -326,52 +308,14 @@ class SideNavigationShellInstrumentedTest {
     private fun hidden(node: SemanticsNode): Boolean =
         node.config.contains(SemanticsProperties.HideFromAccessibility) || node.parent?.let(::hidden) == true
 
-    private fun nodes(): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
+    private fun nodes(): List<SemanticsNode> = composeNodes(activity.window.decorView)
 
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            if (view !is ViewGroup) return emptyList()
-            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
-        }
-        return owners(activity.window.decorView).flatMap { descendants(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) {
-        if (Looper.myLooper() == Looper.getMainLooper()) action()
-        else {
-            var failure: Throwable? = null
-            instrumentation.runOnMainSync {
-                try {
-                    action()
-                } catch (error: Throwable) {
-                    failure = error
-                }
-            }
-            failure?.let { throw it }
-        }
-    }
-
-    private fun awaitMain(ready: () -> Boolean) {
-        fun reached(): Boolean {
-            var result = false
-            main { result = ready() }
-            return result
-        }
-
-        val deadline = System.nanoTime() + TIMEOUT_NANOS
-        while (!reached() && System.nanoTime() < deadline) Thread.sleep(POLL_MILLIS)
-        assertTrue("Navigation shell did not reach the expected state", reached())
-    }
+    private fun awaitMain(ready: () -> Boolean) =
+        awaitCondition({ "Navigation shell did not reach the expected state" }) { main(ready) }
 
     private companion object {
         val MODAL_FIXTURE_WIDTH = 400.dp
         const val CONTENT_TAG = "navigation-content"
         const val POSITION_TOLERANCE_PX = 1f
-        const val TIMEOUT_NANOS = 10_000_000_000L
-        const val POLL_MILLIS = 20L
     }
 }

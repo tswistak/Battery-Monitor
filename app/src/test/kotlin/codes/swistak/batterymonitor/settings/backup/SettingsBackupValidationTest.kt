@@ -24,8 +24,6 @@ class SettingsBackupValidationTest {
             mapOf(
                 SettingsContract.KEY_CUSTOM_CHARGING_TARGET to 1,
                 SettingsContract.KEY_DISCHARGING_TARGET to 99,
-                SettingsContract.KEY_RED_THRESH to "0",
-                SettingsContract.KEY_GREEN_THRESH to "100",
                 SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL to "3600",
                 SettingsContract.KEY_CHIP_SWITCHING_INTERVAL to "1",
                 SettingsContract.KEY_PREDICTION_TYPE to "600000",
@@ -41,8 +39,6 @@ class SettingsBackupValidationTest {
             SettingsContract.KEY_ENABLE_LOGGING to "true",
             SettingsContract.KEY_CUSTOM_CHARGING_TARGET to 101,
             SettingsContract.KEY_DISCHARGING_TARGET to -1,
-            SettingsContract.KEY_RED_THRESH to "101",
-            SettingsContract.KEY_RED_THRESH to "invalid",
             SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL to "custom",
             SettingsContract.KEY_CHIP_SWITCHING_INTERVAL to "0",
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER to "auto",

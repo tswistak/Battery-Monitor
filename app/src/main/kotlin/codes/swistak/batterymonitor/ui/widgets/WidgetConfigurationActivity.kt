@@ -22,6 +22,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -60,10 +61,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -95,6 +95,7 @@ import codes.swistak.batterymonitor.widgets.WidgetConfiguration
 import codes.swistak.batterymonitor.widgets.WidgetConfigurationStore
 import codes.swistak.batterymonitor.widgets.WidgetFamily
 import codes.swistak.batterymonitor.widgets.WidgetMetric
+import codes.swistak.batterymonitor.widgets.WidgetPreviewData
 import codes.swistak.batterymonitor.widgets.WidgetRenderer
 import codes.swistak.batterymonitor.widgets.WidgetStatusExtra
 import codes.swistak.batterymonitor.widgets.WidgetTapAction
@@ -207,19 +208,21 @@ private fun WidgetConfigurationScreen(
     var draftRecord by rememberSaveable(widgetId) { mutableStateOf(initial.encode()) }
     val draft = WidgetConfiguration.decode(draftRecord) ?: initial
     val update: (WidgetConfiguration) -> Unit = { draftRecord = it.encode() }
-    var previewVersion by remember { mutableIntStateOf(0) }
     val context = LocalContext.current
-    LaunchedEffect(family, draft.trendHours) {
-        if (family == WidgetFamily.TREND) {
-            suspendCancellableCoroutine { continuation ->
-                WidgetUpdateDispatcher.preparePreview(context, draft.trendHours) {
-                    if (continuation.isActive) continuation.resume(Unit)
-                }
-            }
-            previewVersion++
+    val trendHours = draft.trendHours.takeIf { family == WidgetFamily.TREND }
+    val previewData by produceState<WidgetPreviewData?>(null, context, trendHours) {
+        value = WidgetUpdateDispatcher.previewData(context, trendHours)
+    }
+    val deviceConfiguration = LocalConfiguration.current
+    val remoteViews by produceState<RemoteViews?>(
+        null, context, family, draft, previewData, deviceConfiguration
+    ) {
+        val data = previewData ?: return@produceState
+        value = withContext(Dispatchers.IO) {
+            WidgetRenderer.preview(context, family, draft, data)
         }
     }
-    val locale = LocalConfiguration.current.locales[0]
+    val locale = deviceConfiguration.locales[0]
     val numberFormat = remember(locale) {
         NumberFormat.getIntegerInstance(locale).apply { isGroupingUsed = false }
     }
@@ -282,9 +285,9 @@ private fun WidgetConfigurationScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            WidgetPreview(family, providerInfo, draft, Color(0xFFE1E8EF), previewVersion)
+            WidgetPreview(family, providerInfo, Color(0xFFE1E8EF), remoteViews)
             if (draft.backgroundOpacityPercent == 0) {
-                WidgetPreview(family, providerInfo, draft, Color(0xFF17232D), previewVersion)
+                WidgetPreview(family, providerInfo, Color(0xFF17232D), remoteViews)
                 Text(
                     stringResource(R.string.widget_transparent_warning),
                     style = MaterialTheme.typography.bodyMedium
@@ -534,16 +537,9 @@ private fun metricLabel(metric: WidgetMetric): String = stringResource(
 private fun WidgetPreview(
     family: WidgetFamily,
     providerInfo: AppWidgetProviderInfo,
-    configuration: WidgetConfiguration,
     wallpaper: Color,
-    previewVersion: Int
+    remoteViews: RemoteViews?
 ) {
-    val context = LocalContext.current
-    val remoteViews = remember(context, family, configuration, previewVersion) {
-        WidgetRenderer.preview(
-            context, family, configuration
-        )
-    }
     val description = stringResource(R.string.widget_preview)
     Box(
         Modifier
@@ -554,18 +550,18 @@ private fun WidgetPreview(
     ) {
         AndroidView(
             factory = { viewContext ->
-                object : AppWidgetHostView(viewContext) {
-                    override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
+            object : AppWidgetHostView(viewContext) {
+                override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
 
-                    @SuppressLint("ClickableViewAccessibility")
-                    override fun onTouchEvent(event: MotionEvent): Boolean = true
-                }.apply {
-                    importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                    setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
-                    setPadding(0, 0, 0, 0)
-                }
-            },
-            update = { it.updateAppWidget(remoteViews) },
+                @SuppressLint("ClickableViewAccessibility")
+                override fun onTouchEvent(event: MotionEvent): Boolean = true
+            }.apply {
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
+                setPadding(0, 0, 0, 0)
+            }
+        },
+            update = { host -> remoteViews?.let(host::updateAppWidget) },
             modifier = Modifier
                 .widthIn(max = if (family == WidgetFamily.STATUS) 220.dp else 350.dp)
                 .fillMaxWidth()

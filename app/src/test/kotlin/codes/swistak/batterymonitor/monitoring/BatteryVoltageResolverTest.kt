@@ -12,7 +12,6 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-import codes.swistak.batterymonitor.common.CommandExecutor
 import codes.swistak.batterymonitor.common.DirectSysfsAccessor
 import codes.swistak.batterymonitor.common.SysfsAccessor
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageReading
@@ -27,8 +26,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
 import java.nio.file.Files
-import java.util.concurrent.AbstractExecutorService
-import java.util.concurrent.TimeUnit
 
 class BatteryVoltageResolverTest {
     @Test
@@ -74,29 +71,11 @@ class BatteryVoltageResolverTest {
     }
 
     @Test
-    fun `dumpsys battery voltage parsing accepts only plausible millivolt values`() {
-        val dump = """
-            Current Battery Service state:
-              AC powered: false
-              status: 2
-              level: 87
-              voltage: 3874
-              temperature: 300
-        """.trimIndent()
-
-        assertEquals(3874, BatteryVoltageValidator.parseDumpsysVoltageMillivolts(dump))
-        assertNull(BatteryVoltageValidator.parseDumpsysVoltageMillivolts("voltage: 3"))
-        assertNull(BatteryVoltageValidator.parseDumpsysVoltageMillivolts("level: 87"))
-        assertNull(BatteryVoltageValidator.parseDumpsysVoltageMillivolts(null))
-    }
-
-    @Test
-    fun `valid broadcast wins without touching sysfs or privileged access`() {
+    fun `valid broadcast wins without touching sysfs`() {
         val sysfs = FakeSysfsAccessor()
-        val harness =
-            ResolverHarness(sysfs, privilegedCommand = { error("unexpected privileged call") })
+        val resolver = BatteryVoltageResolver(sysfs, logger = { _, _, _ -> })
 
-        val reading = harness.resolver.resolve(3874)
+        val reading = resolver.resolve(3874)
 
         assertEquals(
             BatteryVoltageReading(
@@ -112,176 +91,24 @@ class BatteryVoltageResolverTest {
         val sysfs = FakeSysfsAccessor().apply {
             files["/sys/class/power_supply/battery/voltage_now"] = "3874000"
         }
-        var privilegedCalls = 0
-        val harness = ResolverHarness(sysfs, privilegedCommand = {
-            privilegedCalls++
-            null
-        })
+        val resolver = BatteryVoltageResolver(sysfs, logger = { _, _, _ -> })
 
-        val reading = harness.resolver.resolve(3)
+        val reading = resolver.resolve(3)
 
         val expected = BatteryVoltageReading(
             3874, BatteryVoltageSource.SYSFS_DIRECT, "/sys/class/power_supply/battery/voltage_now"
         )
         assertEquals(expected, reading)
-        assertEquals(expected, harness.resolver.resolve(3))
-        assertEquals(0, privilegedCalls)
-    }
-
-    @Test
-    fun `invalid broadcast without sysfs uses a cached privileged dumpsys result`() {
-        val sysfs = FakeSysfsAccessor()
-        var dumpsysCalls = 0
-        val harness = ResolverHarness(sysfs, privilegedCommand = { command ->
-            if (command == "dumpsys battery") {
-                dumpsysCalls++
-                "voltage: 3874"
-            } else {
-                null
-            }
-        })
-
-        assertNull(harness.resolver.resolve(3))
-        assertEquals(1, dumpsysCalls)
-
-        val reading = harness.resolver.resolve(3)
-
-        val expected = BatteryVoltageReading(
-            3874, BatteryVoltageSource.DUMPSYS_PRIVILEGED, "dumpsys battery / voltage"
-        )
-        assertEquals(expected, reading)
-        assertEquals(1, dumpsysCalls)
-        assertEquals(
-            listOf(expected), harness.refreshResults
-        )
-    }
-
-    @Test
-    fun `privileged probe prefers battery sysfs over dumpsys`() {
-        val sysfs = FakeSysfsAccessor()
-        val commands = mutableListOf<String>()
-        val harness = ResolverHarness(sysfs, privilegedCommand = { command ->
-            commands += command
-            if (command == "cat /sys/class/power_supply/battery/voltage_now 2>/dev/null") "3874000" else null
-        })
-
-        harness.resolver.resolve(3)
-        val reading = harness.resolver.resolve(3)
-
-        val expected = BatteryVoltageReading(
-            3874,
-            BatteryVoltageSource.SYSFS_PRIVILEGED,
-            "/sys/class/power_supply/battery/voltage_now"
-        )
-        assertEquals(expected, reading)
-        harness.nowMs += 6 * 60_000
-        assertNull(harness.resolver.resolve(3))
-        assertEquals(expected, harness.resolver.resolve(3))
-        assertEquals(listOf(expected, expected), harness.refreshResults)
-        assertFalse(commands.contains("dumpsys battery"))
-    }
-
-    @Test
-    fun `privileged probe discovers a vendor battery supply and ignores charger supplies`() {
-        val sysfs = FakeSysfsAccessor()
-        val harness = ResolverHarness(sysfs, privilegedCommand = { command ->
-            when (command) {
-                "cat /sys/class/power_supply/battery/voltage_now 2>/dev/null", "cat /sys/class/power_supply/bms/voltage_now 2>/dev/null" -> null
-
-                "ls /sys/class/power_supply 2>/dev/null" -> "usb\nvendor-pack\nwireless"
-                "cat /sys/class/power_supply/usb/type 2>/dev/null" -> "USB"
-                "cat /sys/class/power_supply/wireless/type 2>/dev/null" -> "Wireless"
-                "cat /sys/class/power_supply/vendor-pack/type 2>/dev/null" -> "Battery"
-                "cat /sys/class/power_supply/vendor-pack/voltage_now 2>/dev/null" -> "3874000"
-                else -> null
-            }
-        })
-
-        harness.resolver.resolve(3)
-        val reading = harness.resolver.resolve(3)
-
-        assertEquals(
-            BatteryVoltageReading(
-                3874,
-                BatteryVoltageSource.SYSFS_PRIVILEGED,
-                "/sys/class/power_supply/vendor-pack/voltage_now"
-            ), reading
-        )
+        assertEquals(expected, resolver.resolve(3))
     }
 
     @Test
     fun `all sources invalid resolves to null`() {
         val sysfs = FakeSysfsAccessor()
-        val harness = ResolverHarness(sysfs, privilegedCommand = { null })
+        val resolver = BatteryVoltageResolver(sysfs, logger = { _, _, _ -> })
 
-        assertNull(harness.resolver.resolve(3))
-        assertNull(harness.resolver.resolve(3))
-    }
-
-    @Test
-    fun `disabled privileged access never probes`() {
-        val sysfs = FakeSysfsAccessor()
-        var privilegedCalls = 0
-        val harness = ResolverHarness(
-            sysfs, privilegedCommand = {
-                privilegedCalls++
-                null
-            }, privilegedEnabled = false
-        )
-
-        assertNull(harness.resolver.resolve(3))
-        assertNull(harness.resolver.resolve(3))
-
-        assertEquals(0, privilegedCalls)
-    }
-
-    @Test
-    fun `privileged probing is throttled`() {
-        val sysfs = FakeSysfsAccessor()
-        var dumpsysCalls = 0
-        val harness = ResolverHarness(sysfs, privilegedCommand = { command ->
-            if (command == "dumpsys battery") {
-                dumpsysCalls++
-                "voltage: 3"
-            } else {
-                null
-            }
-        })
-
-        harness.resolver.resolve(3)
-        harness.nowMs += 10_000
-        harness.resolver.resolve(3)
-        harness.nowMs += 10_000
-        harness.resolver.resolve(3)
-        assertEquals(1, dumpsysCalls)
-
-        harness.nowMs += 30_001
-        harness.resolver.resolve(3)
-        assertEquals(2, dumpsysCalls)
-    }
-
-    @Test
-    fun `privileged cache expires and is refreshed in the background`() {
-        val sysfs = FakeSysfsAccessor()
-        var dumpsysCalls = 0
-        val harness = ResolverHarness(sysfs, privilegedCommand = { command ->
-            if (command == "dumpsys battery") {
-                dumpsysCalls++
-                "voltage: 3874"
-            } else {
-                null
-            }
-        })
-
-        assertNull(harness.resolver.resolve(3))
-        assertEquals(3874, harness.resolver.resolve(3)?.millivolts)
-        assertEquals(1, dumpsysCalls)
-
-        harness.nowMs += 6 * 60_000
-        assertNull(harness.resolver.resolve(3))
-        assertEquals(2, dumpsysCalls)
-        assertEquals(3874, harness.resolver.resolve(3)?.millivolts)
-        assertEquals(2, harness.refreshResults.size)
+        assertNull(resolver.resolve(3))
+        assertNull(resolver.resolve(3))
     }
 
     @Test
@@ -291,14 +118,14 @@ class BatteryVoltageResolverTest {
             createSupply(sysfsRoot, "battery", "Battery", voltageNow = "3874000")
             createSupply(sysfsRoot, "bms", "BMS", voltageNow = "3900000")
             val sysfs = PrefixedSysfsAccessor(root.path, DirectSysfsAccessor())
-            val harness = ResolverHarness(sysfs, privilegedCommand = { null })
+            val resolver = BatteryVoltageResolver(sysfs, logger = { _, _, _ -> })
 
             assertEquals(
                 BatteryVoltageReading(
                     3874,
                     BatteryVoltageSource.SYSFS_DIRECT,
                     "/sys/class/power_supply/battery/voltage_now"
-                ), harness.resolver.resolve(3)
+                ), resolver.resolve(3)
             )
 
             File(sysfsRoot, "battery/voltage_now").writeText("garbage")
@@ -306,10 +133,11 @@ class BatteryVoltageResolverTest {
             val expected = BatteryVoltageReading(
                 3900, BatteryVoltageSource.SYSFS_DIRECT, "/sys/class/power_supply/bms/voltage_now"
             )
-            assertEquals(expected, harness.resolver.resolve(3))
-            assertEquals(expected, harness.resolver.resolve(3))
+            assertEquals(expected, resolver.resolve(3))
+            assertEquals(expected, resolver.resolve(3))
         }
     }
+
 
     @Test
     fun `discovery prefers the canonical battery supply over bms`() {
@@ -400,42 +228,6 @@ class BatteryVoltageResolverTest {
         override fun list(path: String): List<String> = delegate.list(prefix + path)
 
         override fun read(path: String): String? = delegate.read(prefix + path)
-    }
-
-    private class ResolverHarness(
-        directSysfs: SysfsAccessor,
-        privilegedCommand: (String) -> String?,
-        privilegedEnabled: Boolean = true
-    ) {
-        var nowMs = 0L
-        val refreshResults = mutableListOf<BatteryVoltageReading?>()
-
-        val resolver = BatteryVoltageResolver(
-            directSysfs = directSysfs,
-            privilegedExecutor = object : CommandExecutor {
-                override fun run(command: String): String? = privilegedCommand(command)
-            },
-            privilegedEnabled = { privilegedEnabled },
-            backgroundExecutor = InlineExecutorService,
-            onPrivilegedRefresh = { refreshResults += it },
-            clock = { nowMs },
-            logger = { _, _, _ -> })
-    }
-
-    private object InlineExecutorService : AbstractExecutorService() {
-        override fun execute(command: Runnable) {
-            command.run()
-        }
-
-        override fun shutdown() {}
-
-        override fun shutdownNow(): MutableList<Runnable> = mutableListOf()
-
-        override fun isShutdown(): Boolean = false
-
-        override fun isTerminated(): Boolean = false
-
-        override fun awaitTermination(timeout: Long, unit: TimeUnit): Boolean = true
     }
 
     private fun withSysfsRoot(block: (File) -> Unit) {

@@ -18,22 +18,23 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.JsonReader
 import android.util.JsonToken
+import android.util.JsonWriter
+import android.util.MalformedJsonException
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogExport
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.monitoring.Predictor
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 import org.json.JSONTokener
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import java.io.EOFException
+import java.io.File
 import java.io.IOException
+import java.io.InputStream
 import java.io.InputStreamReader
-import java.io.StringReader
+import java.io.OutputStream
+import java.io.OutputStreamWriter
 import java.math.BigDecimal
 import java.nio.charset.StandardCharsets
 
@@ -52,124 +53,165 @@ internal object DeviceDataBackup {
     private const val KEY_LOGS = "logs"
     private const val KEY_PREDICTOR = "predictor"
 
-    @Throws(JSONException::class)
-    fun getSchemaVersion(jsonString: String): Int = JSONObject(jsonString).optInt(KEY_VERSION, 0)
-
-    @Throws(JSONException::class, IllegalArgumentException::class)
-    fun getAvailableData(jsonString: String): Set<DeviceDataType> {
-        val root = parseRoot(jsonString)
-        return buildSet {
-            if (root.has(KEY_LOGS) && !root.isNull(KEY_LOGS)) {
-                root.getJSONArray(KEY_LOGS)
-                add(DeviceDataType.LOGS)
-            }
-            if (root.has(KEY_PREDICTOR) && !root.isNull(KEY_PREDICTOR)) {
-                root.getJSONObject(KEY_PREDICTOR)
-                add(DeviceDataType.PREDICTOR_DATA)
-            }
+    fun exportToUri(
+        context: Context,
+        uri: Uri,
+        selectedData: Set<DeviceDataType>,
+        predictorState: PredictorStoredState? = null
+    ) {
+        writeStagedBackupExport(context, { uri }) {
+            writeBackup(context, BackupExportOutputStream(it), selectedData, predictorState)
         }
     }
 
-    @Throws(JSONException::class)
-    fun exportToJson(
+    fun writeBackup(
         context: Context,
+        output: OutputStream,
         selectedData: Set<DeviceDataType>,
         predictorState: PredictorStoredState? = null
-    ): JSONObject {
+    ) {
         require(selectedData.isNotEmpty()) { "No device-specific data selected" }
-        val root = JSONObject().put(KEY_VERSION, SCHEMA_VERSION)
-
+        val writer = backupWriter(output)
         if (DeviceDataType.LOGS in selectedData) {
             val database = LogDatabase(context)
             try {
-                root.put(KEY_LOGS, logsToJson(database.getAllLogRecords()))
+                database.readLogRecords { writer.writeLogs(context, it) }
             } finally {
                 database.close()
             }
-            addLastLogExportTime(context, root)
         }
 
         if (DeviceDataType.PREDICTOR_DATA in selectedData) {
             val state = PredictorBackupReader.state(predictorState) {
                 PredictorBackupReader.read(context.dataDir)
             }
-            val predictor = JSONObject()
+            val version = state.version ?: Version1DeviceDataImporter.VERSION
+            require(version in 1..Predictor.STATE_VERSION) { "Unsupported predictor state version" }
+            writer.name(KEY_PREDICTOR).beginObject()
             for ((backupKey, preferenceKey) in Version1DeviceDataImporter.predictorPreferenceKeysByBackupKey) {
-                state.averages[preferenceKey]?.let { predictor.put(backupKey, it.toDouble()) }
+                state.averages[preferenceKey]?.let { writer.name(backupKey).value(it.toDouble()) }
             }
-            predictor.put(
-                Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION, state.version ?: 1
+            writer.name(Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION).value(
+                version.toLong()
             )
-            root.put(KEY_PREDICTOR, predictor)
+            writer.endObject()
         }
-
-        return root
+        writer.endObject().flush()
     }
 
-    fun validateJson(jsonString: String, selectedData: Set<DeviceDataType>) {
-        require(selectedData.isNotEmpty()) { "No device-specific data selected" }
-        val root = parseRoot(jsonString)
-        if (DeviceDataType.LOGS in selectedData) {
-            parseLogs(root.getJSONArray(KEY_LOGS))
-            if (root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
-                parseLastLogExportTime(root)
-            }
+    fun writeHistory(context: Context, output: OutputStream, records: Sequence<LogRecord>) {
+        backupWriter(BackupExportOutputStream(output)).apply {
+            writeLogs(context, records)
+            endObject().flush()
         }
-        if (DeviceDataType.PREDICTOR_DATA in selectedData) parsePredictor(root)
+    }
+
+    private fun backupWriter(output: OutputStream): JsonWriter =
+        JsonWriter(OutputStreamWriter(output, StandardCharsets.UTF_8)).beginObject()
+            .name(KEY_VERSION).value(SCHEMA_VERSION.toLong())
+
+    private fun JsonWriter.writeLogs(context: Context, records: Sequence<LogRecord>) {
+        name(KEY_LOGS).beginArray()
+        for (record in records) writeLogRecord(record)
+        endArray()
+        val preferences = context.getSharedPreferences(
+            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+        )
+        if (preferences.contains(SettingsContract.KEY_LAST_LOG_EXPORT_TIME)) {
+            name(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME).value(
+                preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0L)
+            )
+        }
+    }
+
+    private fun JsonWriter.writeLogRecord(record: LogRecord) {
+        val (status, charge, time, temperature, voltage, current, remainingCharge) = record
+        require(remainingCharge == null || remainingCharge >= 0) {
+            "Invalid remaining charge in a history record"
+        }
+        beginObject()
+        name(Version1DeviceDataImporter.KEY_LOG_STATUS).value(status.toLong())
+        name(Version1DeviceDataImporter.KEY_LOG_CHARGE).value(charge as Number?)
+        name(Version1DeviceDataImporter.KEY_LOG_TIME).value(time)
+        name(Version1DeviceDataImporter.KEY_LOG_TEMPERATURE).value(temperature as Number?)
+        name(Version1DeviceDataImporter.KEY_LOG_VOLTAGE).value(voltage as Number?)
+        name(Version2DeviceDataImporter.KEY_LOG_CURRENT).value(current as Number?)
+        name(Version2DeviceDataImporter.KEY_LOG_REMAINING_CHARGE).value(remainingCharge as Number?)
+        endObject()
+    }
+
+    fun preparedLogsFile(source: File): File = File(source.parentFile, "${source.name}.logs")
+
+    fun readFromUri(context: Context, uri: Uri, logsFile: File): PreparedDeviceDataBackup {
+        val input = context.contentResolver.openInputStream(uri)
+            ?: throw IOException("Could not open backup source")
+        return input.use { read(it, logsFile) }
+    }
+
+    fun read(input: InputStream, logsFile: File): PreparedDeviceDataBackup = try {
+        DeviceBackupReader.read(
+            InputStreamReader(BackupImportInputStream(input), StandardCharsets.UTF_8.newDecoder()),
+            logsFile
+        )
+    } catch (failure: Exception) {
+        if (failure is MalformedJsonException || failure is EOFException || failure is CharacterCodingException || failure is IllegalStateException) throw IllegalArgumentException(
+            "Invalid device-specific backup", failure
+        )
+        throw failure
+    }
+
+    fun validate(backup: PreparedDeviceDataBackup, selectedData: Set<DeviceDataType>) {
+        require(selectedData.isNotEmpty() && backup.available.containsAll(selectedData)) {
+            "Selected device data is not available in the backup"
+        }
+        if (DeviceDataType.LOGS in selectedData) {
+            backup.logs?.getOrThrow()?.validate()
+            backup.watermark?.getOrThrow()
+        }
+        if (DeviceDataType.PREDICTOR_DATA in selectedData) backup.predictor?.getOrThrow()
     }
 
     fun predictorSnapshot(context: Context): Bundle = SettingsSnapshot.capture(
         context.getSharedPreferences(Predictor.STORE_NAME, Context.MODE_PRIVATE)
     )
 
-    @Throws(
-        JSONException::class, IllegalArgumentException::class, GeneralBackupRestoreException::class
-    )
     // KTX edit discards the commit results required before marking restored data complete.
     @SuppressLint("UseKtx")
-    fun importFromJson(
+    fun restore(
         context: Context,
-        jsonString: String,
+        backup: PreparedDeviceDataBackup,
         selectedData: Set<DeviceDataType>,
         logImportMode: LogImportMode
     ) {
-        require(selectedData.isNotEmpty()) { "No device-specific data selected" }
-        val root = parseRoot(jsonString)
-
-        val logs = if (DeviceDataType.LOGS in selectedData) {
-            parseLogs(root.getJSONArray(KEY_LOGS))
-        } else {
-            null
-        }
-        val lastLogExportTime =
-            if (DeviceDataType.LOGS in selectedData && root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
-                parseLastLogExportTime(root)
-            } else {
-                null
-            }
+        validate(backup, selectedData)
+        val logs = if (DeviceDataType.LOGS in selectedData) backup.logs?.getOrThrow() else null
+        val lastLogExportTime = if (logs != null) backup.watermark?.getOrThrow() else null
         val predictor = if (DeviceDataType.PREDICTOR_DATA in selectedData) {
-            parsePredictor(root)
-        } else {
-            null
-        }
+            backup.predictor?.getOrThrow()
+        } else null
 
         restoreData(restoreLogs = logs?.let { records ->
             {
                 val database = LogDatabase(context)
                 try {
-                    when (logImportMode) {
-                        LogImportMode.REPLACE -> database.replaceAllLogs(records)
-                        LogImportMode.ADD -> database.addLogs(records)
+                    records.read { rows ->
+                        when (logImportMode) {
+                            LogImportMode.REPLACE -> database.replaceAllLogs(rows)
+                            LogImportMode.ADD -> database.addLogs(rows)
+                        }
                     }
                 } finally {
                     database.close()
                 }
-                lastLogExportTime?.let {
-                    check(
-                        context.getSharedPreferences(
-                            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-                        ).edit().putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, it).commit()
-                    ) { "Could not restore the last log export time" }
+                lastLogExportTime?.let { timestamp ->
+                    LogExport.withWatermarkLock(context) {
+                        check(
+                            context.getSharedPreferences(
+                                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+                            ).edit().putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, timestamp)
+                                .remove(SettingsContract.KEY_LAST_LOG_EXPORT_ID).commit()
+                        ) { "Could not restore the last log export time" }
+                    }
                 }
             }
         }, restorePredictor = predictor?.let { state ->
@@ -183,6 +225,7 @@ internal object DeviceDataBackup {
             }
         })
     }
+
 
     internal fun restoreData(restoreLogs: (() -> Unit)?, restorePredictor: (() -> Unit)?) {
         val completed = linkedSetOf<GeneralBackupDataType>()
@@ -203,210 +246,164 @@ internal object DeviceDataBackup {
         }
     }
 
-    @Throws(IOException::class)
-    fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w")
-            ?: throw IOException("Could not open backup destination")
-        pfd.use {
-            FileOutputStream(it.fileDescriptor).use { output ->
-                output.write(json.toString().toByteArray(StandardCharsets.UTF_8))
-            }
-        }
-    }
-
-    @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
-            ?: throw IOException("Could not open backup source")
-        pfd.use {
-            BufferedReader(
-                InputStreamReader(
-                    BackupImportInputStream(FileInputStream(it.fileDescriptor)),
-                    StandardCharsets.UTF_8
-                )
-            ).use { reader ->
-                return reader.readText()
-            }
-        }
-    }
-
-    fun exportLogsToJson(context: Context, records: List<LogRecord>): JSONObject =
-        JSONObject().put(KEY_VERSION, SCHEMA_VERSION).put(KEY_LOGS, logsToJson(records)).also {
-            addLastLogExportTime(context, it)
-        }
-
-    fun readLogsFromJson(jsonString: String): List<LogRecord> =
-        parseLogs(parseRoot(jsonString).getJSONArray(KEY_LOGS))
-
     internal fun prepareLogsAppend(
-        jsonString: String, records: Sequence<LogRecord>, maxBytes: Int
-    ): String? {
-        val empty = jsonString.isEmpty()
-        if (!empty) JsonReader(StringReader(jsonString)).use { reader ->
-            require(reader.peek() == JsonToken.BEGIN_OBJECT) { "Expected a JSON history document" }
-            validateAppendJsonValue(reader, 0)
-            require(reader.peek() == JsonToken.END_DOCUMENT) { "Unexpected content after JSON history" }
+        original: File, output: OutputStream, records: Sequence<LogRecord>, maxBytes: Int
+    ): Boolean {
+        require(original.isFile && original.length() <= maxBytes) { "Invalid staged JSON history" }
+        val empty = original.length() == 0L
+        val appended = records.iterator()
+        val writeReplacement = empty || appended.hasNext()
+        val destination = if (writeReplacement) BackupExportOutputStream(output, maxBytes)
+        else object : OutputStream() {
+            override fun write(value: Int) = Unit
+            override fun write(bytes: ByteArray, offset: Int, length: Int) = Unit
         }
-        val root = if (empty) JSONObject().put(KEY_VERSION, SCHEMA_VERSION)
-            .put(KEY_LOGS, JSONArray()) else JSONObject(jsonString)
-        val version = root.get(KEY_VERSION)
-        require(version is Int && version in Version1DeviceDataImporter.VERSION..SCHEMA_VERSION) {
-            "Unsupported JSON history version"
-        }
-        val logs = root.getJSONArray(KEY_LOGS)
-        parseLogs(logs)
-        if (root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
-            parseLastLogExportTime(root)
-        }
-        if (root.has(KEY_PREDICTOR) && !root.isNull(KEY_PREDICTOR)) root.getJSONObject(KEY_PREDICTOR)
-
-        var changed = false
-        var size = jsonString.toByteArray(StandardCharsets.UTF_8).size.toLong()
-        for (record in records) {
-            val log = logsToJson(listOf(record)).getJSONObject(0)
-            size += log.toString().toByteArray(StandardCharsets.UTF_8).size + 1
-            require(size <= maxBytes) { "JSON history is too large to append safely" }
-            logs.put(log)
-            changed = true
-        }
-        if (!changed && !empty) return null
-        if (version < SCHEMA_VERSION && root.has(KEY_PREDICTOR) && !root.isNull(KEY_PREDICTOR)) {
-            // Version 1 implicitly used predictor state 1; keep that interpretation after upgrading.
-            val predictor = root.getJSONObject(KEY_PREDICTOR)
-            if (!predictor.has(Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION)) {
-                predictor.put(Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION, 1)
-            }
-        }
-        root.put(KEY_VERSION, SCHEMA_VERSION)
-        val prepared = root.toString()
-        val bytes = prepared.toByteArray(StandardCharsets.UTF_8)
-        require(String(bytes, StandardCharsets.UTF_8) == prepared) {
-            "JSON history contains text that cannot be preserved"
-        }
-        require(bytes.size <= maxBytes) {
-            "JSON history is too large to append safely"
-        }
-        validateJson(prepared, setOf(DeviceDataType.LOGS))
-        return prepared
-    }
-
-    private fun validateAppendJsonValue(reader: JsonReader, depth: Int) {
-        require(depth <= 64) { "JSON history is nested too deeply" }
-        when (reader.peek()) {
-            JsonToken.BEGIN_OBJECT -> {
+        val writer =
+            JsonWriter(OutputStreamWriter(destination, StandardCharsets.UTF_8.newEncoder()))
+        writer.beginObject()
+        if (empty) {
+            writer.name(KEY_VERSION).value(SCHEMA_VERSION.toLong())
+            writer.name(KEY_LOGS).beginArray()
+            while (appended.hasNext()) writer.writeLogRecord(appended.next())
+            writer.endArray()
+        } else {
+            val version = original.appendReader().use { reader ->
                 reader.beginObject()
-                val keys = mutableSetOf<String>()
                 while (reader.hasNext()) {
-                    require(keys.add(reader.nextName())) { "Duplicate JSON history field" }
-                    validateAppendJsonValue(reader, depth + 1)
+                    if (reader.nextName() == KEY_VERSION) {
+                        require(reader.peek() == JsonToken.NUMBER) { "Invalid JSON history version" }
+                        val value = reader.nextString().toIntOrNull()
+                        require(value != null && value in Version1DeviceDataImporter.VERSION..SCHEMA_VERSION) {
+                            "Unsupported JSON history version"
+                        }
+                        return@use value
+                    }
+                    reader.skipValue()
                 }
-                reader.endObject()
+                throw IllegalArgumentException("Missing JSON history version")
             }
 
-            JsonToken.BEGIN_ARRAY -> {
-                reader.beginArray()
-                while (reader.hasNext()) validateAppendJsonValue(reader, depth + 1)
-                reader.endArray()
-            }
+            original.appendReader().use { reader ->
+                val fields = reader.appendObjectFields { key ->
+                    writer.name(key)
+                    when (key) {
+                        KEY_VERSION -> {
+                            reader.skipValue()
+                            writer.value(SCHEMA_VERSION.toLong())
+                        }
 
-            JsonToken.NUMBER -> {
-                val literal = reader.nextString()
-                val number = JSONTokener(literal).nextValue()
-                require(number is Number && BigDecimal(literal).compareTo(BigDecimal(number.toString())) == 0) {
-                    "JSON history contains a number that cannot be preserved"
+                        KEY_LOGS -> {
+                            reader.beginArray()
+                            writer.beginArray()
+                            while (reader.hasNext()) {
+                                writer.beginObject()
+                                val log = mutableMapOf<String, Any?>()
+                                reader.appendObjectFields { field ->
+                                    writer.name(field)
+                                    val value = reader.copyAppendValue(writer)
+                                    if (field in DeviceBackupReader.logKeys) log[field] = value
+                                }
+                                Version2DeviceDataImporter.restoreLog(log)
+                                writer.endObject()
+                            }
+                            reader.endArray()
+                            while (appended.hasNext()) writer.writeLogRecord(appended.next())
+                            writer.endArray()
+                        }
+
+                        KEY_PREDICTOR -> {
+                            if (reader.peek() == JsonToken.NULL) reader.copyAppendValue(writer)
+                            else {
+                                writer.beginObject()
+                                val fields = reader.appendObjectFields { field ->
+                                    writer.name(field)
+                                    reader.copyAppendValue(writer)
+                                }
+                                val predictorVersion =
+                                    Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION
+                                if (version < SCHEMA_VERSION && predictorVersion !in fields) {
+                                    writer.name(predictorVersion).value(1L)
+                                }
+                                writer.endObject()
+                            }
+                        }
+
+                        Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME -> {
+                            val value = reader.copyAppendValue(writer)
+                            require(
+                                value is Number && value.toDouble()
+                                    .isFinite() && value.toDouble() == value.toLong().toDouble()
+                            ) { "Invalid last log export time" }
+                        }
+
+                        else -> reader.copyAppendValue(writer)
+                    }
                 }
-            }
-
-            JsonToken.STRING -> reader.nextString()
-            JsonToken.BOOLEAN -> reader.nextBoolean()
-            JsonToken.NULL -> reader.nextNull()
-            else -> error("Invalid JSON history value")
-        }
-    }
-
-    private fun addLastLogExportTime(context: Context, root: JSONObject) {
-        val preferences = context.getSharedPreferences(
-            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-        )
-        if (preferences.contains(SettingsContract.KEY_LAST_LOG_EXPORT_TIME)) {
-            root.put(
-                Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME,
-                preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0L)
-            )
-        }
-    }
-
-    private fun parseLastLogExportTime(root: JSONObject): Long {
-        val key = Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME
-        val value = root.get(key)
-        require(value is Number) { "Invalid value for '$key'" }
-        val longValue = value.toLong()
-        require(value.toDouble().isFinite() && value.toDouble() == longValue.toDouble()) {
-            "Invalid value for '$key'"
-        }
-        return longValue
-    }
-
-    private fun parseRoot(jsonString: String): JSONObject {
-        val root = JSONObject(jsonString)
-        val version = root.optInt(KEY_VERSION, 0)
-        require(version >= Version1DeviceDataImporter.VERSION) {
-            "Unsupported device-specific data backup version"
-        }
-        return root
-    }
-
-    private fun logsToJson(records: List<LogRecord>): JSONArray = JSONArray().apply {
-        for ((status, charge, time, temperature, voltage, currentMicroAmps, remainingChargeMicroampHours) in records) {
-            put(
-                JSONObject().put(Version1DeviceDataImporter.KEY_LOG_STATUS, status)
-                    .putNullable(Version1DeviceDataImporter.KEY_LOG_CHARGE, charge)
-                    .put(Version1DeviceDataImporter.KEY_LOG_TIME, time).putNullable(
-                        Version1DeviceDataImporter.KEY_LOG_TEMPERATURE, temperature
-                    ).putNullable(Version1DeviceDataImporter.KEY_LOG_VOLTAGE, voltage).putNullable(
-                        Version2DeviceDataImporter.KEY_LOG_CURRENT, currentMicroAmps
-                    ).putNullable(
-                        Version2DeviceDataImporter.KEY_LOG_REMAINING_CHARGE,
-                        remainingChargeMicroampHours
-                    )
-            )
-        }
-    }
-
-    private fun parseLogs(logs: JSONArray): List<LogRecord> = buildList {
-        for (index in 0 until logs.length()) {
-            val log = logs.getJSONObject(index)
-            val values = buildMap {
-                for (key in listOf(
-                    Version1DeviceDataImporter.KEY_LOG_STATUS,
-                    Version1DeviceDataImporter.KEY_LOG_CHARGE,
-                    Version1DeviceDataImporter.KEY_LOG_TIME,
-                    Version1DeviceDataImporter.KEY_LOG_TEMPERATURE,
-                    Version1DeviceDataImporter.KEY_LOG_VOLTAGE,
-                    Version2DeviceDataImporter.KEY_LOG_CURRENT,
-                    Version2DeviceDataImporter.KEY_LOG_REMAINING_CHARGE
-                )) {
-                    if (log.has(key)) put(key, if (log.isNull(key)) null else log.get(key))
-                }
-            }
-            add(Version2DeviceDataImporter.restoreLog(values))
-        }
-    }
-
-    private fun parsePredictor(root: JSONObject): PredictorStoredState {
-        val predictor = root.getJSONObject(KEY_PREDICTOR)
-        val values = buildMap<String, Any?> {
-            for (key in Version1DeviceDataImporter.predictorPreferenceKeysByBackupKey.keys) {
-                if (predictor.has(key) && !predictor.isNull(key)) put(key, predictor.get(key))
+                require(KEY_LOGS in fields) { "Missing JSON history records" }
+                require(reader.peek() == JsonToken.END_DOCUMENT) { "Unexpected content after JSON history" }
             }
         }
-        return Version2DeviceDataImporter.restorePredictor(
-            Version1DeviceDataImporter.restorePredictor(values),
-            root.optInt(KEY_VERSION, 0),
-            predictor.opt(Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION)
-        )
+        writer.endObject().flush()
+        return writeReplacement
     }
 
-    private fun JSONObject.putNullable(key: String, value: Number?): JSONObject =
-        put(key, value ?: JSONObject.NULL)
+    private fun File.appendReader() = JsonReader(
+        BoundedJsonTokens(InputStreamReader(inputStream(), StandardCharsets.UTF_8.newDecoder()))
+    )
+
+    private inline fun JsonReader.appendObjectFields(copy: (String) -> Unit): Set<String> {
+        beginObject()
+        val fields = mutableSetOf<String>()
+        var nameChars = 0
+        while (hasNext()) {
+            val name = nextName()
+            nameChars += name.length
+            require(fields.size < 4096 && nameChars <= 64 * 1024) { "JSON history object has too many fields" }
+            require(fields.add(name)) { "Duplicate JSON history field" }
+            copy(name)
+        }
+        endObject()
+        return fields
+    }
+
+    private fun JsonReader.copyAppendValue(writer: JsonWriter): Any? = when (peek()) {
+        JsonToken.BEGIN_OBJECT -> {
+            writer.beginObject()
+            appendObjectFields { field ->
+                writer.name(field)
+                copyAppendValue(writer)
+            }
+            writer.endObject()
+            Unit
+        }
+
+        JsonToken.BEGIN_ARRAY -> {
+            beginArray()
+            writer.beginArray()
+            while (hasNext()) copyAppendValue(writer)
+            endArray()
+            writer.endArray()
+            Unit
+        }
+
+        JsonToken.NUMBER -> {
+            val literal = nextString()
+            val number = JSONTokener(literal).nextValue()
+            require(number is Number && BigDecimal(literal).compareTo(BigDecimal(number.toString())) == 0) {
+                "JSON history contains a number that cannot be preserved"
+            }
+            number.also { writer.value(it) }
+        }
+
+        JsonToken.STRING -> nextString().also { writer.value(it) }
+        JsonToken.BOOLEAN -> nextBoolean().also { writer.value(it) }
+        JsonToken.NULL -> {
+            nextNull()
+            writer.nullValue()
+            null
+        }
+
+        else -> error("Invalid JSON history value")
+    }
+
 }

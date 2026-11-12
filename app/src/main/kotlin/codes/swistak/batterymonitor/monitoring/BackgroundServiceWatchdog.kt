@@ -7,7 +7,6 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -15,8 +14,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
 import android.util.Log
-import androidx.core.content.edit
 import codes.swistak.batterymonitor.settings.SettingsContract
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BackgroundServiceWatchdog : BroadcastReceiver() {
     companion object {
@@ -28,33 +29,11 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
         const val KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME: String =
             "background_last_successful_log_check_elapsed_time"
 
-        fun recordHeartbeat(context: Context) {
-            val elapsedTime = SystemClock.elapsedRealtime()
-            context.getSharedPreferences(
-                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
-            ).edit {
-                putLong(KEY_LAST_HEARTBEAT_ELAPSED_TIME, elapsedTime)
-            }
-            MonitoringHealthStore.recordServiceHeartbeat(context, elapsedTime)
-        }
-
-        fun recordSuccessfulLogCheck(context: Context) {
-            val elapsedTime = SystemClock.elapsedRealtime()
-            context.getSharedPreferences(
-                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
-            ).edit {
-                putLong(
-                    KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME, elapsedTime
-                )
-            }
-            MonitoringHealthStore.recordDatabaseHeartbeat(context, elapsedTime)
-        }
-
         private fun isHeartbeatStale(lastHeartbeat: Long, elapsedRealtime: Long): Boolean {
             return lastHeartbeat !in 1L..elapsedRealtime || elapsedRealtime - lastHeartbeat >= WATCHDOG_INTERVAL_MS
         }
 
-        private fun staleReason(context: Context): String? {
+        private fun staleReason(context: Context, checkDatabase: Boolean): String? {
             val healthState = MonitoringHealthStore.read(context)
             val elapsedRealtime = SystemClock.elapsedRealtime()
             val lastServiceHeartbeat = healthState.serviceHeartbeatElapsedTime
@@ -62,6 +41,7 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
                 return "service heartbeat is stale (last=$lastServiceHeartbeat, now=$elapsedRealtime)"
             }
 
+            if (!checkDatabase) return null
             val settings = context.getSharedPreferences(
                 SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
             )
@@ -73,14 +53,14 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
             } else null
         }
 
-        fun selfHealIfNeeded(context: Context): Boolean {
+        fun selfHealIfNeeded(context: Context, watchdogFired: Boolean = false): Boolean {
             if (!isServiceDesired(context)) {
                 cancel(context)
                 return false
             }
 
-            schedule(context)
-            val reason = staleReason(context) ?: return false
+            arm(context, replaceDeliveredAlarm = watchdogFired)
+            val reason = staleReason(context, checkDatabase = watchdogFired) ?: return false
             Log.w(LOG_TAG, "Battery monitoring is unhealthy: $reason; requesting restart")
             val result = BatteryInfoService.startForegroundServiceSafely(context)
             Log.i(LOG_TAG, "Battery monitoring self-heal result: $result")
@@ -88,45 +68,54 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
         }
 
         fun schedule(context: Context) {
-            if (!isServiceDesired(context)) {
-                cancel(context)
-                return
+            if (isServiceDesired(context)) arm(context, replaceDeliveredAlarm = false)
+            else cancel(context)
+        }
+
+        private fun arm(context: Context, replaceDeliveredAlarm: Boolean) {
+            val alarmManager = context.getSystemService(AlarmManager::class.java) ?: return
+            if (!replaceDeliveredAlarm && pendingIntent(
+                    context, PendingIntent.FLAG_NO_CREATE
+                ) != null
+            ) return
+            val alarm = pendingIntent(context, 0) ?: return
+
+            try {
+                alarmManager.setAndAllowWhileIdle(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + WATCHDOG_INTERVAL_MS,
+                    alarm
+                )
+            } catch (error: RuntimeException) {
+                alarm.cancel()
+                Log.w(LOG_TAG, "Unable to schedule monitoring health check", error)
             }
-
-            val alarmManager =
-                context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager? ?: return
-
-            alarmManager.setAndAllowWhileIdle(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + WATCHDOG_INTERVAL_MS,
-                pendingIntent(context)!!
-            )
         }
 
         fun cancel(context: Context) {
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-            alarmManager?.cancel(pendingIntent(context)!!)
+            val alarm = pendingIntent(context, PendingIntent.FLAG_NO_CREATE) ?: return
+            context.getSystemService(AlarmManager::class.java)?.cancel(alarm)
+            alarm.cancel()
         }
 
         fun isServiceDesired(context: Context): Boolean = MonitoringDesiredState.read(context)
 
-        private fun pendingIntent(context: Context?): PendingIntent? {
+        private fun pendingIntent(context: Context, flags: Int): PendingIntent? {
             val intent = Intent(context, BackgroundServiceWatchdog::class.java)
             return PendingIntent.getBroadcast(
-                context,
-                REQUEST_CODE,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                context, REQUEST_CODE, intent, flags or PendingIntent.FLAG_IMMUTABLE
             )
         }
     }
 
     override fun onReceive(context: Context, intent: Intent?) {
-        if (!isServiceDesired(context)) {
-            cancel(context)
-            return
+        val pending = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                selfHealIfNeeded(context, watchdogFired = true)
+            } finally {
+                pending.finish()
+            }
         }
-
-        selfHealIfNeeded(context)
     }
 }

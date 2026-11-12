@@ -29,7 +29,7 @@ class SettingsDefinitionsTest {
         val categories = SettingsDefinitions.categories
         val groups = categories.values.flatten()
         val preferenceKeys = SettingsDefinitions.preferences.map { it.key }
-        val keys = categories.keys.toList() + groups.mapNotNull { it.key } + preferenceKeys
+        val keys = categories.keys.toList() + preferenceKeys
         assertTrue(keys.all { it.isNotBlank() })
         assertEquals(keys.size, keys.toSet().size)
         assertTrue(categories.values.all { it.isNotEmpty() })
@@ -109,11 +109,5 @@ class SettingsDefinitionsTest {
                 SettingsContract.KEY_DISCHARGING_TARGET to SettingsControl.Number(0, 0, 99)
             ), numbers
         )
-        for ((defaultValue, min, max, increment, adjustable, showValue) in numbers.values) {
-            assertTrue(defaultValue in min..max)
-            assertEquals(1, increment)
-            assertTrue(adjustable)
-            assertTrue(showValue)
-        }
     }
 }

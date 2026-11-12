@@ -32,7 +32,6 @@ import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistorySeries
-import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.settings.LongDurationFormat
@@ -379,18 +378,19 @@ internal object WidgetRenderer {
         return views
     }
 
-    fun preview(context: Context, family: WidgetFamily, config: WidgetConfiguration): RemoteViews =
-        render(
-            context,
-            AppWidgetManager.INVALID_APPWIDGET_ID,
-            family,
-            config,
-            WidgetSnapshotStore.read(context),
-            if (family == WidgetFamily.STATUS) 220 else 350,
-            230,
-            if (family == WidgetFamily.TREND) WidgetUpdateDispatcher.cachedTrend(config.trendHours) else null,
-            BackgroundServiceWatchdog.isServiceDesired(context)
-        )
+    fun preview(
+        context: Context, family: WidgetFamily, config: WidgetConfiguration, data: WidgetPreviewData
+    ): RemoteViews = render(
+        context,
+        AppWidgetManager.INVALID_APPWIDGET_ID,
+        family,
+        config,
+        data.snapshot,
+        if (family == WidgetFamily.STATUS) 220 else 350,
+        230,
+        data.trend,
+        data.monitoringEnabled
+    )
 
     internal fun usesCompactLayout(
         variant: WidgetVariant, heightDp: Int, widthDp: Int = Int.MAX_VALUE

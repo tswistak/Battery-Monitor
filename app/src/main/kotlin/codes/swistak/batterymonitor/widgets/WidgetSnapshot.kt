@@ -105,20 +105,22 @@ internal object WidgetSnapshotStore {
     }
 
     @Synchronized
-    fun write(context: Context, snapshot: WidgetSnapshot) {
+    fun write(context: Context, snapshot: WidgetSnapshot): Boolean {
         val file = file(context)
         val stream = try {
             file.startWrite()
         } catch (error: Exception) {
             Log.w("WidgetSnapshot", "Unable to open snapshot", error)
-            return
+            return false
         }
-        try {
+        return try {
             stream.write(WidgetSnapshotCodec.encode(snapshot))
             file.finishWrite(stream)
+            true
         } catch (error: Exception) {
             file.failWrite(stream)
             Log.w("WidgetSnapshot", "Unable to save snapshot", error)
+            false
         }
     }
 }

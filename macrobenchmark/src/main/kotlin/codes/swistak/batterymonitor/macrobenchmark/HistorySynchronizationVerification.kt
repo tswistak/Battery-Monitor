@@ -528,11 +528,17 @@ class HistorySynchronizationVerification {
     private fun chooseRange(name: String) {
         clickText("history_change_range")
         clickText(name, last = true)
+        clickText("okay")
+        check(device.wait(Until.gone(By.pkg(TARGET).text(text("history_range"))), TIMEOUT)) {
+            "History range dialog stayed open after confirming $name"
+        }
+        awaitText(name)
     }
 
     private fun chooseCustomDay(day: LocalDate, locale: Locale) {
         clickText("history_change_range")
-        clickText("history_custom_range")
+        clickText("history_custom_range", last = true)
+        clickText("okay")
         listOf("history_from", "history_through").forEach { label ->
             val prefix = text(label).substringBefore("%")
             checkNotNull(
@@ -571,6 +577,14 @@ class HistorySynchronizationVerification {
             awaitText("history_calendar_days")
         }
         clickText("okay", last = true)
+        check(
+            device.wait(
+                Until.gone(By.pkg(TARGET).text(text("history_calendar_days"))), TIMEOUT
+            )
+        ) {
+            "Custom history range dialog stayed open after confirming $day"
+        }
+        awaitText("history_custom_range")
     }
 
     private fun dismissImeIfNeeded() {
@@ -668,11 +682,11 @@ class HistorySynchronizationVerification {
     private fun recordUi(stage: String) {
         observations.put(
             JSONObject().put("stage", "$stage-visible")
-                .put(
-                    "texts",
-                    JSONArray(
-                        device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
-                            .distinct())))
+            .put(
+                "texts",
+                JSONArray(
+                    device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
+                        .distinct())))
         val root = outputDirectory()
         device.takeScreenshot(File(root, "history-${phase()}-$stage.png"))
     }

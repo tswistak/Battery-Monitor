@@ -17,7 +17,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import android.os.Handler
@@ -51,7 +50,9 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.io.File
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.TimeUnit
 
 class MonitoringRegressionInstrumentedTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
@@ -153,7 +154,7 @@ class MonitoringRegressionInstrumentedTest {
     }
 
     @Test
-    fun service_history_path_persists_actual_readings_and_resumes_after_database_reopen() {
+    fun service_history_path_enqueues_in_order_while_storage_is_busy() {
         val fields = mapOf(
             "level" to 47,
             "scale" to 100,
@@ -162,16 +163,26 @@ class MonitoringRegressionInstrumentedTest {
             "temperature" to 315,
             "voltage" to 3_920
         )
-        val recordHistory = BatteryInfoService::class.java.getDeclaredMethod(
-            "recordHistory", Map::class.java, Long::class.javaPrimitiveType
-        ).apply { isAccessible = true }
-        recordHistory.invoke(service, fields, 500L)
-        assertTrue((field("spsEditor") as SharedPreferences.Editor).commit())
+        val worker = BatteryInfoService.monitoringPersistence
+        val releaseStorage = CountDownLatch(1)
+        worker.execute { releaseStorage.await(10, TimeUnit.SECONDS) }
+        try {
+            instrumentation.runOnMainSync {
+                enqueueHistory(fields, 500L)
+                set("now", 121_000L)
+                enqueueHistory(fields, 120_500L)
+                call("recordServiceHeartbeat")
+            }
+            (field("currentWorker") as ExecutorService).submit {}.get(5, TimeUnit.SECONDS)
+            val stalled = MonitoringHealthStore.read(context)
+            assertTrue(stalled.serviceHeartbeatElapsedTime > 0L)
+            assertEquals(0L, stalled.databaseHeartbeatElapsedTime)
+        } finally {
+            releaseStorage.countDown()
+        }
+        worker.submit {}.get(5, TimeUnit.SECONDS)
         database.close()
         database = LogDatabase(context)
-        set("logDb", database)
-        set("now", 121_000L)
-        recordHistory.invoke(service, fields, 120_500L)
         val expected = listOf(
             LogRecord(0, 47, 1_000L, 315, 3_920, -123_000L, 2_100_000L),
             LogRecord(200, 47, 121_000L, 315, 3_920, -123_000L, 2_100_000L)
@@ -185,14 +196,47 @@ class MonitoringRegressionInstrumentedTest {
     }
 
     @Test
+    fun failed_history_write_keeps_the_service_heartbeat_and_success_updates_database_health() {
+        val fields = mapOf("level" to 47, "scale" to 100, "plugged" to 0, "status" to 3)
+        val worker = BatteryInfoService.monitoringPersistence
+        context.openOrCreateDatabase("logs.db", Context.MODE_PRIVATE, null).use { sqlite ->
+            sqlite.execSQL(
+                "CREATE TRIGGER fail_observation BEFORE INSERT ON logs " + "BEGIN SELECT RAISE(ABORT, 'synthetic monitoring failure'); END"
+            )
+            enqueueHistory(fields, 500L)
+            call("recordServiceHeartbeat")
+            (field("currentWorker") as ExecutorService).submit {}.get(5, TimeUnit.SECONDS)
+            worker.submit {}.get(5, TimeUnit.SECONDS)
+
+            val failed = MonitoringHealthStore.read(context)
+            assertTrue(failed.serviceHeartbeatElapsedTime > 0L)
+            assertEquals(0L, failed.databaseHeartbeatElapsedTime)
+
+            sqlite.execSQL("DROP TRIGGER fail_observation")
+            set("now", 121_000L)
+            enqueueHistory(fields, 120_500L)
+            worker.submit {}.get(5, TimeUnit.SECONDS)
+            assertTrue(MonitoringHealthStore.read(context).databaseHeartbeatElapsedTime > 0L)
+        }
+    }
+
+    private fun enqueueHistory(fields: Map<String, Int>, elapsed: Long) {
+        BatteryInfoService::class.java.getDeclaredMethod(
+            "recordHistory", Map::class.java, Long::class.javaPrimitiveType
+        ).apply { isAccessible = true }.invoke(service, fields, elapsed)
+    }
+
+    @Test
     fun ordinary_notification_has_vital_details_even_when_live_update_details_are_disabled() {
+        val prepare = BatteryInfoService::class.java.getDeclaredMethod(
+            "prepareNotification", Boolean::class.javaPrimitiveType
+        ).apply { isAccessible = true }
         assertTrue(
-            settings.edit().putString(SettingsContract.KEY_LIVE_UPDATE_DISPLAY, "never")
-                .putString(SettingsContract.KEY_TEMPERATURE_UNIT, "celsius")
+            settings.edit().putString(SettingsContract.KEY_TEMPERATURE_UNIT, "celsius")
                 .putBoolean(SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS, true)
                 .putBoolean(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, false).commit()
         )
-        val notification = call("prepareNotification") as Notification
+        val notification = prepare.invoke(service, false) as Notification
         assertEquals(NotificationChannels.CHAN_ID_MAIN, notification.channelId)
         val expanded = notification.extras.getCharSequence(Notification.EXTRA_BIG_TEXT).toString()
         assertTrue("Fallback notification lost its details: $expanded", expanded.isNotBlank())
@@ -209,7 +253,9 @@ class MonitoringRegressionInstrumentedTest {
                 .commit()
         )
         assertFalse(
-            (call("prepareNotification") as Notification).extras.containsKey(Notification.EXTRA_BIG_TEXT)
+            (prepare.invoke(
+                service, false
+            ) as Notification).extras.containsKey(Notification.EXTRA_BIG_TEXT)
         )
     }
 
@@ -291,11 +337,11 @@ class MonitoringRegressionInstrumentedTest {
         set(
             "currentAcquisition", CurrentAcquisition(
                 readNow = {
-                reads++
-                BatteryCurrentReading(
-                    -400_000, "fake/current_now", BatteryMeasurementTime(2_000L, 2_000L)
-                )
-            },
+                    reads++
+                    BatteryCurrentReading(
+                        -400_000, "fake/current_now", BatteryMeasurementTime(2_000L, 2_000L)
+                    )
+                },
                 readAverage = { error("Average current was not requested") },
                 executor = { pending.addLast(it) },
                 deliver = { it() })
@@ -459,7 +505,8 @@ class MonitoringRegressionInstrumentedTest {
             val registration = currentClients().getValue(client)
             assertNull(
                 registration.javaClass.getDeclaredField("demand")
-                .apply { isAccessible = true }.get(registration))
+                    .apply { isAccessible = true }.get(registration)
+            )
             service.onUnbind(null)
         }
     }
@@ -483,7 +530,8 @@ class MonitoringRegressionInstrumentedTest {
             val registration = currentClients().getValue(client)
             assertNull(
                 registration.javaClass.getDeclaredField("demand")
-                .apply { isAccessible = true }.get(registration))
+                    .apply { isAccessible = true }.get(registration)
+            )
             assertEquals(0, acquisitions)
             assertFalse(MonitoringDesiredState.read(context))
             service.onUnbind(null)

@@ -9,15 +9,12 @@ package codes.swistak.batterymonitor.settings
 
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Build
 import android.view.KeyEvent
-import android.view.View
-import android.view.ViewGroup
-import android.view.inspector.WindowInspector
 import android.widget.FrameLayout
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -40,22 +37,22 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.preference.Preference
-import androidx.preference.PreferenceManager
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
-import codes.swistak.batterymonitor.logs.HistoryMetric
-import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.clickSemantics
+import codes.swistak.batterymonitor.testsupport.composeNodes
+import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsFormat
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsProjectionCache
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsScreen
@@ -63,7 +60,8 @@ import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsState
 import codes.swistak.batterymonitor.ui.diagnostics.diagnosticTime
 import codes.swistak.batterymonitor.ui.help.HelpScreen
 import codes.swistak.batterymonitor.ui.help.helpSections
-import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
+import codes.swistak.batterymonitor.ui.settings.NotificationAvailability
+import codes.swistak.batterymonitor.ui.settings.SettingCatalog
 import codes.swistak.batterymonitor.ui.settings.SettingsDialog
 import codes.swistak.batterymonitor.ui.settings.SettingsDialogs
 import codes.swistak.batterymonitor.ui.settings.SettingsScreen
@@ -77,11 +75,12 @@ import org.junit.Assume.assumeTrue
 import org.junit.Test
 import java.io.File
 import java.util.Locale
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class SettingsNavigationInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context = instrumentation.targetContext
-    private lateinit var activity: FullscreenChartActivity
+    private lateinit var activity: ComposeTestActivity
 
     @Test
     fun appearance_summaries_keep_one_localized_prefix_when_choices_change() {
@@ -96,13 +95,14 @@ class SettingsNavigationInstrumentedTest {
             )
             val keys = listOf(SettingsContract.KEY_COLOR_SOURCE, SettingsContract.KEY_BRIGHTNESS)
             val before = keys.associateWith { settings.getString(it, null) }
-            var version by mutableStateOf(0)
-            val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> version++ }
+            var values by mutableStateOf(settings.all.toMap())
+            val listener = SharedPreferences.OnSharedPreferenceChangeListener { current, _ ->
+                values = current.all.toMap()
+            }
             val prefix = localized.getString(R.string.currently_set_to)
             var registry = SaveableStateRegistry(null) { true }
 
             fun content() {
-                val screen = PreferenceManager(activity).createPreferenceScreen(activity)
                 activity.setContent {
                     CompositionLocalProvider(
                         LocalContext provides localized,
@@ -112,13 +112,15 @@ class SettingsNavigationInstrumentedTest {
                     ) {
                         AppBatteryTheme {
                             SettingsScreen(
-                                screen,
-                                version,
-                                "general",
-                                null,
-                                {},
-                                { _, _ -> },
-                                { _, _ -> })
+                                descriptors = testRows(localized.resources, values),
+                                initialCategory = "general",
+                                highlightKey = null,
+                                onActivate = {},
+                                onChange = { key, value ->
+                                    settings.edit().putString(key, value as String).apply()
+                                },
+                                onNavigateCategory = { _, _ -> },
+                                onDiagnostics = { _, _ -> })
                         }
                     }
                 }
@@ -144,6 +146,7 @@ class SettingsNavigationInstrumentedTest {
             try {
                 settings.edit().putString(keys[0], ColorSource.Dynamic.name)
                     .putString(keys[1], Brightness.System.name).commit()
+                values = settings.all
                 settings.registerOnSharedPreferenceChangeListener(listener)
                 main { content() }
                 await {
@@ -169,6 +172,7 @@ class SettingsNavigationInstrumentedTest {
                     assertEquals(committed, settings.getString(keyAndValue.first, null))
                     select(R.string.cancel)
                     assertEquals(committed, settings.getString(keyAndValue.first, null))
+                    await { !hasText(localized.getString(choice)) }
                     select(title)
                     await { hasText(localized.getString(choice)) }
                     main {
@@ -182,7 +186,7 @@ class SettingsNavigationInstrumentedTest {
                     instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
                     instrumentation.waitForIdleSync()
                     assertEquals(committed, settings.getString(keyAndValue.first, null))
-                    await { hasText(localized.getString(title)) }
+                    await { !hasText(localized.getString(choice)) }
                     select(title)
                     await { hasText(localized.getString(choice)) }
                     select(choice)
@@ -254,9 +258,11 @@ class SettingsNavigationInstrumentedTest {
         instrumentation.waitForIdleSync()
         assertEquals(1, navigationRequests)
         assertEquals(before, settings.all[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
-        assertFalse(nodes(includeDialogs = true).any {
-            it.config.contains(SemanticsProperties.IsDialog)
-        })
+        main {
+            assertFalse(nodes(includeDialogs = true).any {
+                it.config.contains(SemanticsProperties.IsDialog)
+            })
+        }
     }
 
     @Suppress("UsePropertyAccessSyntax")
@@ -290,10 +296,10 @@ class SettingsNavigationInstrumentedTest {
             else DiagnosticsState(basic = snapshot, privilegedEnabled = false)
             assertEquals(
                 chemistry, DiagnosticsProjectionCache().groups(
-                listOfNotNull(state.basic, state.appRaw, state.advanced),
-                DiagnosticsFormat(1, false, Locale.forLanguageTag(language)),
-                tab = 1
-            ).flatMap { it.rows }.single { it.label == R.string.diag_battery_technology }.value
+                    listOfNotNull(state.basic, state.appRaw, state.advanced),
+                    DiagnosticsFormat(1, false, Locale.forLanguageTag(language)),
+                    tab = 1
+                ).flatMap { it.rows }.single { it.label == R.string.diag_battery_technology }.value
             )
             val settings =
                 context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
@@ -495,7 +501,13 @@ class SettingsNavigationInstrumentedTest {
             fun content() {
                 activity.setContent {
                     CompositionLocalProvider(LocalSaveableStateRegistry provides registry) {
-                        AppBatteryTheme { SettingsDialogs(dialog, false) { dialog = null } }
+                        AppBatteryTheme {
+                            SettingsDialogs(
+                                dialog,
+                                false,
+                                onDismiss = { dialog = null },
+                                beforeConfirm = { dialog = null })
+                        }
                     }
                 }
             }
@@ -566,19 +578,14 @@ class SettingsNavigationInstrumentedTest {
     @Test
     fun time_estimates_does_not_repeat_estimator_help_below_the_selector() = withHost {
         main {
-            val screen = PreferenceManager(activity).createPreferenceScreen(activity)
-            screen.addPreference(Preference(activity).apply {
-                key = SettingsContract.KEY_PREDICTION_TYPE
-                title = context.getString(R.string.pref_prediction_type)
-            })
             activity.setContent {
                 AppBatteryTheme {
                     SettingsScreen(
-                        preferences = screen,
-                        version = 0,
+                        descriptors = testRows().filter { it.key == SettingsContract.KEY_PREDICTION_TYPE },
                         initialCategory = "time",
                         highlightKey = null,
                         onActivate = {},
+                        onChange = { _, _ -> error("Navigation must not save a preference") },
                         onNavigateCategory = { _, _ -> },
                         onDiagnostics = { _, _ -> })
                 }
@@ -603,15 +610,14 @@ class SettingsNavigationInstrumentedTest {
             var category by mutableStateOf<String?>(null)
             val destinations = mutableListOf<Pair<String, String?>>()
             main {
-                val screen = PreferenceManager(activity).createPreferenceScreen(activity)
                 activity.setContent {
                     AppBatteryTheme {
                         SettingsScreen(
-                            preferences = screen,
-                            version = 0,
+                            descriptors = SettingCatalog.diagnosticEntries(activity.resources::getString),
                             initialCategory = category,
                             highlightKey = null,
                             onActivate = { error("Diagnostics must reuse their existing route") },
+                            onChange = { _, _ -> error("Navigation must not save a preference") },
                             onNavigateCategory = { route, _ -> category = route },
                             onDiagnostics = { route, highlight -> destinations += route to highlight })
                     }
@@ -633,50 +639,26 @@ class SettingsNavigationInstrumentedTest {
         }
 
     @Test
-    fun notification_search_highlight_keeps_the_matching_first_row_visible_without_a_legacy_preview() =
-        withHost {
-            main {
-                val screen = PreferenceManager(activity).createPreferenceScreen(activity)
-                for (key in listOf(
-                    SettingsContract.KEY_TOP_LINE,
-                    SettingsContract.KEY_BOTTOM_LINE,
-                    SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
-                    SettingsContract.KEY_VITAL_SIGNS_CONTENT,
-                    SettingsContract.KEY_ICON_CONTENT
-                )) {
-                    screen.addPreference(Preference(activity).apply {
-                        this.key = key
-                        title = key
-                    })
-                }
-                activity.setContent {
-                    AppBatteryTheme {
-                        Box(Modifier.height(120.dp)) {
-                            SettingsScreen(
-                                preferences = screen,
-                                version = 0,
-                                initialCategory = "notification",
-                                highlightKey = SettingsContract.KEY_TOP_LINE,
-                                onActivate = {},
-                                onNavigateCategory = { _, _ -> },
-                                onDiagnostics = { _, _ -> })
-                        }
+    fun notification_route_scrolls_to_the_setting_selected_in_search() = withHost {
+        val target = SettingsContract.KEY_ICON_CONTENT
+        main {
+            activity.setContent {
+                AppBatteryTheme {
+                    Box(Modifier.height(190.dp)) {
+                        SettingsScreen(
+                            descriptors = testRows(),
+                            initialCategory = "notification",
+                            highlightKey = target,
+                            onActivate = {},
+                            onChange = { _, _ -> error("Navigation must not save a preference") },
+                            onNavigateCategory = { _, _ -> },
+                            onDiagnostics = { _, _ -> })
                     }
                 }
             }
-            await { nodes().any { it.config.contains(SemanticsProperties.VerticalScrollAxisRange) } }
-            instrumentation.waitForIdleSync()
-            main {
-                val scroll = nodes().first {
-                    it.config.contains(SemanticsProperties.VerticalScrollAxisRange)
-                }.config[SemanticsProperties.VerticalScrollAxisRange]
-                assertEquals(0f, scroll.value(), 0f)
-                assertTrue(nodes().any {
-                    it.config.getOrNull(SemanticsProperties.Text)
-                        ?.any { text -> text.text == SettingsContract.KEY_TOP_LINE } == true
-                })
-            }
         }
+        await { button(R.string.pref_icon_content) != null }
+    }
 
     @Test
     fun search_opens_the_same_monitor_and_OEM_routes_without_changing_preferences() = withHost {
@@ -686,15 +668,14 @@ class SettingsNavigationInstrumentedTest {
         val before = preferences.all.toMap()
         val destinations = mutableListOf<Pair<String, String?>>()
         main {
-            val screen = PreferenceManager(activity).createPreferenceScreen(activity)
             activity.setContent {
                 AppBatteryTheme {
                     SettingsScreen(
-                        preferences = screen,
-                        version = 0,
+                        descriptors = testRows(),
                         initialCategory = null,
                         highlightKey = null,
                         onActivate = { error("Search must route to the existing detail") },
+                        onChange = { _, _ -> error("Navigation must not save a preference") },
                         onNavigateCategory = { _, _ -> error("A diagnostic result is a detail route") },
                         onDiagnostics = { route, highlight -> destinations += route to highlight })
                 }
@@ -801,31 +782,25 @@ class SettingsNavigationInstrumentedTest {
         }
     }
 
+    private fun testRows(
+        resources: Resources = activity.resources, values: Map<String, *> = emptyMap<String, Any>()
+    ) = SettingCatalog.entries(
+        resources, values, Build.VERSION.SDK_INT, NotificationAvailability(
+            appEnabled = true, mainEnabled = true,
+            liveEnabled = true
+        )
+    )
+
     private fun withHost(test: () -> Unit) {
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        try {
-            instrumentation.startActivitySync(
-                FullscreenChartActivity.intent(
-                    context, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
-                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-            await {
-                val host = monitor.lastActivity as? FullscreenChartActivity
-                host != null && host.lifecycle.currentState == Lifecycle.State.RESUMED
-            }
-            activity = monitor.lastActivity as FullscreenChartActivity
+        ActivityScenario.launch(ComposeTestActivity::class.java).use { scenario ->
+            scenario.onActivity { activity = it }
             test()
-        } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(monitor)
         }
     }
 
     private fun click(label: Int) {
         main {
-            assertTrue(requireNotNull(button(label)).config[SemanticsActions.OnClick].action?.invoke() == true)
+            requireNotNull(button(label)).clickSemantics()
         }
         instrumentation.waitForIdleSync()
     }
@@ -835,36 +810,14 @@ class SettingsNavigationInstrumentedTest {
             ?.any { text -> text.text == context.getString(label) } == true
     }
 
-    private fun nodes(includeDialogs: Boolean = false): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
+    private fun nodes(includeDialogs: Boolean = false): List<SemanticsNode> =
+        if (includeDialogs && Build.VERSION.SDK_INT >= 29) composeWindowNodes { it.isShown }
+        else composeNodes(activity.window.decorView)
 
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            return if (view is ViewGroup) (0 until view.childCount).flatMap {
-                owners(view.getChildAt(it))
-            } else emptyList()
+    private fun await(ready: () -> Boolean) =
+        awaitCondition({ "Settings navigation did not reach its expected destination" }) {
+            main(
+                ready
+            )
         }
-
-        val roots = if (includeDialogs && Build.VERSION.SDK_INT >= 29) {
-            WindowInspector.getGlobalWindowViews().filter { it.isShown }
-        } else listOf(activity.window.decorView)
-        return roots.flatMap(::owners).flatMap { descendants(it.rootSemanticsNode) }
-    }
-
-    private fun main(action: () -> Unit) = instrumentation.runOnMainSync(action)
-
-    private fun await(ready: () -> Boolean) {
-        fun reached(): Boolean {
-            var result = false
-            main { result = ready() }
-            return result
-        }
-
-        val deadline = System.nanoTime() + 10_000_000_000L
-        while (!reached() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue("Settings navigation did not reach its expected destination", reached())
-    }
 }

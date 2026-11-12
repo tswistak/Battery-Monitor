@@ -41,6 +41,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 
 class GeneralBackupInstrumentedTest {
@@ -109,7 +110,7 @@ class GeneralBackupInstrumentedTest {
         assertEquals(allData, GeneralBackup.getAvailableData(archive))
         assertEquals(
             setOf("metadata.json", "settings.json", "alarms.json", "device-specific.json"),
-            archive.fileContents.keys
+            exportedEntries().keys
         )
         assertFalse(GeneralBackup.containsNewerSchema(archive))
         seedExistingData()
@@ -166,7 +167,8 @@ class GeneralBackupInstrumentedTest {
 
     @Test
     fun invalid_selected_payloads_are_rejected_before_any_category_is_changed() {
-        val archive = exportedArchive()
+        exportedArchive()
+        val entries = exportedEntries()
         val invalidPayloads = listOf(
             "settings.json" to """{"version":4,"settings":{"enable_logging":"yes"}}""",
             "alarms.json" to """{"version":2,"alarms":[{"enabled":true,"type":"unsupported_type","threshold":"17"}]}""",
@@ -176,7 +178,7 @@ class GeneralBackupInstrumentedTest {
         for ((file, invalidData) in invalidPayloads) {
             seedExistingData()
             val before = storedState()
-            val invalid = read(zip(archive.fileContents + (file to invalidData)))
+            val invalid = read(zip(entries + (file to invalidData)))
 
             assertThrows("Expected validation failure in $file", Exception::class.java) {
                 GeneralBackup.restore(context, preferences, invalid, allData, LogImportMode.REPLACE)
@@ -210,8 +212,8 @@ class GeneralBackupInstrumentedTest {
 
     @Test
     fun malformed_unselected_settings_do_not_block_a_selected_alarm_restore() {
-        val exported = exportedArchive()
-        val archive = read(zip(exported.fileContents + ("settings.json" to "invalid JSON")))
+        exportedArchive()
+        val archive = read(zip(exportedEntries() + ("settings.json" to "invalid JSON")))
         seedExistingData()
 
         GeneralBackup.restore(
@@ -340,8 +342,17 @@ class GeneralBackupInstrumentedTest {
         val destination = Uri.fromFile(File(directory, "general.zip"))
         // The app can export a live snapshot; capture it from the real, isolated preference store.
         GeneralBackup.exportToUri(context, destination, preferences, predictor())
-        return GeneralBackup.readFromUri(context, destination)
+        return GeneralBackup.readFromUri(context, destination, preparedLogs())
     }
+
+    private fun exportedEntries(): Map<String, String> =
+        ZipFile(File(directory, "general.zip")).use { zip ->
+            zip.entries().asSequence().associate { entry ->
+                entry.name to zip.getInputStream(entry).bufferedReader().use { it.readText() }
+            }
+        }
+
+    private fun preparedLogs(): File = File.createTempFile("restore-", ".logs", directory)
 
     private fun seedExistingData() {
         assertTrue(
@@ -429,6 +440,10 @@ class GeneralBackupInstrumentedTest {
                             editor.putLong(key, value)
                         }
 
+                    override fun remove(key: String?): SharedPreferences.Editor = apply {
+                        editor.remove(key)
+                    }
+
                     override fun commit() = false
                 }
             }
@@ -450,5 +465,5 @@ class GeneralBackupInstrumentedTest {
     }
 
     private fun read(bytes: ByteArray): GeneralBackupArchive =
-        GeneralBackup.readArchive(ByteArrayInputStream(bytes))
+        GeneralBackup.readArchive(ByteArrayInputStream(bytes), preparedLogs())
 }

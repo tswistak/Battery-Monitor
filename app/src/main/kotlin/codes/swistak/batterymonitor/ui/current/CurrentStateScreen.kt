@@ -8,7 +8,10 @@
 package codes.swistak.batterymonitor.ui.current
 
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.os.PowerManager
 import androidx.compose.foundation.BorderStroke
@@ -62,6 +65,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -78,6 +82,7 @@ import codes.swistak.batterymonitor.logs.LogsRepository
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
+import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.monitoring.PrivilegedBatteryReader
 import codes.swistak.batterymonitor.monitoring.oldestMeasurementTime
 import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
@@ -102,10 +107,13 @@ import codes.swistak.batterymonitor.ui.settings.settingIcon
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -204,6 +212,28 @@ internal fun CurrentStateRoute(
     }
     var refreshCurrent by remember { mutableIntStateOf(0) }
     val lifecycleOwner = LocalLifecycleOwner.current
+    val appContext = context.applicationContext
+    val monitoringEnabled by produceState(true, appContext, lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            callbackFlow {
+                val receiver = object : BroadcastReceiver() {
+                    override fun onReceive(context: Context, intent: Intent) {
+                        trySend(Unit)
+                    }
+                }
+                ContextCompat.registerReceiver(
+                    appContext,
+                    receiver,
+                    IntentFilter(MonitoringDesiredState.ACTION_CHANGED),
+                    ContextCompat.RECEIVER_NOT_EXPORTED
+                )
+                trySend(Unit)
+                awaitClose { appContext.unregisterReceiver(receiver) }
+            }.conflate().collect {
+                value = withContext(Dispatchers.IO) { MonitoringDesiredState.read(appContext) }
+            }
+        }
+    }
     val latestPreferences by rememberUpdatedState(preferences)
     val latestRefreshCurrent by rememberUpdatedState(refreshCurrent)
     val rawCurrent by produceState(
@@ -287,9 +317,7 @@ internal fun CurrentStateRoute(
     val model = currentStateModel(
         state,
         showFullRange && samePredictionContext,
-        monitoringEnabled = codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog.isServiceDesired(
-            context
-        ),
+        monitoringEnabled = monitoringEnabled,
         notificationsEnabled = notificationsEnabled
     )
     val logs = remember(context.applicationContext) { LogsRepository(context.applicationContext) }
@@ -468,34 +496,34 @@ internal fun CurrentStateScreen(
     val metrics = listOf(
         MetricDetail(
             CurrentMeasurement.TEMPERATURE,
-            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
-                DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
-            } ?: unavailable),
-            if (preferences.fahrenheit) "°F" else "°C",
-            source(CurrentMeasurement.TEMPERATURE),
-            measurementTime("temperature")), MetricDetail(
+        MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
+            DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
+        } ?: unavailable),
+        if (preferences.fahrenheit) "°F" else "°C",
+        source(CurrentMeasurement.TEMPERATURE),
+        measurementTime("temperature")), MetricDetail(
             CurrentMeasurement.VOLTAGE,
-            MetricDisplay(
-                stringResource(R.string.current_voltage),
-                snapshot?.voltageMillivolts?.let {
-                    DisplayStrings.formatVoltage(it)
-                } ?: unavailable),
-            "V",
-            source(CurrentMeasurement.VOLTAGE),
-            measurementTime("voltage"),
-            if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
-            CurrentMeasurement.CURRENT, MetricDisplay(
-                stringResource(R.string.pref_cat_battery_current_main), when {
-                    currentReading?.milliAmps == null -> unavailable
-                    else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
-                        currentReading.milliAmps, configuration.locales[0]
-                    ) + "\u00A0mA"
-                }
-            ), "mA", source(CurrentMeasurement.CURRENT), currentReading?.observedAtMillis, when {
-                currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
-                else -> null
+        MetricDisplay(
+            stringResource(R.string.current_voltage),
+            snapshot?.voltageMillivolts?.let {
+                DisplayStrings.formatVoltage(it)
+            } ?: unavailable),
+        "V",
+        source(CurrentMeasurement.VOLTAGE),
+        measurementTime("voltage"),
+        if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
+        CurrentMeasurement.CURRENT, MetricDisplay(
+            stringResource(R.string.pref_cat_battery_current_main), when {
+                currentReading?.milliAmps == null -> unavailable
+                else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
+                    currentReading.milliAmps, configuration.locales[0]
+                ) + "\u00A0mA"
             }
-        )) + listOfNotNull(power?.let {
+        ), "mA", source(CurrentMeasurement.CURRENT), currentReading?.observedAtMillis, when {
+            currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
+            else -> null
+        }
+    )) + listOfNotNull(power?.let {
         MetricDetail(
             CurrentMeasurement.POWER,
             MetricDisplay(
@@ -664,16 +692,16 @@ internal fun CurrentStateScreen(
         val measurementGrid: @Composable () -> Unit = {
             MetricGrid(
                 metrics.mapIndexed { index, metric ->
-                    metric.display.copy(
-                        icon = listOfNotNull(
-                            R.drawable.ui_temp,
-                            R.drawable.ui_voltage,
-                            R.drawable.ui_current,
-                            R.drawable.ui_bolt.takeIf { power != null },
-                            R.drawable.ui_heart
-                        )[index]
-                    )
-                },
+                metric.display.copy(
+                    icon = listOfNotNull(
+                        R.drawable.ui_temp,
+                        R.drawable.ui_voltage,
+                        R.drawable.ui_current,
+                        R.drawable.ui_bolt.takeIf { power != null },
+                        R.drawable.ui_heart
+                    )[index]
+                )
+            },
                 columns = if (singleColumn) 1 else 2,
                 onMetricClick = { detailSheet = metrics[it].measurement.route },
                 modifier = Modifier.fillMaxWidth(),

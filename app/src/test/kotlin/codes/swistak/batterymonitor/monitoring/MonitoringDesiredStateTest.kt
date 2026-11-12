@@ -18,23 +18,30 @@ import org.junit.Test
 
 class MonitoringDesiredStateTest {
     @Test
-    fun `the persisted authority preserves both a running and an explicitly stopped monitor`() {
+    fun `the persisted authority preserves a running or stopped monitor and its boot`() {
         for (desired in listOf(false, true)) {
+            val session = MonitoringDesiredState.Session(desired, 12)
             assertEquals(
-                desired, MonitoringDesiredState.decode(MonitoringDesiredState.encode(desired))
+                session, MonitoringDesiredState.decode(MonitoringDesiredState.encode(session))
             )
         }
     }
 
     @Test
+    fun `the previous persisted format preserves the choice with no known boot`() {
+        val old = byteArrayOf(0x42, 0x4d, 0x44, 0x53, 0, 0, 0, 1, 1)
+        assertEquals(MonitoringDesiredState.decode(old), MonitoringDesiredState.Session(true, null))
+    }
+
+    @Test
     fun `invalid or unsupported persisted authority is ignored so legacy state can be used`() {
-        val valid = MonitoringDesiredState.encode(true)
+        val valid = MonitoringDesiredState.encode(MonitoringDesiredState.Session(true, 12))
         for (length in valid.indices) {
             assertNull(MonitoringDesiredState.decode(valid.copyOf(length)))
         }
         assertNull(MonitoringDesiredState.decode(valid + byteArrayOf(0)))
         assertNull(MonitoringDesiredState.decode(valid.copyOf().also { it[0] = 0 }))
-        assertNull(MonitoringDesiredState.decode(valid.copyOf().also { it[7] = 2 }))
+        assertNull(MonitoringDesiredState.decode(valid.copyOf().also { it[7] = 3 }))
         assertNull(MonitoringDesiredState.decode(valid.copyOf().also { it[8] = 2 }))
     }
 

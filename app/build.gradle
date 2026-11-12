@@ -190,7 +190,11 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.8.0"
     implementation "androidx.appcompat:appcompat-resources:1.8.0"
 
-    implementation "androidx.preference:preference:1.2.1"
+    constraints {
+        add("implementation", "androidx.customview:customview:1.1.0")
+                .because("Keep the existing runtime version for DrawerLayout and ViewPager")
+    }
+
     implementation "dev.rikka.shizuku:api:13.1.5"
     implementation "dev.rikka.shizuku:provider:13.1.5"
     implementation "com.github.topjohnwu.libsu:core:6.0.0"
@@ -305,8 +309,7 @@ def prepareLocalizationResources = tasks.register('prepareLocalizationResources'
         fileTree(localizationResDirectory.get().asFile).matching {
             include 'values*/strings.xml'
         }.each { resource ->
-            resource.setText(resource.getText('UTF-8').replaceAll(/\\\\|\\n\r?\n {4}/) { token ->
-                token.startsWith('\\n') ? '\\n' : token
+            resource.setText(resource.getText('UTF-8').replaceAll(/\\\\|\\n\r?\n {4}/) { token -> token.startsWith('\\n') ? '\\n' : token
             }, 'UTF-8')
         }
     }
@@ -314,6 +317,5 @@ def prepareLocalizationResources = tasks.register('prepareLocalizationResources'
 tasks.named('preBuild').configure {
     dependsOn prepareLocalizationResources
 }
-androidComponents.onVariants(androidComponents.selector().all()) { variant ->
-    variant.sources.res.addGeneratedSourceDirectory(prepareLocalizationResources) { localizationResDirectory }
+androidComponents.onVariants(androidComponents.selector().all()) { variant -> variant.sources.res.addGeneratedSourceDirectory(prepareLocalizationResources) { localizationResDirectory }
 }

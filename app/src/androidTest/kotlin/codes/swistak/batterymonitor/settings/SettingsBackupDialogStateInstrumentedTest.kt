@@ -18,6 +18,8 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.SharedPreferences
+import android.database.DatabaseErrorHandler
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -30,6 +32,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.devicebackup.GeneralBackup
+import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import codes.swistak.batterymonitor.ui.settings.SettingsDialog
 import kotlinx.coroutines.CancellationException
@@ -64,6 +68,21 @@ class SettingsBackupDialogStateInstrumentedTest {
         context = object : ContextWrapper(target) {
             override fun getApplicationContext(): Context = this
             override fun getCacheDir(): File = directory
+            override fun getDatabasePath(name: String) = File(directory, name)
+            override fun openOrCreateDatabase(
+                name: String, mode: Int, factory: SQLiteDatabase.CursorFactory?
+            ) = SQLiteDatabase.openOrCreateDatabase(getDatabasePath(name), factory)
+
+            override fun openOrCreateDatabase(
+                name: String,
+                mode: Int,
+                factory: SQLiteDatabase.CursorFactory?,
+                errorHandler: DatabaseErrorHandler?
+            ) = SQLiteDatabase.openOrCreateDatabase(
+                getDatabasePath(name).path, factory, errorHandler
+            )
+
+            override fun sendBroadcast(intent: Intent) = Unit
         }
         application = object : Application() {
             init {
@@ -129,7 +148,7 @@ class SettingsBackupDialogStateInstrumentedTest {
         complete(first)
         val preview = choices(first)
         main {
-            dismiss(first)
+            closeForConfirmation(first)
             preview.onConfirm(setOf(0))
         }
         val saved = save(first)
@@ -150,6 +169,47 @@ class SettingsBackupDialogStateInstrumentedTest {
     }
 
     @Test
+    fun confirmed_device_history_survives_dialog_close_and_releases_the_cache_after_restore() {
+        val source = File(directory, "history.json").apply {
+            writeText("""{"version":1,"logs":[{"status":3,"charge":72,"time":1700000000000}]}""")
+        }
+        val fragment = fragment()
+        main {
+            SettingsFragment::class.java.getDeclaredField("mSharedPreferences")
+                .apply { isAccessible = true }
+                .set(fragment, context.getSharedPreferences(directory.name, Context.MODE_PRIVATE))
+        }
+        val request = request(6)
+        read(fragment, request, Uri.fromFile(source))
+        complete(fragment)
+        val preview = choices(fragment)
+        main {
+            closeForConfirmation(fragment)
+            preview.onConfirm(setOf(0))
+        }
+        val mode = choices(fragment)
+        main {
+            closeForConfirmation(fragment)
+            mode.onConfirm(setOf(1))
+        }
+        complete(fragment)
+        assertEquals(
+            context.getString(R.string.device_data_imported_dialog),
+            (dialog(fragment) as SettingsDialog.Message).message
+        )
+        val database = LogDatabase(context)
+        try {
+            assertEquals(
+                listOf(LogRecord(3, 72, 1_700_000_000_000L, null, null)),
+                database.getAllLogRecords()
+            )
+        } finally {
+            database.close()
+        }
+        assertFalse(directory.listFiles().orEmpty().any { it.name.startsWith("settings-import-") })
+    }
+
+    @Test
     fun general_backup_log_mode_restores_selection_from_the_cached_archive() {
         val source = File(directory, "source.zip")
         ZipOutputStream(source.outputStream()).use { output ->
@@ -167,7 +227,7 @@ class SettingsBackupDialogStateInstrumentedTest {
         complete(first)
         val preview = choices(first)
         main {
-            dismiss(first)
+            closeForConfirmation(first)
             preview.onConfirm(setOf(0))
         }
         val restored = restore(save(first))
@@ -183,9 +243,9 @@ class SettingsBackupDialogStateInstrumentedTest {
     @Test
     fun csv_mode_and_newer_schema_warnings_restore_and_missing_cache_fails_safely() {
         for ((code, body) in listOf(
-            7 to "status,charge,time\n22,50,1000\n",
-            2 to """{"version":${SettingsBackup.SCHEMA_VERSION + 1}}""",
-            4 to """{"version":${AlarmBackup.SCHEMA_VERSION + 1}}"""
+            7 to "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Discharging,50,30.0,86.0,4.0\n",
+            2 to """{"version":${SettingsBackup.SCHEMA_VERSION + 1},"settings":{}}""",
+            4 to """{"version":${AlarmBackup.SCHEMA_VERSION + 1},"alarms":[]}"""
         )) {
             val source = File(directory, "source-$code").apply { writeText(body) }
             val first = fragment()
@@ -228,7 +288,7 @@ class SettingsBackupDialogStateInstrumentedTest {
         assertFalse(models.getValue(restored).busy)
 
         val source = File(directory, "picker-settings.json").apply {
-            writeText("""{"version":${SettingsBackup.SCHEMA_VERSION + 1}}""")
+            writeText("""{"version":${SettingsBackup.SCHEMA_VERSION + 1},"settings":{}}""")
         }
         main {
             pending.setInt(restored, saved.getInt("document_request"))
@@ -427,6 +487,11 @@ class SettingsBackupDialogStateInstrumentedTest {
 
     private fun dismiss(fragment: SettingsFragment) {
         SettingsFragment::class.java.getDeclaredMethod("dismissSettingsDialog")
+            .apply { isAccessible = true }.invoke(fragment)
+    }
+
+    private fun closeForConfirmation(fragment: SettingsFragment) {
+        SettingsFragment::class.java.getDeclaredMethod("closeSettingsDialogForConfirmation")
             .apply { isAccessible = true }.invoke(fragment)
     }
 

@@ -7,7 +7,6 @@
 */
 package codes.swistak.batterymonitor.ui.settings
 
-import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,16 +45,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -66,17 +61,10 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.edit
-import androidx.preference.CheckBoxPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceScreen
-import androidx.preference.SeekBarPreference
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
-import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_BRIGHTNESS
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_COLOR_SOURCE
+import codes.swistak.batterymonitor.settings.SettingsControl
 import codes.swistak.batterymonitor.ui.components.NumericValueDialog
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
@@ -87,51 +75,39 @@ import codes.swistak.batterymonitor.ui.theme.brightness
 import codes.swistak.batterymonitor.ui.theme.colorSource
 
 @Composable
-fun SettingsScreen(
-    preferences: PreferenceScreen,
-    version: Int,
+internal fun SettingsScreen(
+    descriptors: List<SettingDescriptor>,
     initialCategory: String?,
     highlightKey: String?,
-    onActivate: (Preference) -> Unit,
+    onActivate: (String) -> Unit,
+    onChange: (String, Any) -> Unit,
     onNavigateCategory: (String?, String?) -> Unit,
     onDiagnostics: (String, String?) -> Unit
 ) {
-    val context = LocalContext.current
     val focus = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
-    val configuration = LocalConfiguration.current
     val resources = LocalResources.current
-    val descriptors = remember(preferences, version, configuration) {
-        val settings =
-            context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-        val chargingTargetMode =
-            settings.getString(SettingsContract.KEY_CHARGING_TARGET_MODE, "automatic")
-        SettingCatalog.entries(preferences, resources::getString).filter {
-            SettingCatalog.isVisible(it.key, Build.VERSION.SDK_INT, chargingTargetMode)
-        }
-    }
     val category = SettingsCategory.fromRoute(initialCategory)
     var query by rememberSaveable { mutableStateOf("") }
     val states = rememberSaveableStateHolder()
     var numericKey by rememberSaveable { mutableStateOf<String?>(null) }
     var appearance by rememberSaveable { mutableStateOf<String?>(null) }
-    var localVersion by remember { mutableIntStateOf(0) }
 
     fun activate(descriptor: SettingDescriptor) {
         descriptor.diagnosticDetail?.let { route ->
             onDiagnostics(route, descriptor.key.takeUnless { it == "background_monitoring" })
             return
         }
-        when (val preference = descriptor.preference) {
-            is CheckBoxPreference -> {
-                val checked = !preference.isChecked
-                if (preference.callChangeListener(checked)) preference.isChecked = checked
-                localVersion++
-            }
+        when {
+            descriptor.control is SettingsControl.Toggle -> onChange(
+                descriptor.key, descriptor.value != true
+            )
 
-            is SeekBarPreference -> numericKey = preference.key
-            null -> appearance = descriptor.key
-            else -> onActivate(preference)
+            descriptor.control is SettingsControl.Number -> numericKey = descriptor.key
+            descriptor.key == KEY_COLOR_SOURCE || descriptor.key == KEY_BRIGHTNESS -> appearance =
+                descriptor.key
+
+            else -> onActivate(descriptor.key)
         }
     }
 
@@ -239,15 +215,9 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        val unavailable = unavailableReason(descriptor, context)
-                        SettingItem(
-                            descriptor,
-                            first,
-                            last,
-                            descriptor.key == highlightKey,
-                            unavailable,
-                            version + localVersion
-                        ) { activate(descriptor) }
+                        SettingItem(descriptor, first, last, descriptor.key == highlightKey) {
+                            activate(descriptor)
+                        }
                     }
                     if (category == SettingsCategory.Advanced) item {
                         val background = descriptors.first { it.key == "background_monitoring" }
@@ -282,30 +252,30 @@ fun SettingsScreen(
         }
 
     }
-    (numericKey?.let { preferences.findPreference<SeekBarPreference>(it) })?.let { preference ->
+    descriptors.firstOrNull { it.key == numericKey && it.unavailable == null }?.let { row ->
+        val number = row.control as SettingsControl.Number
         NumericValueDialog(
-            label = preference.title.toString(),
+            label = row.title,
             fieldLabel = stringResource(R.string.settings_numeric_value),
             unit = stringResource(R.string.percent_symbol),
-            initialValue = preference.value,
-            min = preference.min,
-            max = preference.max,
-            step = maxOf(1, preference.seekBarIncrement),
+            initialValue = (row.value as? Int ?: number.defaultValue).coerceIn(
+                number.min, number.max
+            ),
+            min = number.min,
+            max = number.max,
+            step = 1,
             saveLabel = stringResource(R.string.okay),
             cancelLabel = stringResource(R.string.cancel),
             errorMessage = {
-                resources.getString(R.string.alarms_numeric_range, preference.min, preference.max)
+                resources.getString(R.string.alarms_numeric_range, number.min, number.max)
             },
             onSave = {
-                if (preference.callChangeListener(it)) preference.value = it
-                localVersion++
+                onChange(row.key, it)
                 numericKey = null
             },
             onCancel = { numericKey = null })
     }
     appearance?.let { key ->
-        val settings =
-            context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
         val choices = if (key == KEY_COLOR_SOURCE) listOf(
             ColorSource.Dynamic.name to R.string.settings_color_palette_material_you,
             ColorSource.BatteryBlue.name to R.string.settings_color_palette_battery_blue
@@ -316,7 +286,9 @@ fun SettingsScreen(
             Brightness.TrueBlack.name to R.string.settings_brightness_true_black
         )
         var draft by rememberSaveable(key) {
-            mutableStateOf(settings.getString(key, choices.first().first))
+            mutableStateOf(
+                descriptors.firstOrNull { it.key == key }?.value as? String ?: choices.first().first
+            )
         }
         if (applicationDialogsAllowed()) AlertDialog(
             onDismissRequest = { appearance = null },
@@ -347,7 +319,7 @@ fun SettingsScreen(
                 TextButton(enabled = choices.any { it.first == draft }, onClick = {
                     if (appearance == key && choices.any { it.first == draft }) {
                         appearance = null
-                        settings.edit { putString(key, draft) }
+                        onChange(key, draft)
                     }
                 }) { Text(stringResource(R.string.okay)) }
             },
@@ -419,29 +391,20 @@ private fun SettingItem(
     first: Boolean,
     last: Boolean,
     highlighted: Boolean,
-    unavailable: String?,
-    version: Int,
     onClick: () -> Unit
 ) {
-    val preference = remember(descriptor, version) { descriptor.preference }
-    val enabled = unavailable == null
-    val settings = LocalContext.current.getSharedPreferences(
-        SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-    )
+    val checked =
+        if (descriptor.control is SettingsControl.Toggle) descriptor.value == true else null
+    val enabled = descriptor.unavailable == null
     val summary = when {
-        unavailable != null -> unavailable
-        preference is SeekBarPreference -> descriptor.summary.ifBlank { "${preference.value}%" }
+        descriptor.unavailable != null -> descriptor.unavailable
         descriptor.key == KEY_COLOR_SOURCE -> stringResource(R.string.currently_set_to) + stringResource(
-            if (colorSource(
-                    settings.getString(
-                        KEY_COLOR_SOURCE, null
-                    )
-                ) == ColorSource.Dynamic
-            ) R.string.settings_color_palette_material_you else R.string.settings_color_palette_battery_blue
+            if (colorSource(descriptor.value as? String) == ColorSource.Dynamic) R.string.settings_color_palette_material_you
+            else R.string.settings_color_palette_battery_blue
         )
 
         descriptor.key == KEY_BRIGHTNESS -> stringResource(R.string.currently_set_to) + stringResource(
-            when (brightness(settings.getString(KEY_BRIGHTNESS, null))) {
+            when (brightness(descriptor.value as? String)) {
                 Brightness.System -> R.string.settings_brightness_system
                 Brightness.Light -> R.string.settings_brightness_light
                 Brightness.Dark -> R.string.settings_brightness_dark
@@ -457,8 +420,8 @@ private fun SettingItem(
                 first, last, highlighted
             )
             .then(
-                if (preference is CheckBoxPreference && enabled) Modifier.toggleable(
-                    preference.isChecked,
+                if (checked != null && enabled) Modifier.toggleable(
+                    checked,
                     role = Role.Switch,
                     onValueChange = { onClick() }) else Modifier.clickable(
                     enabled = enabled, onClick = onClick
@@ -482,7 +445,7 @@ private fun SettingItem(
             )
         }
         Spacer(Modifier.width(12.dp))
-        if (preference is CheckBoxPreference) Switch(preference.isChecked, null, enabled = enabled)
+        if (checked != null) Switch(checked, null, enabled = enabled)
         else Icon(
             painterResource(R.drawable.ui_chev),
             null,
@@ -491,26 +454,4 @@ private fun SettingItem(
         )
     }
     if (!last) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-}
-
-private fun unavailableReason(
-    descriptor: SettingDescriptor, context: Context
-): String? {
-    if (descriptor.key == SettingsContract.KEY_CHANGE_APP_LANGUAGE && Build.VERSION.SDK_INT < 33) return context.getString(
-        R.string.settings_app_language_unavailable
-    )
-    if (descriptor.category == SettingsCategory.Notification && descriptor.key !in setOf(
-            SettingsContract.KEY_ENABLE_NOTIFS_B, SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS
-        )
-    ) {
-        val manager = NotificationManagerCompat.from(context)
-        if (!manager.areNotificationsEnabled() || (manager.getNotificationChannel(
-                NotificationChannels.CHAN_ID_MAIN
-            )?.importance ?: 0) == 0
-        ) return context.getString(R.string.settings_notification_disabled)
-    }
-    if (descriptor.preference?.isEnabled == false || descriptor.preference?.isVisible == false) return context.getString(
-        R.string.settings_dependency_disabled
-    )
-    return null
 }

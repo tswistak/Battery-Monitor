@@ -56,12 +56,12 @@ async function openExport(format: string) {
     await clickText(format);
 }
 
-async function exported(previousWatermark?: number) {
+async function exported(expectedWatermark: number) {
     // The action becomes enabled when the export finishes; file assertions below verify its result.
     await browser.$('~More actions').waitForEnabled({ timeout: 20_000 });
-    if (previousWatermark !== undefined) await browser.waitUntil(async () =>
-        await watermark() > previousWatermark,
-    { timeout: 20_000, timeoutMsg: 'The completed export did not advance its manual watermark' });
+    await browser.waitUntil(async () =>
+    await watermark() === expectedWatermark,
+    { timeout: 20_000, timeoutMsg: `Expected manual export watermark ${expectedWatermark}` });
 }
 
 async function watermark() {
@@ -107,8 +107,8 @@ describe('Manual history export format and scope', () => {
 
             await openExport(format);
             await chooseImportFile('Append to an existing file', filename);
-            await exported(before);
-            expect(await watermark()).toBeGreaterThan(before);
+            const lastExportedTime = currentRecords[currentRecords.length - 1].time;
+            await exported(lastExportedTime);
             const appended = await pullSharedFile(filename);
             if (format === 'JSON') {
                 const document = JSON.parse(appended.toString('utf8'));
@@ -128,10 +128,9 @@ describe('Manual history export format and scope', () => {
                 expect(Number(rows[2][9])).toBeCloseTo(-0.56098, 8);
             }
 
-            const beforeRepeat = await watermark();
             await openExport(format);
             await chooseImportFile('Append to an existing file', filename);
-            await exported(beforeRepeat);
+            await exported(lastExportedTime);
             expect(await pullSharedFile(filename)).toEqual(appended);
 
             // The default selected range is the last 24 hours; seeded records are historical.
@@ -139,13 +138,10 @@ describe('Manual history export format and scope', () => {
                 ['Export selected range', 0], ['Everything', 2], ['From last export', 0],
             ] as const) {
                 const output = `manual-${action.replaceAll(' ', '-').toLowerCase()}.${format.toLowerCase()}`;
-                const beforeScope = await watermark();
                 await openExport(format);
                 await clickText(action);
                 await saveBackupThroughFilePicker(output);
-                await exported(action === 'Export selected range' ? undefined : beforeScope);
-                if (action === 'Export selected range') expect(await watermark()).toBe(beforeScope);
-                else expect(await watermark()).toBeGreaterThan(beforeScope);
+                await exported(lastExportedTime);
                 const bytes = await pullSharedFile(output);
                 if (format === 'JSON') {
                     const document = JSON.parse(bytes.toString('utf8'));

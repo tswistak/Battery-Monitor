@@ -82,20 +82,7 @@ internal data class ChargingDiagnosticSnapshot(
     val powerSupplyNodes: Map<String, String>,
     val batteryState: Map<String, String>,
     val adapterStates: Map<String, String>
-) {
-    fun hasLimitedUnprivilegedDiscovery(): Boolean {
-        if (discoveryAccess["privileged_requested"] != "false") return false
-        val restrictedSections = listOf(
-            sectionStatus["settings/global"],
-            sectionStatus["settings/secure"],
-            sectionStatus["settings/system"],
-            sectionStatus["power_supply/local_discovery"]
-        ).count { status ->
-            status?.startsWith("FAILED") == true || status?.startsWith("UNREADABLE") == true
-        }
-        return restrictedSections >= 2
-    }
-}
+)
 
 internal class ChargingLimitDiagnostics(
     context: Context,

@@ -56,10 +56,6 @@ internal class DetailedHistoryTimeAxis(private val range: HistoryRangeState) {
 }
 
 internal fun detailedHistoryBounds(
-    metric: HistoryMetric, records: Sequence<HistoryRecord>
-): DetailedHistoryBounds = detailedHistoryBounds(listOf(metric), records).getValue(metric)
-
-internal fun detailedHistoryBounds(
     metrics: List<HistoryMetric>, records: Sequence<HistoryRecord>
 ): Map<HistoryMetric, DetailedHistoryBounds> {
     require(metrics.size in 1..2 && metrics.distinct().size == metrics.size)
@@ -79,16 +75,6 @@ internal fun detailedHistoryBounds(
         metric to DetailedHistoryBounds(count, minima[index], maxima[index])
     }
 }
-
-internal fun detailedHistoryChart(
-    range: HistoryRangeState,
-    viewport: HistoryRangeState,
-    metric: HistoryMetric,
-    pixelWidth: Int,
-    records: Sequence<HistoryRecord>
-): DetailedHistoryChartModel = detailedHistoryCharts(
-    range, viewport, listOf(metric), pixelWidth, records
-).getValue(metric)
 
 internal fun detailedHistoryCharts(
     range: HistoryRangeState,

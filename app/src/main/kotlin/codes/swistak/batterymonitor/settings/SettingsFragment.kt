@@ -16,7 +16,6 @@ package codes.swistak.batterymonitor.settings
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.LocaleManager
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
@@ -25,10 +24,6 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.content.res.Resources
-import android.icu.text.MeasureFormat
-import android.icu.util.Measure
-import android.icu.util.MeasureUnit
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -48,7 +43,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
@@ -57,16 +51,9 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.CheckBoxPreference
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceGroup
-import androidx.preference.PreferenceManager
-import androidx.preference.PreferenceScreen
-import androidx.preference.SeekBarPreference
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.AlarmRecord
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.PersistentFragment
@@ -82,12 +69,15 @@ import codes.swistak.batterymonitor.devicebackup.GeneralBackupArchive
 import codes.swistak.batterymonitor.devicebackup.GeneralBackupDataType
 import codes.swistak.batterymonitor.devicebackup.GeneralBackupRestoreException
 import codes.swistak.batterymonitor.devicebackup.LogImportMode
+import codes.swistak.batterymonitor.devicebackup.PreparedDeviceDataBackup
 import codes.swistak.batterymonitor.diagnostics.DebugLogCollector
 import codes.swistak.batterymonitor.logs.AutoLogExportFrequency
 import codes.swistak.batterymonitor.logs.AutoLogExportMode
 import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.logs.AutoLogExportSetupAction
+import codes.swistak.batterymonitor.logs.LogExport
 import codes.swistak.batterymonitor.logs.LogExportFormat
+import codes.swistak.batterymonitor.logs.LogExportRecoveryException
 import codes.swistak.batterymonitor.logs.autoLogExportSetupAction
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
@@ -95,13 +85,16 @@ import codes.swistak.batterymonitor.monitoring.BatteryCurrentMultiplierDetector
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitContentProvider
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingTargetResolver
-import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
 import codes.swistak.batterymonitor.monitoring.charginglimit.ResolvedTarget
 import codes.swistak.batterymonitor.monitoring.charginglimit.TargetSource
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
+import codes.swistak.batterymonitor.ui.settings.NotificationAvailability
+import codes.swistak.batterymonitor.ui.settings.SettingCatalog
+import codes.swistak.batterymonitor.ui.settings.SettingDescriptor
 import codes.swistak.batterymonitor.ui.settings.SettingsDialog
 import codes.swistak.batterymonitor.ui.settings.SettingsDialogs
 import codes.swistak.batterymonitor.ui.settings.SettingsOrderItem
@@ -111,6 +104,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
@@ -148,8 +142,7 @@ internal fun copyGeneralBackupDialogSource(
     }
 }
 
-class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
-    PreferenceManager.OnPreferenceTreeClickListener {
+class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
 
     companion object {
         const val ARG_CATEGORY = "category"
@@ -171,52 +164,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         private const val BATTERY_CURRENT_MULTIPLIER_AUTODETECT_VALUE = "auto"
         private const val SHIZUKU_PERMISSION_REQUEST_CODE = 7001
 
-        private val PARENTS = arrayOf<String?>(
-            SettingsContract.KEY_ENABLE_LOGGING,
-            SettingsContract.KEY_RED,
-            SettingsContract.KEY_AMBER,
-            SettingsContract.KEY_GREEN
-        )
-        private val DEPENDENTS = arrayOf<Array<String?>?>(
-            arrayOf(SettingsContract.KEY_MAX_LOG_AGE),
-            arrayOf(SettingsContract.KEY_RED_THRESH),
-            arrayOf(SettingsContract.KEY_AMBER_THRESH),
-            arrayOf(SettingsContract.KEY_GREEN_THRESH)
-        )
-
-        private val INVERSE_PARENTS = arrayOf<String?>()
-        private val INVERSE_DEPENDENTS = arrayOf<String?>()
-
-        private val LIST_PREFS = arrayOf<String?>(
-            SettingsContract.KEY_AUTOSTART,
-            SettingsContract.KEY_STATUS_DUR_EST,
-            SettingsContract.KEY_RED_THRESH,
-            SettingsContract.KEY_AMBER_THRESH,
-            SettingsContract.KEY_GREEN_THRESH,
-            SettingsContract.KEY_ICON_CONTENT,
-            SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
-            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            SettingsContract.KEY_MAX_LOG_AGE,
-            SettingsContract.KEY_TOP_LINE,
-            SettingsContract.KEY_BOTTOM_LINE,
-            SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
-            SettingsContract.KEY_PREDICTION_TYPE,
-            SettingsContract.KEY_TEMPERATURE_UNIT,
-            SettingsContract.KEY_LONG_DURATION_FORMAT
-        )
-
-        private val RESET_SERVICE = arrayOf<String?>(
+        private val RESET_SERVICE = setOf(
             SettingsContract.KEY_COLOR_SOURCE,
             SettingsContract.KEY_BRIGHTNESS,
             SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
             SettingsContract.KEY_TEMPERATURE_UNIT,
-            SettingsContract.KEY_NOTIFY_STATUS_DURATION,
-            SettingsContract.KEY_RED,
-            SettingsContract.KEY_RED_THRESH,
-            SettingsContract.KEY_AMBER,
-            SettingsContract.KEY_AMBER_THRESH,
-            SettingsContract.KEY_GREEN,
-            SettingsContract.KEY_GREEN_THRESH,
             SettingsContract.KEY_INDICATE_CHARGING,
             SettingsContract.KEY_SHOW_ICON_UNIT,
             SettingsContract.KEY_ICON_CONTENT,
@@ -238,21 +190,18 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
             SettingsContract.KEY_USE_PRIVILEGED_ACCESS,
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            SettingsContract.KEY_UI_COLOR,
             SettingsContract.KEY_PREDICTION_TYPE,
             SettingsContract.KEY_CHARGING_TARGET_MODE,
             SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
             SettingsContract.KEY_DISCHARGING_TARGET,
             SettingsContract.KEY_LONG_DURATION_FORMAT
         )
-        private val RESET_SERVICE_WITH_CANCEL_NOTIFICATION = arrayOf<String?>()
 
         private fun reloadService(
             context: Context,
             settings: SharedPreferences,
             messenger: Messenger?,
-            predictor: Boolean = false,
-            cancelFirst: Boolean = false
+            predictor: Boolean = false
         ) {
             if (!BackgroundServiceWatchdog.isServiceDesired(context)) {
                 codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver.synchronize(
@@ -263,7 +212,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             val outgoing = Message.obtain().apply {
                 what = when {
                     predictor -> BatteryInfoService.RemoteConnection.SERVICE_RELOAD_DEVICE_DATA
-                    cancelFirst -> BatteryInfoService.RemoteConnection.SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS
                     else -> BatteryInfoService.RemoteConnection.SERVICE_RELOAD_SETTINGS
                 }
                 data = SettingsSnapshot.capture(settings).apply {
@@ -279,6 +227,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 BatteryInfoService.startForegroundServiceSafely(context, outgoing.data)
             }
         }
+
 
         private fun reloadRestoredData(
             context: Context,
@@ -305,17 +254,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private val serviceConnection = BatteryInfoService.RemoteConnection(messenger)
     private val mainHandler = Handler(Looper.getMainLooper())
 
-    private lateinit var res: Resources
-    private var mPreferenceScreen: PreferenceScreen? = null
     private lateinit var mSharedPreferences: SharedPreferences
-    private var mNotificationManager: NotificationManager? = null
-    private var mainChan: NotificationChannel? = null
-    private var appNotifsEnabled = false
-    private var mainNotifsEnabled = false
-    private var systemPromotedEnabled = false
+    private lateinit var notificationAvailability: NotificationAvailability
+    private var settingsRows by mutableStateOf(emptyList<SettingDescriptor>())
+    private var chargingTargetSummary: String? = null
 
-    private lateinit var preferenceManager: PreferenceManager
-    private var modelVersion by mutableIntStateOf(0)
     private var selectedCategory by mutableStateOf<String?>(null)
     private var highlightedKey by mutableStateOf<String?>(null)
     private var activeDialog by mutableStateOf<SettingsDialog?>(null)
@@ -340,11 +283,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
 
     private lateinit var applicationContext: Context
     private var timeEstimateJob: Job? = null
-    private var chargingLimitProvider: DeviceChargingLimitProvider? = null
-    private var chargingLimitCapabilityVersion = 0
-    private var chargingLimitProviderVersion = -1
-    private var chargingLimitProviderPrivilegedEnabled: Boolean? = null
-    private val chargingLimitProviderLock = Any()
     private var batteryCurrentMultiplierDetectionRunning = false
     private var applyingDetectedBatteryCurrentMultiplier = false
     private var pendingPrivilegedShizukuBinderListener: OnBinderReceivedListener? = null
@@ -390,11 +328,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         highlightedKey = highlight
     }
 
-    // Compose renders the preference model without a PreferenceFragmentCompat to create its manager.
-    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        res = resources
         applicationContext = requireContext().applicationContext
         operationModel = ViewModelProvider(this)[SettingsOperationViewModel::class.java]
         pendingDocumentRequest = savedInstanceState?.getInt("document_request") ?: 0
@@ -403,12 +338,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     ?: selectedCategory
         highlightedKey =
             savedInstanceState?.getString(ARG_HIGHLIGHT) ?: arguments?.getString(ARG_HIGHLIGHT)
-        preferenceManager = PreferenceManager(requireContext()).apply {
-            sharedPreferencesName = SettingsContract.SETTINGS_FILE
-            sharedPreferencesMode = Context.MODE_PRIVATE
-            onPreferenceTreeClickListener = this@SettingsFragment
-        }
-        mSharedPreferences = requireNotNull(preferenceManager.sharedPreferences)
+        mSharedPreferences = requireContext().getSharedPreferences(
+            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+        )
+        prepareBatteryCurrentMultiplierDetection()
+        notificationAvailability = readNotificationAvailability()
         BatteryCurrent.setContext(requireContext())
         PrivilegedAccess.initialize(requireContext())
         PrivilegedAccess.setEnabled(
@@ -417,9 +351,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         PrivilegedAccess.setReadyListener {
             mainHandler.post {
                 if (isAdded) {
-                    chargingLimitCapabilityVersion++
                     setupTimeEstimatePreferences()
-                    modelVersion++
                 }
             }
         }
@@ -446,11 +378,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         setContent {
             AppBatteryTheme {
                 SettingsScreen(
-                    preferences = requireNotNull(mPreferenceScreen),
-                    version = modelVersion,
+                    descriptors = settingsRows,
                     initialCategory = selectedCategory,
                     highlightKey = highlightedKey,
                     onActivate = ::activatePreference,
+                    onChange = ::changeSetting,
                     onNavigateCategory = { category, highlight ->
                         (activity as? BatteryInfoActivity)?.openSettingsCategory(
                             category, highlight
@@ -461,7 +393,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 LaunchedEffect(operationModel.outcome) {
                     if (isResumed) operationModel.takeOutcome()?.let(::handleOperationOutcome)
                 }
-                SettingsDialogs(dialog, busy, ::dismissSettingsDialog)
+                SettingsDialogs(
+                    dialog, busy, ::dismissSettingsDialog, ::closeSettingsDialogForConfirmation
+                )
             }
         }
     }
@@ -470,41 +404,89 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         (activity as? BatteryInfoActivity)?.openDiagnosticDetail(route, highlight)
     }
 
-    private fun activatePreference(preference: Preference) {
-        if (busy || pendingDocumentRequest != 0 || !preference.isEnabled) return
-        if (preference is ListPreference) {
-            dialog = SettingsDialog.Choices(
-                title = (preference.dialogTitle ?: preference.title).toString(),
-                message = preference.dialogMessage?.toString(),
-                options = preference.entries.map(CharSequence::toString),
-                selected = setOf(
-                    if (preference.key == SettingsContract.KEY_CHIP_SWITCHING_INTERVAL) {
-                        chipSwitchingIntervalChoiceIndex(
-                            mSharedPreferences.getString(preference.key, "5"),
-                            preference.entryValues.map(CharSequence::toString)
-                        )
-                    } else preference.findIndexOfValue(preference.value)
-                ),
-                multiple = false,
-                onConfirm = { selected ->
-                    val value = preference.entryValues[selected.single()].toString()
-                    if (preference.callChangeListener(value)) preference.value = value
-                    modelVersion++
-                })
-            rememberPreferenceDialog(preference)
-        } else if (preference.key == SettingsContract.KEY_ENABLE_NOTIFS_B) {
-            enableNotifsButtonClick()
-        } else if (preference.key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) {
-            if (!NotificationSettingsNavigator.openLiveUpdates(requireContext())) {
-                requireContext().showToast(R.string.diag_value_not_available)
+    private fun activatePreference(key: String) {
+        if (busy || pendingDocumentRequest != 0) return
+        val row = settingsRows.firstOrNull { it.key == key && it.unavailable == null } ?: return
+        val choice = row.control as? SettingsControl.Choice
+        when {
+            choice != null -> {
+                val values = resources.getStringArray(choice.entryValues).toList()
+                dialog = SettingsDialog.Choices(
+                    title = choice.dialogTitle?.let(::getString) ?: row.title,
+                    options = resources.getStringArray(choice.entries).toList(),
+                    selected = setOf(
+                        if (key == SettingsContract.KEY_CHIP_SWITCHING_INTERVAL) {
+                            chipSwitchingIntervalChoiceIndex(row.value as? String, values)
+                        } else values.indexOf(row.value as? String)
+                    ),
+                    multiple = false,
+                    onConfirm = { selected -> changeSetting(key, values[selected.single()]) })
+                rememberPreferenceDialog(key)
             }
-        } else if (preference.key == SettingsContract.KEY_CHANGE_APP_LANGUAGE) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                launchChangeAppLanguageIntent()
+
+            key == SettingsContract.KEY_ENABLE_NOTIFS_B -> enableNotifsButtonClick()
+            key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS -> {
+                val context = requireContext()
+                val opened = when {
+                    !notificationAvailability.appEnabled -> NotificationSettingsNavigator.openNotifications(
+                        context
+                    )
+
+                    isLiveUpdateChannelBlocked() -> NotificationSettingsNavigator.openNotificationChannel(
+                        context, NotificationChannels.CHAN_ID_LIVE_UPDATE
+                    )
+
+                    else -> NotificationSettingsNavigator.openLiveUpdates(context)
+                }
+                if (!opened) context.showToast(R.string.diag_value_not_available)
             }
-        } else {
-            onPreferenceTreeClick(preference)
+
+            key == SettingsContract.KEY_CHANGE_APP_LANGUAGE -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    launchChangeAppLanguageIntent()
+                }
+            }
+
+            else -> activateAction(key)
         }
+    }
+
+    private fun changeSetting(key: String, value: Any) {
+        if (busy || settingsRows.none { it.key == key && it.unavailable == null }) return
+        when (key) {
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS -> {
+                if (value == true) {
+                    requestPrivilegedAccessEnable()
+                    return
+                }
+                cancelPrivilegedAccessRequest()
+            }
+
+            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER -> {
+                if (value == BATTERY_CURRENT_MULTIPLIER_AUTODETECT_VALUE) {
+                    requestBatteryCurrentMultiplierDetection()
+                    return
+                }
+            }
+
+            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> {
+                if (value == "custom") {
+                    showCustomChipSwitchingIntervalDialog()
+                    return
+                }
+            }
+        }
+        mSharedPreferences.edit {
+            when (value) {
+                is Boolean -> putBoolean(key, value)
+                is String -> putString(key, value)
+                is Int -> putInt(key, value)
+            }
+            if (key == SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER) {
+                remove(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING)
+            }
+        }
+        refreshSettingsRows()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -525,30 +507,18 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         super.onSaveInstanceState(outState)
     }
 
-    private fun rememberPreferenceDialog(preference: Preference) {
+    private fun rememberPreferenceDialog(key: String) {
         dialogRequest = Bundle().apply {
             putString("action", "preference")
-            putString("key", preference.key)
+            putString("key", key)
         }
     }
 
     private fun restoreDialog(request: Bundle) {
         if (busy || pendingDocumentRequest != 0) return
         when (request.getString("action")) {
-            "preference" -> request.getString("key")?.let { key ->
-                mPreferenceScreen?.findPreference<Preference>(key)?.let(::activatePreference)
-            }
-
-            "interval" -> request.getString("key")?.let { key ->
-                mPreferenceScreen?.findPreference<ListPreference>(key)?.let { preference ->
-                    showIntervalDialog(
-                        preference,
-                        requireNotNull(request.getString("fallback")),
-                        request.getInt("message"),
-                        request.getInt("error")
-                    )
-                }
-            }
+            "preference" -> request.getString("key")?.let(::activatePreference)
+            "interval" -> showCustomChipSwitchingIntervalDialog()
 
             "auto_export" -> showAutoLogExportDialog(
                 request.getString("directory")?.let(Uri::parse),
@@ -563,18 +533,15 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
+
     private fun dismissSettingsDialog() {
-        val backup = pendingBackupDialog
         dialog = null
-        pendingBackupDialog = null
-        if (backup != null) {
-            // Confirmation can synchronously replace a preview with the log-mode dialog.
-            mainHandler.post {
-                if (pendingBackupDialog?.getString("cache") != backup.getString("cache")) {
-                    deleteBackupDialogCache(backup)
-                }
-            }
-        }
+        clearBackupDialog()
+    }
+
+    private fun closeSettingsDialogForConfirmation() {
+        // The confirmation may transfer its cache to another dialog or to the restore worker.
+        dialog = null
     }
 
     private fun rememberBackupDialog(
@@ -591,15 +558,18 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private fun deleteBackupDialogCache(request: Bundle) {
         val name = request.getString("cache") ?: return
         if (File(name).name == name && name.startsWith("settings-import-")) {
-            AtomicFile(File(applicationContext.cacheDir, name)).delete()
+            val source = File(applicationContext.cacheDir, name)
+            AtomicFile(source).delete()
+            DeviceDataBackup.preparedLogsFile(source).delete()
         }
     }
 
-    private fun clearBackupDialog() {
-        pendingBackupDialog?.let(::deleteBackupDialogCache)
+    private fun clearBackupDialog(deleteCache: Boolean = true) {
+        if (deleteCache) pendingBackupDialog?.let(::deleteBackupDialogCache)
         pendingBackupDialog = null
         if (dialogRequest?.getString("action") == "backup_import") dialogRequest = null
     }
+
 
     private fun readBackupImport(request: Bundle, source: Uri? = null) {
         val requestCode = request.getInt("request")
@@ -617,47 +587,53 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             require(File(name).name == name && name.startsWith("settings-import-"))
             val cache = AtomicFile(File(context.cacheDir, name))
             if (source != null) {
-                val input = context.contentResolver.openInputStream(source)
-                    ?: throw IOException("Could not open backup source")
-                input.use {
-                    val output = cache.startWrite()
-                    try {
-                        if (requestCode == IMPORT_GENERAL_BACKUP_REQUEST) {
-                            copyGeneralBackupDialogSource(it, output)
-                        } else {
-                            BackupImportInputStream(it).copyTo(output)
+                val copySource = {
+                    val input = context.contentResolver.openInputStream(source)
+                        ?: throw IOException("Could not open backup source")
+                    input.use {
+                        val output = cache.startWrite()
+                        try {
+                            if (requestCode == IMPORT_GENERAL_BACKUP_REQUEST) {
+                                copyGeneralBackupDialogSource(it, output)
+                            } else {
+                                BackupImportInputStream(it).copyTo(output)
+                            }
+                            cache.finishWrite(output)
+                        } catch (failure: Exception) {
+                            cache.failWrite(output)
+                            throw failure
                         }
-                        cache.finishWrite(output)
-                    } catch (failure: Exception) {
-                        cache.failWrite(output)
-                        throw failure
                     }
                 }
+                if (requestCode == IMPORT_LOGS_CSV_REQUEST) {
+                    LogExport.withReadableCsv(context, source, copySource)
+                } else copySource()
             }
             val cachedUri = Uri.fromFile(cache.baseFile)
+            val preparedLogs = DeviceDataBackup.preparedLogsFile(cache.baseFile)
             when (requestCode) {
-                IMPORT_REQUEST -> {
-                    val json = requireNotNull(SettingsBackup.readFromUri(context, cachedUri))
-                    JsonBackupImportPreview(json, SettingsBackup.getSchemaVersion(json))
-                }
+                IMPORT_REQUEST -> SettingsBackup.parsedSettings(
+                    JSONObject(SettingsBackup.readFromUri(context, cachedUri))
+                )
 
                 IMPORT_ALARMS_REQUEST -> {
-                    val json = AlarmBackup.readFromUri(context, cachedUri)
-                    JsonBackupImportPreview(json, AlarmBackup.getSchemaVersion(json))
-                }
-
-                IMPORT_DEVICE_DATA_REQUEST -> {
-                    val json = DeviceDataBackup.readFromUri(context, cachedUri)
-                    DeviceBackupImportPreview(
-                        json,
-                        DeviceDataBackup.getAvailableData(json),
-                        DeviceDataBackup.getSchemaVersion(json)
+                    val root = JSONObject(AlarmBackup.readFromUri(context, cachedUri))
+                    AlarmBackupImportPreview(
+                        root.optInt("version", 0), AlarmBackup.validatedRecords(root)
                     )
                 }
 
-                IMPORT_LOGS_CSV_REQUEST -> CsvLogImporter.readFromUri(context, cachedUri)
+                IMPORT_DEVICE_DATA_REQUEST -> DeviceDataBackup.readFromUri(
+                    context, cachedUri, preparedLogs
+                )
+
+                IMPORT_LOGS_CSV_REQUEST -> {
+                    cache.openRead().close()
+                    cachedUri
+                }
+
                 else -> {
-                    val archive = GeneralBackup.readFromUri(context, cachedUri)
+                    val archive = GeneralBackup.readFromUri(context, cachedUri, preparedLogs)
                     GeneralBackupImportPreview(
                         archive,
                         GeneralBackup.getAvailableData(archive),
@@ -671,22 +647,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     override fun onResume() {
         super.onResume()
 
-        if (mNotificationManager == null) mNotificationManager = requireActivity().getSystemService(
-            Context.NOTIFICATION_SERVICE
-        ) as NotificationManager?
-
-        val currentAppNotifsEnabled = mNotificationManager!!.areNotificationsEnabled()
-        val currentMainNotifsEnabled = getMainNotifsEnabled()
-        val currentLiveUpdateEnabledInSystem: Boolean =
-            BatteryInfoService.isLiveUpdateEnabledInSystem(requireContext())
-
-        if (appNotifsEnabled != currentAppNotifsEnabled || mainNotifsEnabled != currentMainNotifsEnabled || systemPromotedEnabled != currentLiveUpdateEnabledInSystem) { // Doesn't seem worth checking which screen
-            resetService()
-        }
+        val currentAvailability = readNotificationAvailability()
+        if (notificationAvailability != currentAvailability) resetService()
+        notificationAvailability = currentAvailability
 
         setPreferences()
-        syncPrivilegedAccessPreference()
-        modelVersion++
         operationModel.takeOutcome()?.let(::handleOperationOutcome)
         if (!busy) mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
         if (!serviceBound) {
@@ -729,78 +694,40 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         pendingPrivilegedShizukuBinderListener = null
     }
 
-    private fun resetService(cancelFirst: Boolean = false) {
-        reloadService(
-            applicationContext, mSharedPreferences, serviceMessenger, cancelFirst = cancelFirst
-        )
+    private fun resetService() {
+        reloadService(applicationContext, mSharedPreferences, serviceMessenger)
     }
 
-    private fun setPreferences(reinflate: Boolean = false) {
-        mNotificationManager = requireContext().getSystemService(NotificationManager::class.java)
-        appNotifsEnabled = mNotificationManager!!.areNotificationsEnabled()
-        mainNotifsEnabled = getMainNotifsEnabled()
-        systemPromotedEnabled = BatteryInfoService.isLiveUpdateEnabledInSystem(requireContext())
-        if (mPreferenceScreen == null || reinflate) {
-            prepareBatteryCurrentMultiplierDetection()
-            mPreferenceScreen =
-                SettingsDefinitions.createScreen(requireContext(), preferenceManager)
-            preferenceManager.setPreferences(mPreferenceScreen)
-        }
-        syncPreferenceValues(requireNotNull(mPreferenceScreen))
-        mPreferenceScreen?.findPreference<Preference>(SettingsContract.KEY_ENABLE_NOTIFS_B)?.apply {
-            setTitle(R.string.pref_manage_main_channel)
-            setSummary(
-                if (!appNotifsEnabled) R.string.app_notifs_disabled_summary
-                else if (!mainNotifsEnabled) R.string.main_notifs_disabled_summary
-                else R.string.pref_manage_main_channel_summary
-            )
-            isSelectable = true
-        }
+    private fun setPreferences(afterRestore: Boolean = false) {
+        notificationAvailability = readNotificationAvailability()
         BatteryCurrent.setMultiplier(
             mSharedPreferences.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
                 ?.toIntOrNull() ?: 1
         )
-        setupBatteryCurrentMultiplierPreference()
-        setupChipSwitchingIntervalPreference()
-        updateChipIntervalVisibility()
         syncPrivilegedAccessPreference()
         setupTimeEstimatePreferences()
-        setupPrivilegedAccessPreference()
-        if (reinflate) {
+        if (afterRestore) {
+            prepareBatteryCurrentMultiplierDetection()
             capAutoLogExportFrequencyToRetention()
             AutoLogExportScheduler.ensureScheduled(applicationContext)
         }
-        setupAutoLogExportPreference()
-        PARENTS.indices.forEach(::setEnablednessOfDeps)
-        INVERSE_PARENTS.indices.forEach(::setEnablednessOfInverseDeps)
-        LIST_PREFS.filterNotNull().forEach(::updateListPrefSummary)
-        setupLanguage()
         maybeDetectBatteryCurrentMultiplier()
-        modelVersion++
+        refreshSettingsRows()
     }
 
-    private fun syncPreferenceValues(group: PreferenceGroup) {
-        for (index in 0 until group.preferenceCount) {
-            when (val preference = group.getPreference(index)) {
-                is PreferenceGroup -> syncPreferenceValues(preference)
-                is CheckBoxPreference -> preference.isChecked =
-                    mSharedPreferences.getBoolean(preference.key, preference.isChecked)
-
-                is ListPreference -> preference.value =
-                    mSharedPreferences.getString(preference.key, preference.value)
-
-                is SeekBarPreference -> preference.value =
-                    mSharedPreferences.getInt(preference.key, preference.value)
-            }
-        }
+    private fun refreshSettingsRows() {
+        settingsRows = SettingCatalog.entries(
+            resources,
+            mSharedPreferences.all,
+            Build.VERSION.SDK_INT,
+            notificationAvailability,
+            chargingTargetSummary,
+            autoLogExportSummary()
+        )
     }
 
-    override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        when (preference.key) {
-            null -> {
-                return false
-            }
-
+    private fun activateAction(key: String) {
+        when (key) {
             SettingsContract.KEY_RESET_DEFAULT_SETTINGS -> {
                 dialog = SettingsDialog.Confirm(
                     message = getString(R.string.settings_reset_question),
@@ -808,8 +735,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     confirmLabel = R.string.settings_reset_confirm,
                     onConfirm = ::resetSettingsToDefaults
                 )
-                rememberPreferenceDialog(preference)
-                return true
+                rememberPreferenceDialog(key)
             }
 
             SettingsContract.KEY_EXPORT_SETTINGS -> {
@@ -821,7 +747,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                         .setType("application/json")
                         .putExtra(Intent.EXTRA_TITLE, "battery_monitor_settings_$ts.json")
                 launchDocument(exportIntent, EXPORT_REQUEST)
-                return true
             }
 
             SettingsContract.KEY_IMPORT_SETTINGS -> {
@@ -829,7 +754,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                         .setType("application/json")
                 launchDocument(importIntent, IMPORT_REQUEST)
-                return true
             }
 
             SettingsContract.KEY_EXPORT_ALARMS -> {
@@ -841,7 +765,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                         .setType("application/json")
                         .putExtra(Intent.EXTRA_TITLE, "battery_monitor_alarms_$timestamp.json")
                 launchDocument(exportIntent, EXPORT_ALARMS_REQUEST)
-                return true
             }
 
             SettingsContract.KEY_IMPORT_ALARMS -> {
@@ -849,12 +772,10 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                         .setType("application/json")
                 launchDocument(importIntent, IMPORT_ALARMS_REQUEST)
-                return true
             }
 
             SettingsContract.KEY_EXPORT_DEVICE_DATA -> {
                 showDeviceDataExportDialog()
-                return true
             }
 
             SettingsContract.KEY_IMPORT_DEVICE_DATA -> {
@@ -862,12 +783,10 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                         .setType("application/json")
                 launchDocument(importIntent, IMPORT_DEVICE_DATA_REQUEST)
-                return true
             }
 
             SettingsContract.KEY_IMPORT_LOGS_CSV -> {
                 openCsvLogFilePicker()
-                return true
             }
 
             SettingsContract.KEY_EXPORT_GENERAL_BACKUP -> {
@@ -880,7 +799,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                             Intent.EXTRA_TITLE, "battery_monitor_general_backup_$timestamp.zip"
                         )
                 launchDocument(exportIntent, EXPORT_GENERAL_BACKUP_REQUEST)
-                return true
             }
 
             SettingsContract.KEY_IMPORT_GENERAL_BACKUP -> {
@@ -888,7 +806,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                         .setType("application/zip")
                 launchDocument(importIntent, IMPORT_GENERAL_BACKUP_REQUEST)
-                return true
             }
 
             SettingsContract.KEY_AUTO_LOG_EXPORT -> {
@@ -897,26 +814,21 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 } else {
                     openAutoLogExportDirectoryPicker()
                 }
-                return true
             }
 
             SettingsContract.KEY_VITAL_SIGNS_CONTENT -> {
-                showVitalSignsDialog(preference)
-                return true
+                showVitalSignsDialog()
             }
 
             SettingsContract.KEY_CHIP_CONTENT -> {
-                showChipContentDialog(preference)
-                return true
+                showChipContentDialog()
             }
 
-            else -> return false
         }
     }
 
 
-    private fun showVitalSignsDialog(preference: Preference) = showOrderedContentDialog(
-        preference,
+    private fun showVitalSignsDialog() = showOrderedContentDialog(
         SettingsContract.KEY_VITAL_SIGNS_CONTENT,
         SettingsContract.KEY_VITAL_SIGNS_ORDER,
         SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT,
@@ -931,8 +843,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         serialize = VitalSignsOrder::serialize
     )
 
-    private fun showChipContentDialog(preference: Preference) = showOrderedContentDialog(
-        preference,
+    private fun showChipContentDialog() = showOrderedContentDialog(
         SettingsContract.KEY_CHIP_CONTENT,
         SettingsContract.KEY_CHIP_CONTENT_ORDER,
         SettingsContract.DEFAULT_CHIP_CONTENT,
@@ -948,7 +859,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     )
 
     private fun showOrderedContentDialog(
-        preference: Preference,
         contentKey: String,
         orderKey: String,
         defaults: Set<String>,
@@ -963,8 +873,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             resources.getStringArray(valuesResource).zip(resources.getStringArray(labelsResource))
                 .toMap()
         dialog = SettingsDialog.Ordered(
-            title = preference.title.toString(),
-            message = preference.summary?.toString(),
+            title = getString(SettingsDefinitions.byKey.getValue(contentKey).title),
+            message = SettingsDefinitions.byKey.getValue(contentKey).summary?.let(::getString),
             items = order.mapNotNull { value ->
                 labels[value]?.let {
                     SettingsOrderItem(value, it, value in selected)
@@ -983,112 +893,42 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 } finally {
                     if (isResumed) mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
                 }
-                updateChipIntervalVisibility()
                 resetService()
-                modelVersion++
+                refreshSettingsRows()
             })
-        rememberPreferenceDialog(preference)
+        rememberPreferenceDialog(contentKey)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
-        if (key == null || !isAdded) return
+        if (!isAdded) return
+        if (key == null) {
+            refreshSettingsRows()
+            return
+        }
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        syncPreferenceValues(requireNotNull(mPreferenceScreen))
-
-        if (key == SettingsContract.KEY_CHIP_CONTENT || key == SettingsContract.KEY_CHIP_CONTENT_ORDER) {
-            updateChipIntervalVisibility()
-        }
-
-        if (key == SettingsContract.KEY_MAX_LOG_AGE) {
-            capAutoLogExportFrequencyToRetention()
-        }
-
-        if (key == SettingsContract.KEY_ENABLE_LOGGING) {
-            setupAutoLogExportPreference()
-            if (mSharedPreferences.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
-                AutoLogExportScheduler.ensureScheduled(requireContext())
-            } else {
-                AutoLogExportScheduler.cancel(requireContext())
-            }
-        }
-
-        if (key == SettingsContract.KEY_LIVE_UPDATE_DISPLAY) {
-            updateChipIntervalVisibility()
-        }
-
-        for (i in PARENTS.indices) {
-            if (key == PARENTS[i]) {
-                setEnablednessOfDeps(i)
-                break
-            }
-        }
-
-        for (i in INVERSE_PARENTS.indices) {
-            if (key == INVERSE_PARENTS[i]) {
-                setEnablednessOfInverseDeps(i)
-                break
-            }
-        }
-
-        for (i in LIST_PREFS.indices) {
-            if (key == LIST_PREFS[i]) {
-                updateListPrefSummary(LIST_PREFS[i]!!)
-                break
-            }
-        }
-
-        if (key == SettingsContract.KEY_CHARGING_TARGET_MODE || key == SettingsContract.KEY_CUSTOM_CHARGING_TARGET || key == SettingsContract.KEY_DISCHARGING_TARGET) {
-            setupTimeEstimatePreferences()
-        }
-
-        if (key == SettingsContract.KEY_USE_PRIVILEGED_ACCESS) {
-            val enabled = mSharedPreferences.getBoolean(
-                SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
-            )
-            PrivilegedAccess.setEnabled(enabled)
-            chargingLimitCapabilityVersion++
-            setupTimeEstimatePreferences()
-        }
-
-        if (key == SettingsContract.KEY_CHIP_SWITCHING_INTERVAL) {
-            updateChipSwitchingIntervalSummary()
-        }
-
-        for (i in RESET_SERVICE.indices) {
-            if (key == RESET_SERVICE[i]) {
-                if (!(key == SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER && applyingDetectedBatteryCurrentMultiplier)) {
-                    resetService()
+        try {
+            when (key) {
+                SettingsContract.KEY_MAX_LOG_AGE -> capAutoLogExportFrequencyToRetention()
+                SettingsContract.KEY_ENABLE_LOGGING -> {
+                    if (mSharedPreferences.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
+                        AutoLogExportScheduler.ensureScheduled(requireContext())
+                    } else {
+                        AutoLogExportScheduler.cancel(requireContext())
+                    }
                 }
-                break
+
+                SettingsContract.KEY_CHARGING_TARGET_MODE, SettingsContract.KEY_CUSTOM_CHARGING_TARGET, SettingsContract.KEY_DISCHARGING_TARGET -> setupTimeEstimatePreferences()
+
+                SettingsContract.KEY_USE_PRIVILEGED_ACCESS -> {
+                    syncPrivilegedAccessPreference()
+                    setupTimeEstimatePreferences()
+                }
             }
+            if (key in RESET_SERVICE && !(key == SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER && applyingDetectedBatteryCurrentMultiplier)) resetService()
+        } finally {
+            if (isResumed && !busy) mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
         }
-
-        for (i in RESET_SERVICE_WITH_CANCEL_NOTIFICATION.indices) {
-            if (key == RESET_SERVICE_WITH_CANCEL_NOTIFICATION[i]) {
-                resetService(true)
-                break
-            }
-        }
-
-        mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
-        setupLanguage()
-        modelVersion++
-    }
-
-    private fun setupPrivilegedAccessPreference() {
-        val preference = mPreferenceScreen?.findPreference<CheckBoxPreference>(
-            SettingsContract.KEY_USE_PRIVILEGED_ACCESS
-        ) ?: return
-        preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, value ->
-            val enable = value as? Boolean ?: return@OnPreferenceChangeListener false
-            if (!enable) {
-                cancelPrivilegedAccessRequest()
-                return@OnPreferenceChangeListener true
-            }
-
-            requestPrivilegedAccessEnable()
-            false
-        }
+        refreshSettingsRows()
     }
 
     private fun requestPrivilegedAccessEnable() {
@@ -1189,24 +1029,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun syncPrivilegedAccessPreference() {
-        val enabled = mSharedPreferences.getBoolean(
-            SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
+        PrivilegedAccess.setEnabled(
+            mSharedPreferences.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
         )
-        mPreferenceScreen?.findPreference<CheckBoxPreference>(
-            SettingsContract.KEY_USE_PRIVILEGED_ACCESS
-        )?.isChecked = enabled
-        PrivilegedAccess.setEnabled(enabled)
-    }
-
-    private fun setEnablednessOfDeps(index: Int) {
-        for (i in DEPENDENTS[index]!!.indices) {
-            val dependent =
-                mPreferenceScreen!!.findPreference<Preference?>(DEPENDENTS[index]!![i]!!) ?: return
-
-            dependent.isEnabled = mSharedPreferences.getBoolean(PARENTS[index], false)
-
-            updateListPrefSummary(DEPENDENTS[index]!![i]!!)
-        }
     }
 
     private fun prepareBatteryCurrentMultiplierDetection() {
@@ -1221,24 +1046,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING, true
             )
         }
-    }
-
-    private fun setupBatteryCurrentMultiplierPreference() {
-        val preference = mPreferenceScreen!!.findPreference<ListPreference>(
-            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER
-        ) ?: return
-        preference.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { _, newValue ->
-                if (newValue == BATTERY_CURRENT_MULTIPLIER_AUTODETECT_VALUE) {
-                    requestBatteryCurrentMultiplierDetection()
-                    false
-                } else {
-                    mSharedPreferences.edit {
-                        remove(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING)
-                    }
-                    true
-                }
-            }
     }
 
     private fun requestBatteryCurrentMultiplierDetection() {
@@ -1313,10 +1120,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     } finally {
                         applyingDetectedBatteryCurrentMultiplier = false
                     }
-                    mPreferenceScreen?.findPreference<ListPreference>(
-                        SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER
-                    )?.value = detectedMultiplier.toString()
-                    updateListPrefSummary(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER)
+                    refreshSettingsRows()
                     Toast.makeText(
                         activity, getString(
                             R.string.pref_battery_current_multiplier_detection_result,
@@ -1329,162 +1133,35 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }.apply { name = "battery-current-multiplier-detection" }.start()
     }
 
-    private fun showIntervalDialog(
-        preference: ListPreference, fallback: String, message: Int, error: Int
-    ) {
+    private fun showCustomChipSwitchingIntervalDialog() {
+        val key = SettingsContract.KEY_CHIP_SWITCHING_INTERVAL
+        val row = settingsRows.firstOrNull { it.key == key && it.unavailable == null } ?: return
         dialog = SettingsDialog.Number(
-            title = preference.title.toString(),
-            message = getString(message),
-            initial = mSharedPreferences.getString(preference.key, fallback)?.toIntOrNull()
-                ?: fallback.toInt(),
+            title = row.title,
+            message = getString(R.string.pref_chip_switching_interval_custom_message),
+            initial = (row.value as? String)?.toIntOrNull()?.coerceIn(1, 3600) ?: 5,
             min = 1,
             max = 3600,
-            error = getString(error),
-            onConfirm = { seconds ->
-                preference.value = seconds.toString()
-                updateChipSwitchingIntervalSummary()
-                modelVersion++
-            })
-        dialogRequest = Bundle().apply {
-            putString("action", "interval")
-            putString("key", preference.key)
-            putString("fallback", fallback)
-            putInt("message", message)
-            putInt("error", error)
-        }
-    }
-
-    private fun setupChipSwitchingIntervalPreference() {
-        val preference = mPreferenceScreen!!.findPreference<ListPreference>(
-            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL
-        ) ?: return
-        updateChipSwitchingIntervalSummary()
-        preference.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { _, newValue ->
-                if (newValue == "custom") {
-                    showCustomChipSwitchingIntervalDialog(preference)
-                    false
-                } else {
-                    true
-                }
-            }
-    }
-
-    private fun updateChipSwitchingIntervalSummary() {
-        val preference = mPreferenceScreen!!.findPreference<ListPreference>(
-            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL
-        ) ?: return
-        val seconds = mSharedPreferences.getString(
-            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, "5"
-        )?.toIntOrNull()?.coerceIn(1, 3600) ?: 5
-        val entry = preference.entries.getOrNull(
-            preference.findIndexOfValue(seconds.toString())
-        )
-        val value = entry ?: MeasureFormat.getInstance(
-            resources.configuration.locales[0], MeasureFormat.FormatWidth.WIDE
-        ).formatMeasures(Measure(seconds, MeasureUnit.SECOND))
-        preference.summary = getString(R.string.currently_set_to) + value
-    }
-
-    private fun showCustomChipSwitchingIntervalDialog(preference: ListPreference) {
-        showIntervalDialog(
-            preference,
-            "5",
-            R.string.pref_chip_switching_interval_custom_message,
-            R.string.pref_chip_switching_interval_error
-        )
-    }
-
-    private fun setEnablednessOfInverseDeps(index: Int) {
-        val dependent =
-            mPreferenceScreen!!.findPreference<Preference?>(INVERSE_DEPENDENTS[index]!!) ?: return
-
-        dependent.isEnabled = !mSharedPreferences.getBoolean(INVERSE_PARENTS[index], false)
-
-        updateListPrefSummary(INVERSE_DEPENDENTS[index]!!)
-    }
-
-    private fun updateChipIntervalVisibility() {
-        val p =
-            mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_CHIP_SWITCHING_INTERVAL)
-                ?: return
-
-        val isSwitching = mSharedPreferences.getStringSet(
-            SettingsContract.KEY_CHIP_CONTENT, SettingsContract.DEFAULT_CHIP_CONTENT
-        )?.size?.let { it > 1 } == true
-        val liveUpdatesDisabled = "never" == mSharedPreferences.getString(
-            SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
-            res.getString(R.string.default_live_update_display_mode)
-        )
-        p.isVisible = isSwitching && !liveUpdatesDisabled
-    }
-
-    private fun updateListPrefSummary(key: String) {
-        val pref: ListPreference?
-        try {
-            pref = mPreferenceScreen!!.findPreference<Preference?>(key) as ListPreference?
-        } catch (_: ClassCastException) {
-            return
-        }
-
-        if (pref == null) return
-
-        if (pref.isEnabled) {
-            pref.setSummary(res.getString(R.string.currently_set_to) + pref.getEntry())
-        } else {
-            pref.setSummary(res.getString(R.string.currently_disabled))
-        }
+            error = getString(R.string.pref_chip_switching_interval_error),
+            onConfirm = { seconds -> changeSetting(key, seconds.toString()) })
+        dialogRequest = Bundle().apply { putString("action", "interval") }
     }
 
     private fun setupTimeEstimatePreferences() {
-        val screen = mPreferenceScreen ?: return
-        val modePreference = screen.findPreference<ListPreference>(
-            SettingsContract.KEY_CHARGING_TARGET_MODE
-        ) ?: return
-        val customPreference = screen.findPreference<SeekBarPreference>(
-            SettingsContract.KEY_CUSTOM_CHARGING_TARGET
-        ) ?: return
-        val dischargingPreference = screen.findPreference<SeekBarPreference>(
-            SettingsContract.KEY_DISCHARGING_TARGET
-        ) ?: return
-
-        val customMode = mSharedPreferences.getString(
+        val preferences = mSharedPreferences
+        val customMode = preferences.getString(
             SettingsContract.KEY_CHARGING_TARGET_MODE,
             SettingsContract.CHARGING_TARGET_MODE_AUTOMATIC
         ) == SettingsContract.CHARGING_TARGET_MODE_CUSTOM
-        customPreference.isVisible = customMode
-        customPreference.isEnabled = customMode
-
-        val preferences = mSharedPreferences
-        customPreference.summary = getString(
-            R.string.pref_target_level_summary, preferences.getInt(
-                SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
-                SettingsContract.DEFAULT_CUSTOM_CHARGING_TARGET
-            ).coerceIn(1, 100)
-        )
-        dischargingPreference.summary = getString(
-            R.string.pref_target_level_summary, preferences.getInt(
-                SettingsContract.KEY_DISCHARGING_TARGET, SettingsContract.DEFAULT_DISCHARGING_TARGET
-            ).coerceIn(0, 99)
-        )
+        chargingTargetSummary = null
         timeEstimateJob?.cancel()
         val context = applicationContext
-        val capabilityVersion = chargingLimitCapabilityVersion
-        val privilegedEnabled =
-            preferences.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
         timeEstimateJob = lifecycleScope.launch {
             val target = withContext(Dispatchers.IO) {
                 runCatching {
-                    val provider = synchronized(chargingLimitProviderLock) {
-                        if (chargingLimitProviderVersion != capabilityVersion || chargingLimitProviderPrivilegedEnabled != privilegedEnabled || chargingLimitProvider == null) {
-                            chargingLimitProvider = DeviceChargingLimitProvider(
-                                context, privilegedAccessEnabled = { privilegedEnabled })
-                            chargingLimitProviderVersion = capabilityVersion
-                            chargingLimitProviderPrivilegedEnabled = privilegedEnabled
-                        }
-                        requireNotNull(chargingLimitProvider)
-                    }
-                    ChargingTargetResolver(preferences, provider).resolveChargingTarget()
+                    ChargingTargetResolver(preferences) {
+                        ChargingLimitContentProvider.read(context)
+                    }.resolveChargingTarget()
                 }.getOrDefault(ResolvedTarget(100, TargetSource.DEFAULT))
             }
             if (!isAdded) return@launch
@@ -1499,8 +1176,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             val summary = if (customMode) targetSummary else getString(
                 R.string.pref_charging_target_mode_summary_automatic_help, targetSummary
             )
-            modePreference.summaryProvider = Preference.SummaryProvider<ListPreference> { summary }
-            modelVersion++
+            chargingTargetSummary = summary
+            refreshSettingsRows()
         }
     }
 
@@ -1527,33 +1204,34 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             outcome.result.fold(onSuccess = { value ->
                 when (outcome.action) {
                     SettingsOperationAction.ReadSettings -> {
-                        val preview = value as JsonBackupImportPreview
-                        if (preview.version > SettingsBackup.SCHEMA_VERSION) {
+                        @Suppress("UNCHECKED_CAST") val preview =
+                            value as Pair<Int, Map<String, Any>>
+                        if (preview.first > SettingsBackup.SCHEMA_VERSION) {
                             dialog =
                                 SettingsDialog.Confirm(getString(R.string.settings_file_version_warning)) {
-                                    doImport(preview.json)
+                                    doImport(preview)
                                 }
                             rememberBackupDialog(backupRequest)
-                        } else doImport(preview.json)
+                        } else doImport(preview)
                     }
 
                     SettingsOperationAction.ReadAlarms -> {
-                        val preview = value as JsonBackupImportPreview
+                        val preview = value as AlarmBackupImportPreview
                         if (preview.version > AlarmBackup.SCHEMA_VERSION) {
                             dialog =
                                 SettingsDialog.Confirm(getString(R.string.settings_file_version_warning)) {
-                                    doAlarmImport(preview.json)
+                                    doAlarmImport(preview.alarms)
                                 }
                             rememberBackupDialog(backupRequest)
-                        } else doAlarmImport(preview.json)
+                        } else doAlarmImport(preview.alarms)
                     }
 
-                    SettingsOperationAction.ReadDeviceData -> showDeviceDataImportDialog(value as DeviceBackupImportPreview)
-                    SettingsOperationAction.ReadCsvLogs -> showCsvLogImportModeDialog(value as String)
+                    SettingsOperationAction.ReadDeviceData -> showDeviceDataImportDialog(value as PreparedDeviceDataBackup)
+                    SettingsOperationAction.ReadCsvLogs -> showCsvLogImportModeDialog(value as Uri)
                     SettingsOperationAction.ReadGeneralBackup -> showGeneralBackupImportDialog(value as GeneralBackupImportPreview)
                     else -> {
                         if (outcome.action == SettingsOperationAction.ImportSettings || outcome.action == SettingsOperationAction.ImportGeneralBackup || outcome.action == SettingsOperationAction.ResetSettings) setPreferences(
-                            reinflate = true
+                            afterRestore = true
                         )
                         if (outcome.action == SettingsOperationAction.ExportDeviceData) pendingDeviceDataExport =
                             emptySet()
@@ -1576,7 +1254,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 clearBackupDialog()
                 if (failure is kotlinx.coroutines.CancellationException) return@fold
                 if (outcome.action == SettingsOperationAction.ResetSettings) setPreferences(
-                    reinflate = true
+                    afterRestore = true
                 )
                 dialog = SettingsDialog.Message(backupFailureMessage(outcome.errorMessage, failure))
             })
@@ -1589,12 +1267,13 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun backupFailureMessage(error: Int, failure: Throwable): String {
+        if (failure is LogExportRecoveryException) return failure.message ?: getString(error)
         if (failure !is GeneralBackupRestoreException) {
             val storageFailure =
                 error != R.string.settings_reset_failed && (failure is SecurityException || failure is android.database.sqlite.SQLiteException || failure is IOException && failure !is java.util.zip.ZipException)
             return getString(if (storageFailure) R.string.history_operation_failed else error)
         }
-        setPreferences(reinflate = true)
+        setPreferences(afterRestore = true)
         val completed = failure.completedData.joinToString(", ") {
             generalBackupItemLabel(it)
         }
@@ -1663,9 +1342,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     SettingsOperationAction.ExportDeviceData, R.string.history_operation_failed
                 ) { context ->
                     val snapshot = predictor?.get(6, TimeUnit.SECONDS)
-                    DeviceDataBackup.writeToUri(
-                        context, uri, DeviceDataBackup.exportToJson(context, selectedData, snapshot)
-                    )
+                    DeviceDataBackup.exportToUri(context, uri, selectedData, snapshot)
                 }
             }
 
@@ -1684,33 +1361,17 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
 
-    private fun setupAutoLogExportPreference() {
-        val preference = mPreferenceScreen?.findPreference<Preference>(
-            SettingsContract.KEY_AUTO_LOG_EXPORT
-        ) ?: return
-        val loggingEnabled = mSharedPreferences.getBoolean(
-            SettingsContract.KEY_ENABLE_LOGGING, true
-        )
-        preference.isEnabled = loggingEnabled
-        if (!isAutoLogExportConfigured()) {
-            preference.setTitle(R.string.pref_auto_log_export_title)
-            preference.setSummary(
-                if (loggingEnabled) R.string.pref_auto_log_export_setup_summary
-                else R.string.currently_disabled
-            )
-            return
+    private fun autoLogExportSummary(): String? {
+        if (!mSharedPreferences.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
+            return getString(R.string.currently_disabled)
         }
+        if (!isAutoLogExportConfigured()) return null
 
         val frequencyOptions = autoLogExportFrequencyOptions()
         val frequencyValues = frequencyOptions.map { it.preferenceValue }.toTypedArray()
         val modeValues = resources.getStringArray(R.array.auto_log_export_mode_values)
         val formatValues = resources.getStringArray(R.array.auto_log_export_format_values)
-        preference.setTitle(R.string.pref_auto_log_export_title)
-        if (!loggingEnabled) {
-            preference.setSummary(R.string.currently_disabled)
-            return
-        }
-        preference.summary = getString(
+        return getString(
             R.string.pref_auto_log_export_set_summary, labelForValue(
                 frequencyValues,
                 frequencyOptions.map { it.label }.toTypedArray(),
@@ -1728,6 +1389,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             )
         )
     }
+
 
     private fun openAutoLogExportDirectoryPicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).addFlags(
@@ -1823,7 +1485,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                         if (oldDirectory != directory) remove(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME)
                     }
                     releaseAutoLogExportDirectory(oldDirectory.takeIf { it != directory })
-                    setupAutoLogExportPreference()
+                    refreshSettingsRows()
                     when (autoLogExportSetupAction(wasConfigured)) {
                         AutoLogExportSetupAction.START_INITIAL_EXPORT -> AutoLogExportScheduler.startInitialExport(
                             requireContext()
@@ -1833,7 +1495,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                             requireContext()
                         )
                     }
-                    modelVersion++
                 }.onFailure {
                     dialog = SettingsDialog.Message(getString(R.string.diag_value_not_available))
                 }
@@ -1871,9 +1532,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             remove(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME)
         }
         releaseAutoLogExportDirectory(directory)
-        setupAutoLogExportPreference()
+        refreshSettingsRows()
         AutoLogExportScheduler.cancel(requireContext())
-        modelVersion++
     }
 
     private data class AutoLogExportFrequencyOption(
@@ -1908,7 +1568,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         mSharedPreferences.edit {
             putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, capped.preferenceValue)
         }
-        setupAutoLogExportPreference()
+        refreshSettingsRows()
         AutoLogExportScheduler.reschedule(requireContext())
     }
 
@@ -1971,16 +1631,22 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         launchDocument(importIntent, IMPORT_LOGS_CSV_REQUEST)
     }
 
-    private fun showCsvLogImportModeDialog(csv: String) {
+    private fun showCsvLogImportModeDialog(uri: Uri) {
         val request = pendingBackupDialog
         showLogImportModeDialog(
             getString(R.string.csv_logs_import_warning) + "\n\n" + getString(R.string.log_import_mode_message)
         ) { mode ->
-            clearBackupDialog()
+            clearBackupDialog(deleteCache = false)
             fileOperation(
                 SettingsOperationAction.ImportCsvLogs, R.string.invalid_csv_logs_file
             ) { context ->
-                CsvLogImporter.importFromCsv(context, csv, mode)
+                try {
+                    CsvLogImporter.withCsvReader(context, uri) { reader ->
+                        CsvLogImporter.importFromReader(context, reader, mode)
+                    }
+                } finally {
+                    request?.let(::deleteBackupDialogCache)
+                }
             }
         }
         rememberBackupDialog(request, "log_mode")
@@ -2049,29 +1715,30 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         selectedData: Set<GeneralBackupDataType>,
         logImportMode: LogImportMode
     ) {
-        clearBackupDialog()
+        val request = pendingBackupDialog
+        clearBackupDialog(deleteCache = false)
         val settings = mSharedPreferences
         val messenger = serviceMessenger
         settings.unregisterOnSharedPreferenceChangeListener(this)
         fileOperation(
             SettingsOperationAction.ImportGeneralBackup, R.string.invalid_general_backup_file
         ) { context ->
-            val changed = try {
+            try {
                 GeneralBackup.restore(context, settings, archive, selectedData, logImportMode)
-                selectedData
+                reloadRestoredData(context, settings, messenger, selectedData)
             } catch (failure: GeneralBackupRestoreException) {
                 reloadRestoredData(
                     context, settings, messenger, failure.completedData + failure.failedData
                 )
                 throw failure
+            } finally {
+                request?.let(::deleteBackupDialogCache)
             }
-            reloadRestoredData(context, settings, messenger, changed)
         }
     }
 
-    private fun showDeviceDataImportDialog(preview: DeviceBackupImportPreview) {
+    private fun showDeviceDataImportDialog(preview: PreparedDeviceDataBackup) {
         try {
-            val json = preview.json
             val availableData = preview.available
             val request = pendingBackupDialog
             if (request?.getString("stage") == "log_mode") {
@@ -2079,7 +1746,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     .mapTo(linkedSetOf()) { DeviceDataType.valueOf(it) }
                 require(selected.isNotEmpty() && availableData.containsAll(selected))
                 showLogImportModeDialog(getString(R.string.log_import_mode_message)) { mode ->
-                    doDeviceDataImport(json, selected, mode)
+                    doDeviceDataImport(preview, selected, mode)
                 }
                 rememberBackupDialog(request, "log_mode", selected.map { it.name })
                 return
@@ -2100,11 +1767,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             ) { selectedData ->
                 if (DeviceDataType.LOGS in selectedData) {
                     showLogImportModeDialog(getString(R.string.log_import_mode_message)) { logImportMode ->
-                        doDeviceDataImport(json, selectedData, logImportMode)
+                        doDeviceDataImport(preview, selectedData, logImportMode)
                     }
                     rememberBackupDialog(request, "log_mode", selectedData.map { it.name })
                 } else {
-                    doDeviceDataImport(json, selectedData, LogImportMode.REPLACE)
+                    doDeviceDataImport(preview, selectedData, LogImportMode.REPLACE)
                 }
             }
             rememberBackupDialog(request)
@@ -2113,6 +1780,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             dialog = SettingsDialog.Message(getString(R.string.invalid_device_data_file))
         }
     }
+
 
     private fun showDeviceDataSelectionDialog(
         title: Int,
@@ -2149,21 +1817,26 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun doDeviceDataImport(
-        json: String, selectedData: Set<DeviceDataType>, logImportMode: LogImportMode
+        prepared: PreparedDeviceDataBackup,
+        selectedData: Set<DeviceDataType>,
+        logImportMode: LogImportMode
     ) {
-        clearBackupDialog()
+        val request = pendingBackupDialog
+        clearBackupDialog(deleteCache = false)
         val settings = mSharedPreferences
         val messenger = serviceMessenger
         fileOperation(
             SettingsOperationAction.ImportDeviceData, R.string.invalid_device_data_file
         ) { context ->
             try {
-                DeviceDataBackup.importFromJson(context, json, selectedData, logImportMode)
+                DeviceDataBackup.restore(context, prepared, selectedData, logImportMode)
             } catch (failure: GeneralBackupRestoreException) {
                 reloadRestoredData(
                     context, settings, messenger, failure.completedData + failure.failedData
                 )
                 throw failure
+            } finally {
+                request?.let(::deleteBackupDialogCache)
             }
             if (DeviceDataType.PREDICTOR_DATA in selectedData) reloadService(
                 context, settings, messenger, predictor = true
@@ -2243,7 +1916,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
-    private fun doImport(json: String) {
+    private fun doImport(parsed: Pair<Int, Map<String, Any>>) {
         clearBackupDialog()
         val settings = mSharedPreferences
         val messenger = serviceMessenger
@@ -2253,13 +1926,13 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         ) { context ->
             // Keep commit's Boolean result so failed imports are reported to the user.
             @SuppressLint("UseKtx") val editor = settings.edit()
-            SettingsBackup.importFromJson(editor, json)
+            SettingsBackup.restore(editor, parsed)
             if (!editor.commit()) throw IOException("Could not save imported settings")
             reloadService(context, settings, messenger)
         }
     }
 
-    private fun doAlarmImport(json: String) {
+    private fun doAlarmImport(alarms: List<AlarmRecord>) {
         clearBackupDialog()
         val settings = mSharedPreferences
         val messenger = serviceMessenger
@@ -2268,7 +1941,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         ) { context ->
             val database = AlarmDatabase(context)
             try {
-                AlarmBackup.importFromJson(database, json)
+                AlarmBackup.restore(database, alarms)
             } finally {
                 database.close()
             }
@@ -2276,29 +1949,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
-    private fun setupLanguage() {
-        val category: PreferenceCategory?
-        val pref: Preference?
-        try {
-            category = mPreferenceScreen!!.findPreference(
-                SettingsContract.KEY_CHANGE_APP_LANGUAGE_HOLDER
-            )
-            pref = mPreferenceScreen!!.findPreference(SettingsContract.KEY_CHANGE_APP_LANGUAGE)
-        } catch (_: ClassCastException) {
-            return
-        }
-
-        if (category == null || pref == null) return
-        pref.setSummary(
-            res.getString(R.string.currently_set_to) + Locale.getDefault().displayLanguage
-        )
-        category.isVisible = true
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pref.isVisible = true
-            pref.onPreferenceClickListener =
-                Preference.OnPreferenceClickListener { _: Preference? -> this.launchChangeAppLanguageIntent() }
-        }
-    }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun launchChangeAppLanguageIntent(): Boolean {
@@ -2312,20 +1962,34 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         return false
     }
 
-    fun enableNotifsButtonClick() {
+    private fun enableNotifsButtonClick() {
         val context = requireContext()
-        val opened = if (!appNotifsEnabled || mainChan == null) {
-            NotificationSettingsNavigator.openNotifications(context)
-        } else {
-            NotificationSettingsNavigator.openNotificationChannel(context, mainChan!!.id)
-        }
+        val manager = context.getSystemService(NotificationManager::class.java)
+        val channelId = NotificationChannels.CHAN_ID_MAIN
+        val opened =
+            if (!notificationAvailability.appEnabled || manager.getNotificationChannel(channelId) == null) {
+                NotificationSettingsNavigator.openNotifications(context)
+            } else {
+                NotificationSettingsNavigator.openNotificationChannel(context, channelId)
+            }
         if (!opened) context.showToast(R.string.diag_value_not_available)
     }
 
-    private fun getMainNotifsEnabled(): Boolean {
-        mainChan = mNotificationManager!!.getNotificationChannel(NotificationChannels.CHAN_ID_MAIN)
-        return mainChan != null && mainChan!!.importance > 0
+    private fun isLiveUpdateChannelBlocked(): Boolean =
+        requireContext().getSystemService(NotificationManager::class.java)
+            .getNotificationChannel(NotificationChannels.CHAN_ID_LIVE_UPDATE)?.importance == NotificationManager.IMPORTANCE_NONE
+
+    private fun readNotificationAvailability(): NotificationAvailability {
+        val context = requireContext()
+        val manager = context.getSystemService(NotificationManager::class.java)
+        return NotificationAvailability(
+            appEnabled = manager.areNotificationsEnabled(),
+            mainEnabled = manager.getNotificationChannel(NotificationChannels.CHAN_ID_MAIN)?.importance?.let { it > NotificationManager.IMPORTANCE_NONE } == true,
+            liveEnabled = BatteryInfoService.supportsLiveUpdates() && BatteryInfoService.isLiveUpdateEnabledInSystem(
+                context
+            ) && !isLiveUpdateChannelBlocked())
     }
+
 }
 
 internal fun chipSwitchingIntervalChoiceIndex(

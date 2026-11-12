@@ -103,6 +103,8 @@ internal class AutoLogExportProvider : ContentProvider() {
         private const val ERROR = "error"
         private const val RECOVERY = "recovery"
         private val watermarkKeys = listOf(
+            SettingsContract.KEY_LAST_LOG_EXPORT_ID,
+            SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_ID,
             SettingsContract.KEY_LAST_LOG_EXPORT_TIME,
             SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME
         )

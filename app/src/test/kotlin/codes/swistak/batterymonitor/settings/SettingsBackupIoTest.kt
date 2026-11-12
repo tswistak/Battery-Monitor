@@ -19,7 +19,6 @@ import android.app.Application
 import android.net.Uri
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
-import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -65,7 +64,6 @@ class SettingsBackupIoTest {
         val uri = Uri.fromFile(source)
         assertEquals("ą💡\n", SettingsBackup.readFromUri(context, uri))
         assertEquals(text, AlarmBackup.readFromUri(context, uri))
-        assertEquals(text, DeviceDataBackup.readFromUri(context, uri))
-        assertEquals(text, CsvLogImporter.readFromUri(context, uri))
+        assertEquals(text, CsvLogImporter.withCsvReader(context, uri) { it.readText() })
     }
 }

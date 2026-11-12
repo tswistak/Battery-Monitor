@@ -15,12 +15,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.View
-import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +27,8 @@ import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.StartupDialogViewModel
 import codes.swistak.batterymonitor.app.StartupEnvironment
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeNodes
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import org.junit.Assert.assertEquals
@@ -37,6 +36,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class LicenseScreenInstrumentedTest {
     private val instrumentation: Instrumentation
@@ -315,25 +315,14 @@ class LicenseScreenInstrumentedTest {
             node.config.getOrNull(SemanticsProperties.Text)
                 ?.any { it.text.contains(marker) } == true || node.children.any(::containsText)
 
-        fun scroll(node: SemanticsNode): SemanticsNode? {
-            val range = node.config.getOrNull(SemanticsProperties.VerticalScrollAxisRange)
-            if (range != null && containsText(node)) return node
-            for (child in node.children) scroll(child)?.let { return it }
-            return null
-        }
-
-        fun find(view: View): SemanticsNode? {
-            if (!view.isShown) return null
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            owner?.let { scroll(it.rootSemanticsNode)?.let { position -> return position } }
-            if (view is ViewGroup) {
-                for (index in 0 until view.childCount) find(view.getChildAt(index))?.let { return it }
-            }
-            return null
-        }
-
-        return requireNotNull(find(activity.window.decorView)) { "No active Compose scroll range contains $marker" }
+        return requireNotNull(
+            composeNodes(
+                activity.window.decorView, shownOnly = true
+            ).firstOrNull { node ->
+                node.config.contains(SemanticsProperties.VerticalScrollAxisRange) && containsText(
+                    node
+                )
+            }) { "No active Compose scroll range contains $marker" }
     }
 
     private fun scrollValue(activity: BatteryInfoActivity, marker: String): Float {
@@ -454,23 +443,10 @@ class LicenseScreenInstrumentedTest {
                     ::hidden
                 ) == true
 
-            fun findSemantics(node: SemanticsNode): SemanticsNode? {
+            composeNodes(activity.window.decorView, shownOnly = true).firstOrNull { node ->
                 val bounds = node.boundsInWindow
-                if (bounds.width > 0 && bounds.height > 0 && !hidden(node) && matches(node)) return node
-                return node.children.firstNotNullOfOrNull(::findSemantics)
-            }
-
-            fun findView(view: View): SemanticsNode? {
-                if (!view.isShown) return null
-                val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                    ?.invoke(view) as? SemanticsOwner
-                owner?.let { findSemantics(it.rootSemanticsNode)?.let { node -> return node } }
-                if (view is ViewGroup) {
-                    for (index in 0 until view.childCount) findView(view.getChildAt(index))?.let { return it }
-                }
-                return null
-            }
-            findView(activity.window.decorView)?.let { performed = action(it) }
+                bounds.width > 0 && bounds.height > 0 && !hidden(node) && matches(node)
+            }?.let { performed = action(it) }
         }
         return performed
     }
@@ -486,13 +462,10 @@ class LicenseScreenInstrumentedTest {
         return instrumentation.uiAutomation.rootInActiveWindow?.let(::find)
     }
 
-    private fun await(ready: () -> Boolean) {
-        val deadline = System.nanoTime() + 10_000_000_000
-        while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        val reached = ready()
-        if (!reached) runCatching { reportReadinessTimeout() }
-        assertTrue("License screen did not reach the expected state", reached)
-    }
+    private fun await(ready: () -> Boolean) = awaitCondition({
+        runCatching { reportReadinessTimeout() }
+        "License screen did not reach the expected state"
+    }, ready)
 
     private fun reportReadinessTimeout() {
         val record = Bundle().apply {
@@ -529,20 +502,8 @@ class LicenseScreenInstrumentedTest {
                                 )
                             }"
                         }
-                        node.children.forEach(::collect)
                     }
-
-                    fun inspect(view: View) {
-                        if (!view.isShown) return
-                        val owner = view.javaClass.methods.firstOrNull { method ->
-                            method.name == "getSemanticsOwner"
-                        }?.invoke(view) as? SemanticsOwner
-                        owner?.rootSemanticsNode?.let(::collect)
-                        if (view is ViewGroup) {
-                            for (index in 0 until view.childCount) inspect(view.getChildAt(index))
-                        }
-                    }
-                    inspect(it.window.decorView)
+                    composeNodes(it.window.decorView, shownOnly = true).forEach(::collect)
                     record.putStringArrayList("activityComposeText", ArrayList(texts))
                 }
             }
@@ -577,17 +538,5 @@ class LicenseScreenInstrumentedTest {
         }.onFailure { record.putString("accessibilityDiagnosticError", it.toString()) }
         record.putStringArrayList("activeWindowAccessibility", ArrayList(nodes))
         instrumentation.sendStatus(0, record)
-    }
-
-    private fun main(action: () -> Unit) {
-        var failure: Throwable? = null
-        instrumentation.runOnMainSync {
-            try {
-                action()
-            } catch (error: Throwable) {
-                failure = error
-            }
-        }
-        failure?.let { throw it }
     }
 }

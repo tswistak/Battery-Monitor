@@ -13,14 +13,15 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.widgets.LegacyWidgetRenderer
+import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
 
 class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -32,26 +33,33 @@ class BootCompletedReceiver : BroadcastReceiver() {
         val settings = context.getSharedPreferences(
             SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
         )
-        val startPref: String = settings.getString(SettingsContract.KEY_AUTOSTART, "auto")!!
-        val serviceDesired = BackgroundServiceWatchdog.isServiceDesired(context)
-        val shouldStart = if (action == Intent.ACTION_BOOT_COMPLETED && startPref == "always") {
-            MonitoringDesiredState.write(context, desired = true, mirrorPreferences = false)
-        } else shouldStartMonitoringAfterSystemEvent(action, startPref, serviceDesired)
-        BackgroundServiceWatchdog.schedule(context)
-        if (shouldStart) {
-            BatteryInfoService.startForegroundServiceSafely(context)
-        }
-        if (!BackgroundServiceWatchdog.isServiceDesired(context)) {
-            LegacyWidgetRenderer.renderStopped(context)
-        }
-
-        if (Intent.ACTION_BOOT_COMPLETED == intent.action && settings.getBoolean(
-                SettingsContract.KEY_ENABLE_LOGGING, true
-            )
-        ) LogDatabase(context).logBoot()
-
+        val shouldStart = MonitoringDesiredState.afterSystemEvent(context, action)
+        val logBoot = action == Intent.ACTION_BOOT_COMPLETED && settings.getBoolean(
+            SettingsContract.KEY_ENABLE_LOGGING, true
+        )
+        val bootTime = System.currentTimeMillis()
         val pending = goAsync()
-        codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher.refresh(context) { pending.finish() }
+        BatteryInfoService.monitoringPersistence.execute {
+            try {
+                if (logBoot) {
+                    val database = LogDatabase(context)
+                    try {
+                        database.logBoot(bootTime)
+                    } finally {
+                        database.close()
+                    }
+                }
+            } catch (error: Exception) {
+                Log.e("BootCompletedReceiver", "Unable to record reboot", error)
+            } finally {
+                WidgetUpdateDispatcher.refresh(context) {
+                    pending.finish()
+                }
+            }
+        }
+        BackgroundServiceWatchdog.schedule(context)
+        if (shouldStart) BatteryInfoService.startForegroundServiceSafely(context)
+        else LegacyWidgetRenderer.renderStopped(context)
         AutoLogExportScheduler.ensureScheduled(context)
     }
 }
@@ -59,7 +67,6 @@ class BootCompletedReceiver : BroadcastReceiver() {
 internal fun shouldStartMonitoringAfterSystemEvent(
     action: String?, autostart: String?, serviceDesired: Boolean
 ): Boolean = when (action) {
-    // Package replacement resumes the user's last choice; autostart controls reboot behavior.
     Intent.ACTION_MY_PACKAGE_REPLACED -> serviceDesired
     Intent.ACTION_BOOT_COMPLETED -> autostart == "always" || autostart == "auto" && serviceDesired
     else -> false

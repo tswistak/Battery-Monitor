@@ -25,22 +25,14 @@ internal object Version1SettingsImporter : SettingsImporter {
         put(SettingsContract.KEY_ICON_CONTENT, String::class.java)
         put(SettingsContract.KEY_SHOW_ICON_UNIT, Boolean::class.java)
         put(SettingsContract.LEGACY_KEY_CONVERT_F, Boolean::class.java)
-        put(SettingsContract.KEY_NOTIFY_STATUS_DURATION, Boolean::class.java)
         put(SettingsContract.KEY_AUTOSTART, String::class.java)
         put(SettingsContract.KEY_PREDICTION_TYPE, String::class.java)
-        put(SettingsContract.KEY_STATUS_DUR_EST, String::class.java)
         put(SettingsContract.KEY_INDICATE_CHARGING, Boolean::class.java)
         put(SettingsContract.KEY_CHIP_CONTENT, String::class.java)
         put(SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, String::class.java)
         put(SettingsContract.KEY_CHIP_INDICATE_CHARGING, Boolean::class.java)
         put(SettingsContract.KEY_LIVE_UPDATE_DISPLAY, String::class.java)
         put(SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION, Boolean::class.java)
-        put(SettingsContract.KEY_RED, Boolean::class.java)
-        put(SettingsContract.KEY_RED_THRESH, String::class.java)
-        put(SettingsContract.KEY_AMBER, Boolean::class.java)
-        put(SettingsContract.KEY_AMBER_THRESH, String::class.java)
-        put(SettingsContract.KEY_GREEN, Boolean::class.java)
-        put(SettingsContract.KEY_GREEN_THRESH, String::class.java)
         put(SettingsContract.KEY_TOP_LINE, String::class.java)
         put(SettingsContract.KEY_BOTTOM_LINE, String::class.java)
         put(SettingsContract.KEY_TIME_REMAINING_VERBOSITY, String::class.java)
@@ -59,7 +51,6 @@ internal object Version1SettingsImporter : SettingsImporter {
         put(
             SettingsContract.LEGACY_KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW, Boolean::class.java
         )
-        put(SettingsContract.KEY_UI_COLOR, String::class.java)
     }
 
     override fun restore(

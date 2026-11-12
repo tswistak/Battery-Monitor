@@ -9,8 +9,11 @@ package codes.swistak.batterymonitor.logs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
+import codes.swistak.batterymonitor.devicebackup.BackupExportOutputStream
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
+import codes.swistak.batterymonitor.devicebackup.writeStagedBackupExport
 import codes.swistak.batterymonitor.settings.SettingsContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,65 +27,79 @@ internal data class HistoryExportRequest(
 )
 
 internal inline fun completeHistoryExport(
-    request: HistoryExportRequest, write: () -> Unit, saveWatermark: (Long) -> Unit
+    request: HistoryExportRequest, write: () -> HistoryKey?, saveWatermark: (HistoryKey) -> Unit
 ) {
-    write()
-    if (request.advanceWatermark) saveWatermark(request.through)
+    val lastWritten = write()
+    if (request.advanceWatermark && lastWritten != null) saveWatermark(lastWritten)
+}
+
+internal fun SharedPreferences.exportWatermarkId(
+    after: Long?, timeKey: String, idKey: String
+): Long? =
+    if (after != null && contains(timeKey) && getLong(timeKey, 0) == after && contains(idKey)) {
+        getLong(idKey, 0)
+    } else null
+
+@SuppressLint("UseKtx")
+internal fun SharedPreferences.saveExportWatermark(
+    timeKey: String, idKey: String, written: HistoryKey
+) {
+    val previous = getLong(timeKey, Long.MIN_VALUE)
+    if (written.time < previous || written.time == previous && written.id <= getLong(
+            idKey, Long.MIN_VALUE
+        )
+    ) return
+    check(edit().putLong(timeKey, written.time).putLong(idKey, written.id).commit()) {
+        "Could not save export watermark"
+    }
 }
 
 internal suspend fun exportHistory(context: Context, uri: Uri, request: HistoryExportRequest) =
     withContext(Dispatchers.IO) {
         LogExport.withDocumentLock(context) {
+            val preferences = context.getSharedPreferences(
+                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+            )
+            val timeKey = SettingsContract.KEY_LAST_LOG_EXPORT_TIME
+            val idKey = SettingsContract.KEY_LAST_LOG_EXPORT_ID
+            val afterId = if (request.advanceWatermark) preferences.exportWatermarkId(
+                request.after, timeKey, idKey
+            ) else null
             val database = LogDatabase(context.applicationContext)
             try {
                 completeHistoryExport(request, write = {
-                    val records = if (request.after == null || request.after < request.through) {
-                        val start = (request.after ?: -1L) + 1
-                        historyQuery(HistoryRangeState(start, request.through + 1))
-                    } else null
-
-                    fun write(sequence: Sequence<HistoryRecord>) {
+                    var lastWritten: HistoryKey? = null
+                    database.readExportRecords(request.after, request.through, afterId) { rows ->
+                        val records = rows.map {
+                            lastWritten = it.key
+                            it.record
+                        }
                         if (request.append) {
                             when (request.format) {
-                                LogExportFormat.CSV -> LogExport.appendCsv(
-                                    context, uri, sequence.map { it.record })
-
-                                LogExportFormat.JSON -> LogExport.appendJson(
-                                    context, uri, sequence.map { it.record })
+                                LogExportFormat.CSV -> LogExport.appendCsv(context, uri, records)
+                                LogExportFormat.JSON -> LogExport.appendJson(context, uri, records)
                             }
-                            return
+                        } else {
+                            writeStagedBackupExport(context, { uri }) { output ->
+                                when (request.format) {
+                                    LogExportFormat.CSV -> LogExport.writeCsv(
+                                        context,
+                                        BackupExportOutputStream(output),
+                                        records,
+                                        includeHeader = true
+                                    )
+
+                                    LogExportFormat.JSON -> DeviceDataBackup.writeHistory(
+                                        context, output, records
+                                    )
+                                }
+                            }
                         }
-                        context.contentResolver.openOutputStream(uri, "wt")?.use { output ->
-                            when (request.format) {
-                                LogExportFormat.CSV -> LogExport.writeCsv(
-                                    context,
-                                    output,
-                                    sequence.map { it.record },
-                                    includeHeader = true
-                                )
-
-                                LogExportFormat.JSON -> output.write(
-                                    DeviceDataBackup.exportLogsToJson(
-                                        context, sequence.map { it.record }.toList()
-                                    ).toString().toByteArray(Charsets.UTF_8)
-                                )
-                            }
-                        } ?: error("Could not open export file")
                     }
-                    if (records == null) write(emptySequence()) else database.readHistory(
-                        records, ::write
-                    )
-                }, saveWatermark = { through ->
+                    lastWritten
+                }, saveWatermark = { lastWritten ->
                     LogExport.withWatermarkLock(context) {
-                        val preferences = context.getSharedPreferences(
-                            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-                        )
-                        val old = preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0)
-                        // KTX edit discards commit's Boolean; a failed watermark write must fail the export.
-                        @SuppressLint("UseKtx") val saved = preferences.edit().putLong(
-                            SettingsContract.KEY_LAST_LOG_EXPORT_TIME, maxOf(old, through)
-                        ).commit()
-                        check(saved) { "Could not save export watermark" }
+                        preferences.saveExportWatermark(timeKey, idKey, lastWritten)
                     }
                 })
             } finally {

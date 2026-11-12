@@ -33,6 +33,8 @@ internal object SettingsReset {
                 SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME,
                 SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME,
                 SettingsContract.KEY_LAST_LOG_EXPORT_TIME,
+                SettingsContract.KEY_LAST_LOG_EXPORT_ID,
+                SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_ID,
                 SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION,
                 SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT,
                 SettingsContract.LEGACY_KEY_CURRENT_SOURCE,

@@ -23,6 +23,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import androidx.core.database.sqlite.transaction
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
+import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
 
 
 internal data class LogRecord(
@@ -142,9 +143,11 @@ internal class LogDatabase(context: Context?) {
         }
     }
 
-    private fun historyChanged() {
+    private fun historyChanged(explicit: Boolean = false) {
+        val context = appContext ?: return
         try {
-            appContext?.let { it.sendBroadcast(Intent(ACTION_HISTORY_CHANGED).setPackage(it.packageName)) }
+            context.sendBroadcast(Intent(ACTION_HISTORY_CHANGED).setPackage(context.packageName))
+            if (explicit) WidgetSettingsReceiver.historyChanged(context)
         } catch (error: RuntimeException) {
             Log.w(LOG_TAG, "Unable to notify history consumers", error)
         }
@@ -241,9 +244,7 @@ internal class LogDatabase(context: Context?) {
         closeDatabaseHandles()
     }
 
-    fun getAllLogRecords(): List<LogRecord> {
-        return getLogRecordsInRange()
-    }
+    fun getAllLogRecords(): List<LogRecord> = readLogRecords { it.toList() }
 
     fun <T> readHistory(query: HistoryQuery, block: (Sequence<HistoryRecord>) -> T): T {
         openDBs()
@@ -299,7 +300,7 @@ internal class LogDatabase(context: Context?) {
                 )
             }
         }
-        if (deleted > 0) historyChanged()
+        if (deleted > 0) historyChanged(explicit = true)
     }
 
     fun historyDuration(entry: HistoryRecord): Long? {
@@ -324,63 +325,52 @@ internal class LogDatabase(context: Context?) {
     }
 
 
-    fun getLogRecordsInRange(
-        afterExclusive: Long? = null, throughInclusive: Long? = null
-    ): List<LogRecord> {
-        openDBs()
+    fun <T> readLogRecords(block: (Sequence<LogRecord>) -> T): T =
+        readExportRecords(null, null, null) { records ->
+            block(records.map { it.record })
+        }
 
+    fun <T> readExportRecords(
+        afterExclusive: Long?,
+        throughInclusive: Long?,
+        afterId: Long?,
+        block: (Sequence<HistoryRecord>) -> T
+    ): T {
         val whereParts = mutableListOf<String>()
         val whereArgs = mutableListOf<String>()
         afterExclusive?.let {
-            whereParts += "$KEY_TIME > ?"
+            whereParts += if (afterId == null) "$KEY_TIME > ?"
+            else "($KEY_TIME > ? OR ($KEY_TIME = ? AND $KEY_ID > ?))"
             whereArgs += it.toString()
+            if (afterId != null) whereArgs += listOf(it.toString(), afterId.toString())
         }
         throughInclusive?.let {
             whereParts += "$KEY_TIME <= ?"
             whereArgs += it.toString()
         }
         val where = if (whereParts.isEmpty()) "" else " WHERE ${whereParts.joinToString(" AND ")}"
-        val cursor = rdb?.rawQuery(
-            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE, $KEY_CURRENT, $KEY_REMAINING_CHARGE FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC",
-            whereArgs.takeIf { it.isNotEmpty() }?.toTypedArray()
-        ) ?: return emptyList()
-        cursor.use {
-            val statusColumn = it.getColumnIndexOrThrow(KEY_STATUS_CODE)
-            val chargeColumn = it.getColumnIndexOrThrow(KEY_CHARGE)
-            val timeColumn = it.getColumnIndexOrThrow(KEY_TIME)
-            val temperatureColumn = it.getColumnIndexOrThrow(KEY_TEMPERATURE)
-            val voltageColumn = it.getColumnIndexOrThrow(KEY_VOLTAGE)
-            val currentColumn = it.getColumnIndexOrThrow(KEY_CURRENT)
-            val remainingChargeColumn = it.getColumnIndexOrThrow(KEY_REMAINING_CHARGE)
-            return buildList {
-                while (it.moveToNext()) {
-                    add(
-                        LogRecord(
-                            status = it.getInt(statusColumn),
-                            charge = it.getNullableInt(chargeColumn),
-                            time = it.getLong(timeColumn),
-                            temperature = it.getNullableInt(temperatureColumn),
-                            voltage = it.getNullableInt(voltageColumn)
-                                ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts),
-                            currentMicroAmps = it.getNullableLong(currentColumn),
-                            remainingChargeMicroampHours = it.getNullableLong(remainingChargeColumn)
-                        )
-                    )
-                }
-            }
-        }
+        return readHistory(
+            HistoryQuery(
+                "SELECT _id, $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE, $KEY_CURRENT, $KEY_REMAINING_CHARGE FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC, _id ASC",
+                whereArgs.toTypedArray()
+            ), block
+        )
     }
 
-    fun replaceAllLogs(records: List<LogRecord>) = writeLogs(records, replaceExisting = true)
+    fun replaceAllLogs(records: List<LogRecord>) = replaceAllLogs(records.asSequence())
+    fun addLogs(records: List<LogRecord>) = addLogs(records.asSequence())
+    fun replaceAllLogs(records: Sequence<LogRecord>) = writeLogs(records, replaceExisting = true)
+    fun addLogs(records: Sequence<LogRecord>) = writeLogs(records, replaceExisting = false)
 
-    fun addLogs(records: List<LogRecord>) = writeLogs(records, replaceExisting = false)
-
-    private fun writeLogs(records: List<LogRecord>, replaceExisting: Boolean) {
+    private fun writeLogs(records: Sequence<LogRecord>, replaceExisting: Boolean) {
         openDBs()
         val database = checkNotNull(wdb) { "Log database is unavailable" }
         val changed = database.transaction {
             val previousTimes = if (replaceExisting) affectedTimes() else null
             val deleted = if (replaceExisting) database.delete(LOG_TABLE_NAME, "1", null) else 0
+            var inserted = false
+            var first = previousTimes?.first ?: Long.MAX_VALUE
+            var last = previousTimes?.last ?: Long.MIN_VALUE
             for ((status, charge, time, temperature, voltage, currentMicroAmps, remainingChargeMicroampHours) in records) {
                 val values = ContentValues().apply {
                     put(KEY_STATUS_CODE, status)
@@ -394,20 +384,18 @@ internal class LogDatabase(context: Context?) {
                 check(database.insertOrThrow(LOG_TABLE_NAME, null, values) >= 0) {
                     "Could not restore log entry"
                 }
+                inserted = true
+                first = minOf(first, time)
+                last = maxOf(last, time)
             }
-            val changed = deleted > 0 || records.isNotEmpty()
+            val changed = deleted > 0 || inserted
             if (changed) {
-                val first =
-                    listOfNotNull(previousTimes?.first, records.minOfOrNull { it.time }).minOrNull()
-                        ?: Long.MIN_VALUE
-                val last =
-                    listOfNotNull(previousTimes?.last, records.maxOfOrNull { it.time }).maxOrNull()
-                        ?: Long.MAX_VALUE
-                recordHistoryChange(first, last)
+                if (inserted || previousTimes != null) recordHistoryChange(first, last)
+                else recordHistoryChange(Long.MIN_VALUE, Long.MAX_VALUE)
             }
             changed
         }
-        if (changed) historyChanged()
+        if (changed) historyChanged(explicit = true)
     }
 
     private fun Cursor.getNullableInt(columnIndex: Int): Int? =
@@ -466,12 +454,12 @@ internal class LogDatabase(context: Context?) {
         return result
     }
 
-    fun logBoot(): LogResult {
+    fun logBoot(observedAt: Long = System.currentTimeMillis()): LogResult {
         val result = writeWithRetry("Logging boot completion") { _, writableDatabase ->
             val values = ContentValues().apply {
                 put(KEY_STATUS_CODE, STATUS_BOOT_COMPLETED)
                 putNull(KEY_CHARGE)
-                put(KEY_TIME, System.currentTimeMillis())
+                put(KEY_TIME, observedAt)
                 putNull(KEY_TEMPERATURE)
                 putNull(KEY_VOLTAGE)
                 putNull(KEY_CURRENT)

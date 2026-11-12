@@ -112,7 +112,6 @@ import codes.swistak.batterymonitor.logs.LogExport
 import codes.swistak.batterymonitor.logs.LogExportFormat
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.logs.historyFilterKeys
-import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
@@ -121,7 +120,6 @@ import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 import codes.swistak.batterymonitor.ui.components.historyRangeValue
 import codes.swistak.batterymonitor.ui.components.historyValue
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import java.time.Instant
 import java.time.LocalDate
@@ -206,7 +204,6 @@ internal fun HistoryActionsMenu(enabled: Boolean, onAction: (String) -> Unit) {
 @Composable
 internal fun HistoryRoute(
     viewModel: HistoryViewModel,
-    monitoring: StateFlow<MonitoringUiState>,
     requestedAction: String?,
     onActionHandled: () -> Unit,
     onOpenFullscreen: (HistoryMetric, codes.swistak.batterymonitor.logs.HistoryRangeState, String) -> Unit,
@@ -215,12 +212,7 @@ internal fun HistoryRoute(
     val context = LocalContext.current
     val appContext = context.applicationContext
     val state by viewModel.state.collectAsStateWithLifecycle()
-    HistoryChangeEffect(
-        onActivated = {
-            val snapshot = monitoring.value.snapshot
-            viewModel.resume(Triple(snapshot?.levelPercent, snapshot?.status, snapshot?.plugged))
-        }, onChanged = viewModel::historyChanged
-    )
+    HistoryChangeEffect(onActivated = viewModel::resume, onChanged = viewModel::historyChanged)
     val zone = rememberHistoryTimeZone()
     val today = LocalDate.now(zone)
     val locale = LocalConfiguration.current.locales[0]

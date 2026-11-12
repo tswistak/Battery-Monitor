@@ -122,7 +122,9 @@ internal sealed interface SettingsDialog {
 }
 
 @Composable
-internal fun SettingsDialogs(dialog: SettingsDialog?, busy: Boolean, onDismiss: () -> Unit) {
+internal fun SettingsDialogs(
+    dialog: SettingsDialog?, busy: Boolean, onDismiss: () -> Unit, beforeConfirm: () -> Unit
+) {
     if (busy) {
         if (applicationDialogsAllowed()) AlertDialog(
             onDismissRequest = {},
@@ -149,7 +151,7 @@ internal fun SettingsDialogs(dialog: SettingsDialog?, busy: Boolean, onDismiss: 
     }
     key(dialog.javaClass.name, identity) {
         when (dialog) {
-            is SettingsDialog.Choices -> ChoicesDialog(dialog, onDismiss)
+            is SettingsDialog.Choices -> ChoicesDialog(dialog, onDismiss, beforeConfirm)
             is SettingsDialog.Number -> NumberDialog(dialog, onDismiss)
             is SettingsDialog.Ordered -> OrderedDialog(dialog, onDismiss)
             is SettingsDialog.AutoExport -> AutoExportDialog(dialog, onDismiss)
@@ -157,6 +159,7 @@ internal fun SettingsDialogs(dialog: SettingsDialog?, busy: Boolean, onDismiss: 
                 title = dialog.title,
                 onDismiss = onDismiss,
                 onConfirm = dialog.onConfirm,
+                beforeConfirm = beforeConfirm,
                 confirmLabel = dialog.confirmLabel
             ) { Text(dialog.message) }
 
@@ -172,6 +175,7 @@ private fun SettingsAlert(
     title: String? = null,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
+    beforeConfirm: () -> Unit = onDismiss,
     enabled: Boolean = true,
     confirmLabel: Int = R.string.okay,
     cancellable: Boolean = true,
@@ -201,7 +205,7 @@ private fun SettingsAlert(
             TextButton(onClick = {
                 if (!handled && enabled) {
                     handled = true
-                    onDismiss()
+                    beforeConfirm()
                     onConfirm()
                 }
             }, enabled = enabled) { Text(stringResource(confirmLabel)) }
@@ -212,7 +216,9 @@ private fun SettingsAlert(
 }
 
 @Composable
-private fun ChoicesDialog(dialog: SettingsDialog.Choices, onDismiss: () -> Unit) {
+private fun ChoicesDialog(
+    dialog: SettingsDialog.Choices, onDismiss: () -> Unit, beforeConfirm: () -> Unit
+) {
     var selected by rememberSaveable {
         mutableStateOf(dialog.selected.filter { it in dialog.options.indices }.toSet())
     }
@@ -220,6 +226,7 @@ private fun ChoicesDialog(dialog: SettingsDialog.Choices, onDismiss: () -> Unit)
         title = dialog.title,
         onDismiss = onDismiss,
         onConfirm = { dialog.onConfirm(selected) },
+        beforeConfirm = beforeConfirm,
         enabled = dialog.allowEmpty || selected.isNotEmpty()
     ) {
         dialog.message?.let { Text(it) }

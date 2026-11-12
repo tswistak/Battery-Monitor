@@ -19,34 +19,38 @@ import android.util.Log
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
+import codes.swistak.batterymonitor.devicebackup.GeneralBackup
 import java.io.File
 import java.io.FileOutputStream
-import java.nio.charset.CodingErrorAction
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 
 internal class LogExportRecoveryException(message: String, cause: Exception) :
     IllegalArgumentException(message, cause)
 
+internal fun exportRecoveryKey(uri: Uri): String {
+    val identity = when (uri.scheme) {
+        "file" -> File(requireNotNull(uri.path)).canonicalPath
+        "content" -> try {
+            "${uri.authority}:${DocumentsContract.getDocumentId(uri)}"
+        } catch (_: IllegalArgumentException) {
+            uri.normalizeScheme().toString()
+        }
+
+        else -> uri.normalizeScheme().toString()
+    }
+    return MessageDigest.getInstance("SHA-256").digest(identity.toByteArray())
+        .joinToString("") { "%02x".format(it) }
+}
+
 internal object JsonLogAppend {
-    const val MAX_BYTES = 16 * 1024 * 1024
+    const val MAX_BYTES = GeneralBackup.MAX_ENTRY_BYTES
 
     fun append(context: Context, uri: Uri, records: Sequence<LogRecord>) {
         val directory = File(context.filesDir, "export-recovery").apply {
             check(isDirectory || mkdirs()) { "Could not create export recovery directory" }
         }
-        val identity = when (uri.scheme) {
-            "file" -> File(requireNotNull(uri.path)).canonicalPath
-            "content" -> try {
-                "${uri.authority}:${DocumentsContract.getDocumentId(uri)}"
-            } catch (_: IllegalArgumentException) {
-                uri.normalizeScheme().toString()
-            }
-
-            else -> uri.normalizeScheme().toString()
-        }
-        val key = MessageDigest.getInstance("SHA-256").digest(identity.toByteArray())
-            .joinToString("") { "%02x".format(it) }
+        val key = exportRecoveryKey(uri)
         val original = File(directory, "$key.original")
         val journal = File(directory, "$key.uri")
         val reading = File(directory, "$key.read")
@@ -64,7 +68,7 @@ internal object JsonLogAppend {
                 context.getString(R.string.log_export_recovery_required, original.name), failure
             )
         }
-        
+
         if (original.exists()) {
             try {
                 replace(original)
@@ -84,22 +88,18 @@ internal object JsonLogAppend {
                         output.fd.sync()
                     }
                 }
-                val decoder =
-                    StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
-                        .onUnmappableCharacter(CodingErrorAction.REPORT)
-                val text = decoder.decode(java.nio.ByteBuffer.wrap(reading.readBytes())).toString()
-                DeviceDataBackup.prepareLogsAppend(text, records, MAX_BYTES)
+                FileOutputStream(prepared).use { output ->
+                    DeviceDataBackup.prepareLogsAppend(reading, output, records, MAX_BYTES).also {
+                        if (it) output.fd.sync()
+                    }
+                }
             } catch (failure: Exception) {
                 Log.w("LogExport", "Rejected JSON append destination $uri", failure)
                 throw IllegalArgumentException(
                     context.getString(R.string.log_json_append_invalid), failure
                 )
-            } ?: return
-
-            FileOutputStream(prepared).use { output ->
-                output.write(replacement.toByteArray(StandardCharsets.UTF_8))
-                output.fd.sync()
             }
+            if (!replacement) return
             FileOutputStream(journal).use { output ->
                 output.write(uri.toString().toByteArray(StandardCharsets.UTF_8))
                 output.fd.sync()

@@ -22,26 +22,15 @@ import android.graphics.RectF
 import android.util.DisplayMetrics
 import androidx.core.graphics.createBitmap
 
-internal class BatteryLevel private constructor() {
+internal class BatteryLevel {
     companion object {
         private const val FACTOR_SMALL = 13.33f
 
-        private var smallInstance: BatteryLevel? = null
-
-        fun getSmallInstance(): BatteryLevel {
-            if (smallInstance != null) return smallInstance!!
-
-            smallInstance = BatteryLevel()
-
-            return smallInstance!!
-        }
     }
 
     private val canvas: Canvas = Canvas()
     private val paint: Paint
     private var battery: Bitmap
-    private var mLevel = 0
-    private var mColor = 0
 
     private val factorWidth = 12.0f
     private val factorBodH = 21.0f
@@ -69,16 +58,8 @@ internal class BatteryLevel private constructor() {
         paint.strokeWidth = strokeW.toFloat()
     }
 
-    fun setColor(color: Int) {
-        mColor = color
-        setLevel(mLevel)
-    }
-
-    fun setLevel(level: Int) {
-        var level = level
-        if (level < 0) level = 0
-
-        mLevel = level
+    fun draw(percent: Int, color: Int): Bitmap {
+        val level = percent.coerceAtLeast(0)
 
         val hsw = strokeW * 0.5f
         val isw = strokeW
@@ -86,7 +67,7 @@ internal class BatteryLevel private constructor() {
         val outlineRect = RectF(hsw, topH + hsw, width - hsw, totalH - hsw)
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 
-        paint.setColor(mColor)
+        paint.color = color
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = strokeW.toFloat()
         canvas.drawRoundRect(outlineRect, hsw, hsw, paint)
@@ -107,7 +88,6 @@ internal class BatteryLevel private constructor() {
             topLeft.toFloat(), 0f, (topLeft + topW).toFloat(), (topH + strokeW).toFloat()
         )
         canvas.drawRoundRect(topRect, hsw, hsw, paint)
+        return battery
     }
-
-    fun getBitmap(): Bitmap = battery
 }

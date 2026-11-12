@@ -21,6 +21,20 @@ import org.junit.Test
 import kotlin.math.abs
 
 class DetailedHistoryModelTest {
+    private fun detailedHistoryBounds(
+        metric: HistoryMetric, records: Sequence<HistoryRecord>
+    ): DetailedHistoryBounds = detailedHistoryBounds(listOf(metric), records).getValue(metric)
+
+    private fun detailedHistoryChart(
+        range: HistoryRangeState,
+        viewport: HistoryRangeState,
+        metric: HistoryMetric,
+        pixelWidth: Int,
+        records: Sequence<HistoryRecord>
+    ): DetailedHistoryChartModel = detailedHistoryCharts(
+        range, viewport, listOf(metric), pixelWidth, records
+    ).getValue(metric)
+
     private val observation = LogRecord(200, 50, 1_000, 300, 4000, -100_000, 2_500_000)
 
     private fun rows(count: Int) = (0..<count).asSequence().map { index ->

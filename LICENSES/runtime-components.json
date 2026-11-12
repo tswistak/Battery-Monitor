@@ -171,25 +171,6 @@
     ]
   },
   {
-    "id": "androidx-asynclayoutinflater-asynclayoutinflater",
-    "name": "AndroidX Asynclayoutinflater",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-autofill-autofill",
     "name": "AndroidX Autofill",
     "version": "1.0.0",
@@ -590,25 +571,6 @@
     ]
   },
   {
-    "id": "androidx-coordinatorlayout-coordinatorlayout",
-    "name": "AndroidX Coordinatorlayout",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.coordinatorlayout:coordinatorlayout:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-core-core-ktx",
     "name": "AndroidX Core Kotlin Extensions",
     "version": "1.19.1",
@@ -723,25 +685,6 @@
     ]
   },
   {
-    "id": "androidx-documentfile-documentfile",
-    "name": "AndroidX Documentfile",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.documentfile:documentfile:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-drawerlayout-drawerlayout",
     "name": "AndroidX Drawerlayout",
     "version": "1.0.0",
@@ -802,25 +745,6 @@
     ]
   },
   {
-    "id": "androidx-fragment-fragment-ktx",
-    "name": "AndroidX Fragment Kotlin Extensions",
-    "version": "1.9.1",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment-ktx/1.9.1/fragment-ktx-1.9.1.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment-ktx/1.9.1/fragment-ktx-1.9.1-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.fragment:fragment-ktx:1.9.1"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-fragment-fragment",
     "name": "AndroidX fragment",
     "version": "1.9.1",
@@ -873,44 +797,6 @@
     ],
     "artifacts": [
       "androidx.interpolator:interpolator:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
-    "id": "androidx-legacy-legacy-support-core-ui",
-    "name": "AndroidX Legacy Support Core UI",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.legacy:legacy-support-core-ui:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
-    "id": "androidx-legacy-legacy-support-core-utils",
-    "name": "AndroidX Legacy Support Core Utils",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.legacy:legacy-support-core-utils:1.0.0"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -1182,25 +1068,6 @@
     ]
   },
   {
-    "id": "androidx-localbroadcastmanager-localbroadcastmanager",
-    "name": "AndroidX Localbroadcastmanager",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-navigationevent-navigationevent-android",
     "name": "AndroidX Navigation Event",
     "version": "1.0.0",
@@ -1239,44 +1106,6 @@
     ]
   },
   {
-    "id": "androidx-preference-preference",
-    "name": "AndroidX Preference",
-    "version": "1.2.1",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright (C) 2015 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2021 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/preference/preference/1.2.1/preference-1.2.1.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/preference/preference/1.2.1/preference-1.2.1-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.preference:preference:1.2.1"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
-    "id": "androidx-print-print",
-    "name": "AndroidX Print",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/print/print/1.0.0/print-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/print/print/1.0.0/print-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.print:print:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-profileinstaller-profileinstaller",
     "name": "AndroidX Profile Installer",
     "version": "1.4.0",
@@ -1290,25 +1119,6 @@
     ],
     "artifacts": [
       "androidx.profileinstaller:profileinstaller:1.4.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
-    "id": "androidx-recyclerview-recyclerview",
-    "name": "AndroidX Recyclerview",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/recyclerview/recyclerview/1.0.0/recyclerview-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/recyclerview/recyclerview/1.0.0/recyclerview-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.recyclerview:recyclerview:1.0.0"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -1391,25 +1201,6 @@
     ]
   },
   {
-    "id": "androidx-slidingpanelayout-slidingpanelayout",
-    "name": "AndroidX Slidingpanelayout",
-    "version": "1.2.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2021 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/slidingpanelayout/slidingpanelayout/1.2.0/slidingpanelayout-1.2.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/slidingpanelayout/slidingpanelayout/1.2.0/slidingpanelayout-1.2.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.slidingpanelayout:slidingpanelayout:1.2.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-startup-startup-runtime",
     "name": "AndroidX Startup Runtime",
     "version": "1.1.1",
@@ -1429,25 +1220,6 @@
     ]
   },
   {
-    "id": "androidx-swiperefreshlayout-swiperefreshlayout",
-    "name": "AndroidX Swiperefreshlayout",
-    "version": "1.0.0",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright 2018 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
     "id": "androidx-tracing-tracing-android",
     "name": "AndroidX Tracing",
     "version": "2.0.0",
@@ -1461,25 +1233,6 @@
     ],
     "artifacts": [
       "androidx.tracing:tracing-android:2.0.0"
-    ],
-    "files": [
-      "Apache-2.0.txt"
-    ]
-  },
-  {
-    "id": "androidx-transition-transition",
-    "name": "AndroidX Transition",
-    "version": "1.4.1",
-    "group": "libraries",
-    "license": "Apache-2.0",
-    "attribution": "Copyright (C) 2016 The Android Open Source Project\nCopyright (C) 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project",
-    "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/transition/transition/1.4.1/transition-1.4.1.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/transition/transition/1.4.1/transition-1.4.1-sources.jar",
-      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
-    ],
-    "artifacts": [
-      "androidx.transition:transition:1.4.1"
     ],
     "files": [
       "Apache-2.0.txt"

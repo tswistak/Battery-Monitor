@@ -45,6 +45,8 @@ class SettingsResetTest {
             "last_auto_log_export_time",
             "next_auto_log_export_time",
             "last_log_export_time",
+            "last_log_export_id",
+            "last_auto_log_export_id",
             "battery_current_source",
             "enable_advanced_stats"
         )

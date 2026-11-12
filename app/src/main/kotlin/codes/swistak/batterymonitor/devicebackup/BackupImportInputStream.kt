@@ -12,7 +12,12 @@
 */
 package codes.swistak.batterymonitor.devicebackup
 
+import android.content.Context
+import android.net.Uri
+import java.io.File
+import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
 
 internal class BackupImportInputStream(
     private val source: InputStream, maxBytes: Int = GeneralBackup.MAX_ENTRY_BYTES
@@ -37,5 +42,44 @@ internal class BackupImportInputStream(
     private fun countBytes(count: Int) {
         require(count <= remaining) { "Backup source is too large" }
         remaining -= count
+    }
+}
+
+internal class BackupExportOutputStream(
+    private val destination: OutputStream, private val maxBytes: Int = GeneralBackup.MAX_ENTRY_BYTES
+) : OutputStream() {
+    var bytesWritten = 0
+        private set
+
+    override fun write(value: Int) {
+        checkSpace(1)
+        destination.write(value)
+        bytesWritten++
+    }
+
+    override fun write(bytes: ByteArray, offset: Int, length: Int) {
+        checkSpace(length)
+        destination.write(bytes, offset, length)
+        bytesWritten += length
+    }
+
+    override fun flush() = destination.flush()
+
+    private fun checkSpace(length: Int) {
+        if (length > maxBytes - bytesWritten) throw IOException("Backup export is too large to restore")
+    }
+}
+
+internal fun writeStagedBackupExport(
+    context: Context, destination: () -> Uri, write: (OutputStream) -> Unit
+) {
+    val prepared = File.createTempFile("backup-export-", ".tmp", context.cacheDir)
+    try {
+        prepared.outputStream().buffered().use(write)
+        val output = context.contentResolver.openOutputStream(destination(), "wt")
+            ?: throw IOException("Could not open backup destination")
+        output.use { prepared.inputStream().use { source -> source.copyTo(it) } }
+    } finally {
+        prepared.delete()
     }
 }

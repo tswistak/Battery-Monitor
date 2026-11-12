@@ -16,6 +16,7 @@ internal const val HISTORY_SAMPLE_INTERVAL_MS = 120_000L
 internal const val HISTORY_MAINTENANCE_INTERVAL_MS = 3_600_000L
 
 internal class BatteryHistorySampler(lastRecordedElapsed: Long? = null) {
+    @Volatile
     var lastRecordedElapsed: Long? = lastRecordedElapsed
         private set
 

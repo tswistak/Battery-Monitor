@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application tools:ignore="MissingApplicationIcon">
+        <provider
+            android:name=".testsupport.ChargingLimitProbeProvider"
+            android:authorities="${applicationId}.charging-limit-probe"
+            android:exported="false"
+            android:process="codes.swistak.batterymonitor.BIS" />
+        <activity
+            android:name=".testsupport.ComposeTestActivity"
+            android:exported="false"
+            android:theme="@style/bi_compose_theme" />
+    </application>
+</manifest>

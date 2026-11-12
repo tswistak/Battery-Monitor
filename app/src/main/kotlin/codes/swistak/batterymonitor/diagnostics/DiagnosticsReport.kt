@@ -33,14 +33,7 @@ internal object DiagnosticsReport {
         includeDebugLogs: Boolean = false
     ): String = buildString {
         append(summary(context, rootAvailable, shizukuStatus))
-        if (includeDebugLogs) {
-            val file = DebugLogCollector.logFile(context)
-            if (file.isFile) {
-                appendLine()
-                appendLine("Debug logs")
-                append(file.readText())
-            }
-        }
+        if (includeDebugLogs) DebugLogCollector.appendToReport(context, this)
     }
 
     private fun summary(

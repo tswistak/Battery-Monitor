@@ -18,41 +18,39 @@ import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.historyChart
 import codes.swistak.batterymonitor.logs.historyQuery
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
-import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
 
 internal object WidgetUpdateDispatcher {
     private val executor = Executors.newSingleThreadExecutor()
+    private val dispatcher = executor.asCoroutineDispatcher()
+
     private val policy = WidgetUpdatePolicy()
     private val lock = Any()
     private val pendingIds = mutableSetOf<Int>()
     private val completions = mutableListOf<() -> Unit>()
     private var allIds = false
-    private var pendingForce = false
+    private var pendingHistoryChange = false
     private var queued = false
-    private var pendingSnapshot: WidgetSnapshot? = null
-    private var pendingPublish = false
-    private val trends = ConcurrentHashMap<Int, Pair<Long, WidgetTrend>>()
+    private var latestSnapshot: WidgetSnapshot? = null
+    private var persistedSnapshot: WidgetSnapshot? = null
+    private val trends = mutableMapOf<Int, Pair<Long, WidgetTrend>>()
+    private var trendVersion = 0L
 
-    fun cachedTrend(hours: Int): WidgetTrend? = trends[hours]?.second
-
-    fun preparePreview(context: Context, hours: Int, onComplete: () -> Unit) {
-        executor.execute {
-            try {
-                trend(context.applicationContext, hours, force = false)
-            } finally {
-                finishCallbacks(listOf(onComplete))
-            }
+    suspend fun previewData(context: Context, trendHours: Int?): WidgetPreviewData =
+        withContext(dispatcher) {
+            WidgetPreviewData(snapshot = synchronized(lock) { latestSnapshot } ?: storedSnapshot(
+                context
+            ),
+                monitoringEnabled = BackgroundServiceWatchdog.isServiceDesired(context),
+                trend = trendHours?.let { trend(context, it) })
         }
-    }
 
     fun publish(context: Context, snapshot: WidgetSnapshot, force: Boolean = false) {
         synchronized(lock) {
-            pendingSnapshot = snapshot
-            pendingPublish = pendingPublish || policy.shouldPublish(
-                snapshot, SystemClock.elapsedRealtime(), force
-            )
-            pendingForce = pendingForce || force
+            latestSnapshot = snapshot
+            if (!policy.shouldPublish(snapshot, SystemClock.elapsedRealtime(), force)) return
             allIds = true
             enqueue(context.applicationContext)
         }
@@ -61,9 +59,15 @@ internal object WidgetUpdateDispatcher {
     fun refresh(context: Context, ids: IntArray? = null, onComplete: (() -> Unit)? = null) {
         synchronized(lock) {
             if (ids == null) allIds = true else pendingIds.addAll(ids.toList())
-            pendingForce = true
-            pendingPublish = true
             onComplete?.let(completions::add)
+            enqueue(context.applicationContext)
+        }
+    }
+
+    fun historyChanged(context: Context, onComplete: () -> Unit) {
+        synchronized(lock) {
+            pendingHistoryChange = true
+            completions.add(onComplete)
             enqueue(context.applicationContext)
         }
     }
@@ -74,29 +78,26 @@ internal object WidgetUpdateDispatcher {
         executor.execute {
             while (true) {
                 val work = synchronized(lock) {
-                    if (!allIds && pendingIds.isEmpty() && pendingSnapshot == null && completions.isEmpty()) {
+                    if (!allIds && !pendingHistoryChange && pendingIds.isEmpty() && completions.isEmpty()) {
                         queued = false
                         return@execute
                     }
                     Work(
                         allIds,
                         pendingIds.toIntArray(),
-                        pendingSnapshot,
-                        pendingPublish,
-                        pendingForce,
+                        latestSnapshot,
+                        pendingHistoryChange,
                         completions.toList()
                     ).also {
                         allIds = false
                         pendingIds.clear()
-                        pendingSnapshot = null
-                        pendingPublish = false
-                        pendingForce = false
+                        pendingHistoryChange = false
                         completions.clear()
                     }
                 }
                 try {
-                    work.snapshot?.let { WidgetSnapshotStore.write(context, it) }
-                    if (work.publish) render(context, work)
+                    if (work.historyChanged) trends.clear()
+                    render(context, work)
                 } catch (error: Exception) {
                     Log.w("WidgetDispatcher", "Unable to publish widgets", error)
                 } finally {
@@ -119,52 +120,36 @@ internal object WidgetUpdateDispatcher {
         }
     }
 
-    private data class Work(
+    private class Work(
         val all: Boolean,
         val ids: IntArray,
         val snapshot: WidgetSnapshot?,
-        val publish: Boolean,
-        val force: Boolean,
+        val historyChanged: Boolean,
         val completions: List<() -> Unit>
-    ) {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-
-            other as Work
-
-            if (all != other.all) return false
-            if (publish != other.publish) return false
-            if (force != other.force) return false
-            if (!ids.contentEquals(other.ids)) return false
-            if (snapshot != other.snapshot) return false
-            if (completions != other.completions) return false
-
-            return true
-        }
-
-        override fun hashCode(): Int {
-            var result = all.hashCode()
-            result = 31 * result + publish.hashCode()
-            result = 31 * result + force.hashCode()
-            result = 31 * result + ids.contentHashCode()
-            result = 31 * result + snapshot.hashCode()
-            result = 31 * result + completions.hashCode()
-            return result
-        }
-    }
+    )
 
     private fun render(context: Context, work: Work) {
         val manager = AppWidgetManager.getInstance(context)
+        val targets = WidgetFamily.entries.associateWith { family ->
+            val component = ComponentName(context.packageName, family.providerName)
+            val ids = if (work.all || work.historyChanged && family == WidgetFamily.TREND) {
+                manager.getAppWidgetIds(component)
+            } else work.ids
+            ids.filter { manager.getAppWidgetInfo(it)?.provider == component }
+        }
+        if (targets.values.all { it.isEmpty() }) return
         val store = WidgetConfigurationStore(context)
-        val snapshot = work.snapshot ?: WidgetSnapshotStore.read(context)
+        val snapshot = work.snapshot ?: storedSnapshot(context)
+        if (snapshot != null && snapshot != persistedSnapshot && WidgetSnapshotStore.write(
+                context, snapshot
+            )
+        ) {
+            persistedSnapshot = snapshot
+        }
         val monitoringEnabled = BackgroundServiceWatchdog.isServiceDesired(context)
         val batchTrends = mutableMapOf<Int, WidgetTrend?>()
-        for (family in WidgetFamily.entries) {
-            val component = ComponentName(context.packageName, family.providerName)
-            val ids = if (work.all) manager.getAppWidgetIds(component) else work.ids
+        for ((family, ids) in targets) {
             for (id in ids) {
-                if (manager.getAppWidgetInfo(id)?.provider != component) continue
                 try {
                     val config = store.load(id, family)
                     val options = manager.getAppWidgetOptions(id)
@@ -181,8 +166,7 @@ internal object WidgetUpdateDispatcher {
                             .coerceIn(80, 1200)
                     val trend = if (family == WidgetFamily.TREND) {
                         if (!batchTrends.containsKey(config.trendHours)) {
-                            batchTrends[config.trendHours] =
-                                trend(context, config.trendHours, work.force)
+                            batchTrends[config.trendHours] = trend(context, config.trendHours)
                         }
                         batchTrends[config.trendHours]
                     } else null
@@ -219,19 +203,24 @@ internal object WidgetUpdateDispatcher {
         }
     }
 
-    private fun trend(context: Context, hours: Int, force: Boolean): WidgetTrend? {
+    private fun storedSnapshot(context: Context): WidgetSnapshot? =
+        persistedSnapshot ?: WidgetSnapshotStore.read(context)?.also { persistedSnapshot = it }
+
+    private fun trend(context: Context, hours: Int): WidgetTrend? {
         val elapsed = SystemClock.elapsedRealtime()
         trends[hours]?.let { (last, trend) ->
-            if (!force && elapsed - last in 0..<15 * 60_000L) return trend
+            if (elapsed - last in 0..<15 * 60_000L) return trend
         }
         val range = HistoryRangeState.lastHours(hours)
         val db = LogDatabase(context)
         return try {
-            val chart = db.readHistory(historyQuery(range)) { historyChart(range, it) }
+            val chart = db.readHistory(historyQuery(range)) {
+                historyChart(range, it, metrics = listOf(HistoryMetric.LEVEL))
+            }
             val series = chart.series.getValue(HistoryMetric.LEVEL)
             val points = series.points.map { WidgetTrendPoint(it.key.time, it.value, it.segment) }
             WidgetTrend(
-                range.start, range.end, points, series.min, series.max, points.hashCode().toLong()
+                range.start, range.end, points, series.min, series.max, ++trendVersion
             ).also {
                 trends[hours] = elapsed to it
             }
@@ -243,3 +232,7 @@ internal object WidgetUpdateDispatcher {
         }
     }
 }
+
+internal data class WidgetPreviewData(
+    val snapshot: WidgetSnapshot?, val monitoringEnabled: Boolean, val trend: WidgetTrend?
+)

@@ -23,7 +23,6 @@ import org.junit.Test
 import java.util.Locale
 
 class DiagnosticsModelTest {
-
     @Test
     fun `Android technology is projected without privileged data and preserves its raw provenance`() {
         for (chemistry in listOf("Li-ion", "Li-polymer", "LiFePO4", "123")) {
@@ -382,15 +381,16 @@ class DiagnosticsModelTest {
             sysfsLabels.add("battery/serial_number")
             sysfsValues.add("  private serial\nsecond line\n")
         }
-        val groups = diagnosticGroups(snapshot, 1)
-        val result = filterRawGroups(groups.drop(3), " SERIAL ").single().rows.single()
+        val raw = rawDiagnosticGroups(snapshot)
+        val groups = normalizedDiagnosticGroups(snapshot, 1) + raw
+        val result = filterRawGroups(raw, " SERIAL ").single().rows.single()
         assertEquals("battery/serial_number", result.rawKey)
         assertEquals("  private serial\nsecond line\n", result.value)
         assertEquals(result.rawValue, result.value)
         assertEquals(0, result.label)
         assertEquals("", result.unit)
         assertEquals(42L, result.observedAtMillis)
-        assertTrue(filterRawGroups(groups.drop(3), "private").isEmpty())
+        assertTrue(filterRawGroups(raw, "private").isEmpty())
         assertFalse(diagnosticReport(groups, { it.toString() }, false).contains("private serial"))
         assertTrue(
             diagnosticReport(
@@ -408,7 +408,7 @@ class DiagnosticsModelTest {
                 currentNowUa = -900
                 maxChargingCurrentUa = 2000000
             }
-            val groups = diagnosticGroups(snapshot, 1000)
+            val groups = normalizedDiagnosticGroups(snapshot, 1000)
             assertEquals(
                 "-900\u00A0mA",
                 groups[0].rows.single { it.label == R.string.diag_field_current_now }.value
@@ -511,18 +511,19 @@ class DiagnosticsModelTest {
             metadataLabels.add("original_key")
             metadataValues.add(rawValue)
         }
-        val groups = diagnosticGroups(app, 1)
+        val groups = normalizedDiagnosticGroups(app, 1)
+        val rawGroups = rawDiagnosticGroups(app)
         val appReading = groups[0].rows.single { it.rawKey == "charge_counter" }
         val mixedGroup =
             groups[0].copy(rows = listOf(appReading, appReading.copy(accessMethod = "Android")))
         assertEquals("BatteryManager (Android)", diagnosticGroupSources(mixedGroup))
-        val report = diagnosticReport(groups, { it.toString() }, true)
+        val report = diagnosticReport(groups + rawGroups, { it.toString() }, true)
         assertTrue(report.contains("access=Android;"))
         assertFalse(report.contains("App UID"))
         assertTrue(report.contains(rawValue))
         assertEquals("App UID", app.accessMethod)
         assertEquals("App UID", appReading.accessMethod)
-        val raw = groups.drop(3).flatMap { it.rows }.single()
+        val raw = rawGroups.flatMap { it.rows }.single()
         assertEquals("App UID", raw.accessMethod)
         assertEquals(rawValue, raw.rawValue)
         assertEquals(rawValue, app.metadataValues.single())
@@ -565,7 +566,7 @@ class DiagnosticsModelTest {
                         merged, { it.toString() }, false
                     ).contains("charge_counter:")
                 )
-                val raw = snapshots.flatMap { diagnosticGroups(it, 1).drop(3) }.flatMap { it.rows }
+                val raw = snapshots.flatMap(::rawDiagnosticGroups).flatMap { it.rows }
                 assertEquals("0", raw.single { it.rawKey == "Charge counter" }.rawValue)
                 assertEquals("0", raw.single { it.rawKey == "charge_counter" }.rawValue)
                 assertEquals(
@@ -651,7 +652,7 @@ class DiagnosticsModelTest {
                 serviceLabels.addAll(listOf("voltage", "temperature"))
                 serviceValues.addAll(listOf("5000", "250"))
             }
-            val rows = diagnosticGroups(snapshot, 1000).first().rows
+            val rows = normalizedDiagnosticGroups(snapshot, 1000).first().rows
             assertEquals("5.000\u00A0V", rows.single { it.rawKey == "voltage" }.value)
             assertEquals("25.0°C", rows.single { it.rawKey == "temperature" }.value)
             val energy = rows.single { it.rawKey == "energy_counter" }
@@ -664,13 +665,13 @@ class DiagnosticsModelTest {
                 power.source
             )
             assertEquals(
-                "77.0°F", diagnosticGroups(
+                "77.0°F", normalizedDiagnosticGroups(
                     snapshot, 1000, fahrenheit = true
                 ).first().rows.single { it.rawKey == "temperature" }.value
             )
             snapshot.currentNowUa = null
             assertNull(
-                diagnosticGroups(
+                normalizedDiagnosticGroups(
                     snapshot, 1000
                 ).first().rows.single { it.rawKey == "battery_power" }.value
             )
@@ -699,7 +700,8 @@ class DiagnosticsModelTest {
                     )
                     sysfsValues.addAll(listOf("Battery\n", raw, "USB\n", "5000000\n"))
                 }
-                val groups = diagnosticGroups(snapshot, 1)
+                val groups = normalizedDiagnosticGroups(snapshot, 1)
+                val rawGroups = rawDiagnosticGroups(snapshot)
                 val voltage = groups.first().rows.single { it.rawKey == "voltage" }
                 assertEquals("3.900\u00A0V", voltage.value)
                 assertEquals(raw, voltage.rawValue)
@@ -708,9 +710,9 @@ class DiagnosticsModelTest {
                 assertEquals("Shizuku", voltage.accessMethod)
                 assertEquals(300L, voltage.observedAtMillis)
                 assertEquals(
-                    raw, groups[4].rows.single { it.rawKey == "battery/voltage_now" }.rawValue
+                    raw, rawGroups[1].rows.single { it.rawKey == "battery/voltage_now" }.rawValue
                 )
-                assertEquals("0", groups[3].rows.single { it.rawKey == "voltage" }.rawValue)
+                assertEquals("0", rawGroups[0].rows.single { it.rawKey == "voltage" }.rawValue)
                 assertEquals(
                     "-1.95\u00A0W",
                     groups.first().rows.single { it.rawKey == "battery_power" }.value
@@ -737,7 +739,7 @@ class DiagnosticsModelTest {
                 sysfsValues.addAll(listOf("USB\n", "5000000\n"))
             }
             assertNull(
-                diagnosticGroups(
+                normalizedDiagnosticGroups(
                     invalid, 1
                 ).first().rows.single { it.rawKey == "voltage" }.value
             )
@@ -905,7 +907,7 @@ class DiagnosticsModelTest {
             assertNull(older.chargingPolicy)
             assertNull(older.chargeCounterUah)
             assertEquals(0L, older.maxChargingVoltageUv)
-            val raw = diagnosticGroups(older, 1).drop(3).flatMap { it.rows }
+            val raw = rawDiagnosticGroups(older).flatMap { it.rows }
             assertEquals("4310", raw.single { it.rawKey == "Charger voltage" }.value)
             assertEquals("2571662\n", raw.single { it.rawKey == "bms/charge_now_raw" }.value)
             assertEquals("-19\n", raw.single { it.rawKey == "usb/voltage_now" }.value)
@@ -925,7 +927,8 @@ class DiagnosticsModelTest {
             fieldSources["charging_policy"] = "dumpsys battery / Charging policy"
         }
 
-        fun row(key: String) = diagnosticGroups(snapshot, 1)[2].rows.single { it.rawKey == key }
+        fun row(key: String) =
+            normalizedDiagnosticGroups(snapshot, 1)[2].rows.single { it.rawKey == key }
         assertEquals(R.string.diag_charging_too_cold, row("charging_state").valueLabel)
         assertEquals(R.string.diag_charge_long_life, row("charging_policy").valueLabel)
         snapshot.chargingPolicy = "4"
@@ -977,13 +980,13 @@ class DiagnosticsModelTest {
             fieldSources["charge_full"] = "/sys/class/power_supply/bms/charge_full"
             fieldSources["charge_full_design"] = "/sys/class/power_supply/bms/charge_full_design"
         }
-        assertTrue(inconsistentCapacities(diagnosticGroups(snapshot, 1)[1]))
+        assertTrue(inconsistentCapacities(normalizedDiagnosticGroups(snapshot, 1)[1]))
         assertNull(capacityHealth(snapshot))
-        val rows = diagnosticGroups(snapshot, 1)[1].rows
+        val rows = normalizedDiagnosticGroups(snapshot, 1)[1].rows
         assertEquals("18772000", rows.single { it.rawKey == "charge_full" }.rawValue)
         assertEquals("3292000", rows.single { it.rawKey == "charge_full_design" }.rawValue)
         snapshot.fullChargeUah = 3000000
-        assertFalse(inconsistentCapacities(diagnosticGroups(snapshot, 1)[1]))
+        assertFalse(inconsistentCapacities(normalizedDiagnosticGroups(snapshot, 1)[1]))
         assertEquals(3000000 * 100.0 / 3292000, capacityHealth(snapshot)!!, 0.0)
     }
 
@@ -1069,8 +1072,9 @@ class DiagnosticsModelTest {
             fieldSources["current_now"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_NOW"
         }
 
-        fun reading() =
-            diagnosticGroups(snapshot, 1).first().rows.single { it.rawKey == "current_now" }
+        fun reading() = normalizedDiagnosticGroups(
+            snapshot, 1
+        ).first().rows.single { it.rawKey == "current_now" }
         assertEquals(0L, reading().observedAtMillis)
         assertNull(reading().observedElapsedMillis)
         snapshot.sourceReadTimes[fieldSource(snapshot)] = BatteryMeasurementTime(100, 10)

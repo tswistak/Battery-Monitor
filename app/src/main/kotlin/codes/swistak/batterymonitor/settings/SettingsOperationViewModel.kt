@@ -19,7 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import codes.swistak.batterymonitor.devicebackup.DeviceDataType
+import codes.swistak.batterymonitor.alarms.AlarmRecord
 import codes.swistak.batterymonitor.devicebackup.GeneralBackupArchive
 import codes.swistak.batterymonitor.devicebackup.GeneralBackupDataType
 import kotlinx.coroutines.Dispatchers
@@ -31,11 +31,7 @@ internal enum class SettingsOperationAction {
     ExportSettings, ReadSettings, ImportSettings, ExportAlarms, ReadAlarms, ImportAlarms, ExportDeviceData, ReadDeviceData, ImportDeviceData, ReadCsvLogs, ImportCsvLogs, ExportGeneralBackup, ReadGeneralBackup, ImportGeneralBackup, ResetSettings
 }
 
-internal data class JsonBackupImportPreview(val json: String, val version: Int)
-
-internal data class DeviceBackupImportPreview(
-    val json: String, val available: Set<DeviceDataType>, val version: Int
-)
+internal data class AlarmBackupImportPreview(val version: Int, val alarms: List<AlarmRecord>)
 
 internal data class GeneralBackupImportPreview(
     val archive: GeneralBackupArchive,

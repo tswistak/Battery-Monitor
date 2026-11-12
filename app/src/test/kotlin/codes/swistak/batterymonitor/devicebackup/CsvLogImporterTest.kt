@@ -22,6 +22,12 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class CsvLogImporterTest {
+    private fun parseRecords(
+        csv: String, statusCodeFor: (String) -> Int?, timestampFor: (String, String) -> Long?
+    ): List<LogRecord> = CsvLogImporter.decodeRecords(
+        CsvLogImporter.readCsvRows(csv.reader()), statusCodeFor, timestampFor
+    ).toList()
+
     @Test
     fun `measurement headers support translated order and bidi controls`() {
         val prefix = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,"
@@ -52,9 +58,12 @@ class CsvLogImporterTest {
     @Test
     fun `CSV append needs a separator only when existing content has no line ending`() {
         for ((text, expected) in listOf(
-            "" to false, "a,b\r\n" to false, "a,b\n" to false, "a,b" to true
+            "" to false, "a,b\r\n" to false, "a,b\n" to false, "µA,b" to true
         )) {
-            assertEquals(expected, LogExport.needsCsvSeparator(text.byteInputStream()))
+            val bytes = text.toByteArray()
+            assertEquals(
+                LogExport.CsvTail(bytes.size, expected), LogExport.readCsvTail(bytes.inputStream())
+            )
         }
     }
 
@@ -70,8 +79,8 @@ class CsvLogImporterTest {
         assertEquals(original.first() + columns, upgraded.first())
         assertEquals(original.drop(1).map { it + listOf("", "", "") }, upgraded.drop(1))
         assertEquals(
-            CsvLogImporter.parseRecords(csv, { 122 }, { _, _ -> 1L }),
-            CsvLogImporter.parseRecords(writer.toString(), { 122 }, { _, _ -> 1L })
+            parseRecords(csv, { 122 }, { _, _ -> 1L }),
+            parseRecords(writer.toString(), { 122 }, { _, _ -> 1L })
         )
         for (invalid in listOf(
             "a,b,c,d,e,f\n1,2,3,4,5,6",
@@ -92,7 +101,7 @@ class CsvLogImporterTest {
         val csv =
             "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA),Remaining charge (µAh),Battery power (W)\n" + "date,time,Discharging,50,30,86,4.0,-250125,2500125,-1.0005\n" + "date,time,Charging,50,30,86,,0,0,\n" + "date,time,Boot Completed,0,0,32,0,,,\n"
 
-        fun parse(value: String) = CsvLogImporter.parseRecords(value, {
+        fun parse(value: String) = parseRecords(value, {
             when (it) {
                 "Discharging" -> 100
                 "Charging" -> 22
@@ -127,7 +136,7 @@ class CsvLogImporterTest {
             |date,time,Charging,50,30,86,4.0,,,
             |date,time,Boot Completed,0,0,32,0,,,
         """.trimMargin()
-        val records = CsvLogImporter.parseRecords(csv, {
+        val records = parseRecords(csv, {
             when (it) {
                 "Discharging" -> 100
                 "Charging" -> 122
@@ -141,7 +150,7 @@ class CsvLogImporterTest {
             "NaN", "Infinity", "-Infinity", "invalid", "1.5", "9223372036854775808"
         )) {
             assertThrows(IllegalArgumentException::class.java) {
-                CsvLogImporter.parseRecords(csv.replace("-240125", invalid), {
+                parseRecords(csv.replace("-240125", invalid), {
                     when (it) {
                         "Discharging" -> 100
                         "Charging" -> 122
@@ -156,7 +165,7 @@ class CsvLogImporterTest {
     @Test
     fun `translated column names are ignored and columns are read by position`() {
         val statusCode = LogDatabase.encodeStatus(2, 1, LogDatabase.STATUS_NEW)
-        val records = CsvLogImporter.parseRecords(
+        val records = parseRecords(
             csv = "Data,Czas,Stan,Poziom,Temperatura C,Temperatura F,Napięcie\r\n" + "10.08.2026,12:34:56,Ładowanie AC,75,31.5,88.7,4.125\r\n",
             statusCodeFor = { label -> if (label == "Ładowanie AC") statusCode else null },
             timestampFor = { date, time ->
@@ -170,7 +179,7 @@ class CsvLogImporterTest {
 
     @Test
     fun `commas in status labels from the existing unquoted exporter are supported`() {
-        val records = CsvLogImporter.parseRecords(
+        val records = parseRecords(
             csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Charging, AC,50,20.0,68.0,4.0\n",
             statusCodeFor = { if (it == "Charging, AC") 12 else null },
             timestampFor = { _, _ -> 1L })
@@ -180,7 +189,7 @@ class CsvLogImporterTest {
 
     @Test
     fun `boot rows restore nullable database values`() {
-        val records = CsvLogImporter.parseRecords(
+        val records = parseRecords(
             csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Boot Completed,0,0.0,32.0,0.0\n",
             statusCodeFor = { LogDatabase.STATUS_BOOT_COMPLETED },
             timestampFor = { _, _ -> 1L })
@@ -193,19 +202,19 @@ class CsvLogImporterTest {
     @Test
     fun `unknown statuses and invalid rows reject the complete import`() {
         assertThrows(IllegalArgumentException::class.java) {
-            CsvLogImporter.parseRecords(
+            parseRecords(
                 csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Future Status,50,20.0,68.0,4.0\n",
                 statusCodeFor = { null },
                 timestampFor = { _, _ -> 1L })
         }
         assertThrows(IllegalArgumentException::class.java) {
-            CsvLogImporter.parseRecords(
+            parseRecords(
                 csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Charging,not-a-number,20.0,68.0,4.0\n",
                 statusCodeFor = { 2 },
                 timestampFor = { _, _ -> 1L })
         }
         assertThrows(IllegalArgumentException::class.java) {
-            CsvLogImporter.parseRecords(
+            parseRecords(
                 csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "8/10/26,1:00:00 PM,Charging,50,20.0,68.0,4.0,1200000\n",
                 statusCodeFor = { 2 },
                 timestampFor = { _, _ -> 1L })
@@ -229,12 +238,12 @@ class CsvLogImporterTest {
             )
             val csv =
                 "Date,Time,Status,Charge,C,F,V,Current (µA),Charge (µAh),Power (W)\ndate,time,$label,,,,,,,\n"
-            val parsed = CsvLogImporter.parseRecords(csv, { null }, { _, _ -> 123 })
+            val parsed = parseRecords(csv, { null }, { _, _ -> 123 })
             assertEquals(listOf(LogRecord(code, null, 123, null, null)), parsed)
         }
         for (marker in listOf("[sample=12] Charging", "[sample=299] Unknown", "[sample=no] Bad")) {
             assertThrows(IllegalArgumentException::class.java) {
-                CsvLogImporter.parseRecords(
+                parseRecords(
                     "a,b,c,d,e,f,g,h,i,j\nd,t,$marker,50,30,86,4,1,2,3",
                     { null },
                     { _, _ -> 1 })

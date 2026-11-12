@@ -15,26 +15,26 @@ package codes.swistak.batterymonitor.ui.history
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.res.Configuration
-import android.view.View
-import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
-import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -47,6 +47,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
+import codes.swistak.batterymonitor.testsupport.runOnMain as main
 
 class HistoryRangeDialogInstrumentedTest {
     @Test
@@ -102,30 +103,16 @@ class HistoryRangeDialogInstrumentedTest {
                 if (changed == key) changes.incrementAndGet()
             }
         preferences.registerOnSharedPreferenceChangeListener(listener)
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(
-                target, HistoryMetric.LEVEL, HistoryRangeState.lastHours(24), "24h"
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
         try {
-            await {
-                monitor.lastActivity != null && !monitor.lastActivity.isDestroyed && monitor.lastActivity.hasWindowFocus() && monitor.lastActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-            }
-            main {
-                (monitor.lastActivity as FullscreenChartActivity).setContent {
+            scenario.onActivity { activity ->
+                activity.setContent {
                     androidx.compose.runtime.CompositionLocalProvider(
                         androidx.compose.ui.platform.LocalContext provides isolated,
-                        androidx.activity.compose.LocalActivityResultRegistryOwner provides (monitor.lastActivity as FullscreenChartActivity)
+                        androidx.activity.compose.LocalActivityResultRegistryOwner provides activity
                     ) {
                         AppBatteryTheme {
-                            HistoryRoute(
-                                model,
-                                kotlinx.coroutines.flow.MutableStateFlow(codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState()),
-                                null,
-                                {},
-                                { _, _, _ -> })
+                            HistoryRoute(model, null, {}, { _, _, _ -> })
                         }
                     }
                 }
@@ -167,11 +154,8 @@ class HistoryRangeDialogInstrumentedTest {
             assertEquals(committed - key, model.state.value.filters)
             assertEquals(1, changes.get())
         } finally {
-            main {
-                monitor.lastActivity?.finish()
-                store.clear()
-            }
-            instrumentation.removeMonitor(monitor)
+            scenario.close()
+            main { store.clear() }
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
             for (name in listOf(
                 codes.swistak.batterymonitor.settings.SettingsContract.SETTINGS_FILE,
@@ -188,18 +172,10 @@ class HistoryRangeDialogInstrumentedTest {
         val range = HistoryRangeState.lastHours(24)
         val state = mutableStateOf(HistoryUiState(range = range))
         var commits = 0
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(context, HistoryMetric.LEVEL, range, "24h")
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
-        try {
-            await {
-                monitor.lastActivity != null && !monitor.lastActivity.isDestroyed && monitor.lastActivity.hasWindowFocus() && monitor.lastActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-            }
-            main {
-                (monitor.lastActivity as FullscreenChartActivity).setContent {
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
+        scenario.use { scenario ->
+            scenario.onActivity { activity ->
+                activity.setContent {
                     AppBatteryTheme {
                         HistoryRangeControl(state.value, { next, label ->
                             commits++
@@ -210,8 +186,9 @@ class HistoryRangeDialogInstrumentedTest {
             }
             fun awaitClosedDialog() {
                 await("Range dialog must detach and return focus to its live host before reopening") {
-                    val host = monitor.lastActivity
-                    dialogs() == 0 && host != null && !host.isFinishing && !host.isDestroyed && host.hasWindowFocus()
+                    var focused = false
+                    scenario.onActivity { focused = it.hasWindowFocus() }
+                    dialogs() == 0 && focused
                 }
             }
 
@@ -258,9 +235,6 @@ class HistoryRangeDialogInstrumentedTest {
             main { finalConfirm(); finalConfirm() }
             await { commits == 2 }
             assertEquals("custom", state.value.rangeLabel)
-        } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.removeMonitor(monitor)
         }
     }
 
@@ -273,16 +247,10 @@ class HistoryRangeDialogInstrumentedTest {
             HistoryRangeState.days(LocalDate.of(2026, 12, 1), LocalDate.of(2026, 12, 31), zone)
         val state = mutableStateOf(HistoryUiState(range = range))
         var commits = 0
-        val monitor =
-            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
-        instrumentation.startActivitySync(
-            FullscreenChartActivity.intent(context, HistoryMetric.LEVEL, range, "24h")
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
-        try {
-            await { monitor.lastActivity?.hasWindowFocus() == true }
-            main {
-                (monitor.lastActivity as FullscreenChartActivity).setContent {
+        val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
+        scenario.use { scenario ->
+            scenario.onActivity { activity ->
+                activity.setContent {
                     AppBatteryTheme {
                         HistoryRangeControl(state.value, { next, label ->
                             commits++
@@ -367,9 +335,6 @@ class HistoryRangeDialogInstrumentedTest {
                 HistoryRangeState.days(LocalDate.of(2026, 11, 1), LocalDate.of(2026, 11, 30), zone),
                 state.value.range
             )
-        } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.removeMonitor(monitor)
         }
     }
 
@@ -416,9 +381,7 @@ class HistoryRangeDialogInstrumentedTest {
         try {
             val custom = context.getString(R.string.history_custom_range)
             await {
-                monitor.lastActivity != null && !monitor.lastActivity.isDestroyed && monitor.lastActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && textVisible(
-                    custom
-                )
+                monitor.lastActivity?.hasWindowFocus() == true && textVisible(custom)
             }
             click(custom)
             click(custom)
@@ -472,22 +435,8 @@ class HistoryRangeDialogInstrumentedTest {
         assertEquals("Only one Compose dialog window may be attached", 1, dialogs())
     }
 
-    @SuppressLint("RestrictedApi")
-    private fun windowSemanticsNodes(focusedOnly: Boolean = false): List<SemanticsNode> {
-        fun descendants(node: SemanticsNode): List<SemanticsNode> =
-            listOf(node) + node.children.flatMap(::descendants)
-
-        fun owners(view: View): List<SemanticsOwner> {
-            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
-                ?.invoke(view) as? SemanticsOwner
-            if (owner != null) return listOf(owner)
-            if (view !is ViewGroup) return emptyList()
-            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
-        }
-        return WindowInspectorCompat.getGlobalWindowViews()
-            .filter { !focusedOnly || it.hasWindowFocus() }.flatMap(::owners)
-            .flatMap { descendants(it.rootSemanticsNode) }
-    }
+    private fun windowSemanticsNodes(focusedOnly: Boolean = false): List<SemanticsNode> =
+        composeWindowNodes { !focusedOnly || it.hasWindowFocus() }
 
     private fun dialogs(): Int {
         var count = 0
@@ -590,27 +539,7 @@ class HistoryRangeDialogInstrumentedTest {
         return "accessibility windows: $windows; app windows: $views"
     }
 
-    private fun main(action: () -> Unit) {
-        var failure: Throwable? = null
-        InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            try {
-                action()
-            } catch (error: Throwable) {
-                failure = error
-            }
-        }
-        failure?.let { throw it }
-    }
-
     private fun await(
         message: String = "Dialog UI did not reach the expected state", condition: () -> Boolean
-    ) {
-        val until = android.os.SystemClock.uptimeMillis() + 10_000
-        while (!condition() && android.os.SystemClock.uptimeMillis() < until) {
-            android.os.SystemClock.sleep(50)
-        }
-        if (!condition()) {
-            assertTrue("$message; ${failureDetails()}", false)
-        }
-    }
+    ) = awaitCondition({ "$message; ${failureDetails()}" }, condition)
 }

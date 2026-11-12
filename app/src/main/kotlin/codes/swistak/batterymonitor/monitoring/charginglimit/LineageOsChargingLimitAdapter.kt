@@ -21,10 +21,7 @@ internal object LineageOsChargingLimitAdapter : ChargingLimitAdapter {
     private const val LIMIT_MODE = "3"
     private val SCHEDULED_MODES = setOf("1", "2")
 
-    override fun supports(profile: DeviceProfile): Boolean =
-        profile.hasLineageOsFeature || profile.hasLineageSettingsProvider || profile.property(
-            ChargingLimitPropertyKeys.LINEAGE_VERSION
-        ) is ReadResult.Value
+    override fun supports(profile: DeviceProfile): Boolean = profile.hasLineageSettingsProvider
 
     override fun readState(
         profile: DeviceProfile,
@@ -32,11 +29,6 @@ internal object LineageOsChargingLimitAdapter : ChargingLimitAdapter {
         battery: BatteryChargingStateReader,
         powerSupply: PowerSupplyReader
     ): ChargingLimitState {
-        if (!profile.hasLineageSettingsProvider && profile.hasLineageOsFeature) {
-            return ChargingLimitState.Unavailable(
-                ChargingLimitUnavailableReason.SETTING_ABSENT, id, "provider"
-            )
-        }
         val enabledRead = settings.read(SettingNamespace.LINEAGE_SYSTEM, ENABLED_KEY)
         val enabled = readValue(enabledRead) ?: return unavailableSettingRead(id, enabledRead)
         if (enabled !in setOf("0", "1")) return unknownValue(ENABLED_KEY, enabled)
