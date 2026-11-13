@@ -87,8 +87,8 @@ class WidgetSizesTest {
     }
 
     private fun renderedSizes(options: Bundle): List<WidgetSize> = buildList {
-        WidgetSizes.remoteViews(WidgetFamily.TREND, options) {
-            add(it)
+        WidgetSizes.remoteViews(WidgetFamily.TREND, options) { size, _ ->
+            add(size)
             RemoteViews("android", android.R.layout.simple_list_item_1)
         }
     }

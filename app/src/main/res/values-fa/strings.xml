@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">اضافه ولتاژ</string>
     <string name="health_failure" formatted="false">شکست</string>
     <string name="health_cold" formatted="false">سرد</string>
+    <string name="notification_battery_health">سلامت باتری</string>
+    <string name="notification_health_unknown">@string/health_unknown</string>
+    <string name="notification_health_good">@string/health_good</string>
+    <string name="notification_health_overheat">@string/health_overheat</string>
+    <string name="notification_health_dead">@string/health_dead</string>
+    <string name="notification_health_overvoltage">@string/health_overvoltage</string>
+    <string name="notification_health_failure">@string/health_failure</string>
+    <string name="notification_health_cold">@string/health_cold</string>
     <string name="current_unavailable">خوانشی موجود نیست</string>
     <string name="current_current_unavailable">خوانش جریان در دسترس نیست. «عیب‌یابی» ممکن است مشکل دسترسی یا منبع پشتیبانی‌نشده را نشان دهد.</string>
     <string name="current_detail_unit">واحد: %1$s</string>
@@ -890,11 +898,11 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">از آنجایی که</string>
-    <string name="duration_for">به مدت %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">برای %d\u00A0ساعت</item>
-        <item quantity="other">برای %d\u00A0ساعت</item>
+    <string name="notification_status_since">%1$s از آنجایی که: %2$s</string>
+    <string name="notification_status_duration">%1$s به مدت: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s برای: %1$d\u00A0ساعت</item>
+        <item quantity="other">%2$s برای: %1$d\u00A0ساعت</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0روز، "</item>

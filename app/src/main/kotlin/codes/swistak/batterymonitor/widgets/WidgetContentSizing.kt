@@ -18,11 +18,14 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Typeface
+import android.os.Build
 import android.text.Layout
 import android.text.StaticLayout
+import android.text.TextDirectionHeuristics
 import android.text.TextPaint
 import android.text.TextUtils
 import android.util.TypedValue
+import android.view.View
 import androidx.core.graphics.createBitmap
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -71,6 +74,22 @@ internal fun widgetLineHeightDp(context: Context, sizeSp: Float, medium: Boolean
         ceil((it.descent - it.ascent) / context.resources.displayMetrics.density).toInt()
     }
 
+internal fun compactWidgetTitleFits(
+    context: Context, title: String, widthDp: Int, sizeSp: Float = 12f
+): Boolean {
+    val density = context.resources.displayMetrics.density
+    val width = (widthDp * density).roundToInt()
+    if (width < 1) return false
+    val layout = StaticLayout.Builder.obtain(
+        title, 0, title.length, widgetTextPaint(context, sizeSp, medium = true), width
+    ).setMaxLines(2).setEllipsize(TextUtils.TruncateAt.END).build()
+    return layout.height <= 36 * density && layout.getLineEnd(layout.lineCount - 1) == title.length && (0 until layout.lineCount).all {
+        layout.getEllipsisCount(
+            it
+        ) == 0
+    }
+}
+
 internal fun widgetLabelHeightDp(
     context: Context, text: String, widthDp: Int, sizeSp: Float, maxLines: Int
 ): Int {
@@ -107,4 +126,29 @@ internal fun fitWidgetText(
         sizeSp -= 1
     }
     return minSp
+}
+
+internal fun measurementValueTextSize(
+    context: Context, values: Collection<String>, widthPx: Int, heightPx: Int, maxSp: Float
+): Float {
+    val paint = widgetTextPaint(context, maxSp, medium = true)
+    val width = widthPx.coerceAtLeast(1)
+    val direction =
+        if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+            TextDirectionHeuristics.FIRSTSTRONG_RTL
+        } else TextDirectionHeuristics.FIRSTSTRONG_LTR
+    for (size in paint.textSize.toInt() downTo 1) {
+        paint.textSize = size.toFloat()
+        if (values.any { Layout.getDesiredWidth(it, paint) > width }) continue
+        if (values.all { value ->
+                val layout = StaticLayout.Builder.obtain(value, 0, value.length, paint, width)
+                    .setIncludePad(false).setMaxLines(1).setTextDirection(direction).apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            setUseLineSpacingFromFallbacks(true)
+                        }
+                    }.build()
+                layout.getLineEnd(0) == value.length && layout.getLineMax(0) <= width && layout.height <= heightPx
+            }) return paint.textSize
+    }
+    return 1f
 }

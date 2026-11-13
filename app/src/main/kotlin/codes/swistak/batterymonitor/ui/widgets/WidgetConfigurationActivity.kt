@@ -86,6 +86,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.ui.components.NumericInputResult
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.parseLocalizedInt
@@ -105,6 +106,7 @@ import codes.swistak.batterymonitor.widgets.WidgetStatusExtra
 import codes.swistak.batterymonitor.widgets.WidgetTapAction
 import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
 import codes.swistak.batterymonitor.widgets.WidgetVariant
+import codes.swistak.batterymonitor.widgets.trendMetricLabel
 import codes.swistak.batterymonitor.widgets.trendRangeLabel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -215,9 +217,9 @@ private fun WidgetConfigurationScreen(
     val update: (WidgetConfiguration) -> Unit = { draftRecord = it.encode() }
     val context = LocalContext.current
     val trendHours = draft.trendHours.takeIf { family == WidgetFamily.TREND }
-    val previewData by key(trendHours) {
+    val previewData by key(trendHours, draft.trendMetric) {
         produceState<WidgetPreviewData?>(null, context) {
-            value = WidgetUpdateDispatcher.previewData(context, trendHours)
+            value = WidgetUpdateDispatcher.previewData(context, trendHours, draft.trendMetric)
         }
     }
     val deviceConfiguration = LocalConfiguration.current
@@ -334,6 +336,14 @@ private fun WidgetConfigurationScreen(
 
                 WidgetFamily.TREND -> {
                     ChoiceField(
+                        stringResource(R.string.current_measurements),
+                        draft.trendMetric,
+                        HistoryMetric.entries.map { it to stringResource(trendMetricLabel(it)) }) {
+                        update(
+                            draft.copy(trendMetric = it)
+                        )
+                    }
+                    ChoiceField(
                         stringResource(R.string.history_range), draft.trendHours, listOf(
                             24, 72, 168
                         ).map { it to stringResource(trendRangeLabel(it)) }) {
@@ -365,13 +375,15 @@ private fun WidgetConfigurationScreen(
                     WidgetVariant.COMPACT to stringResource(R.string.widget_presentation_compact)
                 )
             ) { update(draft.copy(variant = it)) }
-            if (family != WidgetFamily.TREND) ChoiceField(
-                stringResource(R.string.pref_temperature_unit), draft.temperatureUnit, listOf(
-                    null to stringResource(R.string.widget_follow_app),
-                    WidgetConfiguration.TEMPERATURE_CELSIUS to stringResource(R.string.celsius),
-                    WidgetConfiguration.TEMPERATURE_FAHRENHEIT to stringResource(R.string.fahrenheit)
-                )
-            ) { update(draft.copy(temperatureUnit = it)) }
+            if (family != WidgetFamily.TREND || draft.trendMetric == HistoryMetric.TEMPERATURE) {
+                ChoiceField(
+                    stringResource(R.string.pref_temperature_unit), draft.temperatureUnit, listOf(
+                        null to stringResource(R.string.widget_follow_app),
+                        WidgetConfiguration.TEMPERATURE_CELSIUS to stringResource(R.string.celsius),
+                        WidgetConfiguration.TEMPERATURE_FAHRENHEIT to stringResource(R.string.fahrenheit)
+                    )
+                ) { update(draft.copy(temperatureUnit = it)) }
+            }
             ChoiceField(
                 stringResource(R.string.settings_brightness), draft.brightness, listOf(
                     null to stringResource(R.string.widget_follow_app),

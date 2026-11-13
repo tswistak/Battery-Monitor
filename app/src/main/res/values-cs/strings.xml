@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">Přepětí</string>
     <string name="health_failure" formatted="false">Vadný</string>
     <string name="health_cold" formatted="false">Studený</string>
+    <string name="notification_battery_health">Kondice baterie</string>
+    <string name="notification_health_unknown">neznámý</string>
+    <string name="notification_health_good">dobrá kondice</string>
+    <string name="notification_health_overheat">přehřátý</string>
+    <string name="notification_health_dead">nepoužitelný</string>
+    <string name="notification_health_overvoltage">přepětí</string>
+    <string name="notification_health_failure">vadný</string>
+    <string name="notification_health_cold">studený</string>
     <string name="current_unavailable">Žádné měření</string>
     <string name="current_current_unavailable">Měření proudu není dostupné. „Diagnostika“ může ukázat problém s přístupem nebo nepodporovaný zdroj.</string>
     <string name="current_detail_unit">Jednotka: %1$s</string>
@@ -901,13 +909,13 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">od</string>
-    <string name="duration_for">po dobu %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">po dobu %d\u00A0hodiny</item>
-        <item quantity="few">po dobu %d\u00A0hodin</item>
-        <item quantity="many">po dobu %d\u00A0hodiny</item>
-        <item quantity="other">po dobu %d\u00A0hodin</item>
+    <string name="notification_status_since">%1$s od: %2$s</string>
+    <string name="notification_status_duration">%1$s po dobu: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s po dobu: %1$d\u00A0hodiny</item>
+        <item quantity="few">%2$s po dobu: %1$d\u00A0hodin</item>
+        <item quantity="many">%2$s po dobu: %1$d\u00A0hodiny</item>
+        <item quantity="other">%2$s po dobu: %1$d\u00A0hodin</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0den, "</item>

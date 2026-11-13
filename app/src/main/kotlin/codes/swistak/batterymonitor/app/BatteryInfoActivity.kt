@@ -63,6 +63,7 @@ import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.showToast
 import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
 import codes.swistak.batterymonitor.diagnostics.DiagnosticsFragment
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -97,6 +98,7 @@ class BatteryInfoActivity : AppCompatActivity() {
 
         const val EXTRA_SECTION = "codes.swistak.batterymonitor.EXTRA_SECTION"
         const val EXTRA_HISTORY_HOURS = "codes.swistak.batterymonitor.EXTRA_HISTORY_HOURS"
+        const val EXTRA_HISTORY_METRIC = "codes.swistak.batterymonitor.EXTRA_HISTORY_METRIC"
     }
 
     private lateinit var navigator: SectionNavigator
@@ -707,7 +709,10 @@ class BatteryInfoActivity : AppCompatActivity() {
             owner == SectionOwner.CURRENT && it.startsWith("measurement:")
         }?.removePrefix("measurement:")?.let(CurrentMeasurement::fromRoute)
         if (owner == SectionOwner.HISTORY && intent.hasExtra(EXTRA_HISTORY_HOURS)) {
-            history.openWidgetRange(intent.getIntExtra(EXTRA_HISTORY_HOURS, -1))
+            val metricName = intent.getStringExtra(EXTRA_HISTORY_METRIC)
+            val metric =
+                HistoryMetric.entries.firstOrNull { it.name == metricName } ?: HistoryMetric.LEVEL
+            history.openWidgetRange(intent.getIntExtra(EXTRA_HISTORY_HOURS, -1), metric)
         }
         if (owner == SectionOwner.HELP && requestedDetail?.startsWith("help:") == true) {
             openHelp(requestedDetail.removePrefix("help:"))

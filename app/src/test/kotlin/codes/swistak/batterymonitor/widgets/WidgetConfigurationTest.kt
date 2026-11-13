@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.widgets
 
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
 import org.junit.Assert.assertEquals
@@ -60,13 +61,40 @@ class WidgetConfigurationTest {
             tapAction = WidgetTapAction.HISTORY,
             tapMetric = WidgetMetric.VOLTAGE,
             trendHours = 168,
-            showYAxisLabels = false
+            showYAxisLabels = false,
+            trendMetric = HistoryMetric.POWER
         )
         assertEquals(configuration, WidgetConfiguration.decode(configuration.encode()))
         for (family in WidgetFamily.entries) {
             val defaults = WidgetConfiguration.defaults(family)
             assertEquals(defaults, WidgetConfiguration.decode(defaults.encode()))
         }
+    }
+
+    @Test
+    fun `version three widgets keep their settings and start with battery level`() {
+        val record =
+            "3|Dark||fahrenheit|65|TEMPERATURE,CURRENT|NONE|COMPACT|HISTORY|CURRENT|72|false|CURRENT,TEMPERATURE,VOLTAGE,REMAINING_CHARGE"
+        assertEquals(
+            WidgetConfiguration.decode(record), WidgetConfiguration(
+                brightness = Brightness.Dark,
+                temperatureUnit = WidgetConfiguration.TEMPERATURE_FAHRENHEIT,
+                backgroundOpacityPercent = 65,
+                metricOrder = listOf(
+                    WidgetMetric.CURRENT,
+                    WidgetMetric.TEMPERATURE,
+                    WidgetMetric.VOLTAGE,
+                    WidgetMetric.REMAINING_CHARGE
+                ),
+                selectedMetrics = setOf(WidgetMetric.TEMPERATURE, WidgetMetric.CURRENT),
+                statusExtra = WidgetStatusExtra.NONE,
+                variant = WidgetVariant.COMPACT,
+                tapAction = WidgetTapAction.HISTORY,
+                trendHours = 72,
+                showYAxisLabels = false,
+                trendMetric = HistoryMetric.LEVEL
+            )
+        )
     }
 
     @Test
@@ -143,9 +171,13 @@ class WidgetConfigurationTest {
         for (invalid in listOf(
             "",
             record.substringBeforeLast('|'),
-            "4" + record.drop(1),
+            "5" + record.drop(1),
             record.replaceFirst("TEMPERATURE,VOLTAGE", "TEMPERATURE,TEMPERATURE"),
-            record.substringBeforeLast('|') + "|TEMPERATURE,VOLTAGE,VOLTAGE,CURRENT",
+            record.replace(
+                "|TEMPERATURE,VOLTAGE,CURRENT,REMAINING_CHARGE|LEVEL",
+                "|TEMPERATURE,VOLTAGE,VOLTAGE,CURRENT|LEVEL"
+            ),
+            record.substringBeforeLast('|') + "|UNKNOWN",
             record.replace("|true", "|yes"),
             record.replace("|100|", "|101|"),
             record.replace("|100|", "|invalid|"),

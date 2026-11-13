@@ -31,6 +31,15 @@ import java.util.TimeZone
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
+internal fun operatingStatusLabel(status: Int): Int? = when (status) {
+    BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.STATUS_DISCHARGING -> R.string.status_discharging
+    BatteryInfo.STATUS_CHARGING -> R.string.status_charging
+    BatteryInfo.STATUS_FULLY_CHARGED -> R.string.status_fully_charged
+    BatteryInfo.STATUS_NOT_CHARGING -> R.string.status_not_charging
+    BatteryInfo.STATUS_UNKNOWN -> R.string.status_unknown
+    else -> null
+}
+
 internal object DisplayStrings {
     private lateinit var res: Resources
 
@@ -41,7 +50,6 @@ internal object DisplayStrings {
     lateinit var celsiusSymbol: String
     lateinit var voltSymbol: String
     lateinit var percentSymbol: String
-    lateinit var since: String
     lateinit var defaultMaxLogAge: String
     lateinit var defaultPredictionType: String
 
@@ -66,7 +74,6 @@ internal object DisplayStrings {
         celsiusSymbol = res.getString(R.string.celsius_symbol)
         voltSymbol = res.getString(R.string.volt_symbol)
         percentSymbol = res.getString(R.string.percent_symbol)
-        since = res.getString(R.string.since)
         defaultMaxLogAge = res.getString(R.string.default_max_log_age)
         defaultPredictionType = res.getString(R.string.default_prediction_type)
 

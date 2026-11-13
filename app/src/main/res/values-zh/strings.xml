@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">超壓</string>
     <string name="health_failure" formatted="false">錯誤</string>
     <string name="health_cold" formatted="false">寒冷</string>
+    <string name="notification_battery_health">電池健康狀況</string>
+    <string name="notification_health_unknown">@string/health_unknown</string>
+    <string name="notification_health_good">@string/health_good</string>
+    <string name="notification_health_overheat">@string/health_overheat</string>
+    <string name="notification_health_dead">@string/health_dead</string>
+    <string name="notification_health_overvoltage">@string/health_overvoltage</string>
+    <string name="notification_health_failure">@string/health_failure</string>
+    <string name="notification_health_cold">@string/health_cold</string>
     <string name="current_unavailable">沒有讀數</string>
     <string name="current_current_unavailable">沒有可用的電流讀數。「診斷」可能會顯示存取問題或不支援的來源。</string>
     <string name="current_detail_unit">單位：%1$s</string>
@@ -885,10 +893,10 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">開始於</string>
-    <string name="duration_for">持續 %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="other">已%d小時</item>
+    <string name="notification_status_since">%1$s 開始於：%2$s</string>
+    <string name="notification_status_duration">%1$s 持續：%2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="other">%2$s 已：%1$d小時</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="other">"%d天,"</item>

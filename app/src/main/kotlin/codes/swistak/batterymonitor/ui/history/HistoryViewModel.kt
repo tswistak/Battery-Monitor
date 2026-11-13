@@ -351,9 +351,9 @@ internal class HistoryViewModel(
         }
     }
 
-    fun openWidgetRange(hours: Int) {
+    fun openWidgetRange(hours: Int, metric: HistoryMetric) {
         if (hours !in setOf(24, 72, 168)) return
-        mutable.value = mutable.value.copy(tab = "charts", metric = HistoryMetric.LEVEL)
+        mutable.value = mutable.value.copy(tab = "charts", metric = metric)
         range(HistoryRangeState.lastHours(hours, now()), if (hours == 168) "7d" else "${hours}h")
     }
 

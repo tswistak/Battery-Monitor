@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">Sovratensione</string>
     <string name="health_failure" formatted="false">Non riuscito</string>
     <string name="health_cold" formatted="false">Freddo</string>
+    <string name="notification_battery_health">Salute della batteria</string>
+    <string name="notification_health_unknown">sconosciuto</string>
+    <string name="notification_health_good">buono stato</string>
+    <string name="notification_health_overheat">surriscaldamento</string>
+    <string name="notification_health_dead">defunta</string>
+    <string name="notification_health_overvoltage">sovratensione</string>
+    <string name="notification_health_failure">non riuscito</string>
+    <string name="notification_health_cold">freddo</string>
     <string name="current_unavailable">Nessuna lettura</string>
     <string name="current_current_unavailable">Nessuna lettura della corrente disponibile. «Diagnostica» potrebbe mostrare un problema di accesso o una sorgente non supportata.</string>
     <string name="current_detail_unit">Unità: %1$s</string>
@@ -895,12 +903,12 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">dalle</string>
-    <string name="duration_for">da %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">per %d\u00A0ora</item>
-        <item quantity="many">per %d\u00A0ore</item>
-        <item quantity="other">per %d\u00A0ore</item>
+    <string name="notification_status_since">%1$s dalle: %2$s</string>
+    <string name="notification_status_duration">%1$s da: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s per: %1$d\u00A0ora</item>
+        <item quantity="many">%2$s per: %1$d\u00A0ore</item>
+        <item quantity="other">%2$s per: %1$d\u00A0ore</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0giorno, "</item>

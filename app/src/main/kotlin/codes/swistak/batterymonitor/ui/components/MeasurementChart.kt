@@ -146,7 +146,7 @@ internal data class HistoryChartScale(
     val minimum: Double, val maximum: Double, val ticks: List<Double>
 )
 
-private fun chartValue(
+internal fun chartValue(
     value: Double, metric: HistoryMetric, fahrenheit: Boolean, currentMultiplier: Int
 ) = when (metric) {
     HistoryMetric.TEMPERATURE -> if (fahrenheit) value * 1.8 + 32 else value

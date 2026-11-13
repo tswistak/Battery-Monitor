@@ -18,6 +18,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.ui.current.CurrentMeasurement
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.widgets.WidgetConfigurationActivity
@@ -25,7 +26,8 @@ import codes.swistak.batterymonitor.ui.widgets.WidgetConfigurationActivity
 internal data class WidgetDestination(
     val section: SectionOwner,
     val measurement: CurrentMeasurement? = null,
-    val historyHours: Int? = null
+    val historyHours: Int? = null,
+    val historyMetric: HistoryMetric? = null
 )
 
 internal object WidgetActions {
@@ -34,7 +36,8 @@ internal object WidgetActions {
             WidgetTapAction.CURRENT_STATE -> WidgetDestination(SectionOwner.CURRENT)
             WidgetTapAction.HISTORY -> WidgetDestination(
                 SectionOwner.HISTORY,
-                historyHours = configuration.trendHours.takeIf { it in setOf(24, 72, 168) } ?: 24)
+                historyHours = configuration.trendHours.takeIf { it in setOf(24, 72, 168) } ?: 24,
+                historyMetric = configuration.trendMetric)
 
             WidgetTapAction.MEASUREMENT -> WidgetDestination(
                 SectionOwner.CURRENT, measurement = configuration.tapMetric.currentMeasurement()
@@ -73,6 +76,9 @@ internal object WidgetActions {
                 BatteryInfoActivity.EXTRA_DETAIL,
                 destination.measurement?.let { "measurement:${it.route}" })
             destination.historyHours?.let { putExtra(BatteryInfoActivity.EXTRA_HISTORY_HOURS, it) }
+            destination.historyMetric?.let {
+                putExtra(BatteryInfoActivity.EXTRA_HISTORY_METRIC, it.name)
+            }
         }
         return PendingIntent.getActivity(
             context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE

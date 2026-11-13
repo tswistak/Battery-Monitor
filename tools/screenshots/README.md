@@ -83,9 +83,9 @@ Every seed checks timestamp ordering/range, observation gaps, gradual temperatur
 
 Use English (United States), Celsius, default font scale, ordinary phone density and consistent timezone. Match SystemUI's simulated battery level/status to the selected scene; the helper does not change SystemUI. Launch normally, complete permission/background setup, and verify the actual Current State, latest history, notification and widgets before capturing. Use the actual launcher widget workflow and normal application settings to change themes or notification content.
 
-Set the disposable emulator's actual display with `adb -s "$SERIAL" shell wm size 1080x2400`. Rotate it for landscape image 6. Use font scale 1.0 and density 420; image 4 uses density 360. Restore overrides with `adb -s "$SERIAL" shell wm size reset` and `adb -s "$SERIAL" shell wm density reset` during cleanup.
+Set the disposable emulator's actual display with `adb -s "$SERIAL" shell wm size 1080x2400`. Rotate it for landscape image 6. Use font scale 1.0 and density 420. Image 4 uses density 300. Restore overrides with `adb -s "$SERIAL" shell wm size reset` and `adb -s "$SERIAL" shell wm density reset` during cleanup.
 
-For image 4, use Pixel Launcher on an Android 16 emulator at 1080 × 2400, effective density 360 (`adb -s "$SERIAL" shell wm density 360`), and font scale 1.0. On a four-column workspace, place Status and Measurements side by side at 2 × 2 cells each and Trend below them at 4 × 2, set to **Last 24 hours**. Leave the unused rows empty. Use a blank launcher page; stage and resize the cards on another page if the launcher needs room for their initial sizes. Dismiss the resize handles and confirm the battery illustration, all four readings, and the chart axes and event markers are visible before capturing the native PNG.
+For image 4, use Pixel Launcher on an Android 16 emulator at 1080 × 2400, density 300 (`adb -s "$SERIAL" shell wm density 300`), and font scale 1.0. On a four-column workspace, place Status and Measurements side by side at 2 × 2 cells each and Trend below them at 4 × 2. Set all three to **Adaptive**, and set Trend to **Battery level** and **Last 24 hours**. Leave the unused rows empty. Use a blank launcher page. Stage and resize the cards on another page if the launcher needs room for their initial sizes. Dismiss the resize handles and confirm the battery illustration, all four readings at the same value font size, the reading-time footers, and the chart axes and event markers are visible before capturing the native PNG.
 
 If SystemUI demo mode is used to hide unrelated notification icons, set its clock from this emulator's actual time immediately before each capture and keep its battery level/status equal to the real battery overrides. Reseed before final captures if lengthy launcher preparation has aged the fixture; this uses the same production import/predictor checks and does not alter widget configuration.
 
@@ -108,7 +108,7 @@ Keep final images and this guide. APKs, emulator disks, disposable keys and devi
 
 ## Asset inventory
 
-Use English (United States), Europe/Warsaw time, Celsius, and font scale 1.0 for the phone images. Use density 420 except for image 4, which uses 360. Select the Battery Blue palette and the appearance listed below through the app's real settings. For image 5, expand the ordinary persistent notification with Live Update set to “Never”; an API 36 emulator provides the required SystemUI layout. Capture native PNGs at the listed display sizes.
+Use English (United States), Europe/Warsaw time, Celsius, and font scale 1.0 for the phone images. Select the Battery Blue palette and the appearance listed below through the app's real settings. For image 5, expand the ordinary persistent notification with Live Update set to “Never”. An API 36 emulator provides the required SystemUI layout. Capture native PNGs at the listed display sizes.
 
 | File | Subject | Size | Appearance |
 | --- | --- | --- | --- |

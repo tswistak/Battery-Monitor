@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">ओवरवॉल्टेज</string>
     <string name="health_failure" formatted="false">असफलता</string>
     <string name="health_cold" formatted="false">ठंडा</string>
+    <string name="notification_battery_health">बैटरी का स्वास्थ्य</string>
+    <string name="notification_health_unknown">@string/health_unknown</string>
+    <string name="notification_health_good">@string/health_good</string>
+    <string name="notification_health_overheat">@string/health_overheat</string>
+    <string name="notification_health_dead">@string/health_dead</string>
+    <string name="notification_health_overvoltage">@string/health_overvoltage</string>
+    <string name="notification_health_failure">@string/health_failure</string>
+    <string name="notification_health_cold">@string/health_cold</string>
     <string name="current_unavailable">कोई रीडिंग नहीं</string>
     <string name="current_current_unavailable">करंट की रीडिंग उपलब्ध नहीं है। “निदान” में पहुँच की समस्या या असमर्थित स्रोत दिख सकता है।</string>
     <string name="current_detail_unit">इकाई: %1$s</string>
@@ -890,11 +898,11 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">तब से</string>
-    <string name="duration_for">%1$s से</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">%d\u00A0घंटे के लिए</item>
-        <item quantity="other">%d\u00A0घंटे के लिए</item>
+    <string name="notification_status_since">%1$s तब से: %2$s</string>
+    <string name="notification_status_duration">%1$s: %2$s से</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s: %1$d\u00A0घंटे के लिए</item>
+        <item quantity="other">%2$s: %1$d\u00A0घंटे के लिए</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0दिन, "</item>

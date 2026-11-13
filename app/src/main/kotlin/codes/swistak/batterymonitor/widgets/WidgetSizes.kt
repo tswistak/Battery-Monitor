@@ -36,19 +36,22 @@ internal object WidgetSizes {
     }
 
     fun remoteViews(
-        family: WidgetFamily, options: Bundle, render: (WidgetSize) -> RemoteViews
+        family: WidgetFamily, options: Bundle, render: (WidgetSize, List<WidgetSize>) -> RemoteViews
     ): RemoteViews {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val sizes = exact(options)
-            if (sizes.size == 1) return render(sizes.single().asDp())
             if (sizes.isNotEmpty()) {
-                return RemoteViews(variants(sizes).associateWith { render(it.asDp()) })
+                val selected = variants(sizes)
+                val dimensions = selected.map { it.asDp() }
+                if (selected.size == 1) return render(dimensions.single(), dimensions)
+                return RemoteViews(selected.associateWith { render(it.asDp(), dimensions) })
             }
         }
         val (portrait, landscape) = legacy(family, options)
-        val portraitView = render(portrait)
+        val dimensions = listOf(portrait, landscape).distinct()
+        val portraitView = render(portrait, dimensions)
         return if (landscape == portrait) portraitView else RemoteViews(
-            render(landscape), portraitView
+            render(landscape, dimensions), portraitView
         )
     }
 

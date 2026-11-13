@@ -1592,7 +1592,7 @@ class BatteryInfoService : Service() {
 
             SettingsContract.CHIP_CONTENT_CURRENT -> {
                 currentMicroAmps?.let { BatteryCurrent.scaleMicroAmps(it) }?.let {
-                    BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "mA"
+                    BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "\u00A0mA"
                 } ?: "—"
             }
 
@@ -1706,8 +1706,6 @@ class BatteryInfoService : Service() {
         val convertF = settings.temperatureUnit(
             res.getString(R.string.default_temperature_unit)
         ).convertToFahrenheit
-        val labelsByValue = res.getStringArray(R.array.vital_signs_content_values)
-            .zip(res.getStringArray(R.array.vital_signs_content_entries)).toMap()
 
         val entries = mutableListOf<Pair<String, String>>()
         for (vitalSign in vitalSignsOrder) {
@@ -1752,7 +1750,7 @@ class BatteryInfoService : Service() {
                 else -> null
             }
             if (value != null) {
-                entries += (labelsByValue[vitalSign] ?: vitalSign) to value
+                entries += vitalSign to value
             }
         }
 
@@ -1763,38 +1761,31 @@ class BatteryInfoService : Service() {
         return VitalSignsDetailsFormatter.collapsedLine(vitalStatEntries())
     }
 
-    private fun expandedDetailEntries(): List<Pair<String, String>> {
-        val entries = mutableListOf<Pair<String, String>>()
-        entries += getString(R.string.time_remaining) to predictionLine(expanded = true)
-        entries += getString(R.string.time_since_status_change) to statusDurationLine()
-        for ((label, value) in vitalStatEntries()) {
-            if (entries.any { it.first == label }) continue
-            entries += label to value
-        }
-        return entries
-    }
-
     private fun vitalStatsDetailed(): String {
-        val format = getString(R.string.pref_expanded_notification_format)
-        return VitalSignsDetailsFormatter.detailedText(expandedDetailEntries(), format)
+        return VitalSignsDetailsFormatter.detailedText(
+            res,
+            predictionLine(expanded = true),
+            statusDurationLine(),
+            vitalStatEntries(),
+            info!!.health
+        )
     }
 
     private fun statusDurationLine(): String {
         val statusDuration = now - info!!.lastStatusCtm
         val statusDurationHours = ((statusDuration + (1000 * 60 * 30)) / (1000 * 60 * 60)).toInt()
-        var line = DisplayStrings.statuses[info!!.status] + " "
-
-        line += if (statusDuration < 1000 * 60 * 60) {
-            DisplayStrings.since + " " + DisplayStrings.formatTime(
-                this, Date(info!!.lastStatusCtm)
+        val status = DisplayStrings.statuses[info!!.status]
+        return if (statusDuration < 1000 * 60 * 60) {
+            getString(
+                R.string.notification_status_since,
+                status,
+                DisplayStrings.formatTime(this, Date(info!!.lastStatusCtm))
             )
         } else {
-            DurationFormatter.formatRoundedHours(
-                res, statusDurationHours, longDurationFormat()
+            DurationFormatter.formatNotificationStatusDuration(
+                res, status, statusDurationHours, longDurationFormat()
             )
         }
-
-        return line
     }
 
     private fun longDurationFormat(): LongDurationFormat = LongDurationFormat.fromPreference(

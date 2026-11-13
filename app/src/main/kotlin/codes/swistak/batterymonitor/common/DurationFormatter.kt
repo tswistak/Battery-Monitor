@@ -29,9 +29,7 @@ internal object DurationFormatter {
             if (hours > 0L) add(String.format(locale, unitPattern(R.string.unit_hours), hours))
             if (minutes > 0L) add(
                 String.format(
-                    locale,
-                    unitPattern(R.string.unit_minutes),
-                    minutes
+                    locale, unitPattern(R.string.unit_minutes), minutes
                 )
             )
             if (seconds > 0L || isEmpty()) {
@@ -86,18 +84,23 @@ internal object DurationFormatter {
         )
     }
 
-    fun formatRoundedHours(
-        resources: Resources, totalHours: Int, longDurationFormat: LongDurationFormat
+    fun formatNotificationStatusDuration(
+        resources: Resources,
+        status: String,
+        totalHours: Int,
+        longDurationFormat: LongDurationFormat
     ): String {
         if (longDurationFormat != LongDurationFormat.DAYS_AND_HOURS || totalHours < 24) {
             return String.format(
-                resources.getQuantityString(R.plurals.for_n_hours, totalHours), totalHours
+                resources.getQuantityString(
+                    R.plurals.notification_status_duration_hours, totalHours
+                ), totalHours, status
             )
         }
 
         val duration = formatShort(
             resources, totalHours * 60, LongDurationFormat.DAYS_AND_HOURS
         )
-        return resources.getString(R.string.duration_for, duration)
+        return resources.getString(R.string.notification_status_duration, status, duration)
     }
 }

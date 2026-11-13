@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.ui.current.CurrentMeasurement
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.widgets.WidgetConfigurationActivity
@@ -63,13 +64,24 @@ class WidgetActionsTest {
     }
 
     @Test
-    fun `trend widgets open history with their configured rolling range`() {
-        listOf(24, 72, 168).forEach { hours ->
-            assertEquals(
-                WidgetDestination(SectionOwner.HISTORY, historyHours = hours),
-                WidgetActions.destination(
-                    WidgetConfiguration.defaults(WidgetFamily.TREND).copy(trendHours = hours)
+    fun `trend widgets open history with their configured rolling range and metric`() {
+        val context = RuntimeEnvironment.getApplication()
+        val defaults = WidgetConfiguration.defaults(WidgetFamily.TREND)
+        for ((hours, metric) in listOf(
+            24 to HistoryMetric.LEVEL, 72 to HistoryMetric.VOLTAGE, 168 to HistoryMetric.CURRENT
+        )) {
+            val action = WidgetActions.open(
+                context, 41, defaults.copy(
+                    trendHours = hours, trendMetric = metric
                 )
+            )
+            val intent = shadowOf(action).savedIntent
+            assertEquals(
+                SectionOwner.HISTORY.route, intent.getStringExtra(BatteryInfoActivity.EXTRA_SECTION)
+            )
+            assertEquals(hours, intent.getIntExtra(BatteryInfoActivity.EXTRA_HISTORY_HOURS, -1))
+            assertEquals(
+                metric.name, intent.getStringExtra(BatteryInfoActivity.EXTRA_HISTORY_METRIC)
             )
         }
     }

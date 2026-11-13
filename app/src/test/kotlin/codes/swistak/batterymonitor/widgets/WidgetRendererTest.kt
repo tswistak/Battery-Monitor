@@ -13,6 +13,7 @@
 package codes.swistak.batterymonitor.widgets
 
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.ui.components.historyAxisFormatter
 import org.junit.Assert.assertEquals
@@ -127,6 +128,17 @@ class WidgetRendererTest {
     }
 
     @Test
+    fun `trend plots signed battery current without discarding readings outside percent bounds`() {
+        val points = listOf(
+            WidgetTrendPoint(10, -320.0, 1),
+            WidgetTrendPoint(20, -140.0, 1),
+            WidgetTrendPoint(30, 0.0, 1),
+            WidgetTrendPoint(40, 260.0, 1)
+        )
+        assertEquals(listOf(points), WidgetTrendChart.runs(points, 0, 100, HistoryMetric.CURRENT))
+    }
+
+    @Test
     fun `time ticks keep plot endpoints and add intermediate times only when their labels fit`() {
         val start = Instant.parse("2026-11-05T16:34:00Z").toEpochMilli()
         val left = 27f
@@ -149,9 +161,9 @@ class WidgetRendererTest {
             assertEquals(4, wide.size)
             assertEquals(left, wide.first().left, 0.01f)
             assertEquals(left + 250f, wide.last().left + wide.last().width, 0.01f)
-            for (tick in wide) {
-                val expected = left + (tick.time - start).toDouble() / (end - start) * 250f
-                assertEquals(expected.toFloat(), tick.x, 0.01f)
+            for ((time, x) in wide) {
+                val expected = left + (time - start).toDouble() / (end - start) * 250f
+                assertEquals(expected.toFloat(), x, 0.01f)
             }
             assertTrue(wide.zipWithNext().all { (a, b) -> a.left + a.width + 6f <= b.left })
             if (hours > 24) assertTrue(wide.first().label != wide.last().label)

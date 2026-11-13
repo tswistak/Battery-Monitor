@@ -34,7 +34,7 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="2"
-            android:text="@string/history_last_24h"
+            android:text="@string/history_battery_level"
             android:textColor="#17232D"
             android:textSize="12sp" />
 

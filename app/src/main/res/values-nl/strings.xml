@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">Voltage te hoog</string>
     <string name="health_failure" formatted="false">Probleem</string>
     <string name="health_cold" formatted="false">Koud</string>
+    <string name="notification_battery_health">Batterijgezondheid</string>
+    <string name="notification_health_unknown">onbekend</string>
+    <string name="notification_health_good">gezond</string>
+    <string name="notification_health_overheat">oververhit</string>
+    <string name="notification_health_dead">defect</string>
+    <string name="notification_health_overvoltage">voltage te hoog</string>
+    <string name="notification_health_failure">probleem</string>
+    <string name="notification_health_cold">koud</string>
     <string name="current_unavailable">Geen meting</string>
     <string name="current_current_unavailable">Er is geen stroommeting beschikbaar. “Diagnostiek” kan een toegangsprobleem of een niet-ondersteunde bron tonen.</string>
     <string name="current_detail_unit">Eenheid: %1$s</string>
@@ -890,11 +898,11 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">sinds</string>
-    <string name="duration_for">gedurende %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">(%d\u00A0uur)</item>
-        <item quantity="other">(%d\u00A0uur)</item>
+    <string name="notification_status_since">%1$s sinds: %2$s</string>
+    <string name="notification_status_duration">%1$s gedurende: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s: %1$d\u00A0uur</item>
+        <item quantity="other">%2$s: %1$d\u00A0uur</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0dag, "</item>

@@ -43,18 +43,22 @@ internal data class WidgetTrend(
     val points: List<WidgetTrendPoint>,
     val min: Double?,
     val max: Double?,
-    val events: List<HistoryEvent>
+    val events: List<HistoryEvent>,
+    val metric: HistoryMetric = HistoryMetric.LEVEL
 ) {
     companion object {
-        fun fromHistory(chart: HistoryChartModel): WidgetTrend {
-            val series = chart.series.getValue(HistoryMetric.LEVEL)
+        fun fromHistory(
+            chart: HistoryChartModel, metric: HistoryMetric = HistoryMetric.LEVEL
+        ): WidgetTrend {
+            val series = chart.series.getValue(metric)
             return WidgetTrend(
                 chart.range.start,
                 chart.range.end,
                 series.points.map { WidgetTrendPoint(it.key.time, it.value, it.segment) },
                 series.min,
                 series.max,
-                chart.events
+                chart.events,
+                metric
             )
         }
     }

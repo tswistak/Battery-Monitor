@@ -11,12 +11,44 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
+import android.content.res.Resources
+import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.settings.SettingsContract
+
 internal object VitalSignsDetailsFormatter {
     fun collapsedLine(entries: List<Pair<String, String>>): String {
         return entries.joinToString(" / ") { it.second }
     }
 
-    fun detailedText(entries: List<Pair<String, String>>, format: String): String {
-        return entries.joinToString("\n") { (label, value) -> format.format(label, value) }
+    fun detailedText(
+        res: Resources,
+        prediction: String,
+        statusDuration: String,
+        entries: List<Pair<String, String>>,
+        health: Int
+    ): String {
+        fun labeled(label: String, value: String) =
+            res.getString(R.string.pref_expanded_notification_format, label, value)
+
+        return buildList {
+            add(labeled(res.getString(R.string.time_remaining), prediction))
+            add(statusDuration)
+
+            val labelsByKey = res.getStringArray(R.array.vital_signs_content_values)
+                .zip(res.getStringArray(R.array.vital_signs_content_entries)).toMap()
+            for ((key, value) in entries) {
+                when (key) {
+                    SettingsContract.VITAL_SIGN_STATUS_DURATION -> Unit
+                    SettingsContract.VITAL_SIGN_HEALTH -> add(
+                        labeled(
+                            res.getString(R.string.notification_battery_health),
+                            res.getStringArray(R.array.notification_battery_health_values)[health]
+                        )
+                    )
+
+                    else -> add(labeled(labelsByKey[key] ?: key, value))
+                }
+            }
+        }.joinToString("\n")
     }
 }

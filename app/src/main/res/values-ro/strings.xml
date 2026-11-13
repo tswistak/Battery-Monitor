@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">Voltaj peste limita</string>
     <string name="health_failure" formatted="false">Defectiune</string>
     <string name="health_cold" formatted="false">Rece</string>
+    <string name="notification_battery_health">Starea de sănătate a bateriei</string>
+    <string name="notification_health_unknown">necunoscut</string>
+    <string name="notification_health_good">stare buna</string>
+    <string name="notification_health_overheat">supraincalzire</string>
+    <string name="notification_health_dead">mort</string>
+    <string name="notification_health_overvoltage">voltaj peste limita</string>
+    <string name="notification_health_failure">defectiune</string>
+    <string name="notification_health_cold">rece</string>
     <string name="current_unavailable">Nicio citire</string>
     <string name="current_current_unavailable">Nu este disponibilă nicio citire a curentului. „Diagnosticare” poate indica o problemă de acces sau o sursă neacceptată.</string>
     <string name="current_detail_unit">Unitate: %1$s</string>
@@ -895,12 +903,12 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">de la</string>
-    <string name="duration_for">timp de %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">pentru %d\u00A0oră</item>
-        <item quantity="few">pentru %d\u00A0ore</item>
-        <item quantity="other">pentru %d\u00A0de ore</item>
+    <string name="notification_status_since">%1$s de la: %2$s</string>
+    <string name="notification_status_duration">%1$s timp de: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s pentru: %1$d\u00A0oră</item>
+        <item quantity="few">%2$s pentru: %1$d\u00A0ore</item>
+        <item quantity="other">%2$s pentru: %1$d\u00A0de ore</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0zi, "</item>

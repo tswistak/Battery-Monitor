@@ -35,16 +35,17 @@ internal object WidgetUpdateDispatcher {
     private var queued = false
     private var latestSnapshot: WidgetSnapshot? = null
     private var persistedSnapshot: WidgetSnapshot? = null
-    private val trends = mutableMapOf<Int, Pair<Long, WidgetTrend>>()
+    private val trends = mutableMapOf<Pair<Int, HistoryMetric>, Pair<Long, WidgetTrend>>()
 
-    suspend fun previewData(context: Context, trendHours: Int?): WidgetPreviewData =
-        withContext(dispatcher) {
-            WidgetPreviewData(snapshot = synchronized(lock) { latestSnapshot } ?: storedSnapshot(
-                context
-            ),
-                monitoringEnabled = BackgroundServiceWatchdog.isServiceDesired(context),
-                trend = trendHours?.let { trend(context, it) })
-        }
+    suspend fun previewData(
+        context: Context, trendHours: Int?, trendMetric: HistoryMetric = HistoryMetric.LEVEL
+    ): WidgetPreviewData = withContext(dispatcher) {
+        WidgetPreviewData(snapshot = synchronized(lock) { latestSnapshot } ?: storedSnapshot(
+            context
+        ),
+            monitoringEnabled = BackgroundServiceWatchdog.isServiceDesired(context),
+            trend = trendHours?.let { trend(context, it to trendMetric) })
+    }
 
     fun publish(context: Context, snapshot: WidgetSnapshot, force: Boolean = false) {
         synchronized(lock) {
@@ -146,19 +147,22 @@ internal object WidgetUpdateDispatcher {
             persistedSnapshot = snapshot
         }
         val monitoringEnabled = BackgroundServiceWatchdog.isServiceDesired(context)
-        val batchTrends = mutableMapOf<Int, WidgetTrend?>()
+        val batchTrends = mutableMapOf<Pair<Int, HistoryMetric>, WidgetTrend?>()
         for ((family, ids) in targets) {
             for (id in ids) {
                 try {
                     val config = store.load(id, family)
                     val options = manager.getAppWidgetOptions(id)
                     val trend = if (family == WidgetFamily.TREND) {
-                        if (!batchTrends.containsKey(config.trendHours)) {
-                            batchTrends[config.trendHours] = trend(context, config.trendHours)
+                        val key = config.trendHours to config.trendMetric
+                        if (!batchTrends.containsKey(key)) {
+                            batchTrends[key] = trend(context, key)
                         }
-                        batchTrends[config.trendHours]
+                        batchTrends[key]
                     } else null
-                    val views = WidgetSizes.remoteViews(family, options) { size ->
+                    val chartPixelBudget =
+                        trend?.let { WidgetTrendChart.payloadPixelBudget(context) }
+                    val views = WidgetSizes.remoteViews(family, options) { size, dimensions ->
                         WidgetRenderer.render(
                             context,
                             id,
@@ -168,8 +172,12 @@ internal object WidgetUpdateDispatcher {
                             size.widthDp,
                             size.heightDp,
                             trend,
-                            monitoringEnabled
-                        )
+                            monitoringEnabled,
+                            chartPixelBudget?.let {
+                                WidgetTrendChart.variantPixelBudget(
+                                    it, size, dimensions
+                                )
+                            })
                     }
                     manager.updateAppWidget(id, views)
                 } catch (error: Exception) {
@@ -182,19 +190,20 @@ internal object WidgetUpdateDispatcher {
     private fun storedSnapshot(context: Context): WidgetSnapshot? =
         persistedSnapshot ?: WidgetSnapshotStore.read(context)?.also { persistedSnapshot = it }
 
-    private fun trend(context: Context, hours: Int): WidgetTrend? {
+    private fun trend(context: Context, key: Pair<Int, HistoryMetric>): WidgetTrend? {
+        val (hours, metric) = key
         val elapsed = SystemClock.elapsedRealtime()
-        trends[hours]?.let { (last, trend) ->
+        trends[key]?.let { (last, trend) ->
             if (elapsed - last in 0..<15 * 60_000L) return trend
         }
         val range = HistoryRangeState.lastHours(hours)
         val db = LogDatabase(context)
         return try {
             val chart = db.readHistory(historyQuery(range)) {
-                historyChart(range, it, metrics = listOf(HistoryMetric.LEVEL))
+                historyChart(range, it, metrics = listOf(metric))
             }
-            WidgetTrend.fromHistory(chart).also {
-                trends[hours] = elapsed to it
+            WidgetTrend.fromHistory(chart, metric).also {
+                trends[key] = elapsed to it
             }
         } catch (error: Exception) {
             Log.w("WidgetDispatcher", "Unable to read widget history", error)

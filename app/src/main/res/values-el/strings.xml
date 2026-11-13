@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">Υπέρβαση Βολτάζ</string>
     <string name="health_failure" formatted="false">Αποτυχία</string>
     <string name="health_cold" formatted="false">Κρύο</string>
+    <string name="notification_battery_health">Υγεία της μπαταρίας</string>
+    <string name="notification_health_unknown">άγνωστο</string>
+    <string name="notification_health_good">καλή υγεία</string>
+    <string name="notification_health_overheat">υπερθέρμανση</string>
+    <string name="notification_health_dead">νεκρή</string>
+    <string name="notification_health_overvoltage">υπέρβαση βολτάζ</string>
+    <string name="notification_health_failure">αποτυχία</string>
+    <string name="notification_health_cold">κρύο</string>
     <string name="current_unavailable">Δεν υπάρχει μέτρηση</string>
     <string name="current_current_unavailable">Δεν υπάρχει διαθέσιμη μέτρηση ρεύματος. Τα «Διαγνωστικά» μπορεί να δείξουν πρόβλημα πρόσβασης ή μη υποστηριζόμενη πηγή.</string>
     <string name="current_detail_unit">Μονάδα: %1$s</string>
@@ -890,11 +898,11 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">από</string>
-    <string name="duration_for">για %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">για %d\u00A0ώρα</item>
-        <item quantity="other">για %d\u00A0ώρες</item>
+    <string name="notification_status_since">%1$s από: %2$s</string>
+    <string name="notification_status_duration">%1$s για: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s για: %1$d\u00A0ώρα</item>
+        <item quantity="other">%2$s για: %1$d\u00A0ώρες</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0ημέρα, "</item>

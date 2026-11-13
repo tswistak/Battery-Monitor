@@ -55,7 +55,9 @@ internal data class AlarmEditorNavigation(
         fun route(intent: Intent) = AlarmEditorNavigation(
             AlarmEditorDestination.INTENT, intentExtras = Bundle().apply {
                 for (key in listOf(
-                    BatteryInfoActivity.EXTRA_SECTION, BatteryInfoActivity.EXTRA_DETAIL
+                    BatteryInfoActivity.EXTRA_SECTION,
+                    BatteryInfoActivity.EXTRA_DETAIL,
+                    BatteryInfoActivity.EXTRA_HISTORY_METRIC
                 )) {
                     if (intent.hasExtra(key)) putString(key, intent.getStringExtra(key))
                 }

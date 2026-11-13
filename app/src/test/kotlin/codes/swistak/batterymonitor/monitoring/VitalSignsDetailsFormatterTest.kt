@@ -11,32 +11,27 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
+import codes.swistak.batterymonitor.settings.SettingsContract
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class VitalSignsDetailsFormatterTest {
     private val entries = listOf(
-        "Health" to "Healthy", "Temperature" to "25.0°C", "Voltage" to "4.1V"
+        SettingsContract.VITAL_SIGN_HEALTH to "Healthy",
+        SettingsContract.VITAL_SIGN_TEMPERATURE to "25.0°C",
+        SettingsContract.VITAL_SIGN_VOLTAGE to "4.1V",
+        SettingsContract.VITAL_SIGN_STATUS_DURATION to "2h"
     )
 
     @Test
     fun `collapsed line joins values without labels`() {
         assertEquals(
-            "Healthy / 25.0°C / 4.1V", VitalSignsDetailsFormatter.collapsedLine(entries)
+            "Healthy / 25.0°C / 4.1V / 2h", VitalSignsDetailsFormatter.collapsedLine(entries)
         )
     }
 
     @Test
-    fun `detailed text shows one labeled value per line in order`() {
-        assertEquals(
-            "Health: Healthy\nTemperature: 25.0°C\nVoltage: 4.1V",
-            VitalSignsDetailsFormatter.detailedText(entries, $$"%1$s: %2$s")
-        )
-    }
-
-    @Test
-    fun `empty entries produce empty texts`() {
+    fun `empty entries produce no collapsed text`() {
         assertEquals("", VitalSignsDetailsFormatter.collapsedLine(emptyList()))
-        assertEquals("", VitalSignsDetailsFormatter.detailedText(emptyList(), $$"%1$s: %2$s"))
     }
 }

@@ -42,6 +42,7 @@ class AlarmNavigationStateTest {
         val intent = Intent().putExtra(BatteryInfoActivity.EXTRA_SECTION, "history")
             .putExtra(BatteryInfoActivity.EXTRA_DETAIL, "alarm-edit")
             .putExtra(BatteryInfoActivity.EXTRA_HISTORY_HOURS, 24)
+            .putExtra(BatteryInfoActivity.EXTRA_HISTORY_METRIC, "VOLTAGE")
             .putExtra(AlarmEditActivity.EXTRA_ALARM_ID, 42)
             .putExtra("unrelated_payload", ByteArray(1024))
         val restored = requireNotNull(
@@ -54,6 +55,7 @@ class AlarmNavigationStateTest {
         assertEquals("history", extras.getString(BatteryInfoActivity.EXTRA_SECTION))
         assertEquals("alarm-edit", extras.getString(BatteryInfoActivity.EXTRA_DETAIL))
         assertEquals(24, extras.getInt(BatteryInfoActivity.EXTRA_HISTORY_HOURS))
+        assertEquals("VOLTAGE", extras.getString(BatteryInfoActivity.EXTRA_HISTORY_METRIC))
         assertEquals(42, extras.getInt(AlarmEditActivity.EXTRA_ALARM_ID))
         assertFalse(extras.containsKey("unrelated_payload"))
     }

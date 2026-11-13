@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">Surtension</string>
     <string name="health_failure" formatted="false">Défaut</string>
     <string name="health_cold" formatted="false">Froid</string>
+    <string name="notification_battery_health">Santé de la batterie</string>
+    <string name="notification_health_unknown">inconnu</string>
+    <string name="notification_health_good">bon état</string>
+    <string name="notification_health_overheat">surchauffe</string>
+    <string name="notification_health_dead">morte</string>
+    <string name="notification_health_overvoltage">surtension</string>
+    <string name="notification_health_failure">défaut</string>
+    <string name="notification_health_cold">froid</string>
     <string name="current_unavailable">Aucune mesure</string>
     <string name="current_current_unavailable">Aucune mesure de courant disponible. «\u00A0Diagnostics\u00A0» peut indiquer un problème d’accès ou une source non prise en charge.</string>
     <string name="current_detail_unit">Unité : %1$s</string>
@@ -895,12 +903,12 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">depuis</string>
-    <string name="duration_for">depuis %1$s</string>
-    <plurals name="for_n_hours">
-        <item quantity="one">depuis %d\u00A0heure</item>
-        <item quantity="many">depuis %d\u00A0heures</item>
-        <item quantity="other">depuis %d\u00A0heures</item>
+    <string name="notification_status_since">%1$s depuis\u00A0: %2$s</string>
+    <string name="notification_status_duration">%1$s depuis\u00A0: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s depuis\u00A0: %1$d\u00A0heure</item>
+        <item quantity="many">%2$s depuis\u00A0: %1$d\u00A0heures</item>
+        <item quantity="other">%2$s depuis\u00A0: %1$d\u00A0heures</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0jour, "</item>

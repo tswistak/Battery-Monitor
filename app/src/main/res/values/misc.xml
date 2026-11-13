@@ -138,6 +138,16 @@
         <item>@string/health_failure</item>
         <item>@string/health_cold</item>
     </string-array>
+    <string-array name="notification_battery_health_values">
+        <item>@string/notification_health_unknown</item>
+        <item>@string/notification_health_unknown</item>
+        <item>@string/notification_health_good</item>
+        <item>@string/notification_health_overheat</item>
+        <item>@string/notification_health_dead</item>
+        <item>@string/notification_health_overvoltage</item>
+        <item>@string/notification_health_failure</item>
+        <item>@string/notification_health_cold</item>
+    </string-array>
     <string-array name="pluggeds">
         <item>@string/plugged_unplugged</item>
         <item>@string/plugged_ac</item>

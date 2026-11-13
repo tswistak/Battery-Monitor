@@ -13,13 +13,18 @@ import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.Point
 import android.graphics.RectF
+import android.hardware.display.DisplayManager
+import android.os.Build
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextDirectionHeuristics
 import android.text.TextPaint
 import android.text.TextUtils
+import android.util.LruCache
 import android.util.TypedValue
+import android.view.Display
 import android.view.View
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withClip
@@ -33,6 +38,7 @@ import codes.swistak.batterymonitor.ui.components.HistoryChartScale
 import codes.swistak.batterymonitor.ui.components.PowerMarkerGap
 import codes.swistak.batterymonitor.ui.components.RebootMarkerRadius
 import codes.swistak.batterymonitor.ui.components.RebootMarkerSpacing
+import codes.swistak.batterymonitor.ui.components.chartValue
 import codes.swistak.batterymonitor.ui.components.forEachHistoryEventMarker
 import codes.swistak.batterymonitor.ui.components.forEachRebootDot
 import codes.swistak.batterymonitor.ui.components.historyAxisFormatter
@@ -47,11 +53,27 @@ import kotlin.math.roundToLong
 import kotlin.math.sqrt
 
 internal object WidgetTrendChart {
-    private const val MAX_CHARTS = 4
+    private const val MAX_BITMAP_BYTES = 16 * 1024 * 1024
+    private const val MAX_EDGE = 4096.0
+    private val cache = object : LruCache<ChartKey, Bitmap>(MAX_BITMAP_BYTES) {
+        override fun sizeOf(key: ChartKey, value: Bitmap) = value.allocationByteCount
+    }
 
-    private const val MAX_PIXELS = 120_000
-    private const val MAX_EDGE = 1024f
-    private val cache = LinkedHashMap<ChartKey, Bitmap>(MAX_CHARTS, 0.75f, true)
+    @Suppress("DEPRECATION")
+    fun payloadPixelBudget(context: Context): Int {
+        val screen = Point()
+        context.getSystemService(DisplayManager::class.java)?.getDisplay(Display.DEFAULT_DISPLAY)
+            ?.getRealSize(screen)
+        val metrics = context.resources.displayMetrics
+        val width = screen.x.takeIf { it > 0 } ?: metrics.widthPixels
+        val height = screen.y.takeIf { it > 0 } ?: metrics.heightPixels
+        return (width.toLong() * height).coerceIn(1L, MAX_BITMAP_BYTES / 4L).toInt()
+    }
+
+    fun variantPixelBudget(totalPixels: Int, size: WidgetSize, sizes: List<WidgetSize>): Int {
+        fun area(bounds: WidgetSize) = bounds.widthDp.toLong() * bounds.heightDp
+        return 1 + ((totalPixels - sizes.size).coerceAtLeast(0) * area(size) / sizes.sumOf(::area)).toInt()
+    }
 
     @Synchronized
     fun bitmap(
@@ -63,41 +85,47 @@ internal object WidgetTrendChart {
         compact: Boolean,
         lineColor: Int,
         gridColor: Int,
-        axisColor: Int
+        axisColor: Int,
+        pixelBudget: Int,
+        fahrenheit: Boolean = false,
+        currentMultiplier: Int = 1
     ): Bitmap {
         val metrics = context.resources.displayMetrics
         val density = metrics.density
         val axisTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 11f, metrics)
         val locale = context.resources.configuration.locales[0]
         val zone = ZoneId.systemDefault()
-        val pixelBudget =
-            minOf(MAX_PIXELS, (metrics.widthPixels * metrics.heightPixels / 4).coerceAtLeast(1))
+        // shortcut: extreme multi-variant sizes share an evenly scaled raster; split the
+        // axes out if such sizes need full-resolution text within the same budget.
+        val longestEdge = maxOf(width, height)
+        val scaleFactor = minOf(
+            1.0,
+            minOf(MAX_EDGE, pixelBudget.toDouble()) / longestEdge,
+            sqrt(pixelBudget / (width.toDouble() * height))
+        )
         val key = ChartKey(
             trend,
             width,
             height,
             density,
             axisTextSize,
-            pixelBudget,
+            scaleFactor,
             locale,
             zone,
             showYAxis,
             compact,
             lineColor,
             gridColor,
-            axisColor
+            axisColor,
+            fahrenheit,
+            currentMultiplier
         )
-        cache[key]?.let { return it }
-
-        // Apply one scale in both axes so the cap preserves circular dots and dash lengths.
-        val scaleFactor = minOf(
-            1f, MAX_EDGE / maxOf(width, height), sqrt(pixelBudget / (width.toFloat() * height))
-        )
+        cache.get(key)?.let { return it }
         val bitmap = createBitmap(
             (width * scaleFactor).toInt().coerceAtLeast(1),
             (height * scaleFactor).toInt().coerceAtLeast(1)
         ).apply { this.density = Bitmap.DENSITY_NONE }
-        val canvas = Canvas(bitmap).apply { scale(scaleFactor, scaleFactor) }
+        val canvas = Canvas(bitmap).apply { scale(scaleFactor.toFloat(), scaleFactor.toFloat()) }
         val axisPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
             color = axisColor
             textSize = axisTextSize
@@ -120,15 +148,20 @@ internal object WidgetTrendChart {
         val axisGap = 4 * density
         val yGutterGap = 6 * density
         val edge = 3 * density
-        val hasYAxis = showYAxis && height >= lineHeight + 2 * edge
+        val hasYScale = trend.metric == HistoryMetric.LEVEL || trend.min != null
+        val hasYAxis = showYAxis && hasYScale && height >= lineHeight + 2 * edge
         val yInset = if (hasYAxis && !compact) maxOf(edge, lineHeight / 2) else edge
-        val scale = if (trend.min == null) HistoryChartScale(
+        val scale = if (trend.metric == HistoryMetric.LEVEL && trend.min == null) HistoryChartScale(
             0.0, 100.0, emptyList()
         ) else historyChartScale(
-            HistorySeries(emptyList(), trend.min, trend.max), HistoryMetric.LEVEL, false
+            HistorySeries(emptyList(), trend.min, trend.max),
+            trend.metric,
+            fahrenheit,
+            currentMultiplier
         )
-        val numberFormat =
-            NumberFormat.getNumberInstance(locale).apply { maximumFractionDigits = 1 }
+        val numberFormat = NumberFormat.getNumberInstance(locale).apply {
+            maximumFractionDigits = if (trend.metric == HistoryMetric.LEVEL) 1 else 3
+        }
         val plot = RectF(edge, yInset, width - edge, height - yInset)
         var yLabels = emptyList<Pair<Double, String>>()
         fun layoutPlot(withTimeAxis: Boolean) {
@@ -173,8 +206,10 @@ internal object WidgetTrendChart {
                 style = Paint.Style.STROKE
                 pathEffect = DashPathEffect(floatArrayOf(3 * density, 5 * density), 0f)
             }
-            for (tick in axisValues(scale.minimum, scale.maximum, compact)) {
-                canvas.drawLine(plot.left, y(tick), plot.right, y(tick), paint)
+            if (hasYScale) {
+                for (tick in axisValues(scale.minimum, scale.maximum, compact)) {
+                    canvas.drawLine(plot.left, y(tick), plot.right, y(tick), paint)
+                }
             }
 
             val shortDashes = DashPathEffect(
@@ -216,15 +251,18 @@ internal object WidgetTrendChart {
             paint.strokeJoin = Paint.Join.ROUND
             paint.strokeCap = Paint.Cap.ROUND
             paint.pathEffect = null
-            for (run in runs(trend.points, trend.rangeStart, trend.rangeEnd)) {
+            fun valueAt(point: WidgetTrendPoint) = y(
+                chartValue(requireNotNull(point.value), trend.metric, fahrenheit, currentMultiplier)
+            )
+            for (run in runs(trend.points, trend.rangeStart, trend.rangeEnd, trend.metric)) {
                 if (run.size == 1) {
                     paint.style = Paint.Style.FILL
-                    canvas.drawCircle(x(run[0].time), y(run[0].value!!), paint.strokeWidth, paint)
+                    canvas.drawCircle(x(run[0].time), valueAt(run[0]), paint.strokeWidth, paint)
                 } else {
                     paint.style = Paint.Style.STROKE
                     val path = Path().apply {
-                        moveTo(x(run.first().time), y(run.first().value!!))
-                        for (i in 1 until run.size) lineTo(x(run[i].time), y(run[i].value!!))
+                        moveTo(x(run.first().time), valueAt(run.first()))
+                        for (i in 1 until run.size) lineTo(x(run[i].time), valueAt(run[i]))
                     }
                     canvas.drawPath(path, paint)
                 }
@@ -236,9 +274,10 @@ internal object WidgetTrendChart {
             }
             for ((_, _, label, left) in timeLabels) drawLabel(label, left, plot.bottom + axisGap)
         }
-        cache[key] = bitmap
-        if (cache.size > MAX_CHARTS) cache.remove(cache.keys.first())
-        return bitmap
+        val result =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) bitmap.asShared() else bitmap
+        cache.put(key, result)
+        return result
     }
 
     internal data class TimeTick(
@@ -289,12 +328,16 @@ internal object WidgetTrendChart {
     }
 
     internal fun runs(
-        points: List<WidgetTrendPoint>, start: Long, end: Long
+        points: List<WidgetTrendPoint>,
+        start: Long,
+        end: Long,
+        metric: HistoryMetric = HistoryMetric.LEVEL
     ): List<List<WidgetTrendPoint>> {
         val runs = mutableListOf<MutableList<WidgetTrendPoint>>()
         var previous: WidgetTrendPoint? = null
         for (point in points) {
-            if (point.time !in start..end || point.value == null || !point.value.isFinite() || point.value !in 0.0..100.0) {
+            val value = point.value
+            if (point.time !in start..end || value == null || !value.isFinite() || (metric == HistoryMetric.LEVEL && value !in 0.0..100.0)) {
                 previous = null
                 continue
             }
@@ -313,13 +356,15 @@ internal object WidgetTrendChart {
         val height: Int,
         val density: Float,
         val textSize: Float,
-        val pixelBudget: Int,
+        val scaleFactor: Double,
         val locale: Locale,
         val zone: ZoneId,
         val showYAxis: Boolean,
         val compact: Boolean,
         val lineColor: Int,
         val gridColor: Int,
-        val axisColor: Int
+        val axisColor: Int,
+        val fahrenheit: Boolean,
+        val currentMultiplier: Int
     )
 }

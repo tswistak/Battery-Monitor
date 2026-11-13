@@ -13,6 +13,7 @@
 package codes.swistak.batterymonitor.widgets
 
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
 import java.util.Collections
@@ -34,6 +35,15 @@ internal fun trendRangeLabel(hours: Int): Int = when (hours) {
     else -> R.string.history_last_24h
 }
 
+internal fun trendMetricLabel(metric: HistoryMetric): Int = when (metric) {
+    HistoryMetric.LEVEL -> R.string.history_battery_level
+    HistoryMetric.TEMPERATURE -> R.string.current_temperature
+    HistoryMetric.VOLTAGE -> R.string.current_voltage
+    HistoryMetric.CURRENT -> R.string.pref_cat_battery_current_main
+    HistoryMetric.POWER -> R.string.battery_power
+    HistoryMetric.REMAINING_CHARGE -> R.string.remaining_charge
+}
+
 internal data class WidgetConfiguration(
     val brightness: Brightness? = null,
     val colorSource: ColorSource? = null,
@@ -46,7 +56,8 @@ internal data class WidgetConfiguration(
     val tapAction: WidgetTapAction = WidgetTapAction.CURRENT_STATE,
     val tapMetric: WidgetMetric = WidgetMetric.CURRENT,
     val trendHours: Int = 24,
-    val showYAxisLabels: Boolean = true
+    val showYAxisLabels: Boolean = true,
+    val trendMetric: HistoryMetric = HistoryMetric.LEVEL
 ) {
     val metrics: List<WidgetMetric> get() = metricOrder.filter(selectedMetrics::contains)
 
@@ -87,12 +98,14 @@ internal data class WidgetConfiguration(
         tapMetric.name,
         trendHours.toString(),
         showYAxisLabels.toString(),
-        metricOrder.joinToString(",") { it.name }).joinToString("|")
+        metricOrder.joinToString(",") { it.name },
+        trendMetric.name
+    ).joinToString("|")
 
     companion object {
         const val TEMPERATURE_CELSIUS = "celsius"
         const val TEMPERATURE_FAHRENHEIT = "fahrenheit"
-        private const val SCHEMA_VERSION = 3
+        private const val SCHEMA_VERSION = 4
 
         fun defaults(family: WidgetFamily): WidgetConfiguration = WidgetConfiguration(
             tapAction = when (family) {
@@ -104,7 +117,19 @@ internal data class WidgetConfiguration(
 
         internal fun decode(value: String): WidgetConfiguration? = runCatching {
             val parts = value.split('|')
-            require(parts.size == 13 && parts[0].toInt() == SCHEMA_VERSION)
+            val trendMetric = when (parts[0].toInt()) {
+                3 -> {
+                    require(parts.size == 13)
+                    HistoryMetric.LEVEL
+                }
+
+                SCHEMA_VERSION -> {
+                    require(parts.size == 14)
+                    HistoryMetric.valueOf(parts[13])
+                }
+
+                else -> return null
+            }
             val selected = parts[5].split(',').map(WidgetMetric::valueOf)
             require(selected.distinct().size == selected.size)
             val order = parts[12].split(',').map(WidgetMetric::valueOf)
@@ -120,7 +145,8 @@ internal data class WidgetConfiguration(
                 tapAction = WidgetTapAction.valueOf(parts[8]),
                 tapMetric = WidgetMetric.valueOf(parts[9]),
                 trendHours = parts[10].toInt(),
-                showYAxisLabels = parts[11].toBooleanStrict()
+                showYAxisLabels = parts[11].toBooleanStrict(),
+                trendMetric = trendMetric
             ).takeIf(WidgetConfiguration::isValid)
         }.getOrNull()
     }

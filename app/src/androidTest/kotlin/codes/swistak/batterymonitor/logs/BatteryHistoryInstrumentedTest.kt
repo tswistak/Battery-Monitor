@@ -124,20 +124,25 @@ class BatteryHistoryInstrumentedTest {
             }
         }
         onWidgetHistoryChanged = { WidgetUpdateDispatcher.historyChanged(previewContext) {} }
-        suspend fun trendLevels() = requireNotNull(
-            WidgetUpdateDispatcher.previewData(previewContext, 24).trend
-        ).points.mapNotNull { it.value }.toSet()
+        suspend fun trendValues(metric: HistoryMetric = HistoryMetric.LEVEL): Set<Double> {
+            val trend =
+                requireNotNull(WidgetUpdateDispatcher.previewData(previewContext, 24, metric).trend)
+            assertEquals(metric, trend.metric)
+            return trend.points.mapNotNull { it.value }.toSet()
+        }
 
         val now = System.currentTimeMillis() - 60_000
         val original = observation.copy(status = 200, charge = 50, time = now)
-        val appended = original.copy(charge = 60, time = now + 1_000)
-        val replacement = original.copy(charge = 70, time = now + 2_000)
+        val appended = original.copy(charge = 60, voltage = 4100, time = now + 1_000)
+        val replacement = original.copy(charge = 70, voltage = null, time = now + 2_000)
         invalidate()
         try {
             database.addLogs(listOf(original))
-            assertEquals(setOf(50.0), trendLevels())
+            assertEquals(setOf(50.0), trendValues())
+            assertEquals(setOf(4.0), trendValues(HistoryMetric.VOLTAGE))
             database.addLogs(listOf(appended))
-            assertEquals(setOf(50.0, 60.0), trendLevels())
+            assertEquals(setOf(4.0, 4.1), trendValues(HistoryMetric.VOLTAGE))
+            assertEquals(setOf(50.0, 60.0), trendValues())
             assertThrows(IllegalStateException::class.java) {
                 database.replaceAllLogs(sequence {
                     yield(replacement)
@@ -145,13 +150,15 @@ class BatteryHistoryInstrumentedTest {
                 })
             }
             assertEquals(2, widgetHistoryNotifications)
-            assertEquals(setOf(50.0, 60.0), trendLevels())
+            assertEquals(setOf(50.0, 60.0), trendValues())
             database.replaceAllLogs(listOf(replacement, appended))
-            assertEquals(setOf(60.0, 70.0), trendLevels())
+            assertEquals(setOf(60.0, 70.0), trendValues())
+            assertEquals(setOf(4.1), trendValues(HistoryMetric.VOLTAGE))
             database.deleteHistory(HistoryRangeState(appended.time, replacement.time))
-            assertEquals(setOf(70.0), trendLevels())
+            assertEquals(setOf(70.0), trendValues())
+            assertTrue(trendValues(HistoryMetric.VOLTAGE).isEmpty())
             database.deleteHistory(null)
-            assertTrue(trendLevels().isEmpty())
+            assertTrue(trendValues().isEmpty())
             assertEquals(5, widgetHistoryNotifications)
         } finally {
             onWidgetHistoryChanged = null

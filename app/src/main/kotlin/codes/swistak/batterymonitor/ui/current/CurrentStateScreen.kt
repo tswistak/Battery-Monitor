@@ -75,6 +75,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
+import codes.swistak.batterymonitor.common.operatingStatusLabel
 import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
 import codes.swistak.batterymonitor.logs.HistoryChartModel
 import codes.swistak.batterymonitor.logs.HistoryMetric
@@ -404,11 +405,11 @@ internal fun CurrentStateScreen(
     val prediction = model.prediction
     val stale =
         model.condition == CurrentCondition.STALE || model.condition == CurrentCondition.DISABLED
+    val operatingStatus = snapshot?.let { operatingStatusLabel(it.status) }
     val status = when (model.condition) {
         CurrentCondition.WAITING -> stringResource(R.string.current_waiting)
         CurrentCondition.DISABLED -> stringResource(R.string.current_monitor_disabled)
         CurrentCondition.STALE -> stringResource(R.string.current_stale)
-        CurrentCondition.FULL -> stringResource(R.string.status_fully_charged)
         CurrentCondition.PAUSED -> stringResource(R.string.current_paused)
         CurrentCondition.TARGET_REACHED -> stringResource(
             R.string.current_target_reached, snapshot?.configuredPrediction?.targetPercent ?: 100
@@ -418,17 +419,11 @@ internal fun CurrentStateScreen(
             R.string.current_below_target, snapshot?.configuredPrediction?.targetPercent ?: 0
         )
 
-        CurrentCondition.LOW -> snapshot?.let { DisplayStrings.statuses.getOrNull(it.status) }
-            ?: stringResource(R.string.current_low)
-
-        CurrentCondition.INSUFFICIENT -> snapshot?.let { DisplayStrings.statuses.getOrNull(it.status) }
-            ?: stringResource(R.string.current_waiting)
-
-        CurrentCondition.UNKNOWN -> snapshot?.let { DisplayStrings.statuses.getOrNull(it.status) }
-            ?: stringResource(R.string.status_unknown)
-
-        CurrentCondition.CHARGING -> stringResource(R.string.status_charging)
-        CurrentCondition.DISCHARGING -> stringResource(R.string.status_discharging)
+        CurrentCondition.LOW -> stringResource(operatingStatus ?: R.string.current_low)
+        CurrentCondition.INSUFFICIENT -> stringResource(operatingStatus ?: R.string.current_waiting)
+        CurrentCondition.FULL, CurrentCondition.CHARGING, CurrentCondition.DISCHARGING, CurrentCondition.UNKNOWN -> stringResource(
+            operatingStatus ?: R.string.status_unknown
+        )
     }
     val plug = snapshot?.takeIf { it.plugged != BatteryInfo.PLUGGED_UNPLUGGED }
         ?.let { DisplayStrings.pluggeds.getOrNull(it.plugged) }?.trim(' ', '(', ')')
@@ -496,34 +491,34 @@ internal fun CurrentStateScreen(
     val metrics = listOf(
         MetricDetail(
             CurrentMeasurement.TEMPERATURE,
-        MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
-            DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
-        } ?: unavailable),
-        if (preferences.fahrenheit) "°F" else "°C",
-        source(CurrentMeasurement.TEMPERATURE),
-        measurementTime("temperature")), MetricDetail(
-            CurrentMeasurement.VOLTAGE,
-        MetricDisplay(
-            stringResource(R.string.current_voltage),
-            snapshot?.voltageMillivolts?.let {
-                DisplayStrings.formatVoltage(it)
+            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
+                DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
             } ?: unavailable),
-        "V",
-        source(CurrentMeasurement.VOLTAGE),
-        measurementTime("voltage"),
-        if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
-        CurrentMeasurement.CURRENT, MetricDisplay(
-            stringResource(R.string.pref_cat_battery_current_main), when {
-                currentReading?.milliAmps == null -> unavailable
-                else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
-                    currentReading.milliAmps, configuration.locales[0]
-                ) + "\u00A0mA"
+            if (preferences.fahrenheit) "°F" else "°C",
+            source(CurrentMeasurement.TEMPERATURE),
+            measurementTime("temperature")), MetricDetail(
+            CurrentMeasurement.VOLTAGE,
+            MetricDisplay(
+                stringResource(R.string.current_voltage),
+                snapshot?.voltageMillivolts?.let {
+                    DisplayStrings.formatVoltage(it)
+                } ?: unavailable),
+            "V",
+            source(CurrentMeasurement.VOLTAGE),
+            measurementTime("voltage"),
+            if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
+            CurrentMeasurement.CURRENT, MetricDisplay(
+                stringResource(R.string.pref_cat_battery_current_main), when {
+                    currentReading?.milliAmps == null -> unavailable
+                    else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
+                        currentReading.milliAmps, configuration.locales[0]
+                    ) + "\u00A0mA"
+                }
+            ), "mA", source(CurrentMeasurement.CURRENT), currentReading?.observedAtMillis, when {
+                currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
+                else -> null
             }
-        ), "mA", source(CurrentMeasurement.CURRENT), currentReading?.observedAtMillis, when {
-            currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
-            else -> null
-        }
-    )) + listOfNotNull(power?.let {
+        )) + listOfNotNull(power?.let {
         MetricDetail(
             CurrentMeasurement.POWER,
             MetricDisplay(
@@ -692,16 +687,16 @@ internal fun CurrentStateScreen(
         val measurementGrid: @Composable () -> Unit = {
             MetricGrid(
                 metrics.mapIndexed { index, metric ->
-                metric.display.copy(
-                    icon = listOfNotNull(
-                        R.drawable.ui_temp,
-                        R.drawable.ui_voltage,
-                        R.drawable.ui_current,
-                        R.drawable.ui_bolt.takeIf { power != null },
-                        R.drawable.ui_heart
-                    )[index]
-                )
-            },
+                    metric.display.copy(
+                        icon = listOfNotNull(
+                            R.drawable.ui_temp,
+                            R.drawable.ui_voltage,
+                            R.drawable.ui_current,
+                            R.drawable.ui_bolt.takeIf { power != null },
+                            R.drawable.ui_heart
+                        )[index]
+                    )
+                },
                 columns = if (singleColumn) 1 else 2,
                 onMetricClick = { detailSheet = metrics[it].measurement.route },
                 modifier = Modifier.fillMaxWidth(),

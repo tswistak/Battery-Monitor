@@ -79,6 +79,14 @@
     <string name="health_overvoltage" formatted="false">過電圧</string>
     <string name="health_failure" formatted="false">障害</string>
     <string name="health_cold" formatted="false">低温</string>
+    <string name="notification_battery_health">バッテリーの健全性</string>
+    <string name="notification_health_unknown">@string/health_unknown</string>
+    <string name="notification_health_good">@string/health_good</string>
+    <string name="notification_health_overheat">@string/health_overheat</string>
+    <string name="notification_health_dead">@string/health_dead</string>
+    <string name="notification_health_overvoltage">@string/health_overvoltage</string>
+    <string name="notification_health_failure">@string/health_failure</string>
+    <string name="notification_health_cold">@string/health_cold</string>
     <string name="current_unavailable">測定値なし</string>
     <string name="current_current_unavailable">電流の測定値がありません。「診断」でアクセスの問題や非対応の取得元を確認できる場合があります。</string>
     <string name="current_detail_unit">単位: %1$s</string>
@@ -885,10 +893,10 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">から</string>
-    <string name="duration_for">%1$s の間</string>
-    <plurals name="for_n_hours">
-        <item quantity="other">%d\u00A0時間</item>
+    <string name="notification_status_since">%1$s：%2$sから</string>
+    <string name="notification_status_duration">%1$s：%2$s の間</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="other">%2$s：%1$d\u00A0時間</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="other">"%d\u00A0日 "</item>
