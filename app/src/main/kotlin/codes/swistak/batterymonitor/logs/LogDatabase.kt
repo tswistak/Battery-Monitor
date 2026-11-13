@@ -420,6 +420,7 @@ internal class LogDatabase(context: Context?) {
         newStatus: Boolean = false
     ): LogResult? {
         if (!loggingEnabled) return null
+        var insertedPowerEvent = false
         val result = writeWithRetry("Logging battery observation") { _, database ->
             database.transaction {
                 val previous = rawQuery(
@@ -432,8 +433,10 @@ internal class LogDatabase(context: Context?) {
                 val age = sampler.statusAge(previous, observation, elapsed, newStatus)
                 if (age == null) LogResult.Duplicate else {
                     val decoded = decodeStatus(observation.status)
+                    val status = encodeStatus(decoded[0], decoded[1], age)
+                    insertedPowerEvent = age == STATUS_NEW && historyEventCode(status) != null
                     val values = ContentValues().apply {
-                        put(KEY_STATUS_CODE, encodeStatus(decoded[0], decoded[1], age))
+                        put(KEY_STATUS_CODE, status)
                         putNullable(KEY_CHARGE, observation.charge)
                         put(KEY_TIME, observation.time)
                         putNullable(KEY_TEMPERATURE, observation.temperature)
@@ -449,7 +452,7 @@ internal class LogDatabase(context: Context?) {
         }
         if (result == LogResult.Inserted) {
             sampler.inserted(elapsed)
-            historyChanged()
+            historyChanged(explicit = insertedPowerEvent)
         }
         return result
     }
@@ -472,7 +475,7 @@ internal class LogDatabase(context: Context?) {
             }
             LogResult.Inserted
         }
-        if (result == LogResult.Inserted) historyChanged()
+        if (result == LogResult.Inserted) historyChanged(explicit = true)
         return result
     }
 

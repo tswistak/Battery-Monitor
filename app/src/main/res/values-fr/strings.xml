@@ -496,11 +496,6 @@
     <string name="widget_preview">Aperçu du widget</string>
     <string name="widget_preview_note">L’aperçu utilise la dernière mesure de surveillance. La taille du widget est définie par votre lanceur.</string>
     <string name="widget_read_at">Mesure %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Niveau · %1$d\u00A0dernière heure</item>
-        <item quantity="many">Niveau · %1$d\u00A0dernières heures</item>
-        <item quantity="other">Niveau · %1$d\u00A0dernières heures</item>
-    </plurals>
     <string name="widget_observed_range">Observé %1$s–%2$s</string>
     <string name="widget_chart_description">Niveau de batterie enregistré du %1$s au %2$s. Minimum %3$s, maximum %4$s.</string>
     <string name="widget_save_failed">Impossible d’enregistrer ce widget. Réessayez.</string>

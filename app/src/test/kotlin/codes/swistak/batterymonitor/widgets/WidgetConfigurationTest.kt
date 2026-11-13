@@ -48,7 +48,13 @@ class WidgetConfigurationTest {
             colorSource = ColorSource.Dynamic,
             temperatureUnit = WidgetConfiguration.TEMPERATURE_FAHRENHEIT,
             backgroundOpacityPercent = 0,
-            metrics = listOf(WidgetMetric.CURRENT, WidgetMetric.TEMPERATURE),
+            metricOrder = listOf(
+                WidgetMetric.CURRENT,
+                WidgetMetric.VOLTAGE,
+                WidgetMetric.TEMPERATURE,
+                WidgetMetric.REMAINING_CHARGE
+            ),
+            selectedMetrics = setOf(WidgetMetric.CURRENT, WidgetMetric.TEMPERATURE),
             statusExtra = WidgetStatusExtra.REMAINING_CHARGE,
             variant = WidgetVariant.COMPACT,
             tapAction = WidgetTapAction.HISTORY,
@@ -64,16 +70,51 @@ class WidgetConfigurationTest {
     }
 
     @Test
-    fun `configuration rejects duplicate missing and oversized measurement selections`() {
-        val defaults = WidgetConfiguration()
-        assertFalse(defaults.copy(metrics = emptyList()).isValid())
-        assertFalse(defaults.copy(metrics = listOf(WidgetMetric.CURRENT)).isValid())
-        assertFalse(
-            defaults.copy(metrics = listOf(WidgetMetric.CURRENT, WidgetMetric.CURRENT)).isValid()
+    fun `toggling keeps full row order and saved drafts remember unchecked positions`() {
+        val arranged = WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS)
+            .moveMetric(WidgetMetric.REMAINING_CHARGE, -1)
+            .moveMetric(WidgetMetric.REMAINING_CHARGE, -1)
+        val draft =
+            arranged.toggleMetric(WidgetMetric.VOLTAGE).toggleMetric(WidgetMetric.TEMPERATURE)
+        val reopened = requireNotNull(WidgetConfiguration.decode(draft.encode()))
+        assertEquals(arranged.metricOrder, reopened.metricOrder)
+        assertEquals(listOf(WidgetMetric.REMAINING_CHARGE, WidgetMetric.CURRENT), reopened.metrics)
+        assertEquals(reopened, reopened.toggleMetric(WidgetMetric.CURRENT))
+
+        val rechecked = reopened.toggleMetric(WidgetMetric.VOLTAGE)
+        assertEquals(arranged.metricOrder, rechecked.metricOrder)
+        assertEquals(
+            listOf(WidgetMetric.REMAINING_CHARGE, WidgetMetric.VOLTAGE, WidgetMetric.CURRENT),
+            rechecked.metrics
         )
-        assertFalse(defaults.copy(metrics = WidgetMetric.entries + WidgetMetric.CURRENT).isValid())
+
+        val moved = rechecked.moveMetric(WidgetMetric.TEMPERATURE, 1)
+        assertEquals(rechecked.metrics, moved.metrics)
+        assertEquals(
+            listOf(
+                WidgetMetric.REMAINING_CHARGE,
+                WidgetMetric.TEMPERATURE,
+                WidgetMetric.VOLTAGE,
+                WidgetMetric.CURRENT
+            ), moved.toggleMetric(WidgetMetric.TEMPERATURE).metrics
+        )
+    }
+
+    @Test
+    fun `configuration rejects invalid selection counts and incomplete row orders`() {
+        val defaults = WidgetConfiguration()
+        assertFalse(defaults.copy(selectedMetrics = emptySet()).isValid())
+        assertFalse(defaults.copy(selectedMetrics = setOf(WidgetMetric.CURRENT)).isValid())
+        assertFalse(defaults.copy(metricOrder = listOf(WidgetMetric.CURRENT)).isValid())
+        assertFalse(
+            defaults.copy(metricOrder = List(4) { WidgetMetric.CURRENT }).isValid()
+        )
+        assertFalse(
+            defaults.copy(metricOrder = WidgetMetric.entries + WidgetMetric.CURRENT).isValid()
+        )
         assertTrue(
-            defaults.copy(metrics = listOf(WidgetMetric.CURRENT, WidgetMetric.VOLTAGE)).isValid()
+            defaults.copy(selectedMetrics = setOf(WidgetMetric.CURRENT, WidgetMetric.VOLTAGE))
+                .isValid()
         )
     }
 
@@ -102,7 +143,9 @@ class WidgetConfigurationTest {
         for (invalid in listOf(
             "",
             record.substringBeforeLast('|'),
-            "3" + record.drop(1),
+            "4" + record.drop(1),
+            record.replaceFirst("TEMPERATURE,VOLTAGE", "TEMPERATURE,TEMPERATURE"),
+            record.substringBeforeLast('|') + "|TEMPERATURE,VOLTAGE,VOLTAGE,CURRENT",
             record.replace("|true", "|yes"),
             record.replace("|100|", "|101|"),
             record.replace("|100|", "|invalid|"),

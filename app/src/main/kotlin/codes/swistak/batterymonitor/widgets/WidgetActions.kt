@@ -37,25 +37,41 @@ internal object WidgetActions {
                 historyHours = configuration.trendHours.takeIf { it in setOf(24, 72, 168) } ?: 24)
 
             WidgetTapAction.MEASUREMENT -> WidgetDestination(
-                SectionOwner.CURRENT, measurement = when (configuration.tapMetric) {
-                    WidgetMetric.TEMPERATURE -> CurrentMeasurement.TEMPERATURE
-                    WidgetMetric.VOLTAGE -> CurrentMeasurement.VOLTAGE
-                    WidgetMetric.CURRENT -> CurrentMeasurement.CURRENT
-                    WidgetMetric.REMAINING_CHARGE -> CurrentMeasurement.REMAINING_CHARGE
-                }
+                SectionOwner.CURRENT, measurement = configuration.tapMetric.currentMeasurement()
             )
         }
 
-    fun open(context: Context, id: Int, config: WidgetConfiguration): PendingIntent {
-        val destination = destination(config)
+    private fun WidgetMetric.currentMeasurement(): CurrentMeasurement = when (this) {
+        WidgetMetric.TEMPERATURE -> CurrentMeasurement.TEMPERATURE
+        WidgetMetric.VOLTAGE -> CurrentMeasurement.VOLTAGE
+        WidgetMetric.CURRENT -> CurrentMeasurement.CURRENT
+        WidgetMetric.REMAINING_CHARGE -> CurrentMeasurement.REMAINING_CHARGE
+    }
+
+    fun open(context: Context, id: Int, config: WidgetConfiguration): PendingIntent =
+        open(context, id, destination(config), "open")
+
+    fun openMeasurement(context: Context, id: Int, metric: WidgetMetric): PendingIntent {
+        val measurement = metric.currentMeasurement()
+        return open(
+            context,
+            id,
+            WidgetDestination(SectionOwner.CURRENT, measurement),
+            "measurement/${measurement.route}"
+        )
+    }
+
+    private fun open(
+        context: Context, id: Int, destination: WidgetDestination, path: String
+    ): PendingIntent {
         val intent = Intent(context, BatteryInfoActivity::class.java).apply {
             action = Intent.ACTION_VIEW
-            data = "batterymonitor://widget/$id/open".toUri()
+            data = "batterymonitor://widget/$id/$path".toUri()
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra(BatteryInfoActivity.EXTRA_SECTION, destination.section.route)
-            destination.measurement?.let {
-                putExtra(BatteryInfoActivity.EXTRA_DETAIL, "measurement:${it.route}")
-            }
+            putExtra(
+                BatteryInfoActivity.EXTRA_DETAIL,
+                destination.measurement?.let { "measurement:${it.route}" })
             destination.historyHours?.let { putExtra(BatteryInfoActivity.EXTRA_HISTORY_HOURS, it) }
         }
         return PendingIntent.getActivity(

@@ -23,8 +23,8 @@ gradle.beforeProject { project ->
                     'val android = try {',
                     'ScreenshotInput.remainingCharge()?.let { return it }\n        val android = try {')
             replaceOnce('BatteryInfoService.kt',
-                    'val batteryIntent = intent ?: registerReceiver(null, batteryChanged)',
-                    'val batteryIntent = ScreenshotInput.batteryIntent() ?: intent ?: registerReceiver(null, batteryChanged)')
+                    'intent ?: registerReceiver(null, batteryChanged)',
+                    'ScreenshotInput.batteryIntent() ?: intent ?: registerReceiver(null, batteryChanged)')
             android.sourceSets.main.kotlin.directories.clear()
             android.sourceSets.main.kotlin.directories.add(output.absolutePath)
             android.sourceSets.debug.manifest.srcFile(root.file('tools/screenshots/AndroidManifest.xml'))

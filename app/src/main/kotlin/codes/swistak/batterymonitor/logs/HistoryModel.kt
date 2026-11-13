@@ -97,6 +97,9 @@ internal fun historyObservationValue(metric: HistoryMetric, record: LogRecord): 
     return metric.value(record)?.takeIf(Double::isFinite)
 }
 
+internal fun historyHasTimeGap(previousTime: Long?, time: Long): Boolean =
+    previousTime != null && time - previousTime > 10 * HISTORY_SAMPLE_INTERVAL_MS
+
 internal enum class HistoryMetric {
     LEVEL, TEMPERATURE, VOLTAGE, CURRENT, POWER, REMAINING_CHARGE;
 
@@ -183,9 +186,12 @@ internal fun historyChart(
     val events = mutableMapOf<Pair<Int, Int>, HistoryEvent>()
     val segments = LongArray(HistoryMetric.entries.size)
     var count = 0L
+    var previousTime: Long? = null
     for (entry in records) {
         val record = entry.record
         if (!range.contains(record.time)) continue
+        val timeGap = historyHasTimeGap(previousTime, record.time)
+        previousTime = record.time
         count++
         val bucket =
             (((record.time - range.start).toDouble() / (range.end - range.start)) * 42).toInt()
@@ -195,7 +201,7 @@ internal fun historyChart(
         val key = entry.key
         for ((metric, metricBuckets) in buckets) {
             val value = historyObservationValue(metric, record)
-            if (value == null) segments[metric.ordinal]++
+            if (value == null || timeGap) segments[metric.ordinal]++
             val point = HistoryPoint(key, value, segments[metric.ordinal])
             metricBuckets[bucket].apply {
                 add(point, event)
@@ -282,9 +288,9 @@ internal fun historyQuery(
     require(limit == null || limit in 1..129)
     return HistoryQuery(
         "SELECT _id, status, charge, time, temperature, voltage, current, remaining_charge_uah FROM logs WHERE ${
-        where.joinToString(
-            " AND "
-        )
-    } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
+            where.joinToString(
+                " AND "
+            )
+        } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
         args.toTypedArray())
 }

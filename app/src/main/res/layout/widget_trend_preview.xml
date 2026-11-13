@@ -4,107 +4,198 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_surface"
+    android:foreground="@drawable/widget_border"
+    android:foregroundTint="#CBD9E3"
     android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/widget_trend"
-        android:textColor="#17232D"
-        android:textSize="12sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:includeFontPadding="false"
-        android:text="@string/widget_preview_level"
-        android:textColor="#17232D"
-        android:textSize="42sp" />
+    android:padding="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="32dp"
-            android:layout_height="match_parent"
-            android:gravity="fill_vertical"
-            android:orientation="vertical"
-            tools:ignore="NestedWeights">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="top"
-                android:text="@string/widget_preview_axis_top"
-                android:textColor="#4D606F"
-                android:textSize="11sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/widget_preview_axis_upper"
-                android:textColor="#4D606F"
-                android:textSize="11sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/widget_preview_axis_lower"
-                android:textColor="#4D606F"
-                android:textSize="11sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="bottom"
-                android:text="@string/widget_preview_axis_bottom"
-                android:textColor="#4D606F"
-                android:textSize="11sp" />
-        </LinearLayout>
+        android:layout_height="36dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="0dp"
+        android:paddingEnd="3dp"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="6dp"
             android:importantForAccessibility="no"
-            android:scaleType="fitXY"
-            android:src="@drawable/widget_trend_preview_line"
-            tools:ignore="NestedWeights" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        android:paddingStart="32dp"
-        android:paddingEnd="0dp">
+            android:src="@drawable/ui_history"
+            android:tint="#006493"
+            tools:ignore="UseAppTint" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/widget_preview_time_start"
-            android:textColor="#4D606F"
-            android:textSize="11sp" />
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="2"
+            android:text="@string/history_last_24h"
+            android:textColor="#17232D"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="top"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="3dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ui_settings"
+            android:tint="#006493"
+            tools:ignore="UseAppTint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/widget_preview_time_end"
+            android:fontFamily="sans-serif-medium"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="@string/widget_preview_styled_level"
+            android:textColor="#17232D"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:text="@string/widget_preview_observed_range"
             android:textColor="#4D606F"
             android:textSize="11sp" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:layoutDirection="ltr"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp">
+
+        <FrameLayout
+            android:id="@+id/widget_preview_chart_y_axis"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/widget_preview_chart_time_axis"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_axis_top"
+                android:textColor="#4D606F"
+                android:textDirection="locale"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_axis_upper"
+                android:textColor="#4D606F"
+                android:textDirection="locale"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_axis_bottom"
+                android:textColor="#4D606F"
+                android:textDirection="locale"
+                android:textSize="11sp" />
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/widget_preview_chart_time_axis"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/widget_preview_chart_y_axis"
+            android:importantForAccessibility="no"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/widget_trend_preview_line" />
+
+        <FrameLayout
+            android:id="@id/widget_preview_chart_time_axis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toEndOf="@id/widget_preview_chart_y_axis">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_time_end"
+                android:textColor="#4D606F"
+                android:textDirection="locale"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_time_middle"
+                android:textColor="#4D606F"
+                android:textDirection="locale"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_time_end"
+                android:textColor="#4D606F"
+                android:textDirection="locale"
+                android:textSize="11sp" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="@string/widget_preview_time_end"
+        android:textColor="#4D606F"
+        android:textSize="11sp" />
 </LinearLayout>

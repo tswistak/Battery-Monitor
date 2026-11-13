@@ -516,15 +516,16 @@ class HistoryModelTest {
     }
 
     @Test
-    fun `legacy sparse readings remain continuous through the first periodic sample`() {
+    fun `twenty minutes stays connected and a longer interval breaks the segment`() {
         val range = HistoryRangeState(0, 10_000_000)
-        val old = listOf(entry(1, 1, status = 100), entry(2, 1_000_000, status = 100))
-        for (records in listOf(old, old + entry(3, 9_000_000, status = 200))) {
-            val points = historyChart(
-                range, records.asSequence()
-            ).series.getValue(HistoryMetric.LEVEL).points
-            assertEquals(1, points.map { it.segment }.distinct().size)
-        }
+        val records = sequenceOf(
+            entry(1, 1, status = 100),
+            entry(2, 1_200_001, status = 100),
+            entry(3, 2_400_002, status = 200),
+            entry(4, 2_520_002, status = 200)
+        )
+        val points = historyChart(range, records).series.getValue(HistoryMetric.LEVEL).points
+        assertEquals(listOf(0L, 0L, 1L, 1L), points.map { it.segment })
     }
 
     @Test

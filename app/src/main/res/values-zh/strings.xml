@@ -488,9 +488,6 @@
     <string name="widget_preview">小工具預覽</string>
     <string name="widget_preview_note">預覽使用上次監測讀數。小工具大小由啟動器設定。</string>
     <string name="widget_read_at">讀數 %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="other">電量 · 最近 %1$d\u00A0小時</item>
-    </plurals>
     <string name="widget_observed_range">觀測 %1$s–%2$s</string>
     <string name="widget_chart_description">從 %1$s 至 %2$s 儲存的電池電量。最小值 %3$s，最大值 %4$s。</string>
     <string name="widget_save_failed">無法儲存此小工具。請再試一次。</string>

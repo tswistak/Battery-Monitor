@@ -492,10 +492,6 @@
     <string name="widget_preview">Προεπισκόπηση γραφικού στοιχείου</string>
     <string name="widget_preview_note">Η προεπισκόπηση χρησιμοποιεί την τελευταία μέτρηση παρακολούθησης. Το μέγεθος του γραφικού στοιχείου ορίζεται από την εφαρμογή αρχικής οθόνης.</string>
     <string name="widget_read_at">Μέτρηση %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Στάθμη · Τελευταία %1$d\u00A0ώρα</item>
-        <item quantity="other">Στάθμη · Τελευταίες %1$d\u00A0ώρες</item>
-    </plurals>
     <string name="widget_observed_range">Παρατηρήσεις %1$s–%2$s</string>
     <string name="widget_chart_description">Αποθηκευμένη στάθμη μπαταρίας από %1$s έως %2$s. Ελάχιστο %3$s, μέγιστο %4$s.</string>
     <string name="widget_save_failed">Δεν ήταν δυνατή η αποθήκευση αυτού του γραφικού στοιχείου. Δοκιμάστε ξανά.</string>

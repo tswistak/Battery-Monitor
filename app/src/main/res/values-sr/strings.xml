@@ -496,11 +496,6 @@
     <string name="widget_preview">Prikaz vidžeta</string>
     <string name="widget_preview_note">Prikaz koristi poslednje očitavanje praćenja. Veličinu vidžeta određuje pokretač.</string>
     <string name="widget_read_at">Očitavanje %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Nivo · Poslednji %1$d\u00A0sat</item>
-        <item quantity="few">Nivo · Poslednja %1$d\u00A0sata</item>
-        <item quantity="other">Nivo · Poslednjih %1$d\u00A0sati</item>
-    </plurals>
     <string name="widget_observed_range">Posmatrano %1$s–%2$s</string>
     <string name="widget_chart_description">Sačuvani nivo baterije od %1$s do %2$s. Minimum %3$s, maksimum %4$s.</string>
     <string name="widget_save_failed">Ovaj vidžet nije moguće sačuvati. Pokušajte ponovo.</string>

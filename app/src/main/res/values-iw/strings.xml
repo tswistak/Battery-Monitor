@@ -496,11 +496,6 @@
     <string name="widget_preview">תצוגה מקדימה של הווידג׳ט</string>
     <string name="widget_preview_note">התצוגה המקדימה משתמשת בקריאת הניטור האחרונה. גודל הווידג׳ט נקבע על ידי המשגר.</string>
     <string name="widget_read_at">קריאה %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">רמה · השעה האחרונה</item>
-        <item quantity="two">רמה · השעתיים האחרונות</item>
-        <item quantity="other">רמה · %1$d\u00A0השעות האחרונות</item>
-    </plurals>
     <string name="widget_observed_range">נצפה %1$s–%2$s</string>
     <string name="widget_chart_description">רמת הסוללה השמורה מ־%1$s עד %2$s. מינימום %3$s, מקסימום %4$s.</string>
     <string name="widget_save_failed">לא ניתן לשמור את הווידג׳ט. יש לנסות שוב.</string>

@@ -496,11 +496,6 @@
     <string name="widget_preview">Anteprima del widget</string>
     <string name="widget_preview_note">L’anteprima usa l’ultima lettura del monitoraggio. La dimensione del widget è definita dal launcher.</string>
     <string name="widget_read_at">Lettura %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Livello · Ultima %1$d\u00A0ora</item>
-        <item quantity="many">Livello · Ultime %1$d\u00A0ore</item>
-        <item quantity="other">Livello · Ultime %1$d\u00A0ore</item>
-    </plurals>
     <string name="widget_observed_range">Osservato %1$s–%2$s</string>
     <string name="widget_chart_description">Livello della batteria salvato dal %1$s al %2$s. Minimo %3$s, massimo %4$s.</string>
     <string name="widget_save_failed">Impossibile salvare questo widget. Riprova.</string>

@@ -508,14 +508,6 @@
     <string name="widget_preview">معاينة الأداة</string>
     <string name="widget_preview_note">تستخدم المعاينة آخر قراءة للمراقبة. يحدد مشغل الشاشة الرئيسية حجم الأداة.</string>
     <string name="widget_read_at">القراءة %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="zero">المستوى · آخر %1$d\u00A0ساعة</item>
-        <item quantity="one">المستوى · آخر ساعة</item>
-        <item quantity="two">المستوى · آخر ساعتين</item>
-        <item quantity="few">المستوى · آخر %1$d\u00A0ساعات</item>
-        <item quantity="many">المستوى · آخر %1$d\u00A0ساعة</item>
-        <item quantity="other">المستوى · آخر %1$d\u00A0ساعة</item>
-    </plurals>
     <string name="widget_observed_range">الرصد %1$s–%2$s</string>
     <string name="widget_chart_description">مستوى البطارية المحفوظ من %1$s إلى %2$s. الحد الأدنى %3$s، والأقصى %4$s.</string>
     <string name="widget_save_failed">تعذر حفظ هذه الأداة. أعد المحاولة.</string>

@@ -147,10 +147,20 @@ class ScreenshotFixtureReceiver : BroadcastReceiver() {
         )
 
         // Import history through the production JSON reader; predictor learning is a separate real replay.
-        val json = JSONObject().put("version", 2).put("logs", JSONArray(rows.map(::jsonRow)))
-        DeviceDataBackup.importFromJson(
-            context, json.toString(), setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
-        )
+        val reboot =
+            LogRecord(LogDatabase.STATUS_BOOT_COMPLETED, null, anchor - 5 * 60 * MINUTE, null, null)
+        val history = (rows + reboot).sortedBy(LogRecord::time)
+        val json = JSONObject().put("version", 2).put("logs", JSONArray(history.map(::jsonRow)))
+        val stagedLogs = File.createTempFile("screenshot-history-", ".logs", context.cacheDir)
+        try {
+            val prepared =
+                json.toString().byteInputStream().use { DeviceDataBackup.read(it, stagedLogs) }
+            DeviceDataBackup.restore(
+                context, prepared, setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
+            )
+        } finally {
+            stagedLogs.delete()
+        }
         val core = PredictorCore(-1f, -1f, -1f, -1f).apply { setTargets(80, 0) }
         val averages = mutableMapOf<String, Float>()
         val elapsed = SystemClock.elapsedRealtime()
@@ -171,7 +181,7 @@ class ScreenshotFixtureReceiver : BroadcastReceiver() {
         check(info.prediction.targetPercent == if (charging) 80 else 0)
         if (charging) check(info.fullRangePrediction.whenHappened > info.prediction.whenHappened)
         val restartedPredictor = Predictor(context)
-        restartedPredictor.update(info)
+        restartedPredictor.update(info, chargingLimit = null)
         val restartedEta = info.prediction.whenHappened - SystemClock.elapsedRealtime()
         check(restartedEta in (if (charging) 600_000L..2_700_000L else 3_600_000L..172_800_000L)) {
             "Implausible persisted $state estimate: $restartedEta"
@@ -202,7 +212,8 @@ class ScreenshotFixtureReceiver : BroadcastReceiver() {
         File(context.filesDir, "screenshot-history.json").writeText(json.toString())
         val events = rows.count { LogDatabase.decodeStatus(it.status)[2] == LogDatabase.STATUS_NEW }
         return Bundle().apply {
-            putInt("rows", rows.size); putInt("transitions", events)
+            putInt("rows", history.size)
+            putInt("transitions", events)
             putLong("anchorMillis", anchor); putLong("replayEstimateMillis", eta)
             putLong("persistedEstimateMillis", restartedEta)
             putString("scenario", "seven-varied-days-4500mAh-${state}68-manual80")

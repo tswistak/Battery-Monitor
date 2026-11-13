@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_metric_cell"
     android:layout_width="0dp"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_weight="1"
+    android:gravity="center_vertical"
     android:orientation="vertical"
-    android:paddingStart="0dp"
-    android:paddingEnd="8dp">
+    android:paddingStart="2dp"
+    android:paddingEnd="4dp">
 
     <TextView
         android:id="@+id/widget_metric_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autoSizeMaxTextSize="11sp"
-        android:autoSizeMinTextSize="8sp"
-        android:autoSizeStepGranularity="1sp"
-        android:autoSizeTextType="uniform"
         android:ellipsize="end"
+        android:includeFontPadding="false"
         android:maxLines="3"
         android:textSize="11sp" />
 
@@ -23,10 +22,6 @@
         android:id="@+id/widget_metric_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autoSizeMaxTextSize="21sp"
-        android:autoSizeMinTextSize="8sp"
-        android:autoSizeStepGranularity="1sp"
-        android:autoSizeTextType="uniform"
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:includeFontPadding="false"

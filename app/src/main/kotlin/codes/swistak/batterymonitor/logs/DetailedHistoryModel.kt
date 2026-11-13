@@ -151,7 +151,7 @@ private class DetailedHistoryReducer(
         val record = entry.record
         val visible = viewport.contains(record.time)
         val value = historyObservationValue(metric, record)
-        if (value == null) segment++
+        if (value == null || historyHasTimeGap(previous?.key?.time, record.time)) segment++
         val point = HistoryPoint(entry.key, value, segment)
         val eventCode = historyEventCode(record.status)
         val eventIndex = HistoryEvent.indexFor(eventCode)

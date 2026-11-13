@@ -500,12 +500,6 @@
     <string name="widget_preview">Predogled gradnika</string>
     <string name="widget_preview_note">Predogled uporablja zadnjo meritev spremljanja. Velikost gradnika določa zaganjalnik.</string>
     <string name="widget_read_at">Meritev %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Raven · Zadnja %1$d\u00A0ura</item>
-        <item quantity="two">Raven · Zadnji %1$d\u00A0uri</item>
-        <item quantity="few">Raven · Zadnje %1$d\u00A0ure</item>
-        <item quantity="other">Raven · Zadnjih %1$d\u00A0ur</item>
-    </plurals>
     <string name="widget_observed_range">Opazovano %1$s–%2$s</string>
     <string name="widget_chart_description">Shranjena raven baterije od %1$s do %2$s. Najmanj %3$s, največ %4$s.</string>
     <string name="widget_save_failed">Tega gradnika ni bilo mogoče shraniti. Poskusite znova.</string>

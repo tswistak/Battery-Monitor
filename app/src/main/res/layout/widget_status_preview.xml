@@ -4,47 +4,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_surface"
+    android:backgroundTint="#DDEFFD"
+    android:foreground="@drawable/widget_border"
+    android:foregroundTint="#CBD9E3"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="12dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/widget_status"
-        android:textColor="#12384F"
-        android:textSize="12sp" />
+        android:layout_height="36dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="0dp"
+        android:paddingEnd="3dp"
+        tools:ignore="UseCompoundDrawables">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="sans-serif-medium"
-            android:paddingStart="0dp"
-            android:paddingEnd="44dp"
-            android:text="@string/widget_preview_level"
-            android:textColor="#12384F"
-            android:textSize="54sp" />
-
-        <!-- Widget previews use framework views, so framework tint is required. -->
         <ImageView
-            android:layout_width="44dp"
-            android:layout_height="64dp"
-            android:layout_gravity="end|center_vertical"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="6dp"
             android:importantForAccessibility="no"
             android:src="@drawable/ui_battery"
-            android:tint="#006B8C"
+            android:tint="#006493"
             tools:ignore="UseAppTint" />
-    </FrameLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="2"
+            android:text="@string/nav_battery_group"
+            android:textColor="#12384F"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="top"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="3dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ui_settings"
+            android:tint="#006493"
+            tools:ignore="UseAppTint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="NestedWeights">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoSizeMaxTextSize="48sp"
+                android:autoSizeMinTextSize="16sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_styled_level"
+                android:textColor="#12384F"
+                android:textSize="48sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/status_discharging"
+                android:textColor="#12384F"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/widget_preview_temperature"
+                android:textColor="#12384F"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:src="@drawable/widget_status_preview_battery" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/status_discharging"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="@string/widget_preview_time_end"
         android:textColor="#12384F"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 </LinearLayout>

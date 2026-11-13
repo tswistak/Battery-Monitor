@@ -488,9 +488,6 @@
     <string name="widget_preview">ウィジェットのプレビュー</string>
     <string name="widget_preview_note">プレビューは監視の前回の測定値を使います。ウィジェットのサイズはランチャーで設定します。</string>
     <string name="widget_read_at">測定 %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="other">残量 · 過去 %1$d\u00A0時間</item>
-    </plurals>
     <string name="widget_observed_range">観測 %1$s–%2$s</string>
     <string name="widget_chart_description">%1$s から %2$s までの保存済みバッテリー残量。最小 %3$s、最大 %4$s。</string>
     <string name="widget_save_failed">このウィジェットを保存できませんでした。再試行してください。</string>

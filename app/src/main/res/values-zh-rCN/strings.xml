@@ -488,9 +488,6 @@
     <string name="widget_preview">小组件预览</string>
     <string name="widget_preview_note">预览使用上次监测读数。小组件大小由启动器设置。</string>
     <string name="widget_read_at">读数 %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="other">电量 · 最近 %1$d\u00A0小时</item>
-    </plurals>
     <string name="widget_observed_range">观测 %1$s–%2$s</string>
     <string name="widget_chart_description">从 %1$s 至 %2$s 保存的电池电量。最小值 %3$s，最大值 %4$s。</string>
     <string name="widget_save_failed">无法保存此小组件。请再试一次。</string>

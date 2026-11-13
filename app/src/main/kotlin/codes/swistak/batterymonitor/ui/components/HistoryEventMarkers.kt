@@ -13,6 +13,17 @@ import codes.swistak.batterymonitor.logs.HistoryEvent
 internal val RebootMarkerRadius = 1.5.dp
 internal val RebootMarkerSpacing = 7.dp
 
+internal val ConnectedMarkerDash = 3.dp
+internal val DisconnectedMarkerDash = 7.dp
+internal val PowerMarkerGap = 4.dp
+
+internal fun historyMarkerTimes(events: List<HistoryEvent>): Map<Int, List<Long>> =
+    events.groupBy { it.code }.mapValues { (_, sameType) ->
+        sameType.flatMap { event ->
+            if (event.first == event.last) listOf(event.first) else listOf(event.first, event.last)
+        }.sorted()
+    }
+
 internal inline fun forEachRebootDot(
     top: Float, bottom: Float, radius: Float, spacing: Float, draw: (y: Float) -> Unit
 ) {

@@ -492,10 +492,6 @@
     <string name="widget_preview">Widget előnézete</string>
     <string name="widget_preview_note">Az előnézet az utolsó figyelési mérést használja. A widget méretét a kezdőképernyő-kezelő állítja be.</string>
     <string name="widget_read_at">Mérés: %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Töltöttség · Utolsó %1$d\u00A0óra</item>
-        <item quantity="other">Töltöttség · Utolsó %1$d\u00A0óra</item>
-    </plurals>
     <string name="widget_observed_range">Megfigyelve: %1$s–%2$s</string>
     <string name="widget_chart_description">Tárolt akkumulátortöltöttség: %1$s–%2$s. Minimum: %3$s, maximum: %4$s.</string>
     <string name="widget_save_failed">A widget nem menthető. Próbálja újra.</string>

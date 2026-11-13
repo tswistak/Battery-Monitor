@@ -501,12 +501,6 @@
     <string name="widget_preview">Náhled widgetu</string>
     <string name="widget_preview_note">Náhled používá poslední měření. Velikost widgetu nastavuje spouštěč.</string>
     <string name="widget_read_at">Měření %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Úroveň · Poslední %1$d\u00A0hodina</item>
-        <item quantity="few">Úroveň · Poslední %1$d\u00A0hodiny</item>
-        <item quantity="many">Úroveň · Posledních %1$d\u00A0hodin</item>
-        <item quantity="other">Úroveň · Posledních %1$d\u00A0hodin</item>
-    </plurals>
     <string name="widget_observed_range">Pozorováno %1$s–%2$s</string>
     <string name="widget_chart_description">Uložená úroveň baterie od %1$s do %2$s. Minimum %3$s, maximum %4$s.</string>
     <string name="widget_save_failed">Tento widget se nepodařilo uložit. Zkuste to znovu.</string>

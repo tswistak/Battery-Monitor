@@ -19,26 +19,27 @@ import android.widget.TextView
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.Locale
 
 class WidgetLocalizationInstrumentedTest {
     @Test
-    fun trend_title_contains_the_configured_history_duration() {
-        val hours = 168
-        val title = renderedTitle()
-        assertTrue("The rendered trend widget must have a title", title.isNotBlank())
-        assertTrue(
-            "The title must include the configured history duration",
-            title.contains(hours.toString())
-        )
-        assertTrue("The title must describe the history duration", title.any(Char::isLetter))
+    fun trend_title_uses_the_same_resource_as_the_configured_history_duration() {
+        for ((hours, label) in listOf(
+            24 to R.string.history_last_24h,
+            72 to R.string.history_last_3d,
+            168 to R.string.history_last_7d
+        )) {
+            assertEquals(label, trendRangeLabel(hours))
+            for (locale in listOf(Locale.ENGLISH, Locale.forLanguageTag("pl"))) {
+                val (rendered, expected) = renderedTitle(hours, label, locale)
+                assertEquals(expected, rendered)
+            }
+        }
     }
 
-    private fun renderedTitle(): String {
-        val locale = Locale.ENGLISH
-        val hours = 168
+    private fun renderedTitle(hours: Int, label: Int, locale: Locale): Pair<String, String> {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val base = instrumentation.targetContext
         val configuration = Configuration(base.resources.configuration).apply { setLocale(locale) }
@@ -64,6 +65,6 @@ class WidgetLocalizationInstrumentedTest {
                 }
             }
         }
-        return requireNotNull(result).getOrThrow()
+        return requireNotNull(result).getOrThrow() to context.getString(label)
     }
 }

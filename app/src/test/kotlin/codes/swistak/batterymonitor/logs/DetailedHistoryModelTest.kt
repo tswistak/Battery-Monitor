@@ -144,7 +144,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun `legacy sparse readings and mixed periodic events match compact continuity`() {
+    fun `legacy and periodic observations use the same gap rule as the compact chart`() {
         val range = HistoryRangeState(0, 10_000_000)
         val legacy = listOf(
             HistoryRecord(1, observation.copy(time = 1, status = 100)),
@@ -155,22 +155,58 @@ class DetailedHistoryModelTest {
                 index + 1L, observation.copy(time = 1 + index * 1_000_000L, status = status)
             )
         }
-        for (records in listOf(
-            legacy, legacy + HistoryRecord(
+        for ((records, segmentCount) in listOf(
+            legacy to 1, (legacy + HistoryRecord(
                 3, observation.copy(time = 9_000_000, status = 200)
-            ), mixed
+            )) to 2, mixed to 1
         )) {
             val compact = historyChart(range, records.asSequence())
             for (metric in HistoryMetric.entries) {
                 val chart = detailedHistoryChart(range, range, metric, 800, records.asSequence())
                 assertEquals(records.map { it.key }, chart.points.map { it.key })
-                assertEquals(1, chart.points.map { it.segment }.distinct().size)
+                assertEquals(segmentCount, chart.points.map { it.segment }.distinct().size)
                 assertEquals(
                     compact.series.getValue(metric).points.map { it.segment },
                     chart.points.map { it.segment })
                 assertEquals(compact.events.map { it.code }, chart.events.map { it.code })
             }
         }
+    }
+
+    @Test
+    fun `an overnight gap survives reduction and a viewport containing only guard readings`() {
+        val hour = 3_600_000L
+        val gap = 12 * hour + 12 * 60_000L
+        val records = rows(600).mapIndexed { index, entry ->
+            if (index < 300) entry else entry.copy(
+                record = entry.record.copy(time = entry.record.time + gap - HISTORY_SAMPLE_INTERVAL_MS)
+            )
+        }.toList()
+        val before = records[299]
+        val after = records[300]
+        val range = HistoryRangeState(0, records.last().record.time + 1)
+
+        val compact = historyChart(
+            range, records.asSequence(), metrics = listOf(HistoryMetric.LEVEL)
+        ).series.getValue(HistoryMetric.LEVEL).points.associateBy { it.key }
+        assertNotEquals(compact.getValue(before.key).segment, compact.getValue(after.key).segment)
+
+        val reduced =
+            detailedHistoryChart(range, range, HistoryMetric.LEVEL, 36, records.asSequence())
+        assertFalse(reduced.raw)
+        assertEquals(2, reduced.points.map { it.segment }.distinct().size)
+        assertTrue(reduced.points.zipWithNext().any { (first, second) ->
+            first.segment == second.segment && second.key.time - first.key.time > 20 * 60_000L
+        })
+
+        val viewport = HistoryRangeState(before.record.time + hour, before.record.time + 8 * hour)
+        val zoomed = detailedHistoryChart(
+            range, viewport, HistoryMetric.LEVEL, 800, sequenceOf(before, after)
+        )
+        assertTrue(zoomed.raw)
+        assertEquals(0L, zoomed.count)
+        assertEquals(listOf(before.key, after.key), zoomed.points.map { it.key })
+        assertNotEquals(zoomed.points.first().segment, zoomed.points.last().segment)
     }
 
     @Test

@@ -12,8 +12,10 @@
 */
 package codes.swistak.batterymonitor.widgets
 
+import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
+import java.util.Collections
 
 internal enum class WidgetFamily(val providerName: String) {
     STATUS("codes.swistak.batterymonitor.widgets.StatusWidgetProvider"), MEASUREMENTS("codes.swistak.batterymonitor.widgets.MeasurementsWidgetProvider"), TREND(
@@ -26,12 +28,19 @@ internal enum class WidgetVariant { ADAPTIVE, COMPACT }
 internal enum class WidgetTapAction { CURRENT_STATE, HISTORY, MEASUREMENT }
 internal enum class WidgetStatusExtra { NONE, TEMPERATURE, REMAINING_CHARGE }
 
+internal fun trendRangeLabel(hours: Int): Int = when (hours) {
+    72 -> R.string.history_last_3d
+    168 -> R.string.history_last_7d
+    else -> R.string.history_last_24h
+}
+
 internal data class WidgetConfiguration(
     val brightness: Brightness? = null,
     val colorSource: ColorSource? = null,
     val temperatureUnit: String? = null,
     val backgroundOpacityPercent: Int = 100,
-    val metrics: List<WidgetMetric> = WidgetMetric.entries.toList(),
+    val metricOrder: List<WidgetMetric> = WidgetMetric.entries,
+    val selectedMetrics: Set<WidgetMetric> = WidgetMetric.entries.toSet(),
     val statusExtra: WidgetStatusExtra = WidgetStatusExtra.TEMPERATURE,
     val variant: WidgetVariant = WidgetVariant.ADAPTIVE,
     val tapAction: WidgetTapAction = WidgetTapAction.CURRENT_STATE,
@@ -39,9 +48,29 @@ internal data class WidgetConfiguration(
     val trendHours: Int = 24,
     val showYAxisLabels: Boolean = true
 ) {
+    val metrics: List<WidgetMetric> get() = metricOrder.filter(selectedMetrics::contains)
+
+    fun canToggleMetric(metric: WidgetMetric): Boolean =
+        if (metric in selectedMetrics) selectedMetrics.size > 2 else selectedMetrics.size < 4
+
+    fun toggleMetric(metric: WidgetMetric): WidgetConfiguration = when {
+        !canToggleMetric(metric) -> this
+        metric in selectedMetrics -> copy(selectedMetrics = selectedMetrics - metric)
+        else -> copy(selectedMetrics = selectedMetrics + metric)
+    }
+
+    fun moveMetric(metric: WidgetMetric, offset: Int): WidgetConfiguration {
+        val from = metricOrder.indexOf(metric)
+        val to = from + offset
+        if (from !in metricOrder.indices || to !in metricOrder.indices) return this
+        return copy(
+            metricOrder = metricOrder.toMutableList().apply { Collections.swap(this, from, to) })
+    }
+
     fun isValid(): Boolean = backgroundOpacityPercent in 0..100 && temperatureUnit in listOf(
         null, TEMPERATURE_CELSIUS, TEMPERATURE_FAHRENHEIT
-    ) && metrics.size in 2..4 && metrics.distinct().size == metrics.size && trendHours in listOf(
+    ) && selectedMetrics.size in 2..4 && metricOrder.size == WidgetMetric.entries.size && metricOrder.toSet()
+        .containsAll(WidgetMetric.entries) && trendHours in listOf(
         24, 72, 168
     )
 
@@ -51,19 +80,19 @@ internal data class WidgetConfiguration(
         colorSource?.name.orEmpty(),
         temperatureUnit.orEmpty(),
         backgroundOpacityPercent.toString(),
-        metrics.joinToString(",") { it.name },
+        WidgetMetric.entries.filter(selectedMetrics::contains).joinToString(",") { it.name },
         statusExtra.name,
         variant.name,
         tapAction.name,
         tapMetric.name,
         trendHours.toString(),
-        showYAxisLabels.toString()
-    ).joinToString("|")
+        showYAxisLabels.toString(),
+        metricOrder.joinToString(",") { it.name }).joinToString("|")
 
     companion object {
         const val TEMPERATURE_CELSIUS = "celsius"
         const val TEMPERATURE_FAHRENHEIT = "fahrenheit"
-        private const val SCHEMA_VERSION = 2
+        private const val SCHEMA_VERSION = 3
 
         fun defaults(family: WidgetFamily): WidgetConfiguration = WidgetConfiguration(
             tapAction = when (family) {
@@ -75,13 +104,17 @@ internal data class WidgetConfiguration(
 
         internal fun decode(value: String): WidgetConfiguration? = runCatching {
             val parts = value.split('|')
-            require(parts.size == 12 && parts[0].toInt() == SCHEMA_VERSION)
+            require(parts.size == 13 && parts[0].toInt() == SCHEMA_VERSION)
+            val selected = parts[5].split(',').map(WidgetMetric::valueOf)
+            require(selected.distinct().size == selected.size)
+            val order = parts[12].split(',').map(WidgetMetric::valueOf)
             WidgetConfiguration(
                 brightness = parts[1].takeIf(String::isNotEmpty)?.let(Brightness::valueOf),
                 colorSource = parts[2].takeIf(String::isNotEmpty)?.let(ColorSource::valueOf),
                 temperatureUnit = parts[3].takeIf(String::isNotEmpty),
                 backgroundOpacityPercent = parts[4].toInt(),
-                metrics = parts[5].split(',').map(WidgetMetric::valueOf),
+                metricOrder = order,
+                selectedMetrics = selected.toSet(),
                 statusExtra = WidgetStatusExtra.valueOf(parts[6]),
                 variant = WidgetVariant.valueOf(parts[7]),
                 tapAction = WidgetTapAction.valueOf(parts[8]),

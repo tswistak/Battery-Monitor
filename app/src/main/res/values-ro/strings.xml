@@ -496,11 +496,6 @@
     <string name="widget_preview">Previzualizarea widgetului</string>
     <string name="widget_preview_note">Previzualizarea folosește ultima citire a monitorului. Dimensiunea widgetului este stabilită de lansator.</string>
     <string name="widget_read_at">Citire %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Nivel · Ultima %1$d\u00A0oră</item>
-        <item quantity="few">Nivel · Ultimele %1$d\u00A0ore</item>
-        <item quantity="other">Nivel · Ultimele %1$d\u00A0de ore</item>
-    </plurals>
     <string name="widget_observed_range">Observat %1$s–%2$s</string>
     <string name="widget_chart_description">Nivelul bateriei salvat de la %1$s la %2$s. Minim %3$s, maxim %4$s.</string>
     <string name="widget_save_failed">Acest widget nu a putut fi salvat. Încearcă din nou.</string>

@@ -35,12 +35,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
@@ -62,6 +60,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -71,6 +70,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -81,6 +82,7 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import codes.swistak.batterymonitor.R
@@ -97,10 +99,13 @@ import codes.swistak.batterymonitor.widgets.WidgetFamily
 import codes.swistak.batterymonitor.widgets.WidgetMetric
 import codes.swistak.batterymonitor.widgets.WidgetPreviewData
 import codes.swistak.batterymonitor.widgets.WidgetRenderer
+import codes.swistak.batterymonitor.widgets.WidgetSize
+import codes.swistak.batterymonitor.widgets.WidgetSizes
 import codes.swistak.batterymonitor.widgets.WidgetStatusExtra
 import codes.swistak.batterymonitor.widgets.WidgetTapAction
 import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
 import codes.swistak.batterymonitor.widgets.WidgetVariant
+import codes.swistak.batterymonitor.widgets.trendRangeLabel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -210,18 +215,31 @@ private fun WidgetConfigurationScreen(
     val update: (WidgetConfiguration) -> Unit = { draftRecord = it.encode() }
     val context = LocalContext.current
     val trendHours = draft.trendHours.takeIf { family == WidgetFamily.TREND }
-    val previewData by produceState<WidgetPreviewData?>(null, context, trendHours) {
-        value = WidgetUpdateDispatcher.previewData(context, trendHours)
-    }
-    val deviceConfiguration = LocalConfiguration.current
-    val remoteViews by produceState<RemoteViews?>(
-        null, context, family, draft, previewData, deviceConfiguration
-    ) {
-        val data = previewData ?: return@produceState
-        value = withContext(Dispatchers.IO) {
-            WidgetRenderer.preview(context, family, draft, data)
+    val previewData by key(trendHours) {
+        produceState<WidgetPreviewData?>(null, context) {
+            value = WidgetUpdateDispatcher.previewData(context, trendHours)
         }
     }
+    val deviceConfiguration = LocalConfiguration.current
+    val orientation = deviceConfiguration.orientation
+    val targetSize by produceState<WidgetSize?>(null, context, widgetId, family, orientation) {
+        value = withContext(Dispatchers.IO) {
+            val options = AppWidgetManager.getInstance(context).getAppWidgetOptions(widgetId)
+            WidgetSizes.preview(family, options, orientation)
+        }
+    }
+    val preview by produceState<Pair<WidgetSize, RemoteViews>?>(
+        null, context, family, draft, previewData, targetSize, deviceConfiguration
+    ) {
+        val data = previewData ?: return@produceState
+        val size = targetSize ?: return@produceState
+        value = withContext(Dispatchers.IO) {
+            size to WidgetRenderer.preview(
+                context, family, draft, data, size.widthDp, size.heightDp
+            )
+        }
+    }
+    val (previewSize, remoteViews) = preview ?: (WidgetSizes.default(family) to null)
     val locale = deviceConfiguration.locales[0]
     val numberFormat = remember(locale) {
         NumberFormat.getIntegerInstance(locale).apply { isGroupingUsed = false }
@@ -285,9 +303,9 @@ private fun WidgetConfigurationScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            WidgetPreview(family, providerInfo, Color(0xFFE1E8EF), remoteViews)
+            WidgetPreview(providerInfo, Color(0xFFE1E8EF), previewSize, remoteViews)
             if (draft.backgroundOpacityPercent == 0) {
-                WidgetPreview(family, providerInfo, Color(0xFF17232D), remoteViews)
+                WidgetPreview(providerInfo, Color(0xFF17232D), previewSize, remoteViews)
                 Text(
                     stringResource(R.string.widget_transparent_warning),
                     style = MaterialTheme.typography.bodyMedium
@@ -312,22 +330,19 @@ private fun WidgetConfigurationScreen(
                         )
                     }) { update(draft.copy(statusExtra = it)) }
 
-                WidgetFamily.MEASUREMENTS -> MetricSelection(draft.metrics) {
-                    update(
-                        draft.copy(
-                            metrics = it
-                        )
-                    )
-                }
+                WidgetFamily.MEASUREMENTS -> MetricSelection(draft, update)
 
                 WidgetFamily.TREND -> {
                     ChoiceField(
                         stringResource(R.string.history_range), draft.trendHours, listOf(
-                            24 to stringResource(R.string.history_last_24h),
-                            72 to stringResource(R.string.history_last_3d),
-                            168 to stringResource(R.string.history_last_7d)
+                            24, 72, 168
+                        ).map { it to stringResource(trendRangeLabel(it)) }) {
+                        update(
+                            draft.copy(
+                                trendHours = it
+                            )
                         )
-                    ) { update(draft.copy(trendHours = it)) }
+                    }
                     Row(
                         Modifier
                             .fillMaxWidth()
@@ -421,14 +436,21 @@ private fun WidgetConfigurationScreen(
                     WidgetTapAction.MEASUREMENT to stringResource(R.string.widget_measurement_details)
                 )
             ) { update(draft.copy(tapAction = it)) }
-            if (draft.tapAction == WidgetTapAction.MEASUREMENT) ChoiceField(
-                stringResource(R.string.widget_tap_measurement),
-                draft.tapMetric,
-                WidgetMetric.entries.map { it to metricLabel(it) }) { update(draft.copy(tapMetric = it)) }
+            if (draft.tapAction == WidgetTapAction.MEASUREMENT && family != WidgetFamily.MEASUREMENTS) {
+                ChoiceField(
+                    stringResource(R.string.widget_tap_measurement),
+                    draft.tapMetric,
+                    WidgetMetric.entries.map { it to metricLabel(it) }) {
+                    update(
+                        draft.copy(
+                            tapMetric = it
+                        )
+                    )
+                }
+            }
         }
     }
 }
-
 
 @Composable
 private fun <T> ChoiceField(
@@ -460,7 +482,9 @@ private fun <T> ChoiceField(
 }
 
 @Composable
-private fun MetricSelection(selected: List<WidgetMetric>, onChange: (List<WidgetMetric>) -> Unit) {
+private fun MetricSelection(
+    draft: WidgetConfiguration, onChange: (WidgetConfiguration) -> Unit
+) {
     Column {
         Text(
             stringResource(R.string.widget_metric_selection),
@@ -470,53 +494,43 @@ private fun MetricSelection(selected: List<WidgetMetric>, onChange: (List<Widget
             stringResource(R.string.widget_metric_selection_hint),
             style = MaterialTheme.typography.bodySmall
         )
-        val order = selected + WidgetMetric.entries.filter { it !in selected }
-        order.forEach { metric ->
-            val index = selected.indexOf(metric)
-            val label = metricLabel(metric)
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Row(
-                    Modifier
-                        .weight(1f)
-                        .heightIn(min = 48.dp)
-                        .toggleable(
-                            value = index >= 0,
-                            enabled = index < 0 || selected.size > 2,
-                            role = Role.Checkbox,
-                            onValueChange = { checked -> onChange(if (checked) selected + metric else selected - metric) }),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
-                ) {
-                    Checkbox(
-                        checked = index >= 0,
-                        enabled = index < 0 || selected.size > 2,
-                        onCheckedChange = null
-                    )
-                    Text(label)
-                }
-                TooltipIconButton(
-                    label = stringResource(R.string.settings_move_item_up, label), onClick = {
-                        onChange(
-                            selected.toMutableList()
-                                .apply { java.util.Collections.swap(this, index, index - 1) })
-                    }, enabled = index > 0
-                ) {
-                    Icon(
-                        painterResource(R.drawable.ui_up),
-                        stringResource(R.string.settings_move_item_up, label)
-                    )
-                }
-                TooltipIconButton(
-                    label = stringResource(R.string.settings_move_item_down, label), onClick = {
-                        onChange(
-                            selected.toMutableList()
-                                .apply { java.util.Collections.swap(this, index, index + 1) })
-                    }, enabled = index >= 0 && index < selected.lastIndex
-                ) {
-                    Icon(
-                        painterResource(R.drawable.ui_down),
-                        stringResource(R.string.settings_move_item_down, label)
-                    )
+        draft.metricOrder.forEachIndexed { index, metric ->
+            key(metric) {
+                val checked = metric in draft.selectedMetrics
+                val canToggle = draft.canToggleMetric(metric)
+                val label = metricLabel(metric)
+                val moveUp = stringResource(R.string.settings_move_item_up, label)
+                val moveDown = stringResource(R.string.settings_move_item_down, label)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        Modifier
+                            .weight(1f)
+                            .heightIn(min = 48.dp)
+                            .toggleable(
+                                value = checked,
+                                enabled = canToggle,
+                                role = Role.Checkbox,
+                                onValueChange = { onChange(draft.toggleMetric(metric)) }),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+                    ) {
+                        Checkbox(checked = checked, enabled = canToggle, onCheckedChange = null)
+                        Text(label)
+                    }
+                    TooltipIconButton(
+                        label = moveUp,
+                        onClick = { onChange(draft.moveMetric(metric, -1)) },
+                        enabled = index > 0
+                    ) {
+                        Icon(painterResource(R.drawable.ui_up), contentDescription = moveUp)
+                    }
+                    TooltipIconButton(
+                        label = moveDown,
+                        onClick = { onChange(draft.moveMetric(metric, 1)) },
+                        enabled = index < draft.metricOrder.lastIndex
+                    ) {
+                        Icon(painterResource(R.drawable.ui_down), contentDescription = moveDown)
+                    }
                 }
             }
         }
@@ -535,9 +549,9 @@ private fun metricLabel(metric: WidgetMetric): String = stringResource(
 
 @Composable
 private fun WidgetPreview(
-    family: WidgetFamily,
     providerInfo: AppWidgetProviderInfo,
     wallpaper: Color,
+    size: WidgetSize,
     remoteViews: RemoteViews?
 ) {
     val description = stringResource(R.string.widget_preview)
@@ -550,22 +564,30 @@ private fun WidgetPreview(
     ) {
         AndroidView(
             factory = { viewContext ->
-            object : AppWidgetHostView(viewContext) {
-                override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
+                object : AppWidgetHostView(viewContext) {
+                    override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
 
-                @SuppressLint("ClickableViewAccessibility")
-                override fun onTouchEvent(event: MotionEvent): Boolean = true
-            }.apply {
-                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
-                setPadding(0, 0, 0, 0)
-            }
-        },
+                    @SuppressLint("ClickableViewAccessibility")
+                    override fun onTouchEvent(event: MotionEvent): Boolean = true
+                }.apply {
+                    importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                    setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
+                    setPadding(0, 0, 0, 0)
+                }
+            },
             update = { host -> remoteViews?.let(host::updateAppWidget) },
-            modifier = Modifier
-                .widthIn(max = if (family == WidgetFamily.STATUS) 220.dp else 350.dp)
-                .fillMaxWidth()
-                .height(230.dp)
-        )
+            modifier = Modifier.layout { measurable, constraints ->
+                val width = size.widthDp.dp.roundToPx()
+                val height = size.heightDp.dp.roundToPx()
+                val widget = measurable.measure(Constraints.fixed(width, height))
+                val scale = minOf(1f, constraints.maxWidth.toFloat() / width)
+                layout((width * scale).roundToInt(), (height * scale).roundToInt()) {
+                    widget.placeWithLayer(0, 0) {
+                        transformOrigin = TransformOrigin(0f, 0f)
+                        scaleX = scale
+                        scaleY = scale
+                    }
+                }
+            })
     }
 }

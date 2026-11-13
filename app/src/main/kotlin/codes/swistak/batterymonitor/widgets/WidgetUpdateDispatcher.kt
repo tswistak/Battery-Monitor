@@ -36,7 +36,6 @@ internal object WidgetUpdateDispatcher {
     private var latestSnapshot: WidgetSnapshot? = null
     private var persistedSnapshot: WidgetSnapshot? = null
     private val trends = mutableMapOf<Int, Pair<Long, WidgetTrend>>()
-    private var trendVersion = 0L
 
     suspend fun previewData(context: Context, trendHours: Int?): WidgetPreviewData =
         withContext(dispatcher) {
@@ -153,47 +152,24 @@ internal object WidgetUpdateDispatcher {
                 try {
                     val config = store.load(id, family)
                     val options = manager.getAppWidgetOptions(id)
-                    val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 180)
-                        .coerceIn(100, 1200)
-                    val maxHeight =
-                        options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 180)
-                            .coerceIn(80, 1200)
-                    val maxWidth =
-                        options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH, minWidth)
-                            .coerceIn(100, 1200)
-                    val minHeight =
-                        options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, maxHeight)
-                            .coerceIn(80, 1200)
                     val trend = if (family == WidgetFamily.TREND) {
                         if (!batchTrends.containsKey(config.trendHours)) {
                             batchTrends[config.trendHours] = trend(context, config.trendHours)
                         }
                         batchTrends[config.trendHours]
                     } else null
-                    val portrait = WidgetRenderer.render(
-                        context,
-                        id,
-                        family,
-                        config,
-                        snapshot,
-                        minWidth,
-                        maxHeight,
-                        trend,
-                        monitoringEnabled
-                    )
-                    val views = if (minWidth == maxWidth && minHeight == maxHeight) portrait else {
-                        val landscape = WidgetRenderer.render(
+                    val views = WidgetSizes.remoteViews(family, options) { size ->
+                        WidgetRenderer.render(
                             context,
                             id,
                             family,
                             config,
                             snapshot,
-                            maxWidth,
-                            minHeight,
+                            size.widthDp,
+                            size.heightDp,
                             trend,
                             monitoringEnabled
                         )
-                        android.widget.RemoteViews(landscape, portrait)
                     }
                     manager.updateAppWidget(id, views)
                 } catch (error: Exception) {
@@ -217,11 +193,7 @@ internal object WidgetUpdateDispatcher {
             val chart = db.readHistory(historyQuery(range)) {
                 historyChart(range, it, metrics = listOf(HistoryMetric.LEVEL))
             }
-            val series = chart.series.getValue(HistoryMetric.LEVEL)
-            val points = series.points.map { WidgetTrendPoint(it.key.time, it.value, it.segment) }
-            WidgetTrend(
-                range.start, range.end, points, series.min, series.max, ++trendVersion
-            ).also {
+            WidgetTrend.fromHistory(chart).also {
                 trends[hours] = elapsed to it
             }
         } catch (error: Exception) {

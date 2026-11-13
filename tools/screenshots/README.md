@@ -61,6 +61,8 @@ Avoid `am force-stop` in this workflow. On Android 15+, relaunching an app from 
 
 Seeding replaces this disposable installation's history, alarms, settings and predictor data. It imports schema-2 history JSON through the production `DeviceDataBackup` reader. Roughly seven days of two-minute observations use seven distinct daily profiles: overnight, late-morning and evening charging, partial charges, two short top-ups and two days without charging. Charging tapers, overnight idle is gradual, and heavier use varies through the day. Exact plug transitions use the production `STATUS_NEW` encoding; level changes use `STATUS_OLD`, and same-level periodic observations use `STATUS_SAMPLE`. The range boundary is not a fictitious connect/disconnect event.
 
+The imported history includes one synthetic reboot five hours before the fixture's anchor so the Trend widget can show its reboot marker. The predictor replay still uses only the battery observations.
+
 The separate predictor is trained by replaying these observations through the actual `PredictorCore`. Its learned averages and current state version are persisted; a fresh production `Predictor` must then calculate a plausible estimate. Recent session observations are memory-only and are not claimed to survive a restart. The target is manually configured to 80%; the emulator does not detect an OEM charging limit.
 
 The default charging scene ends at 68%, +1,650,000 µA, 4,000 mV, 330 tenths °C and 3,060,000 µAh, corresponding to a 4,500 mAh scenario capacity. The UI derives 6.6 W of battery-side power. To prepare the alternate discharging scene, repeat the stopped-app seed sequence with `--es state discharging`; it ends at 68%, −140,000 µA, 4,000 mV, 290 tenths °C and 3,060,000 µAh. Its final hour falls gradually from about 71% to 68%, consistent with a light-use estimate of roughly 22 hours. Do not combine readings from the two scenes.
@@ -81,9 +83,9 @@ Every seed checks timestamp ordering/range, observation gaps, gradual temperatur
 
 Use English (United States), Celsius, default font scale, ordinary phone density and consistent timezone. Match SystemUI's simulated battery level/status to the selected scene; the helper does not change SystemUI. Launch normally, complete permission/background setup, and verify the actual Current State, latest history, notification and widgets before capturing. Use the actual launcher widget workflow and normal application settings to change themes or notification content.
 
-Set the disposable emulator's actual display with `adb -s "$SERIAL" shell wm size 1080x2400` for images 1–3, 5, 7 and 8. Use `1080x1920` for image 4, and rotate the actual `1080x2400` display for landscape image 6. Keep density 420 and font scale 1.0. Restore display overrides with `adb -s "$SERIAL" shell wm size reset` during cleanup.
+Set the disposable emulator's actual display with `adb -s "$SERIAL" shell wm size 1080x2400`. Rotate it for landscape image 6. Use font scale 1.0 and density 420; image 4 uses density 360. Restore overrides with `adb -s "$SERIAL" shell wm size reset` and `adb -s "$SERIAL" shell wm density reset` during cleanup.
 
-For the phone widget image, use a full AOSP (`default`) emulator image, a 1080 × 1920 display at density 420, and font scale 1.0. Select **Wallpaper & style → App grid → 4 × 4** through the launcher's normal controls. Put Trend and Status at 2 × 2 each above Measurements at 4 × 2 on a blank launcher page. Remove unrelated dock shortcuts and keep the first page's search widget out of the capture. Verify all four Measurements values fit without ellipses before capture. Resize the actual widgets through the launcher; do not resize the PNG to imitate a shorter chart.
+For image 4, use Pixel Launcher on an Android 16 emulator at 1080 × 2400, effective density 360 (`adb -s "$SERIAL" shell wm density 360`), and font scale 1.0. On a four-column workspace, place Status and Measurements side by side at 2 × 2 cells each and Trend below them at 4 × 2, set to **Last 24 hours**. Leave the unused rows empty. Use a blank launcher page; stage and resize the cards on another page if the launcher needs room for their initial sizes. Dismiss the resize handles and confirm the battery illustration, all four readings, and the chart axes and event markers are visible before capturing the native PNG.
 
 If SystemUI demo mode is used to hide unrelated notification icons, set its clock from this emulator's actual time immediately before each capture and keep its battery level/status equal to the real battery overrides. Reseed before final captures if lengthy launcher preparation has aged the fixture; this uses the same production import/predictor checks and does not alter widget configuration.
 
@@ -106,14 +108,14 @@ Keep final images and this guide. APKs, emulator disks, disposable keys and devi
 
 ## Asset inventory
 
-Use English (United States), Europe/Warsaw time, Celsius, density 420 and font scale 1.0 for the phone images. Select the Battery Blue palette and the appearance listed below through the app's real settings. For image 5, expand the ordinary persistent notification with Live Update set to “Never”; an API 36 emulator provides the required SystemUI layout. Capture native PNGs at the listed display sizes.
+Use English (United States), Europe/Warsaw time, Celsius, and font scale 1.0 for the phone images. Use density 420 except for image 4, which uses 360. Select the Battery Blue palette and the appearance listed below through the app's real settings. For image 5, expand the ordinary persistent notification with Live Update set to “Never”; an API 36 emulator provides the required SystemUI layout. Capture native PNGs at the listed display sizes.
 
 | File | Subject | Size | Appearance |
 | --- | --- | --- | --- |
 | [1.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | Current battery readings and charging estimate to the manual 80% target | 1080 × 2400 | Light |
 | [2.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | Battery-level history over 24 hours | 1080 × 2400 | Light |
 | [3.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | Grouped battery alarms with enabled and disabled thresholds | 1080 × 2400 | Light |
-| [4.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | Trend 2 × 2, Status 2 × 2 and Measurements 4 × 2 launcher widgets | 1080 × 1920 | Light |
+| [4.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | Status and Measurements (2 × 2 each), with 24-hour Trend (4 × 2) below | 1080 × 2400 | Light |
 | [5.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | Expanded ordinary persistent battery notification | 1080 × 2400 | SystemUI |
 | [6.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | Landscape fullscreen comparison of battery level and temperature | 2400 × 1080 | Dark |
 | [7.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | History Events with Plugged in, Unplugged and Measurements selected: 3 of 9 event types | 1080 × 2400 | Light |

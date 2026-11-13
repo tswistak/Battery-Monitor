@@ -496,11 +496,6 @@
     <string name="widget_preview">Pré-visualização do widget</string>
     <string name="widget_preview_note">A pré-visualização usa a última leitura do monitor. O tamanho do widget é definido pelo seu launcher.</string>
     <string name="widget_read_at">Leitura %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Nível · Última %1$d\u00A0hora</item>
-        <item quantity="many">Nível · Últimas %1$d\u00A0horas</item>
-        <item quantity="other">Nível · Últimas %1$d\u00A0horas</item>
-    </plurals>
     <string name="widget_observed_range">Observado %1$s–%2$s</string>
     <string name="widget_chart_description">Nível da bateria salvo de %1$s a %2$s. Mínimo %3$s, máximo %4$s.</string>
     <string name="widget_save_failed">Não foi possível salvar este widget. Tente novamente.</string>

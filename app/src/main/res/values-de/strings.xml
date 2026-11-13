@@ -492,10 +492,6 @@
     <string name="widget_preview">Widget-Vorschau</string>
     <string name="widget_preview_note">Die Vorschau verwendet den letzten Überwachungsmesswert. Die Widget-Größe wird durch Ihren Launcher festgelegt.</string>
     <string name="widget_read_at">Messwert %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Ladestand · Letzte %1$d\u00A0Stunde</item>
-        <item quantity="other">Ladestand · Letzte %1$d\u00A0Stunden</item>
-    </plurals>
     <string name="widget_observed_range">Beobachtet %1$s–%2$s</string>
     <string name="widget_chart_description">Gespeicherter Akkustand von %1$s bis %2$s. Minimum %3$s, Maximum %4$s.</string>
     <string name="widget_save_failed">Dieses Widget konnte nicht gespeichert werden. Versuchen Sie es erneut.</string>

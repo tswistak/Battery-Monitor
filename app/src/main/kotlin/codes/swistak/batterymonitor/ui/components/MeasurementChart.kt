@@ -266,13 +266,7 @@ internal fun MeasurementChart(
     val outline = MaterialTheme.colorScheme.outlineVariant
     val eventColor = MaterialTheme.colorScheme.onSurfaceVariant
     val eventTimes = remember(model.events, compact) {
-        if (compact) emptyMap() else model.events.groupBy { it.code }.mapValues { (_, events) ->
-            events.flatMap { event ->
-                if (event.first == event.last) listOf(event.first) else listOf(
-                    event.first, event.last
-                )
-            }.sorted()
-        }
+        if (compact) emptyMap() else historyMarkerTimes(model.events)
     }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (!compact) {
@@ -385,10 +379,14 @@ internal fun MeasurementChart(
                         val dotRadius = RebootMarkerRadius.toPx()
                         val dotSpacing = RebootMarkerSpacing.toPx()
                         val strokeWidth = 1.dp.toPx()
+                        val gap = PowerMarkerGap.toPx()
                         val shortDashes =
-                            PathEffect.dashPathEffect(floatArrayOf(3.dp.toPx(), 4.dp.toPx()))
-                        val longDashes =
-                            PathEffect.dashPathEffect(floatArrayOf(7.dp.toPx(), 4.dp.toPx()))
+                            PathEffect.dashPathEffect(floatArrayOf(ConnectedMarkerDash.toPx(), gap))
+                        val longDashes = PathEffect.dashPathEffect(
+                            floatArrayOf(
+                                DisconnectedMarkerDash.toPx(), gap
+                            )
+                        )
                         clipRect(inset, inset, right, bottom) {
                             forEachHistoryEventMarker(
                                 eventTimes, inset, right, dotRadius, strokeWidth, ::x

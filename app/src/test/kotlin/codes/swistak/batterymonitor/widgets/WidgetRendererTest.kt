@@ -14,10 +14,14 @@ package codes.swistak.batterymonitor.widgets
 
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import codes.swistak.batterymonitor.ui.components.historyAxisFormatter
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.Instant
+import java.time.ZoneId
+import java.util.Locale
 
 class WidgetRendererTest {
     @Test
@@ -44,38 +48,20 @@ class WidgetRendererTest {
     }
 
     @Test
-    fun `a short host allocation selects compact content without changing widget configuration`() {
-        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 100))
-        assertFalse(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 230))
-        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 230, 140))
-        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.COMPACT, 230))
+    fun `compact is selected for constrained allocations or an explicit preference`() {
+        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 100, 260))
+        assertFalse(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 180, 200))
+        assertFalse(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 230, 140))
+        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 230, 130))
+        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.COMPACT, 230, 200))
     }
 
     @Test
-    fun `four measurements fit a single row only when the host provides enough width`() {
-        assertEquals(4, WidgetRenderer.measurementColumns(400, 110, true, 4))
-        assertEquals(2, WidgetRenderer.measurementColumns(200, 110, true, 4))
-        assertEquals(2, WidgetRenderer.measurementColumns(400, 230, false, 4))
-    }
-
-    @Test
-    fun `short narrow measurements retain the first two configured metrics while larger allocations show all`() {
-        val metrics = listOf(
-            WidgetMetric.REMAINING_CHARGE,
-            WidgetMetric.CURRENT,
-            WidgetMetric.VOLTAGE,
-            WidgetMetric.TEMPERATURE
-        )
-        val narrow = WidgetRenderer.visibleMetrics(metrics, 180, 100)
-        val wide = WidgetRenderer.visibleMetrics(metrics, 400, 100)
-        val tall = WidgetRenderer.visibleMetrics(metrics, 180, 230)
-        assertEquals(narrow, metrics.take(2))
-        assertEquals(metrics, wide)
-        assertEquals(metrics, tall)
-        assertEquals(2, WidgetRenderer.measurementColumns(180, 100, true, narrow.size))
-        assertEquals(4, WidgetRenderer.measurementColumns(400, 100, true, wide.size))
-        assertEquals(2, WidgetRenderer.measurementColumns(180, 230, false, tall.size))
-        assertEquals(metrics.take(3), WidgetRenderer.visibleMetrics(metrics.take(3), 300, 100))
+    fun `measurement rows reflow for wide short and narrow tall content`() {
+        assertEquals(4, WidgetRenderer.measurementColumns(360, 84, 4))
+        assertEquals(2, WidgetRenderer.measurementColumns(176, 104, 4))
+        assertEquals(2, WidgetRenderer.measurementColumns(360, 200, 4))
+        assertEquals(1, WidgetRenderer.measurementColumns(146, 220, 4))
     }
 
     @Test
@@ -96,15 +82,15 @@ class WidgetRendererTest {
 
     @Test
     fun `Y axis retains scale endpoints when crowded and only the midpoint for compact widgets`() {
-        assertEquals(listOf(45.0, 37.5, 30.0), WidgetRenderer.chartAxisValues(30.0, 45.0, false))
-        assertEquals(listOf(37.5), WidgetRenderer.chartAxisValues(30.0, 45.0, true))
-        assertEquals(listOf(100.0, 70.0, 40.0), WidgetRenderer.chartAxisValues(40.0, 100.0, false))
+        assertEquals(listOf(45.0, 37.5, 30.0), WidgetTrendChart.axisValues(30.0, 45.0, false))
+        assertEquals(listOf(37.5), WidgetTrendChart.axisValues(30.0, 45.0, true))
+        assertEquals(listOf(100.0, 70.0, 40.0), WidgetTrendChart.axisValues(40.0, 100.0, false))
         assertEquals(
             listOf(100.0, 40.0),
-            WidgetRenderer.chartAxisValues(40.0, 100.0, false, includeMiddle = false)
+            WidgetTrendChart.axisValues(40.0, 100.0, false, includeMiddle = false)
         )
         assertEquals(
-            listOf(70.0), WidgetRenderer.chartAxisValues(40.0, 100.0, true, includeMiddle = false)
+            listOf(70.0), WidgetTrendChart.axisValues(40.0, 100.0, true, includeMiddle = false)
         )
     }
 
@@ -120,7 +106,7 @@ class WidgetRendererTest {
         )
         assertEquals(
             listOf(listOf(10L, 20L), listOf(40L), listOf(50L, 60L)),
-            WidgetRenderer.chartRuns(points, 0, 100).map { run -> run.map { it.time } })
+            WidgetTrendChart.runs(points, 0, 100).map { run -> run.map { it.time } })
     }
 
     @Test
@@ -136,7 +122,39 @@ class WidgetRendererTest {
         )
         assertEquals(
             listOf(listOf(10L), listOf(50L), listOf(40L)),
-            WidgetRenderer.chartRuns(points, 0, 100).map { run -> run.map { it.time } })
-        assertTrue(WidgetRenderer.chartRuns(emptyList(), 0, 100).isEmpty())
+            WidgetTrendChart.runs(points, 0, 100).map { run -> run.map { it.time } })
+        assertTrue(WidgetTrendChart.runs(emptyList(), 0, 100).isEmpty())
+    }
+
+    @Test
+    fun `time ticks keep plot endpoints and add intermediate times only when their labels fit`() {
+        val start = Instant.parse("2026-11-05T16:34:00Z").toEpochMilli()
+        val left = 27f
+        for (hours in listOf(24, 72, 168)) {
+            val end = start + hours * 3_600_000L
+            val formatter = historyAxisFormatter(
+                end - start, Locale.forLanguageTag("pl-PL"), ZoneId.of("Europe/Warsaw")
+            )
+
+            fun ticks(width: Float) = WidgetTrendChart.timeTicks(
+                start,
+                end,
+                left,
+                left + width,
+                6f,
+                { formatter.format(Instant.ofEpochMilli(it)) },
+                { 36f })
+            assertEquals(listOf(start, end - 1), ticks(100f).map { it.time })
+            val wide = ticks(250f)
+            assertEquals(4, wide.size)
+            assertEquals(left, wide.first().left, 0.01f)
+            assertEquals(left + 250f, wide.last().left + wide.last().width, 0.01f)
+            for (tick in wide) {
+                val expected = left + (tick.time - start).toDouble() / (end - start) * 250f
+                assertEquals(expected.toFloat(), tick.x, 0.01f)
+            }
+            assertTrue(wide.zipWithNext().all { (a, b) -> a.left + a.width + 6f <= b.left })
+            if (hours > 24) assertTrue(wide.first().label != wide.last().label)
+        }
     }
 }

@@ -14,11 +14,6 @@ package codes.swistak.batterymonitor.widgets
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.DashPathEffect
-import android.graphics.Paint
-import android.graphics.Path
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
@@ -26,29 +21,26 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import androidx.compose.ui.graphics.toArgb
-import androidx.core.graphics.createBitmap
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
-import codes.swistak.batterymonitor.logs.HistoryMetric
-import codes.swistak.batterymonitor.logs.HistorySeries
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.TemperatureUnit
-import codes.swistak.batterymonitor.ui.components.historyChartScale
 import codes.swistak.batterymonitor.ui.theme.batteryColorScheme
 import codes.swistak.batterymonitor.ui.theme.brightness
 import codes.swistak.batterymonitor.ui.theme.colorSource
 import java.text.NumberFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.Date
 import kotlin.math.roundToInt
 
 internal object WidgetRenderer {
-    private const val MAX_CHARTS = 4
-    private val chartCache = LinkedHashMap<WidgetChartKey, Bitmap>(MAX_CHARTS, 0.75f, true)
-
     fun render(
         context: Context,
         appWidgetId: Int,
@@ -112,24 +104,29 @@ internal object WidgetRenderer {
         views.setTextColor(R.id.widget_title, foreground)
         views.setTextColor(R.id.widget_age, muted)
         views.setTextViewText(R.id.widget_age, age)
-        val padding = dp(context, if (compact) 10 else 16)
-        views.setViewPadding(R.id.widget_content, padding, padding, padding, padding)
-        val shortMeasurements = family == WidgetFamily.MEASUREMENTS && heightDp < 120
+        val paddingDp = if (compact) 8 else 12
+        val topDp = 12
+        val shortMeasurements = family == WidgetFamily.MEASUREMENTS && heightDp < 132
+        val endDp = if (shortMeasurements) 48 else paddingDp
+        val rtl = context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+        views.setViewPadding(
+            R.id.widget_content,
+            dp(context, if (rtl) endDp else paddingDp),
+            dp(context, topDp),
+            dp(context, if (rtl) paddingDp else endDp),
+            dp(context, paddingDp)
+        )
         views.setViewVisibility(
             R.id.widget_header, if (shortMeasurements) View.GONE else View.VISIBLE
         )
-        views.setInt(R.id.widget_age, "setMaxLines", if (shortMeasurements) 1 else 2)
+        val contentWidthDp = (widthDp - paddingDp - endDp).coerceAtLeast(1)
+        val footerLines = if (heightDp >= 172) 2 else 1
+        views.setInt(R.id.widget_age, "setMaxLines", footerLines)
+        val bodyHeightDp =
+            (heightDp - topDp - paddingDp - (if (shortMeasurements) 0 else 36) - widgetLabelHeightDp(
+                context, age, contentWidthDp, 11f, footerLines
+            )).coerceAtLeast(1)
         views.removeAllViews(R.id.widget_body)
-        if (shortMeasurements) {
-            val rtl = context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
-            views.setViewPadding(
-                R.id.widget_content,
-                if (rtl) dp(context, 48) else padding,
-                padding,
-                if (rtl) padding else dp(context, 48),
-                padding
-            )
-        }
         views.setViewVisibility(R.id.widget_family_icon, if (compact) View.GONE else View.VISIBLE)
         views.setContentDescription(
             R.id.widget_customize, context.getString(R.string.widget_customize)
@@ -170,28 +167,10 @@ internal object WidgetRenderer {
                 body.setTextViewText(
                     R.id.widget_level, styledPercent(context, reading?.levelPercent)
                 )
-                body.setTextViewTextSize(
-                    R.id.widget_level, TypedValue.COMPLEX_UNIT_SP, if (compact) 38f else 54f
-                )
                 body.setTextColor(R.id.widget_status, foreground)
                 body.setTextViewText(R.id.widget_status, status.orEmpty())
                 body.setViewVisibility(
                     R.id.widget_status, if (compact || status == null) View.GONE else View.VISIBLE
-                )
-                body.setViewVisibility(
-                    R.id.widget_battery_cell, if (compact) View.GONE else View.VISIBLE
-                )
-                for (id in intArrayOf(
-                    R.id.widget_battery_terminal,
-                    R.id.widget_battery_outline,
-                    R.id.widget_battery_fill
-                )) {
-                    body.setInt(id, "setColorFilter", primary)
-                }
-                body.setInt(
-                    R.id.widget_battery_fill,
-                    "setImageLevel",
-                    (reading?.levelPercent ?: 0).coerceIn(0, 100) * 100
                 )
                 val durationFormat = LongDurationFormat.fromPreference(
                     settings.getString(
@@ -237,6 +216,46 @@ internal object WidgetRenderer {
                 body.setViewVisibility(
                     R.id.widget_extra, if (compact || extra == null) View.GONE else View.VISIBLE
                 )
+                val artHeightDp = if (compact) 0 else minOf(
+                    bodyHeightDp - 4, ((contentWidthDp - 8) * 0.40f / BATTERY_ASPECT).toInt(), 176
+                ).coerceAtLeast(0)
+                val showBattery = artHeightDp >= 46
+                body.setViewVisibility(
+                    R.id.widget_battery_cell, if (showBattery) View.VISIBLE else View.GONE
+                )
+                if (showBattery) body.setImageViewBitmap(
+                    R.id.widget_battery_cell,
+                    widgetBatteryBitmap(context, artHeightDp, primary, reading?.levelPercent)
+                )
+                val readingWidthDp = if (showBattery) {
+                    contentWidthDp - (artHeightDp * BATTERY_ASPECT).roundToInt() - 8
+                } else contentWidthDp
+                val statusHeightDp =
+                    if (!compact && status != null) widgetLineHeightDp(context, 12f) else 0
+                val extraHeightDp =
+                    if (!compact && extra != null) widgetLineHeightDp(context, 13f) else 0
+                val showPrediction = prediction != null && (!compact || heightDp >= 140)
+                val predictionLines =
+                    if (bodyHeightDp >= statusHeightDp + extraHeightDp + 2 * widgetLineHeightDp(
+                            context, 13f
+                        ) + widgetLineHeightDp(
+                            context, 34f, medium = true
+                        )
+                    ) 2 else 1
+                body.setInt(R.id.widget_prediction, "setMaxLines", predictionLines)
+                val predictionHeightDp = if (showPrediction) widgetLabelHeightDp(
+                    context, prediction.orEmpty(), readingWidthDp, 13f, predictionLines
+                ) else 0
+                body.setTextViewTextSize(
+                    R.id.widget_level, TypedValue.COMPLEX_UNIT_SP, fitWidgetText(
+                        context,
+                        styledPercent(context, reading?.levelPercent ?: 100),
+                        readingWidthDp,
+                        bodyHeightDp - statusHeightDp - extraHeightDp - predictionHeightDp,
+                        if (compact) 38f else (bodyHeightDp * 0.46f).coerceIn(34f, 82f),
+                        minSp = 16f
+                    )
+                )
                 views.addView(R.id.widget_body, body)
             }
 
@@ -246,43 +265,78 @@ internal object WidgetRenderer {
                 )
                 views.setImageViewResource(R.id.widget_family_icon, R.drawable.ui_current)
                 val body = RemoteViews(context.packageName, R.layout.widget_measurements_content)
-                val metrics = visibleMetrics(config.metrics, widthDp, heightDp)
-                val columns = measurementColumns(widthDp, heightDp, compact, metrics.size)
+                val metrics = config.metrics
+                val columns = measurementColumns(contentWidthDp, bodyHeightDp, metrics.size)
                 val rows = metrics.chunked(columns)
-                for ((index, row) in rows.withIndex()) {
-                    val rowId =
-                        if (index == 0) R.id.widget_measurement_first_row else R.id.widget_measurement_second_row
-                    for (metric in row) {
+                val rowHeightDp = bodyHeightDp / rows.size
+                val rowIds = intArrayOf(
+                    R.id.widget_measurement_first_row,
+                    R.id.widget_measurement_second_row,
+                    R.id.widget_measurement_third_row,
+                    R.id.widget_measurement_fourth_row
+                )
+                for ((index, rowId) in rowIds.withIndex()) {
+                    val row = rows.getOrNull(index)
+                    body.setViewVisibility(rowId, if (row == null) View.GONE else View.VISIBLE)
+                    if (row == null) continue
+                    val cellWidthDp = (contentWidthDp / row.size - 6).coerceAtLeast(1)
+                    val valueMaxSp = minOf(rowHeightDp * 0.46f, cellWidthDp * 0.33f).coerceIn(
+                        14f, if (compact) 23f else 40f
+                    )
+                    val labelMaxSp = minOf(rowHeightDp * 0.23f, cellWidthDp * 0.17f).coerceIn(
+                        10f, if (compact) 12f else 17f
+                    )
+                    val labels = row.map { context.getString(metricLabel(it)) }
+                    val labelSp = labels.flatMap { it.split(' ', '-') }.minOf { word ->
+                        fitWidgetText(
+                            context, word, cellWidthDp, rowHeightDp, labelMaxSp, 10f, medium = false
+                        )
+                    }
+                    val labelLineHeight = widgetLineHeightDp(context, labelSp)
+                    val wraps = rowHeightDp >= 2 * labelLineHeight + widgetLineHeightDp(
+                        context, 16f, medium = true
+                    ) && labels.any {
+                        widgetLabelHeightDp(context, it, cellWidthDp, labelSp, 2) > labelLineHeight
+                    }
+                    val labelLines = if (wraps) 2 else 1
+                    for ((metric, label) in row.zip(labels)) {
                         val item =
                             RemoteViews(context.packageName, R.layout.widget_measurement_item)
-                        item.setTextViewText(
-                            R.id.widget_metric_label, context.getString(metricLabel(metric))
-                        )
+                        val value = metricValue(context, metric, reading, fahrenheit, multiplier)
+                            ?: unavailable
+                        item.setTextViewText(R.id.widget_metric_label, label)
+                        item.setTextViewText(R.id.widget_metric_value, value)
                         item.setTextColor(R.id.widget_metric_label, muted)
                         item.setTextColor(R.id.widget_metric_value, foreground)
-                        item.setTextViewText(
-                            R.id.widget_metric_value,
-                            metricValue(context, metric, reading, fahrenheit, multiplier)
-                                ?: unavailable
+                        item.setInt(R.id.widget_metric_label, "setLines", labelLines)
+                        item.setTextViewTextSize(
+                            R.id.widget_metric_label, TypedValue.COMPLEX_UNIT_SP, labelSp
                         )
-                        if (rows.size > 1 && heightDp < 190) item.setInt(
-                            R.id.widget_metric_label, "setMaxLines", 1
+                        item.setTextViewTextSize(
+                            R.id.widget_metric_value, TypedValue.COMPLEX_UNIT_SP, fitWidgetText(
+                                context,
+                                value,
+                                cellWidthDp,
+                                rowHeightDp - labelLines * labelLineHeight,
+                                valueMaxSp,
+                                minSp = 9f
+                            )
                         )
+                        if (appWidgetId > 0 && config.tapAction == WidgetTapAction.MEASUREMENT) {
+                            item.setOnClickPendingIntent(
+                                R.id.widget_metric_cell,
+                                WidgetActions.openMeasurement(context, appWidgetId, metric)
+                            )
+                        }
                         body.addView(rowId, item)
                     }
                 }
-                body.setViewVisibility(
-                    R.id.widget_measurement_second_row,
-                    if (rows.size > 1) View.VISIBLE else View.GONE
-                )
                 views.addView(R.id.widget_body, body)
             }
 
             WidgetFamily.TREND -> {
                 views.setTextViewText(
-                    R.id.widget_title, context.resources.getQuantityString(
-                        R.plurals.widget_trend_range, config.trendHours, config.trendHours
-                    )
+                    R.id.widget_title, context.getString(trendRangeLabel(config.trendHours))
                 )
                 views.setImageViewResource(R.id.widget_family_icon, R.drawable.ui_history)
                 val body = RemoteViews(context.packageName, R.layout.widget_trend_content)
@@ -290,88 +344,58 @@ internal object WidgetRenderer {
                 body.setTextViewText(
                     R.id.widget_level, styledPercent(context, reading?.levelPercent)
                 )
-                body.setTextViewTextSize(
-                    R.id.widget_level, TypedValue.COMPLEX_UNIT_SP, if (compact) 32f else 42f
-                )
-                body.setTextColor(R.id.widget_trend_summary, muted)
-                val hasHistory = trend?.points?.any { it.value != null } == true
-                val summary = if (trend?.min != null && trend.max != null) context.getString(
-                    R.string.widget_observed_range,
-                    percent(context, trend.min.roundToInt()),
-                    percent(context, trend.max.roundToInt())
-                ) else context.getString(R.string.logs_empty)
-                body.setTextViewText(R.id.widget_trend_summary, summary)
-                body.setViewVisibility(
-                    R.id.widget_chart_container, if (hasHistory) View.VISIBLE else View.GONE
-                )
-                if (trend != null && hasHistory) {
-                    val scale = historyChartScale(
-                        HistorySeries(emptyList(), trend.min, trend.max), HistoryMetric.LEVEL, false
-                    )
-                    val fontScale = context.resources.configuration.fontScale
-                    val axisValues = chartAxisValues(
-                        scale.minimum, scale.maximum, compact, includeMiddle = !usesCompactLayout(
-                            config.variant,
-                            (heightDp / fontScale).roundToInt(),
-                            (widthDp / fontScale).roundToInt()
-                        )
-                    )
-                    val numberFormat = NumberFormat.getNumberInstance(
-                        context.resources.configuration.locales[0]
-                    ).apply { maximumFractionDigits = 1 }
-                    for ((id, value) in listOf(
-                        R.id.widget_chart_y_top to scale.maximum,
-                        R.id.widget_chart_y_middle to (scale.minimum + scale.maximum) / 2,
-                        R.id.widget_chart_y_bottom to scale.minimum
-                    )) {
-                        body.setTextViewText(id, numberFormat.format(value))
-                        body.setTextColor(id, muted)
-                        body.setViewVisibility(
-                            id, if (value in axisValues) View.VISIBLE else View.GONE
-                        )
-                    }
-                    body.setViewVisibility(
-                        R.id.widget_chart_y_axis,
-                        if (config.showYAxisLabels) View.VISIBLE else View.GONE
-                    )
-                    val labelInset = if (config.showYAxisLabels && !compact) Paint().apply {
-                        textSize = TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_SP, 11f, context.resources.displayMetrics
-                        )
-                    }.fontMetricsInt.let { (it.descent - it.ascent + 1) / 2 } else 0
-                    body.setViewPadding(R.id.widget_chart, 0, labelInset, 0, labelInset)
-                    val chartWidth =
-                        dp(context, (widthDp - 32).coerceAtLeast(100)).coerceAtMost(512)
-                    val chartHeight = dp(
-                        context, (heightDp - if (compact) 100 else 130).coerceIn(32, 120)
-                    ).coerceAtMost(256)
-                    body.setImageViewBitmap(
-                        R.id.widget_chart, chartBitmap(
-                            trend, chartWidth, chartHeight, primary, scheme.outlineVariant.toArgb()
-                        )
-                    )
-                    val start = DisplayStrings.formatTime(context, Date(trend.rangeStart))
-                    val end = DisplayStrings.formatTime(context, Date(trend.rangeEnd))
-                    body.setTextViewText(R.id.widget_chart_start, start)
-                    body.setTextViewText(R.id.widget_chart_end, end)
-                    body.setTextColor(R.id.widget_chart_start, muted)
-                    body.setTextColor(R.id.widget_chart_end, muted)
-                    body.setContentDescription(
-                        R.id.widget_chart,
-                        context.getString(
-                            R.string.widget_chart_description,
-                            start,
-                            end,
-                            trend.min?.let { percent(context, it.roundToInt()) } ?: unavailable,
-                            trend.max?.let { percent(context, it.roundToInt()) } ?: unavailable))
+                val levelSp = when {
+                    compact || bodyHeightDp < 84 -> 22f
+                    bodyHeightDp >= 150 -> 38f
+                    else -> 30f
                 }
-                body.setViewVisibility(
-                    R.id.widget_chart_axis, if (hasHistory && !compact) View.VISIBLE else View.GONE
+                val summaryLines = if (compact || bodyHeightDp < 84) 1 else 2
+                body.setTextViewTextSize(R.id.widget_level, TypedValue.COMPLEX_UNIT_SP, levelSp)
+                body.setTextColor(R.id.widget_trend_summary, muted)
+                body.setInt(R.id.widget_trend_summary, "setLines", summaryLines)
+                val min = trend?.min?.let { percent(context, it.roundToInt()) }
+                val max = trend?.max?.let { percent(context, it.roundToInt()) }
+                val summary = if (min != null && max != null) {
+                    context.getString(R.string.widget_observed_range, min, max)
+                } else context.getString(R.string.logs_empty)
+                body.setTextViewText(R.id.widget_trend_summary, summary)
+                val rowHeightDp = maxOf(
+                    widgetLineHeightDp(context, levelSp, medium = true),
+                    widgetLineHeightDp(context, 11f) * summaryLines
                 )
+                val chartHeightDp = bodyHeightDp - rowHeightDp - 4
+                val showChart =
+                    trend != null && (trend.min != null || trend.events.isNotEmpty()) && chartHeightDp >= 16 && contentWidthDp >= 48
                 body.setViewVisibility(
-                    R.id.widget_trend_summary,
-                    if (compact && hasHistory) View.GONE else View.VISIBLE
+                    R.id.widget_chart, if (showChart) View.VISIBLE else View.GONE
                 )
+                if (showChart) {
+                    body.setImageViewBitmap(
+                        R.id.widget_chart, WidgetTrendChart.bitmap(
+                            context,
+                            trend,
+                            dp(context, contentWidthDp),
+                            dp(context, chartHeightDp),
+                            config.showYAxisLabels,
+                            compact,
+                            primary,
+                            scheme.outlineVariant.toArgb(),
+                            muted
+                        )
+                    )
+                    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                        .withLocale(context.resources.configuration.locales[0])
+                        .withZone(ZoneId.systemDefault())
+                    body.setContentDescription(
+                        R.id.widget_chart, context.getString(
+                            R.string.widget_chart_description,
+                            formatter.format(Instant.ofEpochMilli(trend.rangeStart)),
+                            formatter.format(Instant.ofEpochMilli(trend.rangeEnd - 1)),
+                            min ?: unavailable,
+                            max ?: unavailable
+                        )
+                    )
+                }
                 views.addView(R.id.widget_body, body)
             }
         }
@@ -379,31 +403,33 @@ internal object WidgetRenderer {
     }
 
     fun preview(
-        context: Context, family: WidgetFamily, config: WidgetConfiguration, data: WidgetPreviewData
+        context: Context,
+        family: WidgetFamily,
+        config: WidgetConfiguration,
+        data: WidgetPreviewData,
+        widthDp: Int,
+        heightDp: Int
     ): RemoteViews = render(
         context,
         AppWidgetManager.INVALID_APPWIDGET_ID,
         family,
         config,
         data.snapshot,
-        if (family == WidgetFamily.STATUS) 220 else 350,
-        230,
+        widthDp,
+        heightDp,
         data.trend,
         data.monitoringEnabled
     )
 
     internal fun usesCompactLayout(
-        variant: WidgetVariant, heightDp: Int, widthDp: Int = Int.MAX_VALUE
-    ): Boolean = variant == WidgetVariant.COMPACT || heightDp < 190 || widthDp < 180
+        variant: WidgetVariant, heightDp: Int, widthDp: Int
+    ): Boolean = variant == WidgetVariant.COMPACT || heightDp < 148 || widthDp < 140
 
-    internal fun measurementColumns(
-        widthDp: Int, heightDp: Int, compact: Boolean, metricCount: Int
-    ): Int = if (compact && widthDp >= metricCount * 90 && heightDp < 190) metricCount else 2
-
-    internal fun visibleMetrics(
-        metrics: List<WidgetMetric>, widthDp: Int, heightDp: Int
-    ): List<WidgetMetric> =
-        if (heightDp < 160 && widthDp < metrics.size * 90) metrics.take(2) else metrics
+    internal fun measurementColumns(widthDp: Int, bodyHeightDp: Int, metricCount: Int): Int = when {
+        bodyHeightDp < 112 && widthDp >= metricCount * 78 -> metricCount
+        widthDp < 155 && bodyHeightDp >= metricCount * 54 -> 1
+        else -> 2
+    }
 
     internal fun canShowPrediction(snapshot: WidgetSnapshot?, nowMillis: Long): Boolean =
         snapshot != null && snapshot.monitoringEnabled && snapshot.observedAtMillis > 0 && !snapshot.isStale(
@@ -463,93 +489,4 @@ internal object WidgetRenderer {
 
     private fun dp(context: Context, value: Int): Int =
         (value * context.resources.displayMetrics.density).roundToInt()
-
-    @Synchronized
-    private fun chartBitmap(
-        trend: WidgetTrend, width: Int, height: Int, line: Int, grid: Int
-    ): Bitmap {
-        val key = WidgetChartKey(
-            trend.version, trend.rangeStart, trend.rangeEnd, width, height, line, grid
-        )
-        chartCache[key]?.let { return it }
-        val bitmap = createBitmap(width, height)
-        val canvas = Canvas(bitmap)
-        val scale = historyChartScale(
-            HistorySeries(emptyList(), trend.min, trend.max), HistoryMetric.LEVEL, false
-        )
-
-        fun y(value: Double): Float =
-            ((scale.maximum - value) / (scale.maximum - scale.minimum) * (height - 1)).toFloat()
-
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = grid
-            strokeWidth = 1f
-            style = Paint.Style.STROKE
-            pathEffect = DashPathEffect(floatArrayOf(5f, 5f), 0f)
-        }
-        for (tick in chartAxisValues(scale.minimum, scale.maximum, false)) {
-            canvas.drawLine(4f, y(tick), width - 4f, y(tick), paint)
-        }
-        paint.color = line
-        paint.strokeWidth = (width / 160f).coerceIn(2f, 4f)
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.pathEffect = null
-        val start = trend.rangeStart
-        val span = (trend.rangeEnd - start).coerceAtLeast(1)
-        fun x(point: WidgetTrendPoint): Float =
-            (4 + (point.time - start).toDouble() / span * (width - 8)).toFloat()
-        for (run in chartRuns(trend.points, start, trend.rangeEnd)) {
-            if (run.size == 1) {
-                paint.style = Paint.Style.FILL
-                canvas.drawCircle(x(run[0]), y(run[0].value!!), paint.strokeWidth, paint)
-                paint.style = Paint.Style.STROKE
-            } else {
-                val path = Path()
-                path.moveTo(x(run.first()), y(run.first().value!!))
-                run.drop(1).forEach { path.lineTo(x(it), y(it.value!!)) }
-                canvas.drawPath(path, paint)
-            }
-        }
-        chartCache[key] = bitmap
-        if (chartCache.size > MAX_CHARTS) chartCache.remove(chartCache.keys.first())
-        return bitmap
-    }
-
-    internal fun chartAxisValues(
-        minimum: Double, maximum: Double, compact: Boolean, includeMiddle: Boolean = true
-    ): List<Double> = when {
-        compact -> listOf((minimum + maximum) / 2)
-        includeMiddle -> listOf(maximum, (minimum + maximum) / 2, minimum)
-        else -> listOf(maximum, minimum)
-    }
-
-    internal fun chartRuns(
-        points: List<WidgetTrendPoint>, start: Long, end: Long
-    ): List<List<WidgetTrendPoint>> {
-        val runs = mutableListOf<MutableList<WidgetTrendPoint>>()
-        var previous: WidgetTrendPoint? = null
-        for (point in points) {
-            if (point.time !in start..end || point.value == null || !point.value.isFinite() || point.value !in 0.0..100.0) {
-                previous = null
-                continue
-            }
-            if (previous == null || previous.segment != point.segment || point.time <= previous.time) {
-                runs.add(mutableListOf())
-            }
-            runs.last().add(point)
-            previous = point
-        }
-        return runs
-    }
 }
-
-private data class WidgetChartKey(
-    val version: Long,
-    val start: Long,
-    val end: Long,
-    val width: Int,
-    val height: Int,
-    val line: Int,
-    val grid: Int
-)

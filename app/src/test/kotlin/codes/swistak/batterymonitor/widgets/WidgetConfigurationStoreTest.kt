@@ -25,17 +25,20 @@ class WidgetConfigurationStoreTest {
     fun `saving and deleting one instance preserve all other widget configurations`() {
         val preferences = TestPreferences()
         val store = WidgetConfigurationStore(preferences.preferences)
-        val first =
-            WidgetConfiguration.defaults(WidgetFamily.STATUS).copy(backgroundOpacityPercent = 35)
+        val first = WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS)
+            .copy(backgroundOpacityPercent = 35).moveMetric(WidgetMetric.CURRENT, -1)
+            .toggleMetric(WidgetMetric.VOLTAGE)
         val second = WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS)
-            .copy(brightness = Brightness.Dark)
+            .copy(brightness = Brightness.Dark).moveMetric(WidgetMetric.VOLTAGE, -1)
+            .toggleMetric(WidgetMetric.TEMPERATURE)
         assertTrue(store.save(17, first))
         assertTrue(store.save(21, second))
-        assertEquals(first, store.load(17, WidgetFamily.STATUS))
+        assertEquals(first, store.load(17, WidgetFamily.MEASUREMENTS))
         assertEquals(second, store.load(21, WidgetFamily.MEASUREMENTS))
         assertTrue(store.delete(intArrayOf(17)))
         assertEquals(
-            WidgetConfiguration.defaults(WidgetFamily.STATUS), store.load(17, WidgetFamily.STATUS)
+            WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS),
+            store.load(17, WidgetFamily.MEASUREMENTS)
         )
         assertEquals(second, store.load(21, WidgetFamily.MEASUREMENTS))
     }

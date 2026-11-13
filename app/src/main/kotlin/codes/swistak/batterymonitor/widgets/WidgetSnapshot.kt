@@ -10,6 +10,9 @@ package codes.swistak.batterymonitor.widgets
 import android.content.Context
 import android.util.AtomicFile
 import android.util.Log
+import codes.swistak.batterymonitor.logs.HistoryChartModel
+import codes.swistak.batterymonitor.logs.HistoryEvent
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.DataInputStream
@@ -40,8 +43,22 @@ internal data class WidgetTrend(
     val points: List<WidgetTrendPoint>,
     val min: Double?,
     val max: Double?,
-    val version: Long
-)
+    val events: List<HistoryEvent>
+) {
+    companion object {
+        fun fromHistory(chart: HistoryChartModel): WidgetTrend {
+            val series = chart.series.getValue(HistoryMetric.LEVEL)
+            return WidgetTrend(
+                chart.range.start,
+                chart.range.end,
+                series.points.map { WidgetTrendPoint(it.key.time, it.value, it.segment) },
+                series.min,
+                series.max,
+                chart.events
+            )
+        }
+    }
+}
 
 internal object WidgetSnapshotCodec {
     private const val VERSION = 1

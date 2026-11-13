@@ -492,10 +492,6 @@
     <string name="widget_preview">پیش‌نمایش ابزارک</string>
     <string name="widget_preview_note">پیش‌نمایش از آخرین خوانش پایشگر استفاده می‌کند. اندازه ابزارک را راه‌انداز شما تعیین می‌کند.</string>
     <string name="widget_read_at">خوانش %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">سطح · %1$d\u00A0ساعت گذشته</item>
-        <item quantity="other">سطح · %1$d\u00A0ساعت گذشته</item>
-    </plurals>
     <string name="widget_observed_range">مشاهده %1$s–%2$s</string>
     <string name="widget_chart_description">سطح ذخیره‌شده باتری از %1$s تا %2$s. کمینه %3$s، بیشینه %4$s.</string>
     <string name="widget_save_failed">ذخیره این ابزارک ممکن نشد. دوباره تلاش کنید.</string>

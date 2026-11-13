@@ -500,12 +500,6 @@
     <string name="widget_preview">Náhľad miniaplikácie</string>
     <string name="widget_preview_note">Náhľad používa posledné meranie. Veľkosť miniaplikácie nastavuje spúšťač.</string>
     <string name="widget_read_at">Meranie %1$s</string>
-    <plurals name="widget_trend_range">
-        <item quantity="one">Úroveň · Posledná %1$d\u00A0hodina</item>
-        <item quantity="few">Úroveň · Posledné %1$d\u00A0hodiny</item>
-        <item quantity="many">Úroveň · Posledných %1$d\u00A0hodín</item>
-        <item quantity="other">Úroveň · Posledných %1$d\u00A0hodín</item>
-    </plurals>
     <string name="widget_observed_range">Pozorované %1$s–%2$s</string>
     <string name="widget_chart_description">Uložená úroveň batérie od %1$s do %2$s. Minimum %3$s, maximum %4$s.</string>
     <string name="widget_save_failed">Túto miniaplikáciu sa nepodarilo uložiť. Skúste to znova.</string>

@@ -26,14 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="12dp">
 
         <LinearLayout
             android:id="@+id/widget_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:minHeight="24dp"
+            android:minHeight="36dp"
             android:orientation="horizontal"
             android:paddingStart="0dp"
             android:paddingEnd="32dp"
@@ -54,7 +54,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-medium"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:text="@string/nav_battery_group"
                 android:textColor="#17232D"
                 android:textSize="12sp" />
@@ -71,7 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:includeFontPadding="false"
+            android:maxLines="1"
             android:text="@string/current_waiting"
             android:textColor="#4D606F"
             android:textSize="11sp" />
