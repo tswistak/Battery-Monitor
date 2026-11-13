@@ -31,14 +31,14 @@ class ChargingLimitSnapshotTest {
                     fixed(80)
                 },
                 onTargetChanged = { changes++ })
-            assertNull(snapshot.refresh())
+            assertNull(snapshot.refresh().state)
             assertTrue(entered.await(5, TimeUnit.SECONDS))
-            assertNull(snapshot.refresh())
+            assertNull(snapshot.refresh().state)
             release.countDown()
             requireNotNull(delivered.poll(5, TimeUnit.SECONDS)).invoke()
             worker.submit {}.get(5, TimeUnit.SECONDS)
             assertTrue(delivered.isEmpty())
-            assertEquals(80, resolveDetectedChargingTarget(snapshot.refresh()).percent)
+            assertEquals(80, resolveDetectedChargingTarget(snapshot.refresh().state).percent)
             assertEquals(1, changes)
         } finally {
             release.countDown()
@@ -65,23 +65,23 @@ class ChargingLimitSnapshotTest {
                 result
             },
             onTargetChanged = { changes++ })
-        assertNull(snapshot.refresh())
+        assertNull(snapshot.refresh().state)
         work.removeFirst().run()
         access = ChargingLimitAccess(false, 2, 2)
         deliveries.removeFirst().invoke()
-        assertNull(snapshot.refresh())
+        assertNull(snapshot.refresh().state)
         assertEquals(0, changes)
 
         result = fixed(85)
         work.removeFirst().run()
         deliveries.removeFirst().invoke()
-        assertEquals(85, resolveDetectedChargingTarget(snapshot.refresh()).percent)
+        assertEquals(85, resolveDetectedChargingTarget(snapshot.refresh().state).percent)
         clock += CHARGING_LIMIT_CACHE_MS
         fail = true
-        assertEquals(85, resolveDetectedChargingTarget(snapshot.refresh()).percent)
+        assertEquals(85, resolveDetectedChargingTarget(snapshot.refresh().state).percent)
         work.removeFirst().run()
         deliveries.removeFirst().invoke()
-        assertEquals(100, resolveDetectedChargingTarget(snapshot.refresh()).percent)
+        assertEquals(100, resolveDetectedChargingTarget(snapshot.refresh().state).percent)
         assertEquals(2, changes)
     }
 
@@ -101,19 +101,19 @@ class ChargingLimitSnapshotTest {
         work.removeFirst().run()
         deliveries.removeFirst().invoke()
         clock = CHARGING_LIMIT_CACHE_MS
-        assertEquals(80, resolveDetectedChargingTarget(snapshot.refresh()).percent)
+        assertEquals(80, resolveDetectedChargingTarget(snapshot.refresh().state).percent)
         clock = CHARGING_LIMIT_MAX_AGE_MS
-        assertNull(snapshot.refresh())
+        assertNull(snapshot.refresh().state)
         assertEquals(1, work.size)
         clock += CHARGING_LIMIT_CACHE_MS
         work.removeFirst().run()
         deliveries.removeFirst().invoke()
-        assertNull(snapshot.refresh())
+        assertNull(snapshot.refresh().state)
         clock += CHARGING_LIMIT_CACHE_MS
         snapshot.refresh()
         work.removeFirst().run()
         deliveries.removeFirst().invoke()
-        assertEquals(80, resolveDetectedChargingTarget(snapshot.refresh()).percent)
+        assertEquals(80, resolveDetectedChargingTarget(snapshot.refresh().state).percent)
     }
 
     @Test
@@ -134,11 +134,11 @@ class ChargingLimitSnapshotTest {
         epoch++
         snapshot.refresh()
         deliveries.removeFirst().invoke()
-        assertNull(snapshot.refresh())
+        assertNull(snapshot.refresh().state)
         result = fixed(85)
         work.removeFirst().run()
         deliveries.removeFirst().invoke()
-        assertEquals(85, resolveDetectedChargingTarget(snapshot.refresh()).percent)
+        assertEquals(85, resolveDetectedChargingTarget(snapshot.refresh().state).percent)
     }
 
     @Test
@@ -157,7 +157,7 @@ class ChargingLimitSnapshotTest {
         work.removeFirst().run()
         access = null
         deliveries.removeFirst().invoke()
-        assertNull(snapshot.refresh())
+        assertNull(snapshot.refresh().state)
         assertTrue(work.isEmpty())
     }
 

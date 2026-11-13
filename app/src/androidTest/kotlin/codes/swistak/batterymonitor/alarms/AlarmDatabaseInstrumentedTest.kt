@@ -16,6 +16,7 @@ import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.database.sqlite.SQLiteDatabase
+import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.platform.app.InstrumentationRegistry
@@ -294,7 +295,9 @@ class AlarmDatabaseInstrumentedTest {
 
     @Test
     fun actual_1_7_3_backup_imports_all_eight_types_and_exports_the_same_portable_records() {
-        assertEquals(9, AlarmBackup.importFromJson(database, legacyBackup))
+        val file = File(directory, "standalone-alarms.json").apply { writeText(legacyBackup) }
+        val uri = Uri.fromFile(file)
+        assertEquals(9, AlarmBackup.restore(database, AlarmBackup.readFromUri(context, uri).alarms))
         val imported = database.getAllAlarmRecords()
         assertEquals(8, imported.map { it.type }.distinct().size)
         assertEquals(
@@ -317,7 +320,10 @@ class AlarmDatabaseInstrumentedTest {
             )
         }
         assertEquals(imported, oldReader)
-        assertEquals(9, AlarmBackup.importFromJson(database, exported.toString()))
+        AlarmBackup.writeToUri(context, uri, exported)
+        val currentBackup = AlarmBackup.readFromUri(context, uri)
+        assertEquals(AlarmBackup.SCHEMA_VERSION, currentBackup.version)
+        assertEquals(9, AlarmBackup.restore(database, currentBackup.alarms))
         assertEquals(imported, database.getAllAlarmRecords())
         assertEquals(
             9, AlarmBackup.importFromJson(

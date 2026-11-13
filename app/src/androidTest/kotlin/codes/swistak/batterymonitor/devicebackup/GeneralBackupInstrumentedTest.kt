@@ -33,6 +33,7 @@ import org.json.JSONObject
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -215,6 +216,13 @@ class GeneralBackupInstrumentedTest {
         exportedArchive()
         val archive = read(zip(exportedEntries() + ("settings.json" to "invalid JSON")))
         seedExistingData()
+
+        val original = requireNotNull(archive.settings?.exceptionOrNull())
+        assertFalse(GeneralBackup.containsNewerSchema(archive))
+        assertSame(
+            original, assertThrows(IllegalArgumentException::class.java) {
+                GeneralBackup.restore(context, preferences, archive, allData, LogImportMode.REPLACE)
+            })
 
         GeneralBackup.restore(
             context,
@@ -408,7 +416,7 @@ class GeneralBackupInstrumentedTest {
     private fun logs(): List<LogRecord> {
         val database = LogDatabase(context)
         return try {
-            database.getAllLogRecords()
+            database.readLogRecords { it.toList() }
         } finally {
             database.close()
         }

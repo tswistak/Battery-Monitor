@@ -244,8 +244,6 @@ internal class LogDatabase(context: Context?) {
         closeDatabaseHandles()
     }
 
-    fun getAllLogRecords(): List<LogRecord> = readLogRecords { it.toList() }
-
     fun <T> readHistory(query: HistoryQuery, block: (Sequence<HistoryRecord>) -> T): T {
         openDBs()
         val database = checkNotNull(rdb) { "Log database is unavailable" }
@@ -357,8 +355,8 @@ internal class LogDatabase(context: Context?) {
         )
     }
 
+    // The platform-only E2E helper seeds the installed APK through this Java-callable overload.
     fun replaceAllLogs(records: List<LogRecord>) = replaceAllLogs(records.asSequence())
-    fun addLogs(records: List<LogRecord>) = addLogs(records.asSequence())
     fun replaceAllLogs(records: Sequence<LogRecord>) = writeLogs(records, replaceExisting = true)
     fun addLogs(records: Sequence<LogRecord>) = writeLogs(records, replaceExisting = false)
 

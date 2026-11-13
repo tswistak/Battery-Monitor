@@ -21,6 +21,13 @@ internal data class ChargingLimitAccess(
     val privileged: Boolean, val revision: Long, val changes: Long, val providerEpoch: Long = 0
 )
 
+internal data class ChargingLimitReading(
+    val state: ChargingLimitState?,
+    val generation: Long,
+    val pendingRead: Long?,
+    val completedRead: Long?
+)
+
 internal class ChargingLimitSnapshot(
     private val worker: Executor,
     private val deliver: (() -> Unit) -> Unit,
@@ -31,44 +38,59 @@ internal class ChargingLimitSnapshot(
 ) {
     private var access: ChargingLimitAccess? = null
     private var generation = 0L
+    private var nextRead = 0L
     private var inFlight = false
+    private var pendingRead: Long? = null
+    private var completedRead: Long? = null
     private var refreshAt: Long? = null
     private var expiresAt = 0L
     private var state: ChargingLimitState? = null
 
-    fun refresh(): ChargingLimitState? {
+    fun refresh(): ChargingLimitReading {
         val latest = currentAccess()
+        val now = clock()
         if (latest != access) {
             access = latest
             generation++
             refreshAt = null
             state = null
+            completedRead = null
+            pendingRead = if (latest != null && inFlight) ++nextRead else null
         }
-        if (clock() >= expiresAt) state = null
-        if (latest != null && !inFlight && refreshAt?.let { clock() < it } != true) {
+        if (now >= expiresAt) {
+            state = null
+            completedRead = null
+        }
+        if (latest != null && !inFlight && refreshAt?.let { now < it } != true) {
+            val readId = pendingRead ?: (++nextRead).also { pendingRead = it }
             inFlight = true
             val request = generation
-            val startedAt = clock()
             worker.execute {
                 val result = try {
                     read(latest)
                 } catch (_: Exception) {
-                    null
+                    ChargingLimitState.Unavailable(ChargingLimitUnavailableReason.READ_FAILED)
                 }
                 deliver {
                     inFlight = false
                     if (request != generation || latest != currentAccess()) {
                         refresh()
                     } else {
+                        pendingRead = null
+                        val completedAt = clock()
+                        val wasPending = state == null
                         val previousTarget = resolveDetectedChargingTarget(state)
-                        expiresAt = startedAt + CHARGING_LIMIT_MAX_AGE_MS
-                        state = result.takeIf { clock() < expiresAt }
-                        refreshAt = clock() + CHARGING_LIMIT_CACHE_MS
-                        if (resolveDetectedChargingTarget(state) != previousTarget) onTargetChanged()
+                        expiresAt = now + CHARGING_LIMIT_MAX_AGE_MS
+                        state = result.takeIf { completedAt < expiresAt }
+                        val currentTarget = resolveDetectedChargingTarget(state)
+                        completedRead = if (currentTarget.percent < 100) readId else null
+                        if (completedRead == null) generation++
+                        refreshAt = completedAt + CHARGING_LIMIT_CACHE_MS
+                        if (wasPending || currentTarget != previousTarget) onTargetChanged()
                     }
                 }
             }
         }
-        return state
+        return ChargingLimitReading(state, generation, pendingRead, completedRead)
     }
 }

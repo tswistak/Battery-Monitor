@@ -55,6 +55,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmRecord
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
+import codes.swistak.batterymonitor.alarms.backup.AlarmBackupImportPreview
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
@@ -104,7 +105,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
@@ -596,7 +596,12 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                             if (requestCode == IMPORT_GENERAL_BACKUP_REQUEST) {
                                 copyGeneralBackupDialogSource(it, output)
                             } else {
-                                BackupImportInputStream(it).copyTo(output)
+                                val limit = when (requestCode) {
+                                    IMPORT_REQUEST -> SettingsBackup.MAX_IMPORT_BYTES
+                                    IMPORT_ALARMS_REQUEST -> AlarmBackup.MAX_IMPORT_BYTES
+                                    else -> GeneralBackup.MAX_ENTRY_BYTES
+                                }
+                                BackupImportInputStream(it, limit).copyTo(output)
                             }
                             cache.finishWrite(output)
                         } catch (failure: Exception) {
@@ -612,16 +617,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
             val cachedUri = Uri.fromFile(cache.baseFile)
             val preparedLogs = DeviceDataBackup.preparedLogsFile(cache.baseFile)
             when (requestCode) {
-                IMPORT_REQUEST -> SettingsBackup.parsedSettings(
-                    JSONObject(SettingsBackup.readFromUri(context, cachedUri))
-                )
-
-                IMPORT_ALARMS_REQUEST -> {
-                    val root = JSONObject(AlarmBackup.readFromUri(context, cachedUri))
-                    AlarmBackupImportPreview(
-                        root.optInt("version", 0), AlarmBackup.validatedRecords(root)
-                    )
-                }
+                IMPORT_REQUEST -> SettingsBackup.readFromUri(context, cachedUri)
+                IMPORT_ALARMS_REQUEST -> AlarmBackup.readFromUri(context, cachedUri)
 
                 IMPORT_DEVICE_DATA_REQUEST -> DeviceDataBackup.readFromUri(
                     context, cachedUri, preparedLogs

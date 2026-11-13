@@ -18,6 +18,7 @@ import android.content.Intent
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import androidx.test.platform.app.InstrumentationRegistry
+import codes.swistak.batterymonitor.testsupport.addLogs
 import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -187,7 +188,7 @@ class DetailedHistoryInstrumentedTest {
         val sampler = BatteryHistorySampler()
         assertTrue(database.logObservation(observation, 1_000, sampler, true) is LogResult.Failed)
         assertEquals(0L, database.historyChanges(null, null).revision)
-        assertTrue(database.getAllLogRecords().isEmpty())
+        assertTrue(database.readLogRecords { it.none() })
         assertTrue(notifications.isEmpty())
         assertNull(sampler.lastRecordedElapsed)
     }
@@ -220,7 +221,7 @@ class DetailedHistoryInstrumentedTest {
         failure.get()?.let { throw AssertionError("Concurrent history write failed", it) }
         assertEquals(10_000, rows)
         assertTrue(database.historyChanges(before, HistoryRangeState(0, 20_000)).affectsRange)
-        assertEquals(10_001, database.getAllLogRecords().size)
+        assertEquals(10_001, database.readLogRecords { it.count() })
     }
 
     @Test
@@ -297,7 +298,7 @@ class DetailedHistoryInstrumentedTest {
                 observation.copy(time = 1_000_000, status = 100)
             )
             val samples = (0..<600).map { index ->
-                observation.copy(time = 10_000_000 + index * 1_000_000L, status = 200 + index % 100)
+                observation.copy(time = 2_000_000 + index * 1_000_000L, status = 200 + index % 100)
             }
             database.addLogs(legacy + samples)
             val repository = LogsRepository(context)
@@ -413,37 +414,42 @@ class DetailedHistoryInstrumentedTest {
         database.addLogs(emptyList())
         database.deleteHistory(null)
         assertTrue(notifications.isEmpty())
+        val historyChanged = LogDatabase.ACTION_HISTORY_CHANGED
+        val widgetChanged = WidgetSettingsReceiver.ACTION_HISTORY_CHANGED
+        fun assertNotifications(vararg actions: String) {
+            assertEquals(actions.toList(), notifications.map { it.action })
+            assertTrue(notifications.all {
+                if (it.action == historyChanged) it.`package` == context.packageName
+                else it.component?.className == WidgetSettingsReceiver::class.java.name && it.component?.packageName == context.packageName
+            })
+            notifications.clear()
+        }
+
         val sampler = BatteryHistorySampler()
         assertEquals(LogResult.Inserted, database.logObservation(observation, 1_000, sampler, true))
-        assertEquals(1, notifications.size)
+        assertNotifications(historyChanged, widgetChanged)
         assertEquals(
             LogResult.Duplicate, database.logObservation(observation, 1_001, sampler, true)
         )
-        assertEquals(1, notifications.size)
+        assertNotifications()
         assertEquals(
             LogResult.Inserted, database.logObservation(
                 observation.copy(time = 121_000), 121_000, sampler, true
             )
         )
-        assertEquals(2, notifications.size)
+        assertNotifications(historyChanged)
         database.prune(1)
-        assertEquals(3, notifications.size)
+        assertNotifications(historyChanged)
         database.prune(1)
-        assertEquals(3, notifications.size)
+        assertNotifications()
         assertEquals(LogResult.Inserted, database.logBoot())
-        assertEquals(4, notifications.size)
+        assertNotifications(historyChanged, widgetChanged)
         database.replaceAllLogs(listOf(observation))
-        assertEquals(6, notifications.size)
+        assertNotifications(historyChanged, widgetChanged)
         database.addLogs(listOf(observation.copy(time = 2_000)))
-        assertEquals(8, notifications.size)
+        assertNotifications(historyChanged, widgetChanged)
         database.deleteHistory(null)
-        assertEquals(10, notifications.size)
-        val (history, widgets) = notifications.partition { it.action == LogDatabase.ACTION_HISTORY_CHANGED }
-        assertEquals(7, history.size)
-        assertTrue(history.all { it.`package` == context.packageName })
-        assertTrue(widgets.all {
-            it.action == WidgetSettingsReceiver.ACTION_HISTORY_CHANGED && it.component?.className == WidgetSettingsReceiver::class.java.name && it.component?.packageName == context.packageName
-        })
+        assertNotifications(historyChanged, widgetChanged)
     }
 
     @Test

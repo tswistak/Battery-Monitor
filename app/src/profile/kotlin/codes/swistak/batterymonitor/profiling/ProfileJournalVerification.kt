@@ -198,29 +198,29 @@ internal object ProfileJournalVerification {
         case("small_pending_and_range_boundaries") { database, _, item ->
             check(!database.historyChanges(0, null).affectsRange)
             check(database.historyChanges(null, null).affectsRange)
-            database.addLogs(listOf(observation))
+            database.addLogs(sequenceOf(observation))
             val before = database.historyChanges(null, null).revision
             val closed = HistoryRangeState(1_000, 2_000)
-            database.addLogs(listOf(observation.copy(time = 2_000)))
+            database.addLogs(sequenceOf(observation.copy(time = 2_000)))
             val outside = database.historyChanges(before, closed)
             check(outside.revision > before && !outside.affectsRange)
-            database.addLogs(listOf(observation.copy(time = 1_999)))
+            database.addLogs(sequenceOf(observation.copy(time = 1_999)))
             check(database.historyChanges(outside.revision, closed).affectsRange)
             val acknowledged = database.historyChanges(null, null).revision
             check(!database.historyChanges(acknowledged, closed).affectsRange)
-            database.addLogs(listOf(observation.copy(time = 1_000, currentMicroAmps = null)))
+            database.addLogs(sequenceOf(observation.copy(time = 1_000, currentMicroAmps = null)))
             check(database.historyChanges(acknowledged, closed).affectsRange)
-            check(database.getAllLogRecords().size == 4)
+            check(database.readLogRecords { it.count() } == 4)
             item.put("outsideRevisionAcknowledged", outside.revision)
             item.put("inclusiveStartExclusiveEnd", true)
         }
         case("pending_127_128_129_and_overflow") { database, context, item ->
-            database.addLogs(listOf(observation))
+            database.addLogs(sequenceOf(observation))
             val consumer = database.historyChanges(null, null).revision
             val closed = HistoryRangeState(0, 2_000)
             for (index in 1..129) {
                 budget()
-                database.addLogs(listOf(observation.copy(time = 10_000L + index)))
+                database.addLogs(sequenceOf(observation.copy(time = 10_000L + index)))
                 if (index in setOf(1, 127, 128, 129)) {
                     val change = database.historyChanges(consumer, closed)
                     check(change.affectsRange == (index == 129))
@@ -235,7 +235,7 @@ internal object ProfileJournalVerification {
             check(journal(context.file).getInt("count") == 128)
             check(!database.historyChanges(latest, closed).affectsRange)
             check(database.historyChanges(latest + 1, closed).affectsRange)
-            check(database.getAllLogRecords().size == 130)
+            check(database.readLogRecords { it.count() } == 130)
         }
         case("bulk_add_replace_delete_clear_and_noops") { database, context, item ->
             val original = listOf(
@@ -247,12 +247,12 @@ internal object ProfileJournalVerification {
                     remainingChargeMicroampHours = null
                 )
             )
-            database.addLogs(original)
+            database.addLogs(original.asSequence())
             val beforeAdd = database.historyChanges(null, null).revision
             val originalDigest = digestRows(context.file, "_id <= 2")
             val imported =
                 (0 until IMPORT_COUNT).map { index -> observation.copy(time = 10_000L + index) }
-            database.addLogs(imported)
+            database.addLogs(imported.asSequence())
             check(database.historyChanges(null, null).revision == beforeAdd + 1)
             check(!database.historyChanges(beforeAdd, HistoryRangeState(0, 3_000)).affectsRange)
             check(
@@ -261,7 +261,7 @@ internal object ProfileJournalVerification {
                 ).affectsRange
             )
             check(digestRows(context.file, "_id <= 2") == originalDigest)
-            check(database.getAllLogRecords() == original + imported)
+            check(database.readLogRecords { it.toList() } == original + imported)
             val beforeReplace = database.historyChanges(null, null).revision
             val restored = listOf(
                 observation.copy(time = 30_000),
@@ -275,7 +275,7 @@ internal object ProfileJournalVerification {
                 )
             )
             database.replaceAllLogs(restored)
-            check(database.getAllLogRecords() == restored)
+            check(database.readLogRecords { it.toList() } == restored)
             check(database.historyChanges(null, null).revision == beforeReplace + 1)
             check(
                 database.historyChanges(
@@ -294,7 +294,7 @@ internal object ProfileJournalVerification {
             )
             val beforeDelete = database.historyChanges(null, null).revision
             database.deleteHistory(HistoryRangeState(31_000, 31_001))
-            check(database.getAllLogRecords() == listOf(restored[0], restored[2]))
+            check(database.readLogRecords { it.toList() } == listOf(restored[0], restored[2]))
             check(database.historyChanges(null, null).revision == beforeDelete + 1)
             check(
                 database.historyChanges(
@@ -303,7 +303,7 @@ internal object ProfileJournalVerification {
             )
             val beforeClear = database.historyChanges(null, null).revision
             database.deleteHistory(null)
-            check(database.getAllLogRecords().isEmpty())
+            check(database.readLogRecords { it.none() })
             val afterClear = database.historyChanges(null, null).revision
             check(afterClear == beforeClear + 1)
             check(
@@ -313,8 +313,8 @@ internal object ProfileJournalVerification {
             )
             val notifications = context.broadcasts.get()
             database.deleteHistory(null)
-            database.addLogs(emptyList())
-            database.replaceAllLogs(emptyList())
+            database.addLogs(emptySequence())
+            database.replaceAllLogs(emptySequence())
             check(database.historyChanges(null, null).revision == afterClear)
             check(context.broadcasts.get() == notifications)
             item.put("importRows", IMPORT_COUNT)
@@ -325,7 +325,7 @@ internal object ProfileJournalVerification {
             item.put("noOpMutationDidNotNotify", true)
         }
         case("journal_failure_rolls_back_all_state") { database, context, item ->
-            database.addLogs(listOf(observation))
+            database.addLogs(sequenceOf(observation))
             val before = inspect(context.file)
             val revision = database.historyChanges(null, null).revision
             val notifications = context.broadcasts.get()
@@ -351,14 +351,14 @@ internal object ProfileJournalVerification {
             )
             check(database.historyChanges(null, null).revision == revision + 1)
             check(sampler.lastRecordedElapsed == 120_000L && context.broadcasts.get() == notifications + 1)
-            check(database.getAllLogRecords().size == 2)
+            check(database.readLogRecords { it.count() } == 2)
             item.put("beforeFailure", before)
             item.put("rowsRevisionSamplerBroadcastRolledBack", true)
             item.put("sameSamplerRetryCommittedOnce", true)
         }
         case("concurrent_snapshot_then_commit") { database, context, item ->
             val records = (0 until 1_000).map { observation.copy(time = it.toLong()) }
-            database.addLogs(records)
+            database.addLogs(records.asSequence())
             val before = database.historyChanges(null, null).revision
             val originalDigest = digestRows(context.file, "_id <= 1000")
             val writerReady = CountDownLatch(1)
@@ -372,7 +372,7 @@ internal object ProfileJournalVerification {
                     writerReady.countDown()
                     check(startWrite.await(5, TimeUnit.SECONDS))
                     attemptingWrite.countDown()
-                    other.addLogs(listOf(observation.copy(time = 1_001)))
+                    other.addLogs(sequenceOf(observation.copy(time = 1_001)))
                 } catch (error: Throwable) {
                     failure.set(error)
                 } finally {
@@ -403,7 +403,7 @@ internal object ProfileJournalVerification {
                 check(!writer.isAlive) { "Concurrent writer did not finish after the snapshot closed" }
                 failure.get()?.let { throw IllegalStateException("Concurrent writer failed", it) }
                 check(count == 1_000)
-                check(database.getAllLogRecords().size == 1_001)
+                check(database.readLogRecords { it.count() } == 1_001)
                 check(database.historyChanges(before, HistoryRangeState(0, 2_000)).affectsRange)
                 check(digestRows(context.file, "_id <= 1000") == originalDigest)
                 item.put("readSnapshotRows", count)

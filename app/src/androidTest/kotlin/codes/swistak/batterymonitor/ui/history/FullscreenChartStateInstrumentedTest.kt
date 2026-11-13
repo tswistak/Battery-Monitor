@@ -64,6 +64,7 @@ import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
+import codes.swistak.batterymonitor.testsupport.addLogs
 import codes.swistak.batterymonitor.testsupport.awaitCondition
 import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
@@ -1445,7 +1446,7 @@ class FullscreenChartStateInstrumentedTest {
         val model = model(HistoryMetric.LEVEL, fullRange, "24h")
         loaded(model)
         val scenario = ActivityScenario.launch(ComposeTestActivity::class.java)
-        try {
+        scenario.use { scenario ->
             lateinit var activity: ComposeTestActivity
             scenario.onActivity { activity = it }
             main {
@@ -1593,8 +1594,6 @@ class FullscreenChartStateInstrumentedTest {
                 model.viewport(HistoryRangeState(start, start + 4 * 3_600_000L), 1000)
             }
             assertFixtureRendered(activity, model)
-        } finally {
-            scenario.close()
         }
     }
 

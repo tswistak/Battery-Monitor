@@ -28,7 +28,8 @@ import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
 import codes.swistak.batterymonitor.ui.theme.brightness
 import codes.swistak.batterymonitor.ui.theme.colorSource
-import org.json.JSONObject
+import android.net.Uri
+import java.io.File
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -198,9 +199,8 @@ class SettingsCompatibilityInstrumentedTest {
             "status_dur_est" to "0",
         )
         write(source, portable + excluded)
-        val exported = SettingsBackup.exportToJson(source).toString()
-        val json = JSONObject(exported).getJSONObject("settings")
-        assertEquals(SettingsBackup.SCHEMA_VERSION, SettingsBackup.getSchemaVersion(exported))
+        val exported = SettingsBackup.exportToJson(source)
+        val json = exported.getJSONObject("settings")
         for (key in excluded.keys) {
             assertFalse(
                 "Technical, transient or SAF-bound setting must stay local: $key", json.has(key)
@@ -214,8 +214,16 @@ class SettingsCompatibilityInstrumentedTest {
         assertEquals(0, json.getInt("vital_signs_status_duration_order"))
 
         write(restored, excluded)
-        SettingsBackup.validateJson(exported)
-        assertTrue(restored.edit().also { SettingsBackup.importFromJson(it, exported) }.commit())
+        val file = File.createTempFile("settings-export-", ".json", context.cacheDir)
+        try {
+            val uri = Uri.fromFile(file)
+            SettingsBackup.writeToUri(context, uri, exported)
+            val prepared = SettingsBackup.readFromUri(context, uri)
+            assertEquals(SettingsBackup.SCHEMA_VERSION, prepared.first)
+            assertTrue(restored.edit().also { SettingsBackup.restore(it, prepared) }.commit())
+        } finally {
+            file.delete()
+        }
         for ((key, value) in portable) assertEquals("Restored $key", value, restored.all[key])
         for ((key, value) in excluded - SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING) {
             assertEquals("Preserved local $key", value, restored.all[key])
@@ -275,7 +283,14 @@ class SettingsCompatibilityInstrumentedTest {
         )
         for (backup in backups) {
             assertTrue(restored.edit().clear().commit())
-            assertTrue(restored.edit().also { SettingsBackup.importFromJson(it, backup) }.commit())
+            val file = File.createTempFile("settings-legacy-", ".json", context.cacheDir)
+            try {
+                file.writeText(backup)
+                val prepared = SettingsBackup.readFromUri(context, Uri.fromFile(file))
+                assertTrue(restored.edit().also { SettingsBackup.restore(it, prepared) }.commit())
+            } finally {
+                file.delete()
+            }
             assertFalse(restored.contains("red_threshold"))
             assertFalse(restored.contains("ui_color"))
             assertEquals(TemperatureUnit.FAHRENHEIT, restored.temperatureUnit("celsius"))

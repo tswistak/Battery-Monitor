@@ -20,6 +20,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowSystemClock
+import java.io.File
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
@@ -102,6 +103,43 @@ class MonitoringRecoveryTest {
         assertTrue(BackgroundServiceWatchdog.isServiceDesired(context))
         setBoot(31)
         assertFalse(BackgroundServiceWatchdog.isServiceDesired(context))
+    }
+
+    @Test
+    fun unavailable_boot_count_still_distinguishes_reboot_from_manual_session_recovery() {
+        preferences.edit().putString(SettingsContract.KEY_AUTOSTART, "never").apply()
+        setBoot(-1)
+        assertTrue(MonitoringDesiredState.write(context, true))
+        assertTrue(BackgroundServiceWatchdog.isServiceDesired(context))
+        assertFalse(MonitoringDesiredState.afterSystemEvent(context, Intent.ACTION_BOOT_COMPLETED))
+        assertFalse(BackgroundServiceWatchdog.selfHealIfNeeded(context))
+
+        assertTrue(MonitoringDesiredState.write(context, true))
+        assertTrue(BackgroundServiceWatchdog.selfHealIfNeeded(context))
+        assertEquals(1, context.startCount)
+
+        assertTrue(MonitoringDesiredState.write(context, false))
+        assertFalse(BackgroundServiceWatchdog.selfHealIfNeeded(context, watchdogFired = true))
+        assertNull(alarms.peekNextScheduledAlarm())
+    }
+
+    @Test
+    fun corrupt_state_recovers_from_mirrored_preferences_on_package_replacement() {
+        setBoot(35)
+        assertTrue(MonitoringDesiredState.write(context, true))
+        val file = File(context.noBackupFilesDir, "monitoring_desired_state")
+        file.writeBytes(byteArrayOf(0x42, 0x4d))
+
+        assertTrue(BackgroundServiceWatchdog.isServiceDesired(context))
+        assertTrue(
+            MonitoringDesiredState.afterSystemEvent(
+                context, Intent.ACTION_MY_PACKAGE_REPLACED
+            )
+        )
+        assertEquals(
+            MonitoringDesiredState.Session(true, 35),
+            MonitoringDesiredState.decode(file.readBytes())
+        )
     }
 
     @Test

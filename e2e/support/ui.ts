@@ -107,6 +107,13 @@ export async function completeOnboarding(
             throw new Error('Unexpected changelog interrupted startup');
         }
         if (await allowStartupPermission()) return false;
+            if (await browser.$(textSelector('Status Bar Battery Chip')).isDisplayed()) {
+            const dismiss = await browser.$(textSelector('Dismiss'));
+            if (await dismiss.isDisplayed()) {
+                await dismiss.click();
+                return false;
+            }
+        }
         for (const selector of [
             textSelector('Cancel'),
             textSelector('Got it'),

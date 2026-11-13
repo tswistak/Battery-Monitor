@@ -323,9 +323,9 @@ class BatteryInfoService : Service() {
     }
     private val currentAcquisition = CurrentAcquisition(
         readNow = {
-        BatteryCurrent.readWithSource(
-            false, readPrivileged = { null })
-    },
+            BatteryCurrent.readWithSource(
+                false, readPrivileged = { null })
+        },
         readAverage = { BatteryCurrent.readWithSource(true, readPrivileged = { null }) },
         executor = currentWorker,
         deliver = { callback -> mHandler.post { callback() } })
@@ -1250,14 +1250,10 @@ class BatteryInfoService : Service() {
                 SettingsContract.KEY_PREDICTION_TYPE, DisplayStrings.defaultPredictionType
             )!!
         )
-        val resolvedTargets = predictor!!.update(info!!, chargingLimit.refresh())
+        val limitReading = chargingLimit.refresh()
+        val resolvedTargets = predictor!!.update(info!!, limitReading.state)
         val targetAlarmResult = targetAlarmEvaluator.evaluate(
-            TargetAlarmUpdate(
-                percent = info!!.percent,
-                plugged = info!!.plugged,
-                chargingTarget = resolvedTargets.charging.percent,
-                dischargingTarget = resolvedTargets.discharging.percent
-            )
+            TargetAlarmUpdate(info!!, resolvedTargets, limitReading)
         )
         info!!.prediction.updateRelativeTime()
         info!!.fullRangePrediction.updateRelativeTime()

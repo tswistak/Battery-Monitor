@@ -91,7 +91,7 @@ class JsonLogAppendTest {
 
     private fun storedLogs(): List<LogRecord> = LogDatabase(context).let { database ->
         try {
-            database.getAllLogRecords()
+            database.readLogRecords { it.toList() }
         } finally {
             database.close()
         }
@@ -100,7 +100,7 @@ class JsonLogAppendTest {
     private fun addObservation() {
         val database = LogDatabase(context)
         try {
-            database.addLogs(listOf(observation))
+            database.addLogs(sequenceOf(observation))
         } finally {
             database.close()
         }
@@ -424,7 +424,7 @@ class JsonLogAppendTest {
         provider.unreadable = false
         val database = LogDatabase(context)
         try {
-            assertEquals(listOf(observation), database.getAllLogRecords())
+            assertEquals(listOf(observation), database.readLogRecords { it.toList() })
             assertTrue(database.hasLogsOlderThan(672))
             maintainHistory(
                 672,
@@ -432,7 +432,7 @@ class JsonLogAppendTest {
                 { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
                 database::prune
             )
-            assertTrue(database.getAllLogRecords().isEmpty())
+            assertTrue(database.readLogRecords { it.none() })
             assertEquals(successful, file.readText())
             assertEquals(200L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0))
             assertTrue(
@@ -455,14 +455,14 @@ class JsonLogAppendTest {
             .putString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, "append").commit()
         val database = LogDatabase(context)
         try {
-            database.addLogs(listOf(old))
+            database.addLogs(sequenceOf(old))
             AutoLogExporter.exportInMainProcess(context)
             assertEquals(
                 old.time, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1)
             )
 
             val tied = old.copy(charge = 49)
-            database.addLogs(listOf(tied, observation))
+            database.addLogs(sequenceOf(tied, observation))
             AutoLogExporter.exportInMainProcess(context)
             AutoLogExporter.exportInMainProcess(context)
             assertEquals(listOf(old, tied, observation), decodedLogs(file.readText()))

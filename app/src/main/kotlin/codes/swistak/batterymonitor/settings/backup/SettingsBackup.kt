@@ -15,7 +15,8 @@ package codes.swistak.batterymonitor.settings.backup
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
-import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
+import codes.swistak.batterymonitor.devicebackup.readBackupJson
+import codes.swistak.batterymonitor.devicebackup.writeBackupJson
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.VitalSignsOrder
@@ -24,15 +25,12 @@ import codes.swistak.batterymonitor.settings.migration.TemperatureUnitPreference
 import codes.swistak.batterymonitor.settings.migration.VitalSignsContentMigration
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
 
 internal object SettingsBackup {
     const val SCHEMA_VERSION: Int = Version4SettingsImporter.VERSION
+
+    const val MAX_IMPORT_BYTES = 1024 * 1024
 
     fun parsedSettings(root: JSONObject): Pair<Int, Map<String, Any>> {
         val version = root.optInt("version", 0)
@@ -51,15 +49,6 @@ internal object SettingsBackup {
             SettingsBackupCodec.chipContentOrderFromBackup(values)
         }
         return version to values
-    }
-
-    fun validateJson(jsonString: String) {
-        parsedSettings(JSONObject(jsonString))
-    }
-
-    @Throws(JSONException::class)
-    fun getSchemaVersion(jsonString: String): Int {
-        return JSONObject(jsonString).optInt("version", 0)
     }
 
     @Throws(JSONException::class)
@@ -103,10 +92,6 @@ internal object SettingsBackup {
         return root
     }
 
-    @Throws(JSONException::class, IllegalArgumentException::class)
-    fun importFromJson(editor: SharedPreferences.Editor, jsonString: String) =
-        restore(editor, parsedSettings(JSONObject(jsonString)))
-
     fun restore(editor: SharedPreferences.Editor, parsed: Pair<Int, Map<String, Any>>) {
         val (version, validatedSettings) = parsed
         settingsImporterForVersion(version).restore(editor, validatedSettings)
@@ -118,32 +103,10 @@ internal object SettingsBackup {
     }
 
     @Throws(IOException::class)
-    fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w")
-            ?: throw IOException("Could not open backup destination")
-        pfd.use { pfd ->
-            val fos = FileOutputStream(pfd.fileDescriptor)
-            fos.write(json.toString().toByteArray(StandardCharsets.UTF_8))
-            fos.close()
-        }
-    }
+    fun writeToUri(context: Context, uri: Uri, json: JSONObject) =
+        writeBackupJson(context, uri, json, MAX_IMPORT_BYTES)
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
-            ?: throw IOException("Could not open backup source")
-        pfd.use { pfd ->
-            BufferedReader(
-                InputStreamReader(
-                    BackupImportInputStream(FileInputStream(pfd.fileDescriptor)),
-                    StandardCharsets.UTF_8
-                )
-            ).use { reader ->
-                val sb = StringBuilder()
-                var line: String?
-                while ((reader.readLine().also { line = it }) != null) sb.append(line).append('\n')
-                return sb.toString()
-            }
-        }
-    }
+    fun readFromUri(context: Context, uri: Uri): Pair<Int, Map<String, Any>> =
+        parsedSettings(readBackupJson(context, uri, MAX_IMPORT_BYTES))
 }

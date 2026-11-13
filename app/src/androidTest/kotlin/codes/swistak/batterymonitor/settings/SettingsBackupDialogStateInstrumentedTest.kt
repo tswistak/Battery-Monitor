@@ -30,6 +30,8 @@ import androidx.fragment.app.FragmentHostCallback
 import androidx.lifecycle.ViewModelStore
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.AlarmRecord
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.devicebackup.GeneralBackup
 import codes.swistak.batterymonitor.logs.LogDatabase
@@ -68,6 +70,13 @@ class SettingsBackupDialogStateInstrumentedTest {
         context = object : ContextWrapper(target) {
             override fun getApplicationContext(): Context = this
             override fun getCacheDir(): File = directory
+            override fun getFilesDir(): File = directory
+            override fun getSharedPreferences(name: String, mode: Int): SharedPreferences =
+                target.getSharedPreferences("${directory.name}-$name", mode)
+
+            override fun deleteSharedPreferences(name: String): Boolean =
+                target.deleteSharedPreferences("${directory.name}-$name")
+
             override fun getDatabasePath(name: String) = File(directory, name)
             override fun openOrCreateDatabase(
                 name: String, mode: Int, factory: SQLiteDatabase.CursorFactory?
@@ -94,6 +103,9 @@ class SettingsBackupDialogStateInstrumentedTest {
     @After
     fun tearDown() {
         main { store.clear() }
+        for (name in listOf(SettingsContract.SETTINGS_FILE, directory.name, "picker-result-test")) {
+            context.deleteSharedPreferences(name)
+        }
         directory.deleteRecursively()
     }
 
@@ -136,6 +148,69 @@ class SettingsBackupDialogStateInstrumentedTest {
         assertTrue(dialog(fragment) is SettingsDialog.Message)
         assertNull(save(fragment).getBundle("settings_backup_dialog"))
         assertFalse(directory.listFiles().orEmpty().any { it.name.startsWith("settings-import-") })
+    }
+
+    @Test
+    fun settings_and_alarm_limits_apply_during_cache_copy_and_again_after_recreation() {
+        val settings =
+            context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+        assertTrue(settings.edit().putBoolean(SettingsContract.KEY_ENABLE_LOGGING, true).commit())
+        val oldAlarm = AlarmRecord(true, "charge_rises", "83")
+        val database = AlarmDatabase(context)
+        try {
+            assertTrue(database.replaceAllAlarms(listOf(oldAlarm)))
+            val entries = listOf(
+                Triple(
+                    2, SettingsBackup.MAX_IMPORT_BYTES, R.string.invalid_settings_file
+                ) to """{"version":${SettingsBackup.SCHEMA_VERSION + 1},"settings":{"enable_logging":false}}""",
+                Triple(
+                    4, AlarmBackup.MAX_IMPORT_BYTES, R.string.invalid_alarms_file
+                ) to """{"version":${AlarmBackup.SCHEMA_VERSION + 1},"alarms":[]}"""
+            )
+            for ((entry, json) in entries) {
+                val (code, limit, error) = entry
+                val exact = json + " ".repeat(limit - json.toByteArray().size)
+                val source =
+                    File(directory, "bounded-source-$code").apply { writeText("$exact ") }
+                val rejected = fragment()
+                read(rejected, request(code), Uri.fromFile(source))
+                val outcome = complete(rejected)
+                assertEquals(
+                    "Backup source is too large", outcome.result.exceptionOrNull()?.message
+                )
+                assertEquals(
+                    context.getString(error), (dialog(rejected) as SettingsDialog.Message).message
+                )
+                assertFalse(
+                    directory.listFiles().orEmpty().any { it.name.startsWith("settings-import-") })
+
+                source.writeText(exact)
+                val first = fragment()
+                read(first, request(code), Uri.fromFile(source))
+                complete(first)
+                assertTrue(dialog(first) is SettingsDialog.Confirm)
+                val saved = save(first)
+                val cache = File(
+                    directory, saved.getBundle("settings_backup_dialog")!!.getString("cache")!!
+                )
+                val reopened = restore(saved)
+                complete(reopened)
+                assertTrue(dialog(reopened) is SettingsDialog.Confirm)
+
+                cache.appendText(" ")
+                val rejectedAfterRecreation = restore(saved)
+                complete(rejectedAfterRecreation)
+                assertEquals(
+                    context.getString(error),
+                    (dialog(rejectedAfterRecreation) as SettingsDialog.Message).message
+                )
+                assertFalse(cache.exists())
+            }
+            assertTrue(settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, false))
+            assertEquals(listOf(oldAlarm), database.getAllAlarmRecords())
+        } finally {
+            database.close()
+        }
     }
 
     @Test
@@ -201,8 +276,7 @@ class SettingsBackupDialogStateInstrumentedTest {
         try {
             assertEquals(
                 listOf(LogRecord(3, 72, 1_700_000_000_000L, null, null)),
-                database.getAllLogRecords()
-            )
+                database.readLogRecords { it.toList() })
         } finally {
             database.close()
         }
@@ -238,6 +312,130 @@ class SettingsBackupDialogStateInstrumentedTest {
             save(restored).getBundle("settings_backup_dialog")!!.getStringArrayList("selected")
         )
         cancel(restored)
+    }
+
+    @Test
+    fun general_backup_preview_restores_valid_sections_independently_after_recreation() {
+        val settings =
+            context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+        val oldAlarm = AlarmRecord(true, "charge_rises", "81")
+        val importedAlarm = AlarmRecord(false, "charge_drops", "17")
+        fun alarms(): List<AlarmRecord> {
+            val database = AlarmDatabase(context)
+            return try {
+                database.getAllAlarmRecords()
+            } finally {
+                database.close()
+            }
+        }
+        for (brokenIndex in listOf(0, 1)) {
+            assertTrue(
+                settings.edit().putString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
+                    .putBoolean(SettingsContract.KEY_ENABLE_LOGGING, true).commit()
+            )
+            val database = AlarmDatabase(context)
+            try {
+                assertTrue(database.replaceAllAlarms(listOf(oldAlarm)))
+            } finally {
+                database.close()
+            }
+            val source = generalBackupSource(
+                settings = if (brokenIndex == 0) "invalid JSON" else """{"version":${SettingsBackup.SCHEMA_VERSION + 1},"settings":{"enable_logging":false}}""",
+                alarms = if (brokenIndex == 1) "invalid JSON" else """{"version":${AlarmBackup.SCHEMA_VERSION + 1},"alarms":[{"enabled":false,"type":"charge_drops","threshold":"17"}]}"""
+            )
+
+            val invalidSelection = fragment()
+            read(invalidSelection, request(9), Uri.fromFile(source))
+            complete(invalidSelection)
+            val invalidPreview = choices(invalidSelection)
+            assertEquals(
+                listOf(
+                    context.getString(R.string.settings_activity_subtitle),
+                    context.getString(R.string.alarm_settings)
+                ), invalidPreview.options
+            )
+            assertTrue(
+                invalidPreview.message.orEmpty()
+                    .contains(context.getString(R.string.settings_file_version_warning))
+            )
+            main {
+                closeForConfirmation(invalidSelection)
+                invalidPreview.onConfirm(setOf(0, 1))
+            }
+            complete(invalidSelection)
+            assertEquals(
+                context.getString(R.string.invalid_general_backup_file),
+                (dialog(invalidSelection) as SettingsDialog.Message).message
+            )
+            assertTrue(settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, false))
+            assertEquals(listOf(oldAlarm), alarms())
+            assertNoImportCache()
+
+            val first = fragment()
+            read(first, request(9), Uri.fromFile(source))
+            complete(first)
+            val restored = restore(save(first))
+            complete(restored)
+            val preview = choices(restored)
+            assertEquals(invalidPreview.options, preview.options)
+            main {
+                closeForConfirmation(restored)
+                preview.onConfirm(setOf(1 - brokenIndex))
+            }
+            complete(restored)
+            assertEquals(
+                context.getString(R.string.general_backup_imported),
+                (dialog(restored) as SettingsDialog.Message).message
+            )
+            assertEquals(
+                brokenIndex == 0, settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
+            )
+            assertEquals(
+                listOf(if (brokenIndex == 0) importedAlarm else oldAlarm), alarms()
+            )
+            assertNoImportCache()
+        }
+    }
+
+    @Test
+    fun general_backup_preview_rejects_incomplete_or_oversized_archives() {
+        val validSettings = """{"version":4,"settings":{}}"""
+        val validAlarms = """{"version":2,"alarms":[]}"""
+        val incomplete = generalBackupSource(validSettings, validAlarms)
+        RandomAccessFile(incomplete, "rw").use { it.setLength(it.length() - 22L) }
+        val oversized = generalBackupSource(
+            validSettings + " ".repeat(SettingsBackup.MAX_IMPORT_BYTES), validAlarms
+        )
+        for (source in listOf(incomplete, oversized)) {
+            val fragment = fragment()
+            read(fragment, request(9), Uri.fromFile(source))
+            complete(fragment)
+            assertEquals(
+                context.getString(R.string.invalid_general_backup_file),
+                (dialog(fragment) as SettingsDialog.Message).message
+            )
+            assertNull(save(fragment).getBundle("settings_backup_dialog"))
+            assertNoImportCache()
+        }
+    }
+
+    private fun generalBackupSource(settings: String, alarms: String): File =
+        File.createTempFile("general-backup-", ".zip", directory).also { source ->
+            ZipOutputStream(source.outputStream()).use { output ->
+                for ((name, body) in mapOf(
+                    "metadata.json" to """{"version":1,"files":["settings.json","alarms.json"]}""",
+                    "settings.json" to settings,
+                    "alarms.json" to alarms
+                )) {
+                    output.putNextEntry(ZipEntry(name))
+                    output.write(body.toByteArray(Charsets.UTF_8))
+                    output.closeEntry()
+                }
+            }
+        }
+
+    private fun assertNoImportCache() {
+        assertFalse(directory.listFiles().orEmpty().any { it.name.startsWith("settings-import-") })
     }
 
     @Test
@@ -423,6 +621,12 @@ class SettingsBackupDialogStateInstrumentedTest {
                 .apply { isAccessible = true }.set(result, context)
             SettingsFragment::class.java.getDeclaredField("operationModel")
                 .apply { isAccessible = true }.set(result, model)
+            SettingsFragment::class.java.getDeclaredField("mSharedPreferences")
+                .apply { isAccessible = true }.set(
+                    result, context.getSharedPreferences(
+                        SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+                    )
+                )
             models[result] = model
             store.put("backup-${models.size}", model)
         }
@@ -444,16 +648,19 @@ class SettingsBackupDialogStateInstrumentedTest {
         }
     }
 
-    private fun complete(fragment: SettingsFragment) {
+    private fun complete(fragment: SettingsFragment): SettingsOperationOutcome {
         val model = models.getValue(fragment)
         val deadline = System.nanoTime() + 10_000_000_000L
         while (model.outcome == null && System.nanoTime() < deadline) Thread.sleep(20)
         assertNotNull("Backup read must complete", model.outcome)
+        lateinit var outcome: SettingsOperationOutcome
         main {
+            outcome = requireNotNull(model.takeOutcome())
             SettingsFragment::class.java.getDeclaredMethod(
                 "handleOperationOutcome", SettingsOperationOutcome::class.java
-            ).apply { isAccessible = true }.invoke(fragment, model.takeOutcome())
+            ).apply { isAccessible = true }.invoke(fragment, outcome)
         }
+        return outcome
     }
 
     private fun save(fragment: SettingsFragment) = Bundle().also {

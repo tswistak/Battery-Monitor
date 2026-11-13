@@ -16,21 +16,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
-import android.util.JsonReader
-import android.util.JsonToken
-import android.util.MalformedJsonException
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import org.json.JSONArray
 import org.json.JSONObject
-import org.json.JSONTokener
-import java.io.EOFException
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.io.InputStreamReader
 import java.io.OutputStream
 import java.nio.charset.StandardCharsets
 import java.util.zip.ZipEntry
@@ -78,8 +72,6 @@ internal object GeneralBackup {
     internal const val MAX_ENTRY_NAME_BYTES = 128
     internal const val MAX_METADATA_BYTES = 16 * 1024
     internal const val MAX_ARCHIVE_BYTES = MAX_TOTAL_BYTES + 10 * 1024 * 1024
-    private const val MAX_SETTINGS_BYTES = 1024 * 1024
-    private const val MAX_ALARMS_BYTES = 2 * 1024 * 1024
 
     fun exportToUri(
         context: Context,
@@ -231,64 +223,17 @@ internal object GeneralBackup {
     }
 
     private fun InputStream.readJson(): Result<JSONObject> = try {
-        val root = JsonReader(
-            BoundedJsonTokens(
-                InputStreamReader(
-                    this, StandardCharsets.UTF_8.newDecoder()
-                )
-            )
-        ).use { reader ->
-            var valuesLeft = 250_000
-            val value = reader.readValue {
-                require(valuesLeft-- > 0) { "Too many values in backup JSON" }
-            }
-            require(value is JSONObject && reader.peek() == JsonToken.END_DOCUMENT) {
-                "Expected a single JSON backup object"
-            }
-            value
-        }
-        Result.success(root)
+        Result.success(readBackupJson(this))
     } catch (failure: ZipException) {
         throw failure
     } catch (failure: Exception) {
-        Result.failure(
-            if (failure is MalformedJsonException || failure is EOFException || failure is CharacterCodingException) {
-                IllegalArgumentException("Invalid backup JSON", failure)
-            } else failure
-        )
-    }
-
-    private fun JsonReader.readValue(count: () -> Unit): Any {
-        count()
-        return when (peek()) {
-            JsonToken.BEGIN_OBJECT -> JSONObject().apply {
-                beginObject()
-                while (hasNext()) {
-                    val name = nextName()
-                    require(!has(name)) { "Duplicate backup JSON field" }
-                    put(name, readValue(count))
-                }
-                endObject()
-            }
-
-            JsonToken.BEGIN_ARRAY -> JSONArray().apply {
-                beginArray()
-                while (hasNext()) put(readValue(count))
-                endArray()
-            }
-
-            JsonToken.NUMBER -> JSONTokener(nextString()).nextValue()
-            JsonToken.STRING -> nextString()
-            JsonToken.BOOLEAN -> nextBoolean()
-            JsonToken.NULL -> nextNull().let { JSONObject.NULL }
-            else -> throw IllegalArgumentException("Invalid backup JSON value")
-        }
+        Result.failure(failure)
     }
 
     private fun entryLimit(name: String): Int = when (name) {
         METADATA_FILE -> MAX_METADATA_BYTES
-        Version1GeneralBackupSchema.SETTINGS_FILE -> MAX_SETTINGS_BYTES
-        Version1GeneralBackupSchema.ALARMS_FILE -> MAX_ALARMS_BYTES
+        Version1GeneralBackupSchema.SETTINGS_FILE -> SettingsBackup.MAX_IMPORT_BYTES
+        Version1GeneralBackupSchema.ALARMS_FILE -> AlarmBackup.MAX_IMPORT_BYTES
         else -> MAX_ENTRY_BYTES
     }
 
@@ -300,10 +245,11 @@ internal object GeneralBackup {
         if (DeviceDataType.PREDICTOR_DATA in device) add(GeneralBackupDataType.PREDICTOR_DATA)
     }
 
+    // A failed optional member is reported when it is selected for restoration.
     fun containsNewerSchema(archive: GeneralBackupArchive): Boolean =
-        archive.schemaVersion > SCHEMA_VERSION || (archive.settings?.getOrThrow()
+        archive.schemaVersion > SCHEMA_VERSION || (archive.settings?.getOrNull()
             ?.optInt(KEY_VERSION, 0)
-            ?: 0) > SettingsBackup.SCHEMA_VERSION || (archive.alarms?.getOrThrow()
+            ?: 0) > SettingsBackup.SCHEMA_VERSION || (archive.alarms?.getOrNull()
             ?.optInt(KEY_VERSION, 0) ?: 0) > AlarmBackup.SCHEMA_VERSION || (archive.device?.version
             ?: 0) > DeviceDataBackup.SCHEMA_VERSION
 

@@ -84,7 +84,7 @@ class ProfileHistoryReceiver : BroadcastReceiver() {
                         )
                     ) { it.firstOrNull()?.id ?: 0L }
                     val start = SystemClock.elapsedRealtimeNanos()
-                    database.addLogs(times.map { time ->
+                    database.addLogs(times.asSequence().map { time ->
                         LogRecord(
                             LogDatabase.encodeStatus(status, plugged, LogDatabase.STATUS_SAMPLE),
                             percent,

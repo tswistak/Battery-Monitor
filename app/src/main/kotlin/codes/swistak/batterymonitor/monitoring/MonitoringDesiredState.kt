@@ -33,11 +33,10 @@ internal object MonitoringDesiredState {
     private const val FILE_NAME = "monitoring_desired_state"
     private const val MAGIC = 0x424D4453
     private const val VERSION = 2
-    private const val LEGACY_ENCODED_SIZE = 9
     private const val ENCODED_SIZE = 13
     const val ACTION_CHANGED = "codes.swistak.batterymonitor.MONITORING_DESIRED_CHANGED"
 
-    internal data class Session(val desired: Boolean, val bootCount: Int?)
+    internal data class Session(val desired: Boolean, val bootCount: Int)
 
     fun read(context: Context): Boolean = resolve(context)
 
@@ -54,7 +53,7 @@ internal object MonitoringDesiredState {
                 val autostart = readAutostart(context)
                 val wasDesired = previous?.desired ?: readLegacy(context, autostart)
                 val effective = when {
-                    previous?.bootCount != null || action == Intent.ACTION_BOOT_COMPLETED -> shouldStartMonitoringAfterSystemEvent(
+                    previous != null || action == Intent.ACTION_BOOT_COMPLETED -> shouldStartMonitoringAfterSystemEvent(
                         Intent.ACTION_BOOT_COMPLETED, autostart, wasDesired
                     )
 
@@ -85,20 +84,18 @@ internal object MonitoringDesiredState {
         var changed = false
         locked(context) { file ->
             val existing = readFile(file)
-            if (desired == null && existing?.bootCount == null) {
+            if (desired == null && existing == null) {
                 val service = context.getSharedPreferences(
                     SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
                 )
                 val main = context.getSharedPreferences(
                     SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
                 )
-                if (existing != null || service.contains(BatteryInfoService.KEY_SERVICE_DESIRED) || main.getBoolean(
+                if (service.contains(BatteryInfoService.KEY_SERVICE_DESIRED) || main.getBoolean(
                         SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
                     )
                 ) {
-                    mirror(
-                        context, existing?.desired ?: readLegacy(context, readAutostart(context))
-                    )
+                    mirror(context, readLegacy(context, readAutostart(context)))
                     return@locked
                 }
             }
@@ -214,22 +211,20 @@ internal object MonitoringDesiredState {
             output.writeInt(MAGIC)
             output.writeInt(VERSION)
             output.writeBoolean(session.desired)
-            output.writeInt(requireNotNull(session.bootCount))
+            output.writeInt(session.bootCount)
         }
     }.toByteArray()
 
     internal fun decode(bytes: ByteArray): Session? {
-        if (bytes.size != ENCODED_SIZE && bytes.size != LEGACY_ENCODED_SIZE) return null
+        if (bytes.size != ENCODED_SIZE) return null
         return DataInputStream(ByteArrayInputStream(bytes)).use { input ->
-            if (input.readInt() != MAGIC) return null
-            val version = input.readInt()
-            if (version != if (bytes.size == ENCODED_SIZE) VERSION else 1) return null
+            if (input.readInt() != MAGIC || input.readInt() != VERSION) return null
             val desired = when (input.readUnsignedByte()) {
                 0 -> false
                 1 -> true
                 else -> return null
             }
-            Session(desired, if (version == VERSION) input.readInt() else null)
+            Session(desired, input.readInt())
         }
     }
 }

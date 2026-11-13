@@ -17,18 +17,19 @@ import android.net.Uri
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmRecord
 import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
+import codes.swistak.batterymonitor.devicebackup.readBackupJson
+import codes.swistak.batterymonitor.devicebackup.writeBackupJson
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
+
+internal data class AlarmBackupImportPreview(val version: Int, val alarms: List<AlarmRecord>)
 
 internal object AlarmBackup {
     const val SCHEMA_VERSION: Int = Version2AlarmImporter.VERSION
+
+    const val MAX_IMPORT_BYTES = 2 * 1024 * 1024
 
     @Throws(JSONException::class)
     fun exportToJson(database: AlarmDatabase): JSONObject {
@@ -44,8 +45,11 @@ internal object AlarmBackup {
     }
 
     @Throws(JSONException::class, IllegalArgumentException::class)
-    fun importFromJson(database: AlarmDatabase, jsonString: String): Int =
-        restore(database, validatedRecords(JSONObject(jsonString)))
+    fun importFromJson(database: AlarmDatabase, jsonString: String): Int {
+        require(jsonString.length <= MAX_IMPORT_BYTES) { "Alarm backup is too large" }
+        val input = BackupImportInputStream(jsonString.byteInputStream(), MAX_IMPORT_BYTES)
+        return restore(database, validatedRecords(readBackupJson(input)))
+    }
 
     fun restore(database: AlarmDatabase, restored: List<AlarmRecord>): Int {
         check(database.replaceAllAlarms(restored)) { "Could not restore alarms" }
@@ -73,29 +77,12 @@ internal object AlarmBackup {
     }
 
     @Throws(IOException::class)
-    fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w")
-            ?: throw IOException("Could not open backup destination")
-        pfd.use {
-            FileOutputStream(it.fileDescriptor).use { output ->
-                output.write(json.toString().toByteArray(StandardCharsets.UTF_8))
-            }
-        }
-    }
+    fun writeToUri(context: Context, uri: Uri, json: JSONObject) =
+        writeBackupJson(context, uri, json, MAX_IMPORT_BYTES)
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
-            ?: throw IOException("Could not open backup source")
-        pfd.use {
-            BufferedReader(
-                InputStreamReader(
-                    BackupImportInputStream(FileInputStream(it.fileDescriptor)),
-                    StandardCharsets.UTF_8
-                )
-            ).use { reader ->
-                return reader.readText()
-            }
-        }
+    fun readFromUri(context: Context, uri: Uri): AlarmBackupImportPreview {
+        val root = readBackupJson(context, uri, MAX_IMPORT_BYTES)
+        return AlarmBackupImportPreview(root.optInt("version", 0), validatedRecords(root))
     }
 }

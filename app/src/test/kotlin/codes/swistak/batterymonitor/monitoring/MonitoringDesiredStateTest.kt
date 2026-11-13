@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -21,16 +22,12 @@ class MonitoringDesiredStateTest {
     fun `the persisted authority preserves a running or stopped monitor and its boot`() {
         for (desired in listOf(false, true)) {
             val session = MonitoringDesiredState.Session(desired, 12)
-            assertEquals(
-                session, MonitoringDesiredState.decode(MonitoringDesiredState.encode(session))
+            val savedV2 = byteArrayOf(
+                0x42, 0x4d, 0x44, 0x53, 0, 0, 0, 2, if (desired) 1 else 0, 0, 0, 0, 12
             )
+            assertEquals(session, MonitoringDesiredState.decode(savedV2))
+            assertArrayEquals(savedV2, MonitoringDesiredState.encode(session))
         }
-    }
-
-    @Test
-    fun `the previous persisted format preserves the choice with no known boot`() {
-        val old = byteArrayOf(0x42, 0x4d, 0x44, 0x53, 0, 0, 0, 1, 1)
-        assertEquals(MonitoringDesiredState.decode(old), MonitoringDesiredState.Session(true, null))
     }
 
     @Test

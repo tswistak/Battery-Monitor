@@ -83,7 +83,7 @@ internal object ProfileHistoryIoVerification {
             check(decoded == records) { "Export did not preserve all seven record fields and duplicate rows" }
             val restore = LogDatabase(isolated)
             try {
-                check(restore.getAllLogRecords().isEmpty())
+                check(restore.readLogRecords { it.none() })
             } finally {
                 restore.close()
             }
@@ -92,7 +92,7 @@ internal object ProfileHistoryIoVerification {
             )
             val restored = LogDatabase(isolated)
             val result = try {
-                restored.getAllLogRecords()
+                restored.readLogRecords { it.toList() }
             } finally {
                 restored.close()
             }
@@ -145,7 +145,7 @@ internal object ProfileHistoryIoVerification {
         check(actual == expected) { "Owned export checksum mismatch" }
         val before = LogDatabase(context)
         try {
-            check(before.getAllLogRecords().isEmpty()) { "Actual profile history must be empty" }
+            check(before.readLogRecords { it.none() }) { "Actual profile history must be empty" }
         } finally {
             before.close()
         }
@@ -168,7 +168,7 @@ internal object ProfileHistoryIoVerification {
         }
         val database = LogDatabase(context)
         val restored = try {
-            database.getAllLogRecords()
+            database.readLogRecords { it.toList() }
         } finally {
             database.close()
         }

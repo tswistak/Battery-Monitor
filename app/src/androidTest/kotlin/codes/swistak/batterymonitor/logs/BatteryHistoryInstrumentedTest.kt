@@ -28,6 +28,7 @@ import codes.swistak.batterymonitor.devicebackup.LogImportMode
 import codes.swistak.batterymonitor.devicebackup.PreparedDeviceDataBackup
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
+import codes.swistak.batterymonitor.testsupport.addLogs
 import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
 import codes.swistak.batterymonitor.ui.history.HistoryViewModel
 import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
@@ -510,7 +511,7 @@ class BatteryHistoryInstrumentedTest {
         DeviceDataBackup.restore(
             context, prepareDeviceHistory(json), setOf(DeviceDataType.LOGS), LogImportMode.REPLACE
         )
-        assertEquals(records, database.getAllLogRecords())
+        assertEquals(records, database.readLogRecords { it.toList() })
     }
 
     @Test
@@ -541,7 +542,7 @@ class BatteryHistoryInstrumentedTest {
         DeviceDataBackup.restore(
             context, prepareDeviceHistory(backup), selected, LogImportMode.REPLACE
         )
-        assertEquals(records, database.getAllLogRecords())
+        assertEquals(records, database.readLogRecords { it.toList() })
         assertEquals(1234L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, -1))
 
         database.replaceAllLogs(records.dropLast(1))
@@ -549,14 +550,16 @@ class BatteryHistoryInstrumentedTest {
         DeviceDataBackup.restore(
             context, prepareDeviceHistory(sampleExport), selected, LogImportMode.ADD
         )
-        assertEquals(records, database.getAllLogRecords())
+        assertEquals(records, database.readLogRecords { it.toList() })
 
         for (version in listOf(1, 2)) {
             val legacy = """{"version":$version,"logs":[{"status":112,"charge":50,"time":1000}]}"""
             DeviceDataBackup.restore(
                 context, prepareDeviceHistory(legacy), selected, LogImportMode.REPLACE
             )
-            assertEquals(listOf(LogRecord(112, 50, 1000, null, null)), database.getAllLogRecords())
+            assertEquals(
+                listOf(LogRecord(112, 50, 1000, null, null)),
+                database.readLogRecords { it.toList() })
         }
     }
 
@@ -569,7 +572,7 @@ class BatteryHistoryInstrumentedTest {
         assertEquals(
             0, CsvLogImporter.importFromReader(context, empty.reader(), LogImportMode.REPLACE)
         )
-        assertEquals(listOf(observation), database.getAllLogRecords())
+        assertEquals(listOf(observation), database.readLogRecords { it.toList() })
 
         val partial = ByteArrayOutputStream().also {
             LogExport.writeCsv(
@@ -579,7 +582,7 @@ class BatteryHistoryInstrumentedTest {
         assertThrows(IllegalArgumentException::class.java) {
             CsvLogImporter.importFromReader(context, partial.reader(), LogImportMode.REPLACE)
         }
-        assertEquals(listOf(observation), database.getAllLogRecords())
+        assertEquals(listOf(observation), database.readLogRecords { it.toList() })
     }
 
     @Test
@@ -612,13 +615,13 @@ class BatteryHistoryInstrumentedTest {
                 { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
                 database::prune
             )
-            assertEquals(listOf(record), database.getAllLogRecords())
+            assertEquals(listOf(record), database.readLogRecords { it.toList() })
             assertEquals(
                 0L, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1)
             )
             assertEquals(1234L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, -1))
             assertThrows(Exception::class.java) { runBlocking { LogsRepository(context).delete(null) } }
-            assertEquals(listOf(record), database.getAllLogRecords())
+            assertEquals(listOf(record), database.readLogRecords { it.toList() })
             assertEquals(
                 0L, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1)
             )

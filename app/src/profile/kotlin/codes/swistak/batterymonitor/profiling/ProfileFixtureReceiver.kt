@@ -152,7 +152,7 @@ class ProfileFixtureReceiver : BroadcastReceiver() {
         val database = LogDatabase(context)
         try {
             database.replaceAllLogs(records)
-            check(database.getAllLogRecords().size == records.size)
+            check(database.readLogRecords { it.count() } == records.size)
         } finally {
             database.close()
         }
@@ -173,7 +173,7 @@ class ProfileFixtureReceiver : BroadcastReceiver() {
         val database = LogDatabase(context)
         try {
             database.addLogs(
-                listOf(
+                sequenceOf(
                     LogRecord(
                         status = LogDatabase.encodeStatus(
                             BatteryManager.BATTERY_STATUS_CHARGING,
