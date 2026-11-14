@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">درصد باتری</string>
     <string name="pref_content_temperature" formatted="false">دمای باتری</string>
     <string name="pref_show_icon_unit" formatted="false">نمایش نماد واحد</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">نمایش نماد واحد کنار مقدار در نماد نوار وضعیت</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">نماد واحد کنار مقدار در نماد نوار وضعیت نمایش داده شود؟</string>
     <string name="pref_show_icon_unit_help" formatted="false">اگر فعال باشد، آیکون برای درصد باتری علامت درصد و برای دمای باتری علامت درجه را نشان می‌دهد. برای نمایش فقط عدد، این گزینه را غیرفعال کنید.</string>
     <string name="pref_indicate_charging" formatted="false">شارژ را نشان می دهد</string>
     <string name="pref_indicate_charging_summary" formatted="false">نماد تغییر دهید تا هنگام شارژ نشان داده شود؟</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">یک عدد صحیح از ۰ تا ۱۰۰ وارد کنید.</string>
     <string name="widget_transparent_warning">با پس‌زمینه شفاف، خوانایی به تصویر زمینه شما بستگی دارد.</string>
     <string name="widget_y_axis_labels">نمایش مقادیر محور Y</string>
-    <string name="widget_presentation">شیوه نمایش</string>
-    <string name="widget_presentation_adaptive">سازگار با فضای موجود</string>
-    <string name="widget_presentation_compact">فشرده</string>
     <string name="widget_tap_action">عملکرد ضربه زدن</string>
     <string name="widget_measurement_details">جزئیات اندازه‌گیری</string>
-    <string name="widget_tap_measurement">اندازه‌گیری برای باز کردن</string>
     <string name="widget_preview">پیش‌نمایش ابزارک</string>
     <string name="widget_preview_note">پیش‌نمایش از آخرین خوانش پایشگر استفاده می‌کند. اندازه ابزارک را راه‌انداز شما تعیین می‌کند.</string>
     <string name="widget_read_at">خوانش %1$s</string>

@@ -7,7 +7,6 @@
 */
 package codes.swistak.batterymonitor.ui.current
 
-
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -120,6 +119,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import java.text.NumberFormat
 import java.util.Date
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -488,7 +488,7 @@ internal fun CurrentStateScreen(
 
     val unavailable = stringResource(R.string.current_unavailable)
     val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
-    val metrics = listOf(
+    val dashboardDetails = listOf(
         MetricDetail(
             CurrentMeasurement.TEMPERATURE,
             MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
@@ -496,7 +496,8 @@ internal fun CurrentStateScreen(
             } ?: unavailable),
             if (preferences.fahrenheit) "°F" else "°C",
             source(CurrentMeasurement.TEMPERATURE),
-            measurementTime("temperature")), MetricDetail(
+            measurementTime("temperature")),
+        MetricDetail(
             CurrentMeasurement.VOLTAGE,
             MetricDisplay(
                 stringResource(R.string.current_voltage),
@@ -506,7 +507,8 @@ internal fun CurrentStateScreen(
             "V",
             source(CurrentMeasurement.VOLTAGE),
             measurementTime("voltage"),
-            if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
+            if (snapshot?.voltageMillivolts == null) unavailable else null),
+        MetricDetail(
             CurrentMeasurement.CURRENT, MetricDisplay(
                 stringResource(R.string.pref_cat_battery_current_main), when {
                     currentReading?.milliAmps == null -> unavailable
@@ -518,28 +520,37 @@ internal fun CurrentStateScreen(
                 currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
                 else -> null
             }
-        )) + listOfNotNull(power?.let {
+        ),
         MetricDetail(
             CurrentMeasurement.POWER,
-            MetricDisplay(
-                stringResource(R.string.battery_power),
+            MetricDisplay(stringResource(R.string.battery_power), power?.let {
                 historyValue(it, HistoryMetric.POWER, false, configuration.locales[0])
-            ),
+            } ?: unavailable),
             "W",
             source(CurrentMeasurement.POWER),
             powerTime?.wallMillis,
-            stringResource(R.string.battery_power_explanation)
-        )
-    }) + MetricDetail(
-        CurrentMeasurement.ANDROID_HEALTH,
-        MetricDisplay(stringResource(R.string.current_android_health), snapshot?.let {
-            DisplayStrings.healths.getOrNull(it.health)
-        } ?: unavailable),
-        null,
-        source(CurrentMeasurement.ANDROID_HEALTH),
-        measurementTime("health"),
-        stringResource(R.string.current_health_explanation))
-    val detailMetrics = metrics + MetricDetail(
+            stringResource(R.string.battery_power_explanation)),
+        MetricDetail(
+            CurrentMeasurement.ANDROID_HEALTH,
+            MetricDisplay(stringResource(R.string.current_android_health), snapshot?.let {
+                DisplayStrings.healths.getOrNull(it.health)
+            } ?: unavailable),
+            null,
+            source(CurrentMeasurement.ANDROID_HEALTH),
+            measurementTime("health"),
+            stringResource(R.string.current_health_explanation)))
+    val metrics =
+        dashboardDetails.filter { it.measurement != CurrentMeasurement.POWER || power != null }
+    val detailMetrics = dashboardDetails + MetricDetail(
+        CurrentMeasurement.LEVEL,
+        MetricDisplay(
+            stringResource(R.string.history_battery_level),
+            snapshot?.levelPercent?.takeIf { it in 0..100 }?.let {
+                NumberFormat.getPercentInstance(configuration.locales[0]).format(it / 100.0)
+            } ?: unavailable),
+        "%",
+        source(CurrentMeasurement.LEVEL),
+        measurementTime("level")) + MetricDetail(
         CurrentMeasurement.REMAINING_CHARGE,
         MetricDisplay(
             stringResource(R.string.remaining_charge),

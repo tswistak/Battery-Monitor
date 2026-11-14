@@ -73,6 +73,7 @@ class CurrentStateModelTest {
     fun `measurement details use each actual source and both power inputs`() {
         val reading = snapshot().copy(
             fieldSources = mapOf(
+                "level" to "ACTION_BATTERY_CHANGED / level",
                 "temperature" to "ACTION_BATTERY_CHANGED / temperature",
                 "voltage" to "/sys/class/power_supply/bms/voltage_now",
                 "health" to "dumpsys battery / health",
@@ -81,6 +82,7 @@ class CurrentStateModelTest {
         )
         val current = "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE"
         val expected = mapOf(
+            CurrentMeasurement.LEVEL to reading.fieldSources["level"],
             CurrentMeasurement.TEMPERATURE to reading.fieldSources["temperature"],
             CurrentMeasurement.VOLTAGE to reading.fieldSources["voltage"],
             CurrentMeasurement.CURRENT to current,

@@ -209,7 +209,7 @@
     <string name="pref_content_percent" formatted="false">バッテリー残量</string>
     <string name="pref_content_temperature" formatted="false">バッテリー温度</string>
     <string name="pref_show_icon_unit" formatted="false">単位記号を表示</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">ステータスバーアイコンの値の横に単位記号を表示</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">ステータスバーアイコンの値の横に単位記号を表示しますか？</string>
     <string name="pref_show_icon_unit_help" formatted="false">有効にすると、アイコンにバッテリー残量はパーセント記号、バッテリー温度は度記号を表示します。数字だけを表示したい場合は無効にしてください。</string>
     <string name="pref_indicate_charging" formatted="false">充電中を示す</string>
     <string name="pref_indicate_charging_summary" formatted="false">充電中を示すアイコンを使用しますか?</string>
@@ -487,12 +487,8 @@
     <string name="widget_background_opacity_error">0 から 100 までの整数を入力してください。</string>
     <string name="widget_transparent_warning">背景が透明な場合、読みやすさは壁紙によって変わります。</string>
     <string name="widget_y_axis_labels">Y軸の値を表示</string>
-    <string name="widget_presentation">表示形式</string>
-    <string name="widget_presentation_adaptive">空きスペースに合わせる</string>
-    <string name="widget_presentation_compact">コンパクト</string>
     <string name="widget_tap_action">タップ時の動作</string>
     <string name="widget_measurement_details">測定の詳細</string>
-    <string name="widget_tap_measurement">開く測定値</string>
     <string name="widget_preview">ウィジェットのプレビュー</string>
     <string name="widget_preview_note">プレビューは監視の前回の測定値を使います。ウィジェットのサイズはランチャーで設定します。</string>
     <string name="widget_read_at">測定 %1$s</string>

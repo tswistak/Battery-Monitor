@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">Battery Percentage</string>
     <string name="pref_content_temperature" formatted="false">Battery Temperature</string>
     <string name="pref_show_icon_unit" formatted="false">Show Unit Symbol</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Show the unit symbol beside the value in the status bar icon</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Show the unit symbol beside the value in the status bar icon?</string>
     <string name="pref_show_icon_unit_help" formatted="false">If enabled, the icon shows a percent sign for battery percentage and a degree symbol for battery temperature. Disable it to show only the number.</string>
     <string name="pref_indicate_charging" formatted="false">Indicate Charging</string>
     <string name="pref_indicate_charging_summary" formatted="false">Alter icon to indicate when charging?</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">Enter a whole number from 0 to 100.</string>
     <string name="widget_transparent_warning">With a transparent background, readability depends on your wallpaper.</string>
     <string name="widget_y_axis_labels">Show Y-axis values</string>
-    <string name="widget_presentation">Presentation</string>
-    <string name="widget_presentation_adaptive">Adapt to available space</string>
-    <string name="widget_presentation_compact">Compact</string>
     <string name="widget_tap_action">Tap action</string>
     <string name="widget_measurement_details">Measurement details</string>
-    <string name="widget_tap_measurement">Measurement to open</string>
     <string name="widget_preview">Widget preview</string>
     <string name="widget_preview_note">Preview uses the last monitor reading. Widget size is set by your launcher.</string>
     <string name="widget_read_at">Reading %1$s</string>

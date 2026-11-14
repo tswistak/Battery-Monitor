@@ -215,7 +215,7 @@
     <string name="pref_content_percent" formatted="false">Porcentagem de bateria</string>
     <string name="pref_content_temperature" formatted="false">Temperatura da bateria</string>
     <string name="pref_show_icon_unit" formatted="false">Mostrar símbolo da unidade</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Mostrar o símbolo da unidade ao lado do valor no ícone da barra de status</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Mostrar o símbolo da unidade ao lado do valor no ícone da barra de status?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Se ativado, o ícone mostra o sinal de porcentagem para a carga da bateria e o símbolo de grau para a temperatura da bateria. Desative para mostrar apenas o número.</string>
     <string name="pref_indicate_charging" formatted="false">Indicar carregamento</string>
     <string name="pref_indicate_charging_summary" formatted="false">Alterar ícone para indicar durante o carregamento?</string>
@@ -495,12 +495,8 @@
     <string name="widget_background_opacity_error">Insira um número inteiro de 0 a 100.</string>
     <string name="widget_transparent_warning">Com um fundo transparente, a legibilidade depende do seu papel de parede.</string>
     <string name="widget_y_axis_labels">Mostrar valores do eixo Y</string>
-    <string name="widget_presentation">Apresentação</string>
-    <string name="widget_presentation_adaptive">Adaptar ao espaço disponível</string>
-    <string name="widget_presentation_compact">Compacta</string>
     <string name="widget_tap_action">Ação ao tocar</string>
     <string name="widget_measurement_details">Detalhes da medição</string>
-    <string name="widget_tap_measurement">Medição a abrir</string>
     <string name="widget_preview">Pré-visualização do widget</string>
     <string name="widget_preview_note">A pré-visualização usa a última leitura do monitor. O tamanho do widget é definido pelo seu launcher.</string>
     <string name="widget_read_at">Leitura %1$s</string>

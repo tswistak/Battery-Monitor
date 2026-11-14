@@ -218,7 +218,7 @@
     <string name="pref_content_percent" formatted="false">Procent baterii</string>
     <string name="pref_content_temperature" formatted="false">Temperatura baterii</string>
     <string name="pref_show_icon_unit" formatted="false">Pokazuj symbol jednostki</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Pokazuj symbol jednostki obok wartości na ikonie na pasku stanu</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Czy pokazywać symbol jednostki obok wartości na ikonie na pasku stanu?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Jeśli włączone, ikona pokazuje znak procenta dla poziomu naładowania baterii i symbol stopnia dla temperatury baterii. Wyłącz to ustawienie, aby pokazywać tylko liczbę.</string>
     <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
     <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
@@ -498,13 +498,9 @@
     <string name="widget_background_opacity">Przezroczystość tła</string>
     <string name="widget_background_opacity_error">Wprowadź liczbę całkowitą od 0 do 100.</string>
     <string name="widget_transparent_warning">W przypadku przezroczystego tła czytelność zależy od Twojej tapety.</string>
-    <string name="widget_y_axis_labels">Pokaż wartości na osi Y</string>
-    <string name="widget_presentation">Układ</string>
-    <string name="widget_presentation_adaptive">Dostosuj do dostępnego miejsca</string>
-    <string name="widget_presentation_compact">Kompaktowy</string>
+    <string name="widget_y_axis_labels">Pokazuj wartości na osi Y</string>
     <string name="widget_tap_action">Działanie po naciśnięciu</string>
     <string name="widget_measurement_details">Szczegóły pomiaru</string>
-    <string name="widget_tap_measurement">Pomiar do otwarcia</string>
     <string name="widget_preview">Podgląd widżetu</string>
     <string name="widget_preview_note">Podgląd używa ostatniego odczytu monitora. Rozmiar widżetu jest ustawiany przez Twój launcher.</string>
     <string name="widget_read_at">Odczyt %1$s</string>

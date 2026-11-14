@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">Akkustand in Prozent</string>
     <string name="pref_content_temperature" formatted="false">Akkutemperatur</string>
     <string name="pref_show_icon_unit" formatted="false">Einheitensymbol anzeigen</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Einheitensymbol neben dem Wert im Statusleistensymbol anzeigen</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Einheitensymbol neben dem Wert im Statusleistensymbol anzeigen?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Wenn aktiviert, zeigt das Symbol ein Prozentzeichen für den Akkustand und ein Gradsymbol für die Akkutemperatur. Deaktivieren Sie dies, wenn nur die Zahl angezeigt werden soll.</string>
     <string name="pref_indicate_charging" formatted="false">Ladevorgang anzeigen</string>
     <string name="pref_indicate_charging_summary" formatted="false">Icon bei Ladevorgang anpassen?</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">Geben Sie eine ganze Zahl von 0 bis 100 ein.</string>
     <string name="widget_transparent_warning">Bei transparentem Hintergrund hängt die Lesbarkeit von Ihrem Hintergrundbild ab.</string>
     <string name="widget_y_axis_labels">Werte der Y-Achse anzeigen</string>
-    <string name="widget_presentation">Darstellung</string>
-    <string name="widget_presentation_adaptive">An verfügbaren Platz anpassen</string>
-    <string name="widget_presentation_compact">Kompakt</string>
     <string name="widget_tap_action">Aktion beim Antippen</string>
     <string name="widget_measurement_details">Messwertdetails</string>
-    <string name="widget_tap_measurement">Zu öffnender Messwert</string>
     <string name="widget_preview">Widget-Vorschau</string>
     <string name="widget_preview_note">Die Vorschau verwendet den letzten Überwachungsmesswert. Die Widget-Größe wird durch Ihren Launcher festgelegt.</string>
     <string name="widget_read_at">Messwert %1$s</string>

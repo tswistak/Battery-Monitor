@@ -42,7 +42,7 @@ class WidgetMeasurementsInstrumentedTest {
                         addAll(inspect(base, "pl", 1.5f, 190, 150, 3))
                         addAll(inspect(base, "en", 1.5f, 342, 150, 2))
                         addAll(inspect(base, "ar", 1.5f, 190, 206, 4))
-                        addAll(inspect(base, "pl", 1f, 190, 206, 4, WidgetVariant.COMPACT))
+                        addAll(inspect(base, "pl", 1f, 139, 320, 4))
                     }
                 } finally {
                     DisplayStrings.setResources(base.resources)
@@ -54,13 +54,7 @@ class WidgetMeasurementsInstrumentedTest {
     }
 
     private fun inspect(
-        base: Context,
-        language: String,
-        fontScale: Float,
-        widthDp: Int,
-        heightDp: Int,
-        count: Int,
-        variant: WidgetVariant = WidgetVariant.ADAPTIVE
+        base: Context, language: String, fontScale: Float, widthDp: Int, heightDp: Int, count: Int
     ): List<String> = buildList {
         val locale = Locale.forLanguageTag(language)
         val configuration = Configuration(base.resources.configuration).apply {
@@ -72,8 +66,7 @@ class WidgetMeasurementsInstrumentedTest {
         val config = WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS).copy(
             metricOrder = WidgetMetric.entries.reversed(),
             selectedMetrics = metrics.toSet(),
-            temperatureUnit = WidgetConfiguration.TEMPERATURE_CELSIUS,
-            variant = variant
+            temperatureUnit = WidgetConfiguration.TEMPERATURE_CELSIUS
         )
         val snapshot = WidgetSnapshot(
             45,
@@ -89,7 +82,7 @@ class WidgetMeasurementsInstrumentedTest {
         )
         val dm = context.resources.displayMetrics
         val size =
-            "$language ${widthDp}x$heightDp dp density=${dm.density} fontScale=$fontScale ($count, $variant)"
+            "$language ${widthDp}x$heightDp dp density=${dm.density} fontScale=$fontScale ($count)"
         val width = (widthDp * dm.density).roundToInt()
         val height = (heightDp * dm.density).roundToInt()
         val root = WidgetRenderer.render(

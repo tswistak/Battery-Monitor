@@ -31,7 +31,7 @@ internal data class WidgetDestination(
 )
 
 internal object WidgetActions {
-    fun destination(configuration: WidgetConfiguration): WidgetDestination =
+    fun destination(family: WidgetFamily, configuration: WidgetConfiguration): WidgetDestination =
         when (configuration.tapAction) {
             WidgetTapAction.CURRENT_STATE -> WidgetDestination(SectionOwner.CURRENT)
             WidgetTapAction.HISTORY -> WidgetDestination(
@@ -40,9 +40,22 @@ internal object WidgetActions {
                 historyMetric = configuration.trendMetric)
 
             WidgetTapAction.MEASUREMENT -> WidgetDestination(
-                SectionOwner.CURRENT, measurement = configuration.tapMetric.currentMeasurement()
+                SectionOwner.CURRENT, measurement = when (family) {
+                    WidgetFamily.STATUS -> null
+                    WidgetFamily.MEASUREMENTS -> CurrentMeasurement.CURRENT
+                    WidgetFamily.TREND -> configuration.trendMetric.currentMeasurement()
+                }
             )
         }
+
+    private fun HistoryMetric.currentMeasurement(): CurrentMeasurement = when (this) {
+        HistoryMetric.LEVEL -> CurrentMeasurement.LEVEL
+        HistoryMetric.TEMPERATURE -> CurrentMeasurement.TEMPERATURE
+        HistoryMetric.VOLTAGE -> CurrentMeasurement.VOLTAGE
+        HistoryMetric.CURRENT -> CurrentMeasurement.CURRENT
+        HistoryMetric.POWER -> CurrentMeasurement.POWER
+        HistoryMetric.REMAINING_CHARGE -> CurrentMeasurement.REMAINING_CHARGE
+    }
 
     private fun WidgetMetric.currentMeasurement(): CurrentMeasurement = when (this) {
         WidgetMetric.TEMPERATURE -> CurrentMeasurement.TEMPERATURE
@@ -51,8 +64,9 @@ internal object WidgetActions {
         WidgetMetric.REMAINING_CHARGE -> CurrentMeasurement.REMAINING_CHARGE
     }
 
-    fun open(context: Context, id: Int, config: WidgetConfiguration): PendingIntent =
-        open(context, id, destination(config), "open")
+    fun open(
+        context: Context, id: Int, family: WidgetFamily, config: WidgetConfiguration
+    ): PendingIntent = open(context, id, destination(family, config), "open")
 
     fun openMeasurement(context: Context, id: Int, metric: WidgetMetric): PendingIntent {
         val measurement = metric.currentMeasurement()

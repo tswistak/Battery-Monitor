@@ -218,7 +218,7 @@
     <string name="pref_content_percent" formatted="false">Odstotek baterije</string>
     <string name="pref_content_temperature" formatted="false">Temperatura baterije</string>
     <string name="pref_show_icon_unit" formatted="false">Prikaži simbol enote</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Pokaži simbol enote ob vrednosti v ikoni vrstice stanja</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Ali naj se simbol enote prikaže ob vrednosti v ikoni vrstice stanja?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Če je omogočeno, ikona prikazuje znak za odstotek pri odstotku baterije in simbol stopinje pri temperaturi baterije. Izklopite to možnost, če želite prikazati samo številko.</string>
     <string name="pref_indicate_charging" formatted="false">Označite Polnjenje</string>
     <string name="pref_indicate_charging_summary" formatted="false">Ali želite spremeniti ikono za prikaz med polnjenjem?</string>
@@ -499,12 +499,8 @@
     <string name="widget_background_opacity_error">Vnesite celo število od 0 do 100.</string>
     <string name="widget_transparent_warning">Pri prosojnem ozadju je berljivost odvisna od ozadja zaslona.</string>
     <string name="widget_y_axis_labels">Prikaži vrednosti osi Y</string>
-    <string name="widget_presentation">Prikaz</string>
-    <string name="widget_presentation_adaptive">Prilagodi razpoložljivemu prostoru</string>
-    <string name="widget_presentation_compact">Strnjeno</string>
     <string name="widget_tap_action">Dejanje ob dotiku</string>
     <string name="widget_measurement_details">Podrobnosti meritve</string>
-    <string name="widget_tap_measurement">Meritev za odpiranje</string>
     <string name="widget_preview">Predogled gradnika</string>
     <string name="widget_preview_note">Predogled uporablja zadnjo meritev spremljanja. Velikost gradnika določa zaganjalnik.</string>
     <string name="widget_read_at">Meritev %1$s</string>

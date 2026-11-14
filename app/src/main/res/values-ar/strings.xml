@@ -224,7 +224,7 @@
     <string name="pref_content_percent" formatted="false">نسبة البطارية</string>
     <string name="pref_content_temperature" formatted="false">درجة حرارة البطارية</string>
     <string name="pref_show_icon_unit" formatted="false">إظهار رمز الوحدة</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">عرض رمز الوحدة بجانب القيمة في أيقونة شريط الحالة</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">هل يُعرض رمز الوحدة بجانب القيمة في أيقونة شريط الحالة؟</string>
     <string name="pref_show_icon_unit_help" formatted="false">عند التفعيل، تعرض الأيقونة علامة النسبة المئوية لنسبة البطارية وعلامة الدرجة لدرجة حرارة البطارية. عطّل هذا الخيار لعرض الرقم فقط.</string>
     <string name="pref_indicate_charging" formatted="false">اشارة الى الشحن</string>
     <string name="pref_indicate_charging_summary" formatted="false">تغيير لايقونة للتنبيه عند الشحن؟</string>
@@ -507,12 +507,8 @@
     <string name="widget_background_opacity_error">أدخل عددًا صحيحًا من 0 إلى 100.</string>
     <string name="widget_transparent_warning">مع الخلفية الشفافة، تعتمد سهولة القراءة على خلفية الشاشة.</string>
     <string name="widget_y_axis_labels">عرض قيم المحور Y</string>
-    <string name="widget_presentation">العرض</string>
-    <string name="widget_presentation_adaptive">التكيف مع المساحة المتاحة</string>
-    <string name="widget_presentation_compact">مضغوط</string>
     <string name="widget_tap_action">إجراء الضغط</string>
     <string name="widget_measurement_details">تفاصيل القياس</string>
-    <string name="widget_tap_measurement">القياس المراد فتحه</string>
     <string name="widget_preview">معاينة الأداة</string>
     <string name="widget_preview_note">تستخدم المعاينة آخر قراءة للمراقبة. يحدد مشغل الشاشة الرئيسية حجم الأداة.</string>
     <string name="widget_read_at">القراءة %1$s</string>

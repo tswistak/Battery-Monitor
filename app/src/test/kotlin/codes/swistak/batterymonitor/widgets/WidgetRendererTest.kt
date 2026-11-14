@@ -49,12 +49,11 @@ class WidgetRendererTest {
     }
 
     @Test
-    fun `compact is selected for constrained allocations or an explicit preference`() {
-        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 100, 260))
-        assertFalse(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 180, 200))
-        assertFalse(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 230, 140))
-        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 230, 130))
-        assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.COMPACT, 230, 200))
+    fun `widgets use a smaller layout when height or width is constrained`() {
+        assertTrue(WidgetRenderer.usesCompactLayout(147, 260))
+        assertFalse(WidgetRenderer.usesCompactLayout(148, 200))
+        assertFalse(WidgetRenderer.usesCompactLayout(230, 140))
+        assertTrue(WidgetRenderer.usesCompactLayout(230, 139))
     }
 
     @Test

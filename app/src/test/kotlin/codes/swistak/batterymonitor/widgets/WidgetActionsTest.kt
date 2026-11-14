@@ -39,27 +39,39 @@ class WidgetActionsTest {
     @Test
     fun `status widgets open the current state parent without a measurement or history override`() {
         assertEquals(
-            WidgetActions.destination(WidgetConfiguration.defaults(WidgetFamily.STATUS)),
-            WidgetDestination(SectionOwner.CURRENT)
+            WidgetActions.destination(
+                WidgetFamily.STATUS, WidgetConfiguration.defaults(WidgetFamily.STATUS)
+            ), WidgetDestination(SectionOwner.CURRENT)
         )
     }
 
     @Test
-    fun `each measurement widget tap uses a stable measurement route in current state`() {
+    fun `trend widget details open the metric currently charted`() {
+        val context = RuntimeEnvironment.getApplication()
         val expected = mapOf(
-            WidgetMetric.TEMPERATURE to "temperature",
-            WidgetMetric.VOLTAGE to "voltage",
-            WidgetMetric.CURRENT to "current",
-            WidgetMetric.REMAINING_CHARGE to "remaining-charge"
+            HistoryMetric.LEVEL to "level",
+            HistoryMetric.TEMPERATURE to "temperature",
+            HistoryMetric.VOLTAGE to "voltage",
+            HistoryMetric.CURRENT to "current",
+            HistoryMetric.POWER to "power",
+            HistoryMetric.REMAINING_CHARGE to "remaining-charge"
         )
         expected.forEach { (metric, route) ->
-            val destination = WidgetActions.destination(
-                WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS).copy(tapMetric = metric)
+            val action = WidgetActions.open(
+                context,
+                41,
+                WidgetFamily.TREND,
+                WidgetConfiguration.defaults(WidgetFamily.TREND).copy(trendMetric = metric)
             )
-            assertEquals(SectionOwner.CURRENT, destination.section)
-            assertEquals(route, destination.measurement?.route)
-            assertEquals(destination.measurement, CurrentMeasurement.fromRoute(route))
-            assertNull(destination.historyHours)
+            val intent = shadowOf(action).savedIntent
+            assertEquals(
+                SectionOwner.CURRENT.route, intent.getStringExtra(BatteryInfoActivity.EXTRA_SECTION)
+            )
+            assertEquals(
+                "measurement:$route", intent.getStringExtra(BatteryInfoActivity.EXTRA_DETAIL)
+            )
+            assertTrue(CurrentMeasurement.fromRoute(route) != null)
+            assertNull(intent.getStringExtra(BatteryInfoActivity.EXTRA_HISTORY_METRIC))
         }
     }
 
@@ -67,11 +79,12 @@ class WidgetActionsTest {
     fun `trend widgets open history with their configured rolling range and metric`() {
         val context = RuntimeEnvironment.getApplication()
         val defaults = WidgetConfiguration.defaults(WidgetFamily.TREND)
+            .copy(tapAction = WidgetTapAction.HISTORY)
         for ((hours, metric) in listOf(
             24 to HistoryMetric.LEVEL, 72 to HistoryMetric.VOLTAGE, 168 to HistoryMetric.CURRENT
         )) {
             val action = WidgetActions.open(
-                context, 41, defaults.copy(
+                context, 41, WidgetFamily.TREND, defaults.copy(
                     trendHours = hours, trendMetric = metric
                 )
             )
@@ -91,7 +104,9 @@ class WidgetActionsTest {
         listOf(Int.MIN_VALUE, -1, 0, 1, 73, Int.MAX_VALUE).forEach { hours ->
             assertEquals(
                 24, WidgetActions.destination(
-                    WidgetConfiguration.defaults(WidgetFamily.TREND).copy(trendHours = hours)
+                    WidgetFamily.TREND, WidgetConfiguration.defaults(WidgetFamily.TREND).copy(
+                        trendHours = hours, tapAction = WidgetTapAction.HISTORY
+                    )
                 ).historyHours
             )
         }
@@ -111,9 +126,7 @@ class WidgetActionsTest {
         val host = FrameLayout(context)
         val firstId = 41
         val secondId = 42
-        val firstConfig = WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS).copy(
-            tapMetric = WidgetMetric.VOLTAGE
-        )
+        val firstConfig = WidgetConfiguration.defaults(WidgetFamily.MEASUREMENTS)
         val secondConfig = firstConfig.copy(
             metricOrder = listOf(
                 WidgetMetric.REMAINING_CHARGE,
@@ -179,7 +192,7 @@ class WidgetActionsTest {
         assertTrue(first.performClick())
         val rootIntent = requireNotNull(shadow.nextStartedActivity)
         assertEquals(
-            "measurement:voltage", rootIntent.getStringExtra(BatteryInfoActivity.EXTRA_DETAIL)
+            "measurement:current", rootIntent.getStringExtra(BatteryInfoActivity.EXTRA_DETAIL)
         )
         assertEquals("batterymonitor://widget/$firstId/open", rootIntent.dataString)
 
@@ -211,7 +224,7 @@ class WidgetActionsTest {
         val cells = listOf(41, 42).flatMap { id ->
             WidgetMetric.entries.map { WidgetActions.openMeasurement(context, id, it) }
         }
-        val root = WidgetActions.open(context, 41, config)
+        val root = WidgetActions.open(context, 41, WidgetFamily.MEASUREMENTS, config)
         val configure = WidgetActions.configure(context, 41)
         assertEquals(cells.size + 2, (cells + root + configure).toSet().size)
         assertTrue(cells.all { it.isImmutable })

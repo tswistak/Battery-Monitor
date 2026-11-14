@@ -219,7 +219,7 @@
     <string name="pref_content_percent" formatted="false">Procento baterie</string>
     <string name="pref_content_temperature" formatted="false">Teplota baterie</string>
     <string name="pref_show_icon_unit" formatted="false">Zobrazit symbol jednotky</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Zobrazit symbol jednotky vedle hodnoty v ikoně stavového řádku</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Zobrazovat symbol jednotky vedle hodnoty v ikoně stavového řádku?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Je-li zapnuto, ikona zobrazuje znak procenta pro procento baterie a symbol stupně pro teplotu baterie. Vypněte tuto volbu, chcete-li zobrazit jen číslo.</string>
     <string name="pref_indicate_charging" formatted="false">Označte nabíjení</string>
     <string name="pref_indicate_charging_summary" formatted="false">Změnit ikonu pro indikaci při nabíjení?</string>
@@ -500,12 +500,8 @@
     <string name="widget_background_opacity_error">Zadejte celé číslo od 0 do 100.</string>
     <string name="widget_transparent_warning">U průhledného pozadí závisí čitelnost na tapetě.</string>
     <string name="widget_y_axis_labels">Zobrazit hodnoty osy Y</string>
-    <string name="widget_presentation">Zobrazení</string>
-    <string name="widget_presentation_adaptive">Přizpůsobit dostupnému prostoru</string>
-    <string name="widget_presentation_compact">Kompaktní</string>
     <string name="widget_tap_action">Akce při klepnutí</string>
     <string name="widget_measurement_details">Podrobnosti měření</string>
-    <string name="widget_tap_measurement">Měření k otevření</string>
     <string name="widget_preview">Náhled widgetu</string>
     <string name="widget_preview_note">Náhled používá poslední měření. Velikost widgetu nastavuje spouštěč.</string>
     <string name="widget_read_at">Měření %1$s</string>

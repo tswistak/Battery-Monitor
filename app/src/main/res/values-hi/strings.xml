@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">बैटरी प्रतिशत</string>
     <string name="pref_content_temperature" formatted="false">बैटरी तापमान</string>
     <string name="pref_show_icon_unit" formatted="false">इकाई चिह्न दिखाएँ</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">स्टेटस बार आइकन में मान के पास इकाई का चिह्न दिखाएँ</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">स्टेटस बार आइकन में मान के पास इकाई का चिह्न दिखाएँ?</string>
     <string name="pref_show_icon_unit_help" formatted="false">यदि यह चालू है, तो आइकन बैटरी प्रतिशत के लिए प्रतिशत चिह्न और बैटरी तापमान के लिए डिग्री चिह्न दिखाता है। केवल संख्या दिखाने के लिए इसे बंद करें।</string>
     <string name="pref_indicate_charging" formatted="false">चार्जिंग का संकेत दें</string>
     <string name="pref_indicate_charging_summary" formatted="false">चार्ज करते समय इंगित करने के लिए आइकन बदलें?</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">0 से 100 के बीच पूर्णांक दर्ज करें।</string>
     <string name="widget_transparent_warning">पारदर्शी बैकग्राउंड पर पढ़ने में आसानी आपके वॉलपेपर पर निर्भर करती है।</string>
     <string name="widget_y_axis_labels">Y-अक्ष के मान दिखाएँ</string>
-    <string name="widget_presentation">प्रस्तुति</string>
-    <string name="widget_presentation_adaptive">उपलब्ध जगह के अनुसार</string>
-    <string name="widget_presentation_compact">सघन</string>
     <string name="widget_tap_action">टैप की कार्रवाई</string>
     <string name="widget_measurement_details">माप का विवरण</string>
-    <string name="widget_tap_measurement">खोला जाने वाला माप</string>
     <string name="widget_preview">विजेट पूर्वावलोकन</string>
     <string name="widget_preview_note">पूर्वावलोकन पिछली निगरानी रीडिंग का उपयोग करता है। विजेट का आकार आपका लॉन्चर तय करता है।</string>
     <string name="widget_read_at">रीडिंग %1$s</string>

@@ -218,7 +218,7 @@
     <string name="pref_content_percent" formatted="false">Percento batérie</string>
     <string name="pref_content_temperature" formatted="false">Teplota batérie</string>
     <string name="pref_show_icon_unit" formatted="false">Zobraziť symbol jednotky</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Zobraziť symbol jednotky vedľa hodnoty v ikone stavového riadka</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Zobrazovať symbol jednotky vedľa hodnoty v ikone stavového riadka?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Ak je zapnuté, ikona zobrazuje znak percenta pre stav batérie a symbol stupňa pre teplotu batérie. Vypnite túto možnosť, ak chcete zobrazovať len číslo.</string>
     <string name="pref_indicate_charging" formatted="false">Označte nabíjanie</string>
     <string name="pref_indicate_charging_summary" formatted="false">Zmeniť ikonu na označenie pri nabíjaní?</string>
@@ -499,12 +499,8 @@
     <string name="widget_background_opacity_error">Zadajte celé číslo od 0 do 100.</string>
     <string name="widget_transparent_warning">Pri priehľadnom pozadí závisí čitateľnosť od tapety.</string>
     <string name="widget_y_axis_labels">Zobraziť hodnoty osi Y</string>
-    <string name="widget_presentation">Zobrazenie</string>
-    <string name="widget_presentation_adaptive">Prispôsobiť dostupnému priestoru</string>
-    <string name="widget_presentation_compact">Kompaktné</string>
     <string name="widget_tap_action">Akcia pri klepnutí</string>
     <string name="widget_measurement_details">Podrobnosti merania</string>
-    <string name="widget_tap_measurement">Meranie na otvorenie</string>
     <string name="widget_preview">Náhľad miniaplikácie</string>
     <string name="widget_preview_note">Náhľad používa posledné meranie. Veľkosť miniaplikácie nastavuje spúšťač.</string>
     <string name="widget_read_at">Meranie %1$s</string>

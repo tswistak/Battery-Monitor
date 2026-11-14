@@ -25,7 +25,6 @@ internal enum class WidgetFamily(val providerName: String) {
 }
 
 internal enum class WidgetMetric { TEMPERATURE, VOLTAGE, CURRENT, REMAINING_CHARGE }
-internal enum class WidgetVariant { ADAPTIVE, COMPACT }
 internal enum class WidgetTapAction { CURRENT_STATE, HISTORY, MEASUREMENT }
 internal enum class WidgetStatusExtra { NONE, TEMPERATURE, REMAINING_CHARGE }
 
@@ -52,9 +51,7 @@ internal data class WidgetConfiguration(
     val metricOrder: List<WidgetMetric> = WidgetMetric.entries,
     val selectedMetrics: Set<WidgetMetric> = WidgetMetric.entries.toSet(),
     val statusExtra: WidgetStatusExtra = WidgetStatusExtra.TEMPERATURE,
-    val variant: WidgetVariant = WidgetVariant.ADAPTIVE,
     val tapAction: WidgetTapAction = WidgetTapAction.CURRENT_STATE,
-    val tapMetric: WidgetMetric = WidgetMetric.CURRENT,
     val trendHours: Int = 24,
     val showYAxisLabels: Boolean = true,
     val trendMetric: HistoryMetric = HistoryMetric.LEVEL
@@ -93,9 +90,7 @@ internal data class WidgetConfiguration(
         backgroundOpacityPercent.toString(),
         WidgetMetric.entries.filter(selectedMetrics::contains).joinToString(",") { it.name },
         statusExtra.name,
-        variant.name,
         tapAction.name,
-        tapMetric.name,
         trendHours.toString(),
         showYAxisLabels.toString(),
         metricOrder.joinToString(",") { it.name },
@@ -105,34 +100,21 @@ internal data class WidgetConfiguration(
     companion object {
         const val TEMPERATURE_CELSIUS = "celsius"
         const val TEMPERATURE_FAHRENHEIT = "fahrenheit"
-        private const val SCHEMA_VERSION = 4
+        private const val SCHEMA_VERSION = 5
 
         fun defaults(family: WidgetFamily): WidgetConfiguration = WidgetConfiguration(
             tapAction = when (family) {
                 WidgetFamily.STATUS -> WidgetTapAction.CURRENT_STATE
-                WidgetFamily.MEASUREMENTS -> WidgetTapAction.MEASUREMENT
-                WidgetFamily.TREND -> WidgetTapAction.HISTORY
+                WidgetFamily.MEASUREMENTS, WidgetFamily.TREND -> WidgetTapAction.MEASUREMENT
             }
         )
 
         internal fun decode(value: String): WidgetConfiguration? = runCatching {
             val parts = value.split('|')
-            val trendMetric = when (parts[0].toInt()) {
-                3 -> {
-                    require(parts.size == 13)
-                    HistoryMetric.LEVEL
-                }
-
-                SCHEMA_VERSION -> {
-                    require(parts.size == 14)
-                    HistoryMetric.valueOf(parts[13])
-                }
-
-                else -> return null
-            }
+            require(parts.size == 12 && parts[0].toInt() == SCHEMA_VERSION)
             val selected = parts[5].split(',').map(WidgetMetric::valueOf)
             require(selected.distinct().size == selected.size)
-            val order = parts[12].split(',').map(WidgetMetric::valueOf)
+            val order = parts[10].split(',').map(WidgetMetric::valueOf)
             WidgetConfiguration(
                 brightness = parts[1].takeIf(String::isNotEmpty)?.let(Brightness::valueOf),
                 colorSource = parts[2].takeIf(String::isNotEmpty)?.let(ColorSource::valueOf),
@@ -141,12 +123,10 @@ internal data class WidgetConfiguration(
                 metricOrder = order,
                 selectedMetrics = selected.toSet(),
                 statusExtra = WidgetStatusExtra.valueOf(parts[6]),
-                variant = WidgetVariant.valueOf(parts[7]),
-                tapAction = WidgetTapAction.valueOf(parts[8]),
-                tapMetric = WidgetMetric.valueOf(parts[9]),
-                trendHours = parts[10].toInt(),
-                showYAxisLabels = parts[11].toBooleanStrict(),
-                trendMetric = trendMetric
+                tapAction = WidgetTapAction.valueOf(parts[7]),
+                trendHours = parts[8].toInt(),
+                showYAxisLabels = parts[9].toBooleanStrict(),
+                trendMetric = HistoryMetric.valueOf(parts[11])
             ).takeIf(WidgetConfiguration::isValid)
         }.getOrNull()
     }

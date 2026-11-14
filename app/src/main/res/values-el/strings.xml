@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">Ποσοστό μπαταρίας</string>
     <string name="pref_content_temperature" formatted="false">Θερμοκρασία μπαταρίας</string>
     <string name="pref_show_icon_unit" formatted="false">Εμφάνιση συμβόλου μονάδας</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Εμφάνιση του συμβόλου μονάδας δίπλα στην τιμή στο εικονίδιο της γραμμής κατάστασης</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Να εμφανίζεται το σύμβολο της μονάδας δίπλα στην τιμή στο εικονίδιο της γραμμής κατάστασης;</string>
     <string name="pref_show_icon_unit_help" formatted="false">Αν είναι ενεργό, το εικονίδιο εμφανίζει σύμβολο ποσοστού για το ποσοστό μπαταρίας και σύμβολο βαθμών για τη θερμοκρασία της μπαταρίας. Απενεργοποιήστε το για να εμφανίζεται μόνο ο αριθμός.</string>
     <string name="pref_indicate_charging" formatted="false">Υποδεικνύεται Φόρτιση</string>
     <string name="pref_indicate_charging_summary" formatted="false">Αλλαγή εικονιδίου για ένδειξη κατά τη φόρτιση;</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">Εισαγάγετε ακέραιο αριθμό από 0 έως 100.</string>
     <string name="widget_transparent_warning">Με διαφανές φόντο, η αναγνωσιμότητα εξαρτάται από την ταπετσαρία σας.</string>
     <string name="widget_y_axis_labels">Εμφάνιση τιμών άξονα Y</string>
-    <string name="widget_presentation">Παρουσίαση</string>
-    <string name="widget_presentation_adaptive">Προσαρμογή στον διαθέσιμο χώρο</string>
-    <string name="widget_presentation_compact">Συμπαγής</string>
     <string name="widget_tap_action">Ενέργεια πατήματος</string>
     <string name="widget_measurement_details">Λεπτομέρειες μέτρησης</string>
-    <string name="widget_tap_measurement">Μέτρηση για άνοιγμα</string>
     <string name="widget_preview">Προεπισκόπηση γραφικού στοιχείου</string>
     <string name="widget_preview_note">Η προεπισκόπηση χρησιμοποιεί την τελευταία μέτρηση παρακολούθησης. Το μέγεθος του γραφικού στοιχείου ορίζεται από την εφαρμογή αρχικής οθόνης.</string>
     <string name="widget_read_at">Μέτρηση %1$s</string>

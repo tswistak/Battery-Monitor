@@ -215,7 +215,7 @@
     <string name="pref_content_percent" formatted="false">Procenat baterije</string>
     <string name="pref_content_temperature" formatted="false">Temperatura baterije</string>
     <string name="pref_show_icon_unit" formatted="false">Prikaži simbol jedinice</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Prikaži simbol jedinice pored vrednosti u ikoni statusne trake</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Prikazivati simbol jedinice pored vrednosti u ikoni statusne trake?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Ako je uključeno, ikonica prikazuje znak procenta za procenat baterije i znak stepena za temperaturu baterije. Isključite ovu opciju ako želite da se prikazuje samo broj.</string>
     <string name="pref_indicate_charging" formatted="false">Označi punjenje</string>
     <string name="pref_indicate_charging_summary" formatted="false">Izmeni ikonicu da označi kada je na punjenju?</string>
@@ -495,12 +495,8 @@
     <string name="widget_background_opacity_error">Unesite ceo broj od 0 do 100.</string>
     <string name="widget_transparent_warning">Sa providnom pozadinom čitljivost zavisi od pozadine početnog ekrana.</string>
     <string name="widget_y_axis_labels">Prikaži vrednosti Y ose</string>
-    <string name="widget_presentation">Prikaz</string>
-    <string name="widget_presentation_adaptive">Prilagodi raspoloživom prostoru</string>
-    <string name="widget_presentation_compact">Kompaktno</string>
     <string name="widget_tap_action">Radnja pri dodiru</string>
     <string name="widget_measurement_details">Detalji merenja</string>
-    <string name="widget_tap_measurement">Merenje za otvaranje</string>
     <string name="widget_preview">Prikaz vidžeta</string>
     <string name="widget_preview_note">Prikaz koristi poslednje očitavanje praćenja. Veličinu vidžeta određuje pokretač.</string>
     <string name="widget_read_at">Očitavanje %1$s</string>

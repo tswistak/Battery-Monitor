@@ -215,7 +215,7 @@
     <string name="pref_content_percent" formatted="false">Procentul bateriei</string>
     <string name="pref_content_temperature" formatted="false">Temperatura bateriei</string>
     <string name="pref_show_icon_unit" formatted="false">Afișați simbolul unității</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Afișează simbolul unității lângă valoare în pictograma barei de stare</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Afișezi simbolul unității lângă valoare în pictograma barei de stare?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Dacă este activată, pictograma afișează semnul procentului pentru nivelul bateriei și simbolul gradului pentru temperatura bateriei. Dezactivează opțiunea pentru a afișa doar numărul.</string>
     <string name="pref_indicate_charging" formatted="false">Indicați încărcarea</string>
     <string name="pref_indicate_charging_summary" formatted="false">Modificați pictograma pentru a indica când se încarcă?</string>
@@ -495,12 +495,8 @@
     <string name="widget_background_opacity_error">Introdu un număr întreg de la 0 la 100.</string>
     <string name="widget_transparent_warning">Cu un fundal transparent, lizibilitatea depinde de imaginea de fundal.</string>
     <string name="widget_y_axis_labels">Arată valorile axei Y</string>
-    <string name="widget_presentation">Prezentare</string>
-    <string name="widget_presentation_adaptive">Adaptează la spațiul disponibil</string>
-    <string name="widget_presentation_compact">Compactă</string>
     <string name="widget_tap_action">Acțiune la atingere</string>
     <string name="widget_measurement_details">Detaliile măsurătorii</string>
-    <string name="widget_tap_measurement">Măsurătoare de deschis</string>
     <string name="widget_preview">Previzualizarea widgetului</string>
     <string name="widget_preview_note">Previzualizarea folosește ultima citire a monitorului. Dimensiunea widgetului este stabilită de lansator.</string>
     <string name="widget_read_at">Citire %1$s</string>

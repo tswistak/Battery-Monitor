@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">Akkumulátor százalék</string>
     <string name="pref_content_temperature" formatted="false">Akkumulátor hőmérséklet</string>
     <string name="pref_show_icon_unit" formatted="false">Egységjel megjelenítése</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">A mértékegység jelének megjelenítése az érték mellett az állapotsor ikonjában</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Megjelenjen a mértékegység jele az érték mellett az állapotsor ikonjában?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Bekapcsolva az ikon százalékjelet jelenít meg az akkumulátor töltöttségéhez és fokjelet az akkumulátor hőmérsékletéhez. Kapcsold ki, ha csak a számot szeretnéd látni.</string>
     <string name="pref_indicate_charging" formatted="false">Töltés jelzése</string>
     <string name="pref_indicate_charging_summary" formatted="false">Látszódjon az ikonon a töltés?</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">Adjon meg egy egész számot 0 és 100 között.</string>
     <string name="widget_transparent_warning">Átlátszó háttér esetén az olvashatóság a háttérképtől függ.</string>
     <string name="widget_y_axis_labels">Y-tengely értékeinek megjelenítése</string>
-    <string name="widget_presentation">Megjelenítés</string>
-    <string name="widget_presentation_adaptive">Igazítás a rendelkezésre álló helyhez</string>
-    <string name="widget_presentation_compact">Kompakt</string>
     <string name="widget_tap_action">Koppintási művelet</string>
     <string name="widget_measurement_details">Mérés részletei</string>
-    <string name="widget_tap_measurement">Megnyitandó mérés</string>
     <string name="widget_preview">Widget előnézete</string>
     <string name="widget_preview_note">Az előnézet az utolsó figyelési mérést használja. A widget méretét a kezdőképernyő-kezelő állítja be.</string>
     <string name="widget_read_at">Mérés: %1$s</string>

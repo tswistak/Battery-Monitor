@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">Pil Yüzdesi</string>
     <string name="pref_content_temperature" formatted="false">Pil Sıcaklığı</string>
     <string name="pref_show_icon_unit" formatted="false">Birim sembolünü göster</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Durum çubuğu simgesindeki değerin yanında birim simgesini göster</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Durum çubuğu simgesindeki değerin yanında birim simgesi gösterilsin mi?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Etkinse simge, pil yüzdesi için yüzde işareti ve pil sıcaklığı için derece simgesi gösterir. Yalnızca sayıyı göstermek için bunu kapatın.</string>
     <string name="pref_indicate_charging" formatted="false">Şarjı Göster</string>
     <string name="pref_indicate_charging_summary" formatted="false">Şarj olurken simge değişsin mi?</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">0 ile 100 arasında bir tam sayı girin.</string>
     <string name="widget_transparent_warning">Saydam arka planda okunabilirlik, duvar kağıdınıza bağlıdır.</string>
     <string name="widget_y_axis_labels">Y ekseni değerlerini göster</string>
-    <string name="widget_presentation">Sunum</string>
-    <string name="widget_presentation_adaptive">Kullanılabilir alana uyarla</string>
-    <string name="widget_presentation_compact">Kompakt</string>
     <string name="widget_tap_action">Dokunma işlemi</string>
     <string name="widget_measurement_details">Ölçüm ayrıntıları</string>
-    <string name="widget_tap_measurement">Açılacak ölçüm</string>
     <string name="widget_preview">Widget önizlemesi</string>
     <string name="widget_preview_note">Önizleme, son izleme ölçümünü kullanır. Widget boyutunu başlatıcınız belirler.</string>
     <string name="widget_read_at">Ölçüm %1$s</string>

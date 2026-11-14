@@ -209,7 +209,7 @@
     <string name="pref_content_percent" formatted="false">電池電量百分比</string>
     <string name="pref_content_temperature" formatted="false">電池溫度</string>
     <string name="pref_show_icon_unit" formatted="false">顯示單位符號</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">在狀態列圖示中的數值旁顯示單位符號</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">在狀態列圖示中的數值旁顯示單位符號？</string>
     <string name="pref_show_icon_unit_help" formatted="false">啟用後，圖示會為電池百分比顯示百分號，為電池溫度顯示度數符號。停用此選項可只顯示數字。</string>
     <string name="pref_indicate_charging" formatted="false">指示正在充電</string>
     <string name="pref_indicate_charging_summary" formatted="false">更改圖示以指示充電時？</string>
@@ -487,12 +487,8 @@
     <string name="widget_background_opacity_error">請輸入 0 至 100 的整數。</string>
     <string name="widget_transparent_warning">背景透明時，可讀性取決於您的桌布。</string>
     <string name="widget_y_axis_labels">顯示 Y 軸數值</string>
-    <string name="widget_presentation">顯示方式</string>
-    <string name="widget_presentation_adaptive">配合可用空間</string>
-    <string name="widget_presentation_compact">精簡</string>
     <string name="widget_tap_action">點選動作</string>
     <string name="widget_measurement_details">測量詳情</string>
-    <string name="widget_tap_measurement">要開啟的測量值</string>
     <string name="widget_preview">小工具預覽</string>
     <string name="widget_preview_note">預覽使用上次監測讀數。小工具大小由啟動器設定。</string>
     <string name="widget_read_at">讀數 %1$s</string>

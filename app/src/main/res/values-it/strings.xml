@@ -215,7 +215,7 @@
     <string name="pref_content_percent" formatted="false">Percentuale batteria</string>
     <string name="pref_content_temperature" formatted="false">Temperatura batteria</string>
     <string name="pref_show_icon_unit" formatted="false">Mostra simbolo dell’unità</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Mostra il simbolo dell’unità accanto al valore nell’icona della barra di stato</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Mostrare il simbolo dell’unità accanto al valore nell’icona della barra di stato?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Se attivata, l’icona mostra il simbolo di percentuale per la carica della batteria e il simbolo di grado per la temperatura della batteria. Disattivala per mostrare solo il numero.</string>
     <string name="pref_indicate_charging" formatted="false">Indica carica</string>
     <string name="pref_indicate_charging_summary" formatted="false">Modificare l\'icona quando in carica?</string>
@@ -495,12 +495,8 @@
     <string name="widget_background_opacity_error">Inserisci un numero intero da 0 a 100.</string>
     <string name="widget_transparent_warning">Con uno sfondo trasparente, la leggibilità dipende dal tuo sfondo.</string>
     <string name="widget_y_axis_labels">Mostra valori dell’asse Y</string>
-    <string name="widget_presentation">Presentazione</string>
-    <string name="widget_presentation_adaptive">Adatta allo spazio disponibile</string>
-    <string name="widget_presentation_compact">Compatta</string>
     <string name="widget_tap_action">Azione al tocco</string>
     <string name="widget_measurement_details">Dettagli della misurazione</string>
-    <string name="widget_tap_measurement">Misurazione da aprire</string>
     <string name="widget_preview">Anteprima del widget</string>
     <string name="widget_preview_note">L’anteprima usa l’ultima lettura del monitoraggio. La dimensione del widget è definita dal launcher.</string>
     <string name="widget_read_at">Lettura %1$s</string>

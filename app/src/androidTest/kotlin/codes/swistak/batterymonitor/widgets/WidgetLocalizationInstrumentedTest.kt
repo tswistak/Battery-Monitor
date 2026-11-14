@@ -66,10 +66,7 @@ class WidgetLocalizationInstrumentedTest {
                         context,
                         AppWidgetManager.INVALID_APPWIDGET_ID,
                         WidgetFamily.STATUS,
-                        WidgetConfiguration.defaults(WidgetFamily.STATUS).copy(
-                            statusExtra = extra,
-                            variant = if (height < 148) WidgetVariant.COMPACT else WidgetVariant.ADAPTIVE
-                        ),
+                        WidgetConfiguration.defaults(WidgetFamily.STATUS).copy(statusExtra = extra),
                         reading,
                         widthDp = width,
                         heightDp = height,

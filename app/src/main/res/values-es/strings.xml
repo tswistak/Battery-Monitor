@@ -215,7 +215,7 @@
     <string name="pref_content_percent" formatted="false">Porcentaje de batería</string>
     <string name="pref_content_temperature" formatted="false">Temperatura de la batería</string>
     <string name="pref_show_icon_unit" formatted="false">Mostrar símbolo de unidad</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Mostrar el símbolo de unidad junto al valor en el icono de la barra de estado</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">¿Mostrar el símbolo de unidad junto al valor en el icono de la barra de estado?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Si está activado, el icono muestra un signo de porcentaje para el nivel de batería y un símbolo de grado para la temperatura de la batería. Desactívalo para mostrar solo el número.</string>
     <string name="pref_indicate_charging" formatted="false">Indicar cargando</string>
     <string name="pref_indicate_charging_summary" formatted="false">¿Modificar el icono para indicar cuándo se está cargando?</string>
@@ -495,12 +495,8 @@
     <string name="widget_background_opacity_error">Introduce un número entero entre 0 y 100.</string>
     <string name="widget_transparent_warning">Con un fondo transparente, la legibilidad depende de tu fondo de pantalla.</string>
     <string name="widget_y_axis_labels">Mostrar valores del eje Y</string>
-    <string name="widget_presentation">Presentación</string>
-    <string name="widget_presentation_adaptive">Adaptar al espacio disponible</string>
-    <string name="widget_presentation_compact">Compacta</string>
     <string name="widget_tap_action">Acción al tocar</string>
     <string name="widget_measurement_details">Detalles de la medición</string>
-    <string name="widget_tap_measurement">Medición que se abrirá</string>
     <string name="widget_preview">Vista previa del widget</string>
     <string name="widget_preview_note">La vista previa usa la última lectura del monitor. El lanzador determina el tamaño del widget.</string>
     <string name="widget_read_at">Lectura %1$s</string>

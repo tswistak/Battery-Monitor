@@ -215,7 +215,7 @@
     <string name="pref_content_percent" formatted="false">אחוז סוללה</string>
     <string name="pref_content_temperature" formatted="false">טמפרטורת הסוללה</string>
     <string name="pref_show_icon_unit" formatted="false">הצג סמל יחידה</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">הצגת סמל היחידה לצד הערך בסמל בשורת המצב</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">להציג את סמל היחידה לצד הערך בסמל שורת המצב?</string>
     <string name="pref_show_icon_unit_help" formatted="false">כאשר האפשרות מופעלת, הסמל מציג סימן אחוז עבור אחוז הסוללה וסימן מעלה עבור טמפרטורת הסוללה. השבת אפשרות זו כדי להציג רק את המספר.</string>
     <string name="pref_indicate_charging" formatted="false">ציין טעינה</string>
     <string name="pref_indicate_charging_summary" formatted="false">לשנות את הסמל לציון בעת ​​טעינה?</string>
@@ -495,12 +495,8 @@
     <string name="widget_background_opacity_error">יש להזין מספר שלם מ־0 עד 100.</string>
     <string name="widget_transparent_warning">עם רקע שקוף, הקריאות תלויה בטפט שלכם.</string>
     <string name="widget_y_axis_labels">הצגת ערכי ציר Y</string>
-    <string name="widget_presentation">תצוגה</string>
-    <string name="widget_presentation_adaptive">התאמה למקום הפנוי</string>
-    <string name="widget_presentation_compact">קומפקטית</string>
     <string name="widget_tap_action">פעולה בהקשה</string>
     <string name="widget_measurement_details">פרטי המדידה</string>
-    <string name="widget_tap_measurement">מדידה לפתיחה</string>
     <string name="widget_preview">תצוגה מקדימה של הווידג׳ט</string>
     <string name="widget_preview_note">התצוגה המקדימה משתמשת בקריאת הניטור האחרונה. גודל הווידג׳ט נקבע על ידי המשגר.</string>
     <string name="widget_read_at">קריאה %1$s</string>

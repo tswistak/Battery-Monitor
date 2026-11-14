@@ -105,7 +105,6 @@ import codes.swistak.batterymonitor.widgets.WidgetSizes
 import codes.swistak.batterymonitor.widgets.WidgetStatusExtra
 import codes.swistak.batterymonitor.widgets.WidgetTapAction
 import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
-import codes.swistak.batterymonitor.widgets.WidgetVariant
 import codes.swistak.batterymonitor.widgets.trendMetricLabel
 import codes.swistak.batterymonitor.widgets.trendRangeLabel
 import kotlinx.coroutines.Dispatchers
@@ -369,12 +368,6 @@ private fun WidgetConfigurationScreen(
                     }
                 }
             }
-            ChoiceField(
-                stringResource(R.string.widget_presentation), draft.variant, listOf(
-                    WidgetVariant.ADAPTIVE to stringResource(R.string.widget_presentation_adaptive),
-                    WidgetVariant.COMPACT to stringResource(R.string.widget_presentation_compact)
-                )
-            ) { update(draft.copy(variant = it)) }
             if (family != WidgetFamily.TREND || draft.trendMetric == HistoryMetric.TEMPERATURE) {
                 ChoiceField(
                     stringResource(R.string.pref_temperature_unit), draft.temperatureUnit, listOf(
@@ -441,25 +434,22 @@ private fun WidgetConfigurationScreen(
                     steps = 99,
                     modifier = Modifier.semantics { contentDescription = opacityLabel })
             }
-            ChoiceField(
-                stringResource(R.string.widget_tap_action), draft.tapAction, listOf(
-                    WidgetTapAction.CURRENT_STATE to stringResource(R.string.tab_current_info),
-                    WidgetTapAction.HISTORY to stringResource(R.string.tab_history),
-                    WidgetTapAction.MEASUREMENT to stringResource(R.string.widget_measurement_details)
-                )
-            ) { update(draft.copy(tapAction = it)) }
-            if (draft.tapAction == WidgetTapAction.MEASUREMENT && family != WidgetFamily.MEASUREMENTS) {
-                ChoiceField(
-                    stringResource(R.string.widget_tap_measurement),
-                    draft.tapMetric,
-                    WidgetMetric.entries.map { it to metricLabel(it) }) {
-                    update(
-                        draft.copy(
-                            tapMetric = it
-                        )
+            val tapOptions = buildList {
+                addAll(
+                    listOf(
+                        WidgetTapAction.CURRENT_STATE to stringResource(R.string.tab_current_info),
+                        WidgetTapAction.HISTORY to stringResource(R.string.tab_history)
                     )
+                )
+                if (family != WidgetFamily.STATUS) {
+                    add(WidgetTapAction.MEASUREMENT to stringResource(R.string.widget_measurement_details))
                 }
             }
+            ChoiceField(
+                stringResource(R.string.widget_tap_action),
+                draft.tapAction.takeIf { action -> tapOptions.any { it.first == action } }
+                    ?: WidgetTapAction.CURRENT_STATE,
+                tapOptions) { update(draft.copy(tapAction = it)) }
         }
     }
 }

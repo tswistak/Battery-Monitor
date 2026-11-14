@@ -209,7 +209,7 @@
     <string name="pref_content_percent" formatted="false">电池电量百分比</string>
     <string name="pref_content_temperature" formatted="false">电池温度</string>
     <string name="pref_show_icon_unit" formatted="false">显示单位符号</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">在状态栏图标中的数值旁显示单位符号</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">在状态栏图标中的数值旁显示单位符号？</string>
     <string name="pref_show_icon_unit_help" formatted="false">启用后，图标会为电池百分比显示百分号，为电池温度显示度数符号。关闭此选项可只显示数字。</string>
     <string name="pref_indicate_charging" formatted="false">指示正在充电</string>
     <string name="pref_indicate_charging_summary" formatted="false">更改图标以指示充电时？</string>
@@ -487,12 +487,8 @@
     <string name="widget_background_opacity_error">请输入 0 至 100 的整数。</string>
     <string name="widget_transparent_warning">后台透明时，可读性取决于您的壁纸。</string>
     <string name="widget_y_axis_labels">显示 Y 轴数值</string>
-    <string name="widget_presentation">显示方式</string>
-    <string name="widget_presentation_adaptive">配合可用空间</string>
-    <string name="widget_presentation_compact">精简</string>
     <string name="widget_tap_action">点击动作</string>
     <string name="widget_measurement_details">测量详情</string>
-    <string name="widget_tap_measurement">要打开的测量值</string>
     <string name="widget_preview">小组件预览</string>
     <string name="widget_preview_note">预览使用上次监测读数。小组件大小由启动器设置。</string>
     <string name="widget_read_at">读数 %1$s</string>

@@ -77,7 +77,7 @@ internal object WidgetRenderer {
         else scheme.surface.toArgb()
         val muted =
             if (family == WidgetFamily.STATUS) foreground else scheme.onSurfaceVariant.toArgb()
-        val compact = usesCompactLayout(config.variant, heightDp, widthDp)
+        val compact = usesCompactLayout(heightDp, widthDp)
         val unavailable = context.getString(R.string.current_unavailable)
         val time = snapshot?.observedAtMillis?.takeIf { it > 0 }?.let {
             DisplayStrings.formatTime(context, Date(it))
@@ -173,7 +173,7 @@ internal object WidgetRenderer {
         )
         if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
             views.setOnClickPendingIntent(
-                R.id.widget_root, WidgetActions.open(context, appWidgetId, config)
+                R.id.widget_root, WidgetActions.open(context, appWidgetId, family, config)
             )
             views.setOnClickPendingIntent(
                 R.id.widget_customize, WidgetActions.configure(context, appWidgetId)
@@ -496,9 +496,8 @@ internal object WidgetRenderer {
         data.monitoringEnabled
     )
 
-    internal fun usesCompactLayout(
-        variant: WidgetVariant, heightDp: Int, widthDp: Int
-    ): Boolean = variant == WidgetVariant.COMPACT || heightDp < 148 || widthDp < 140
+    internal fun usesCompactLayout(heightDp: Int, widthDp: Int): Boolean =
+        heightDp < 148 || widthDp < 140
 
     internal fun measurementColumns(widthDp: Int, bodyHeightDp: Int, metricCount: Int): Int = when {
         bodyHeightDp < 112 && widthDp >= metricCount * 78 -> metricCount

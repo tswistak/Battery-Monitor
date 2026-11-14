@@ -212,7 +212,7 @@
     <string name="pref_content_percent" formatted="false">Batterijpercentage</string>
     <string name="pref_content_temperature" formatted="false">Batterijtemperatuur</string>
     <string name="pref_show_icon_unit" formatted="false">Eenheidssymbool tonen</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Eenheidssymbool naast de waarde in het statusbalkpictogram tonen</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Eenheidssymbool naast de waarde in het statusbalkpictogram tonen?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Als dit is ingeschakeld, toont het pictogram een procentteken voor het batterijpercentage en een gradensymbool voor de batterijtemperatuur. Schakel dit uit om alleen het getal te tonen.</string>
     <string name="pref_indicate_charging" formatted="false">Indicatie tonen tijdens opladen</string>
     <string name="pref_indicate_charging_summary" formatted="false">Icoon veranderen tijdens opladen</string>
@@ -491,12 +491,8 @@
     <string name="widget_background_opacity_error">Voer een geheel getal van 0 tot 100 in.</string>
     <string name="widget_transparent_warning">Bij een transparante achtergrond hangt de leesbaarheid af van je achtergrondafbeelding.</string>
     <string name="widget_y_axis_labels">Y-aswaarden tonen</string>
-    <string name="widget_presentation">Weergave</string>
-    <string name="widget_presentation_adaptive">Aan beschikbare ruimte aanpassen</string>
-    <string name="widget_presentation_compact">Compact</string>
     <string name="widget_tap_action">Actie bij tikken</string>
     <string name="widget_measurement_details">Meetdetails</string>
-    <string name="widget_tap_measurement">Te openen meting</string>
     <string name="widget_preview">Widgetvoorbeeld</string>
     <string name="widget_preview_note">Het voorbeeld gebruikt de laatste bewakingsmeting. Je launcher bepaalt de widgetgrootte.</string>
     <string name="widget_read_at">Meting %1$s</string>

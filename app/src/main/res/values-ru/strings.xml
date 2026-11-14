@@ -218,7 +218,7 @@
     <string name="pref_content_percent" formatted="false">Процент заряда</string>
     <string name="pref_content_temperature" formatted="false">Температура батареи</string>
     <string name="pref_show_icon_unit" formatted="false">Показывать символ единицы</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Показывать символ единицы рядом со значением в значке строки состояния</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Показывать символ единицы рядом со значением в значке строки состояния?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Если включено, значок показывает знак процента для уровня заряда и символ градуса для температуры батареи. Отключите этот параметр, чтобы показывать только число.</string>
     <string name="pref_indicate_charging" formatted="false">Показывать зарядку</string>
     <string name="pref_indicate_charging_summary" formatted="false">Изменять значок во время зарядки?</string>
@@ -499,12 +499,8 @@
     <string name="widget_background_opacity_error">Введите целое число от 0 до 100.</string>
     <string name="widget_transparent_warning">С прозрачным фоном читаемость зависит от обоев.</string>
     <string name="widget_y_axis_labels">Показывать значения оси Y</string>
-    <string name="widget_presentation">Отображение</string>
-    <string name="widget_presentation_adaptive">Подстраивать под доступное место</string>
-    <string name="widget_presentation_compact">Компактное</string>
     <string name="widget_tap_action">Действие при нажатии</string>
     <string name="widget_measurement_details">Подробности измерения</string>
-    <string name="widget_tap_measurement">Открываемое измерение</string>
     <string name="widget_preview">Предпросмотр виджета</string>
     <string name="widget_preview_note">Предпросмотр использует последнее измерение мониторинга. Размер виджета задаётся программой запуска.</string>
     <string name="widget_read_at">Измерение %1$s</string>

@@ -17,6 +17,7 @@ internal enum class CurrentMeasurement(val route: String) {
     TEMPERATURE("temperature"), VOLTAGE("voltage"), CURRENT("current"), POWER("power"), ANDROID_HEALTH(
         "android-health"
     ),
+    LEVEL("level"),
     REMAINING_CHARGE("remaining-charge");
 
     companion object {
@@ -32,6 +33,7 @@ internal enum class CurrentCondition {
 internal fun currentMeasurementSource(
     measurement: CurrentMeasurement, snapshot: MonitoringSnapshot?, currentSource: String?
 ): String? = when (measurement) {
+    CurrentMeasurement.LEVEL -> snapshot?.fieldSources?.get("level")
     CurrentMeasurement.TEMPERATURE -> snapshot?.fieldSources?.get("temperature")
     CurrentMeasurement.VOLTAGE -> snapshot?.fieldSources?.get("voltage")
     CurrentMeasurement.ANDROID_HEALTH -> snapshot?.fieldSources?.get("health")

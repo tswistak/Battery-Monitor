@@ -215,7 +215,7 @@
     <string name="pref_content_percent" formatted="false">Pourcentage batterie</string>
     <string name="pref_content_temperature" formatted="false">Température batterie</string>
     <string name="pref_show_icon_unit" formatted="false">Afficher le symbole d’unité</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Afficher le symbole de l’unité à côté de la valeur dans l’icône de la barre d’état</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Afficher le symbole de l’unité à côté de la valeur dans l’icône de la barre d’état ?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Si cette option est activée, l’icône affiche un signe pourcentage pour le niveau de batterie et un symbole de degré pour la température de la batterie. Désactivez-la pour n’afficher que le nombre.</string>
     <string name="pref_indicate_charging" formatted="false">Indiquer la charge</string>
     <string name="pref_indicate_charging_summary" formatted="false">Modifier l’icône pendant la charge ?</string>
@@ -495,12 +495,8 @@
     <string name="widget_background_opacity_error">Saisissez un nombre entier de 0 à 100.</string>
     <string name="widget_transparent_warning">Avec un arrière-plan transparent, la lisibilité dépend de votre fond d’écran.</string>
     <string name="widget_y_axis_labels">Afficher les valeurs de l’axe Y</string>
-    <string name="widget_presentation">Présentation</string>
-    <string name="widget_presentation_adaptive">Adapter à l’espace disponible</string>
-    <string name="widget_presentation_compact">Compacte</string>
     <string name="widget_tap_action">Action au toucher</string>
     <string name="widget_measurement_details">Détails de la mesure</string>
-    <string name="widget_tap_measurement">Mesure à ouvrir</string>
     <string name="widget_preview">Aperçu du widget</string>
     <string name="widget_preview_note">L’aperçu utilise la dernière mesure de surveillance. La taille du widget est définie par votre lanceur.</string>
     <string name="widget_read_at">Mesure %1$s</string>

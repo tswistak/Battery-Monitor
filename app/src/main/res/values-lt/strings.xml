@@ -218,7 +218,7 @@
     <string name="pref_content_percent" formatted="false">Baterijos procentas</string>
     <string name="pref_content_temperature" formatted="false">Baterijos temperatūra</string>
     <string name="pref_show_icon_unit" formatted="false">Rodyti vieneto simbolį</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Rodyti vieneto simbolį šalia reikšmės būsenos juostos piktogramoje</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Rodyti vieneto simbolį šalia reikšmės būsenos juostos piktogramoje?</string>
     <string name="pref_show_icon_unit_help" formatted="false">Jei įjungta, piktograma rodo procento ženklą akumuliatoriaus lygiui ir laipsnio simbolį akumuliatoriaus temperatūrai. Išjunkite, jei norite rodyti tik skaičių.</string>
     <string name="pref_indicate_charging" formatted="false">Nurodykite įkrovimą</string>
     <string name="pref_indicate_charging_summary" formatted="false">Keisti piktogramą, kad būtų rodomas įkrovimas?</string>
@@ -499,12 +499,8 @@
     <string name="widget_background_opacity_error">Įveskite sveikąjį skaičių nuo 0 iki 100.</string>
     <string name="widget_transparent_warning">Su skaidriu fonu skaitomumas priklauso nuo ekrano fono.</string>
     <string name="widget_y_axis_labels">Rodyti Y ašies vertes</string>
-    <string name="widget_presentation">Pateikimas</string>
-    <string name="widget_presentation_adaptive">Prisitaikyti prie laisvos vietos</string>
-    <string name="widget_presentation_compact">Kompaktiškas</string>
     <string name="widget_tap_action">Palietimo veiksmas</string>
     <string name="widget_measurement_details">Matavimo informacija</string>
-    <string name="widget_tap_measurement">Atveriamas matavimas</string>
     <string name="widget_preview">Valdiklio peržiūra</string>
     <string name="widget_preview_note">Peržiūra naudoja paskutinį stebėjimo rodmenį. Valdiklio dydį nustato paleidimo priemonė.</string>
     <string name="widget_read_at">Rodmuo %1$s</string>
