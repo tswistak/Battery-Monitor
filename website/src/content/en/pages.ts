@@ -121,7 +121,7 @@ export const featureCopy = {
     imageAlt: 'Battery Monitor home-screen widgets',
     videoLabel: 'Swipe between home screens with Battery Monitor widgets',
     transcript:
-      'Swipe between home screens to see Battery Monitor status, measurement and history widgets. The status widget is widened to show the charge percentage and battery graphic. The measurement widget keeps its default size. The history chart fills the home-screen grid width while keeping its default height. The sequence moves through all three screens, then returns through the second screen to the first.',
+      'On the first home screen, the status widget shows the charge percentage and battery graphic above a measurements widget with four readings and their units. Swipe to the second home screen for a full-width chart of battery level over the last 24 hours, then swipe back.',
     caption: 'Battery information, at a glance.',
   },
   backups: {
