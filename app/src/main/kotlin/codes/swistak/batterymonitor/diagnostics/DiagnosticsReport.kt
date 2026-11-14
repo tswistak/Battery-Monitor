@@ -8,12 +8,15 @@
 package codes.swistak.batterymonitor.diagnostics
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
+import android.app.ApplicationExitInfo
 import android.app.NotificationManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.PowerManager
 import android.os.SystemClock
+import androidx.annotation.RequiresApi
 import androidx.core.content.pm.PackageInfoCompat
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.MonitoringHealthStore
@@ -22,6 +25,9 @@ import java.time.Instant
 import java.util.Locale
 
 internal object DiagnosticsReport {
+    private const val MAX_PROCESS_EXITS = 20
+    private const val MAX_EXIT_DESCRIPTION_LENGTH = 240
+
     enum class ShizukuStatus {
         NOT_RUNNING, PERMISSION_GRANTED, PERMISSION_MISSING
     }
@@ -33,6 +39,9 @@ internal object DiagnosticsReport {
         includeDebugLogs: Boolean = false
     ): String = buildString {
         append(summary(context, rootAvailable, shizukuStatus))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            appendProcessExits(context, includeDebugLogs)
+        }
         if (includeDebugLogs) DebugLogCollector.appendToReport(context, this)
     }
 
@@ -90,6 +99,15 @@ internal object DiagnosticsReport {
             appendLine(line("Root access", rootStatus))
             appendLine(line("Shizuku access", shizukuStatusText))
             appendLine(line("Battery optimization", optimizationStatus))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                context.getSystemService(ActivityManager::class.java)?.let {
+                    appendLine(
+                        line(
+                            "Background restricted", booleanStatus(it.isBackgroundRestricted)
+                        )
+                    )
+                }
+            }
             appendLine(
                 line(
                     "Monitoring service", monitoringStatus(
@@ -119,6 +137,52 @@ internal object DiagnosticsReport {
                 )
             )
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun StringBuilder.appendProcessExits(context: Context, includeDebugLogs: Boolean) {
+        appendLine().appendLine("Recent Android process exits")
+        val exits = try {
+            context.getSystemService(ActivityManager::class.java)
+                ?.getHistoricalProcessExitReasons(context.packageName, 0, MAX_PROCESS_EXITS)
+        } catch (_: RuntimeException) {
+            null
+        }
+        if (exits.isNullOrEmpty()) {
+            appendLine(if (exits == null) "Unavailable" else "None recorded by Android")
+            return
+        }
+        for (exit in exits) {
+            append("${Instant.ofEpochMilli(exit.timestamp)} ${exit.processName} (pid=${exit.pid}): ")
+            append("${exitReasonName(exit.reason)} (${exit.reason}), status=${exit.status}, importance=${exit.importance}")
+            if (includeDebugLogs) {
+                exit.description?.lineSequence()?.firstOrNull()?.trim()
+                    ?.take(MAX_EXIT_DESCRIPTION_LENGTH)?.takeIf(String::isNotEmpty)?.let {
+                        append("; Android description: ").append(it)
+                    }
+            }
+            appendLine()
+        }
+    }
+
+    private fun exitReasonName(reason: Int): String = when (reason) {
+        ApplicationExitInfo.REASON_EXIT_SELF -> "Exited normally"
+        ApplicationExitInfo.REASON_SIGNALED -> "OS signal"
+        ApplicationExitInfo.REASON_LOW_MEMORY -> "Low memory"
+        ApplicationExitInfo.REASON_CRASH -> "Java crash"
+        ApplicationExitInfo.REASON_CRASH_NATIVE -> "Native crash"
+        ApplicationExitInfo.REASON_ANR -> "Application not responding"
+        ApplicationExitInfo.REASON_INITIALIZATION_FAILURE -> "Initialization failure"
+        ApplicationExitInfo.REASON_PERMISSION_CHANGE -> "Permission change"
+        ApplicationExitInfo.REASON_EXCESSIVE_RESOURCE_USAGE -> "Excessive resource use"
+        ApplicationExitInfo.REASON_USER_REQUESTED -> "USER_REQUESTED"
+        ApplicationExitInfo.REASON_USER_STOPPED -> "Android user stopped"
+        ApplicationExitInfo.REASON_DEPENDENCY_DIED -> "Dependency died"
+        ApplicationExitInfo.REASON_OTHER -> "Other system reason"
+        ApplicationExitInfo.REASON_FREEZER -> "App Freezer"
+        ApplicationExitInfo.REASON_PACKAGE_STATE_CHANGE -> "Package state change"
+        ApplicationExitInfo.REASON_PACKAGE_UPDATED -> "Package updated"
+        else -> "Unknown reason"
     }
 
     private fun monitoringStatus(
