@@ -434,6 +434,15 @@
     <string name="pref_enable_logging" formatted="false">Kayıt Tutmayı Etkinleştir</string>
     <string name="pref_enable_logging_summary" formatted="false">Pil durum değişiklikleri kaydedilsin mi?</string>
     <string name="pref_enable_logging_help" formatted="false">“Geçmiş” için pil gözlemlerini ve durum değişikliklerini kaydedin. Mevcut ölçümler; seviye, sıcaklık, gerilim, özgün anlık akım ve kalan şarjı içerir. Güç, gösterilirken veya dışa aktarılırken gerilim ve akımdan hesaplanır; ayrı saklanmaz. Kaydı kapatmak mevcut geçmişi silmez veya süre tahminlerini durdurmaz.</string>
+    <string name="pref_history_sampling_mode">Cihaz uykudayken ölçümler</string>
+    <string name="pref_history_sampling_standard">Standart</string>
+    <string name="pref_history_sampling_exact_alarm">Kesin zamanlı uyandırma alarmları</string>
+    <string name="pref_history_sampling_keep_cpu_awake">İşlemciyi uyanık tut</string>
+    <string name="pref_history_sampling_mode_help">Cihazınız uykudayken Battery Monitor’ın ölçümleri nasıl kaydedeceğini seçin. “Standart” modda ölçümler arasında boşluklar oluşabilir. “Kesin zamanlı uyandırma alarmları” ölçüm almak için işlemciyi kısa süreliğine uyandırır. “İşlemciyi uyanık tut” daha fazla pil tüketir. Son iki seçenek de uygulamanın pil optimizasyonundan muaf tutulmasını gerektirir ve iki dakikada bir ölçüm almayı hedefler.</string>
+    <string name="pref_chart_gap_threshold">Grafikte boşluk eşiği</string>
+    <string name="pref_chart_gap_never">Boşlukları asla gösterme</string>
+    <string name="pref_chart_gap_custom_message">Dakika cinsinden 1’den büyük bir tam sayı girin.</string>
+    <string name="pref_chart_gap_threshold_help">Grafiklerin iki ölçümü birleştirebileceği en uzun süreyi ayarlayın. Daha uzun aralıklar “Geçmiş” sekmesindeki ve “Pil eğilimi” widget’ındaki grafiklerde boşluk olarak görünür. “Boşlukları asla gösterme” seçeneği, aralık ne kadar uzun olursa olsun kayıtlı ölçümleri birleştirir.</string>
     <string name="pref_max_log_age" formatted="false">Maksimum Kayıt Yaşı</string>
     <string name="pref_max_log_age_help" formatted="false">Kayıt etkinken bu sınırdan eski günlükler geçmiş bakımı sırasında otomatik olarak kaldırılır. “Sınır yok” seçeneği, elle temizleyene kadar saklar. Otomatik dışa aktarma etkinse Battery Monitor eski girdileri silmeden önce bekleyen günlükleri dışa aktarır; dışa aktarma başarısız olursa silme yapılmaz.</string>
     <string name="age_1_day" formatted="false">1\u00A0gün</string>

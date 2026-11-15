@@ -430,6 +430,15 @@
     <string name="pref_enable_logging" formatted="false">启用历史记录</string>
     <string name="pref_enable_logging_summary" formatted="false">记录电池状态变化？</string>
     <string name="pref_enable_logging_help" formatted="false">保存电池观测值与状态变更以供“历史记录”使用。可用测量值包括电量、温度、电压、原始瞬时电流与剩余电荷量。功率在显示或导出时由电压与电流计算，不会另外保存。关闭记录不会清除现有历史记录或停止时间估算。</string>
+    <string name="pref_history_sampling_mode">设备休眠时的测量</string>
+    <string name="pref_history_sampling_standard">标准</string>
+    <string name="pref_history_sampling_exact_alarm">精确定时唤醒</string>
+    <string name="pref_history_sampling_keep_cpu_awake">让 CPU 保持运行</string>
+    <string name="pref_history_sampling_mode_help">选择 Battery Monitor 在设备休眠期间记录测量值的方式。“标准”可能会漏记。“精确定时唤醒”会短暂唤醒 CPU 以进行测量。“让 CPU 保持运行”会增加耗电量。后两个选项都需要将应用排除在电池优化之外，目标是每两分钟测量一次。</string>
+    <string name="pref_chart_gap_threshold">图表连线的最长间隔</string>
+    <string name="pref_chart_gap_never">始终连接测量值</string>
+    <string name="pref_chart_gap_custom_message">请输入大于 1 的整数（单位为分钟）。</string>
+    <string name="pref_chart_gap_threshold_help">设置图表可连接两个测量值的最长时间间隔。超过此间隔时，“历史记录”标签页和“电池趋势”小组件中的图表会断开连线。选择“始终连接测量值”可连接已保存的测量值，不受时间间隔限制。</string>
     <string name="pref_max_log_age" formatted="false">历史记录保留时间</string>
     <string name="pref_max_log_age_help" formatted="false">启用记录时，超过此期限的记录会在历史维护期间自动移除。选择“无限制”会保留记录，直到手动清除。启用自动导出时，Battery Monitor 会先导出待处理记录，再删除旧项目；导出失败时不会删除。</string>
     <string name="age_1_day" formatted="false">一天</string>

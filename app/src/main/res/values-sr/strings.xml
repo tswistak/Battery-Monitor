@@ -438,6 +438,15 @@
     <string name="pref_enable_logging" formatted="false">Omogući evidenciju</string>
     <string name="pref_enable_logging_summary" formatted="false">Evidentiraj promene u stanju baterije?</string>
     <string name="pref_enable_logging_help" formatted="false">Sačuvajte zapažanja baterije i promene stanja za odeljak „Istorija“. Dostupna merenja obuhvataju nivo, temperaturu, napon, izvornu trenutnu struju i preostali naboj. Snaga se računa iz napona i struje pri prikazu ili izvozu; ne čuva se zasebno. Isključivanje beleženja ne briše postojeću istoriju niti zaustavlja procene vremena.</string>
+    <string name="pref_history_sampling_mode">Merenja tokom mirovanja uređaja</string>
+    <string name="pref_history_sampling_standard">Standardno</string>
+    <string name="pref_history_sampling_exact_alarm">Precizni alarmi za buđenje</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Zadrži procesor aktivnim</string>
+    <string name="pref_history_sampling_mode_help">Odaberite kako Battery Monitor beleži merenja dok uređaj miruje. Uz opciju „Standardno“ neka merenja mogu izostati. Opcija „Precizni alarmi za buđenje“ nakratko budi procesor radi merenja. Opcija „Zadrži procesor aktivnim“ povećava potrošnju baterije. Za poslednje dve opcije potrebno je izuzeti aplikaciju iz optimizacije baterije. Cilj obe opcije je merenje na svaka dva minuta.</string>
+    <string name="pref_chart_gap_threshold">Prag za praznine na grafikonima</string>
+    <string name="pref_chart_gap_never">Nikada ne prikazuj praznine</string>
+    <string name="pref_chart_gap_custom_message">Unesite ceo broj veći od 1 (u minutima).</string>
+    <string name="pref_chart_gap_threshold_help">Podesite najduži vremenski razmak preko kojeg grafikoni mogu da povežu dva merenja. Duži razmaci prikazuju se kao praznine na kartici „Istorija“ i u vidžetu „Trend baterije“. Opcija „Nikada ne prikazuj praznine“ povezuje sačuvana merenja bez obzira na razmak.</string>
     <string name="pref_max_log_age" formatted="false">Maksimalno vreme evidentiranja unosa</string>
     <string name="pref_max_log_age_help" formatted="false">Kada je beleženje omogućeno, evidencije starije od ove granice automatski se uklanjaju tokom održavanja istorije. „Без ограничења“ ih zadržava dok ih ručno ne obrišete. Ako je automatski izvoz omogućen, Battery Monitor izvozi evidencije na čekanju pre brisanja starih unosa; neuspešan izvoz sprečava to brisanje.</string>
     <string name="age_1_day" formatted="false">1\u00A0dan</string>

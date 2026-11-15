@@ -60,6 +60,13 @@ internal object SettingsBackup {
             }
         }
 
+        if (!settings.has(SettingsContract.KEY_HISTORY_SAMPLING_MODE)) {
+            settings.put(
+                SettingsContract.KEY_HISTORY_SAMPLING_MODE,
+                SettingsContract.HISTORY_SAMPLING_MODE_STANDARD
+            )
+        }
+
         val vitalSignsContent = prefs.getStringSet(
             SettingsContract.KEY_VITAL_SIGNS_CONTENT, SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
         ) ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT

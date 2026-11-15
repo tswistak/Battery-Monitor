@@ -378,7 +378,7 @@ internal fun MeasurementChart(
                         val bottom = size.height - inset
                         val dotRadius = RebootMarkerRadius.toPx()
                         val dotSpacing = RebootMarkerSpacing.toPx()
-                        val strokeWidth = 1.dp.toPx()
+                        val strokeWidth = PowerMarkerStrokeWidth.toPx()
                         val gap = PowerMarkerGap.toPx()
                         val shortDashes =
                             PathEffect.dashPathEffect(floatArrayOf(ConnectedMarkerDash.toPx(), gap))

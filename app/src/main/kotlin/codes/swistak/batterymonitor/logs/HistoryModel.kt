@@ -9,6 +9,7 @@ package codes.swistak.batterymonitor.logs
 
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
+import codes.swistak.batterymonitor.settings.SettingsContract
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -81,7 +82,6 @@ internal fun historyFilterKey(code: Int): String? {
     }
 }
 
-
 internal fun historyExclusiveEnd(time: Long): Long = if (time == Long.MAX_VALUE) time else time + 1
 
 internal fun historyEventCode(status: Int): Int? = when (historyFilterKey(status)) {
@@ -97,8 +97,17 @@ internal fun historyObservationValue(metric: HistoryMetric, record: LogRecord): 
     return metric.value(record)?.takeIf(Double::isFinite)
 }
 
-internal fun historyHasTimeGap(previousTime: Long?, time: Long): Boolean =
-    previousTime != null && time - previousTime > 10 * HISTORY_SAMPLE_INTERVAL_MS
+internal const val DEFAULT_CHART_GAP_THRESHOLD_MS = 20 * 60_000L
+
+internal fun chartGapThresholdMillis(preference: String?): Long? =
+    if (preference == SettingsContract.CHART_GAP_THRESHOLD_NEVER) null
+    else SettingsContract.parseChartGapThresholdMinutes(preference)?.times(60_000L)
+        ?: DEFAULT_CHART_GAP_THRESHOLD_MS
+
+internal fun historyHasTimeGap(
+    previousTime: Long?, time: Long, gapThresholdMillis: Long?
+): Boolean =
+    gapThresholdMillis != null && previousTime != null && time - previousTime > gapThresholdMillis
 
 internal enum class HistoryMetric {
     LEVEL, TEMPERATURE, VOLTAGE, CURRENT, POWER, REMAINING_CHARGE;
@@ -149,7 +158,8 @@ internal fun historyChart(
     range: HistoryRangeState,
     records: Sequence<HistoryRecord>,
     selectedKey: HistoryKey? = null,
-    metrics: Collection<HistoryMetric> = HistoryMetric.entries
+    metrics: Collection<HistoryMetric> = HistoryMetric.entries,
+    gapThresholdMillis: Long? = DEFAULT_CHART_GAP_THRESHOLD_MS
 ): HistoryChartModel {
     class Bucket {
         var selected: HistoryPoint? = null
@@ -190,7 +200,7 @@ internal fun historyChart(
     for (entry in records) {
         val record = entry.record
         if (!range.contains(record.time)) continue
-        val timeGap = historyHasTimeGap(previousTime, record.time)
+        val timeGap = historyHasTimeGap(previousTime, record.time, gapThresholdMillis)
         previousTime = record.time
         count++
         val bucket =

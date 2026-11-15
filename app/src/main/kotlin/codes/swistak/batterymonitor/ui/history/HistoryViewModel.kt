@@ -85,6 +85,7 @@ internal class HistoryViewModel(
     private var freshnessJob: Job? = null
     private var queryGeneration = 0L
     private var appliedRevision: Long? = null
+    private var appliedChartGapMillis: Long? = null
     private var retainedSelection: HistoryKey? = null
 
     private var isTwoPane = false
@@ -120,7 +121,9 @@ internal class HistoryViewModel(
                 val keepRange = retainExactRange || activationKeepsRange == true
                 activationKeepsRange = null
                 val rolling = current.rangeLabel in setOf("24h", "72h", "7d") && !keepRange
-                if (changes.affectsRange || (rolling && (activated || changes.revision != appliedRevision))) {
+                val gapChanged =
+                    current.chart != null && appliedChartGapMillis != repository.chartGapMillis
+                if (changes.affectsRange || gapChanged || (rolling && (activated || changes.revision != appliedRevision))) {
                     refresh(keepRange = keepRange)
                 } else {
                     appliedRevision = changes.revision
@@ -311,9 +314,14 @@ internal class HistoryViewModel(
                     )
                 } else if (pageBackwards) records.size > 128 else pageAnchor != null
                 val chartVisible = value.tab == "charts" || isTwoPane
-                val loadChart = chartVisible && (forceChart || value.chart == null)
+                val gapMillis = repository.chartGapMillis
+                val loadChart =
+                    chartVisible && (forceChart || value.chart == null || appliedChartGapMillis != gapMillis)
                 val chart = when {
-                    loadChart -> repository.chart(value.range, selectedKey)
+                    loadChart -> repository.chart(
+                        value.range, selectedKey, gapThresholdMillis = gapMillis
+                    )
+
                     forceChart -> null
                     else -> value.chart
                 }
@@ -327,6 +335,7 @@ internal class HistoryViewModel(
                 }
                 retainedSelection = if (chart == null) latest else selected
                 if (forceChart || loadChart || chart == null) appliedRevision = revision
+                if (loadChart) appliedChartGapMillis = gapMillis
                 mutable.value = mutable.value.copy(
                     chart = chart,
                     page = page,

@@ -41,6 +41,7 @@ import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import android.os.PatternMatcher
+import android.os.PowerManager
 import android.os.RemoteException
 import android.os.ResultReceiver
 import android.os.SystemClock
@@ -372,7 +373,8 @@ class BatteryInfoService : Service() {
     private data class PendingBatteryUpdate(
         val intent: Intent,
         val acquiredAt: BatteryMeasurementTime,
-        val diagnosticsReceiver: ResultReceiver? = null
+        val diagnosticsReceiver: ResultReceiver? = null,
+        val historySampleWakeLock: PowerManager.WakeLock? = null
     )
 
     private val pendingBatteryUpdates = java.util.ArrayDeque<PendingBatteryUpdate>()
@@ -434,7 +436,31 @@ class BatteryInfoService : Service() {
         }
     }
 
-    private val runPredictorUpdate = Runnable { update(null) }
+    private var historySamplingSession = false
+    private var historyPowerReceiverRegistered = false
+    private val historySampling by lazy {
+        BackgroundHistorySampling(
+            this,
+            mHandler,
+            requestedMode = {
+                if (historySamplingSession && settings.getBoolean(
+                        SettingsContract.KEY_ENABLE_LOGGING, true
+                    )
+                ) {
+                    settings.getString(SettingsContract.KEY_HISTORY_SAMPLING_MODE, null)
+                        ?.takeIf { BackgroundServiceWatchdog.isServiceDesired(this) }
+                } else null
+            },
+            lastSampleElapsed = { historySampler?.lastRecordedElapsed },
+            sample = { lock -> update(null, historySampleWakeLock = lock) })
+    }
+    private val historyPowerReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) = historySampling.reconcile()
+    }
+    private val runPredictorUpdate = Runnable {
+        historySampling.reconcile()
+        update(null)
+    }
     private var chipSwitchScheduled = false
     private val runChipSwitch: Runnable = object : Runnable {
         override fun run() {
@@ -568,14 +594,30 @@ class BatteryInfoService : Service() {
                 }, ContextCompat.RECEIVER_NOT_EXPORTED
             )
         }
+        ContextCompat.registerReceiver(
+            this, historyPowerReceiver, IntentFilter().apply {
+                addAction(MonitoringDesiredState.ACTION_CHANGED)
+                addAction(BackgroundHistorySampling.ACTION_POWER_ALLOWLIST_CHANGED)
+                addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    addAction(AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED)
+                }
+            }, ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+        historyPowerReceiverRegistered = true
     }
 
     override fun onTimeout(startId: Int, fgsType: Int) {
         Log.w(LOG_TAG, "Foreground service timeout reached for type: $fgsType")
+        historySamplingSession = false
+        historySampling.stop()
         stopSelf()
     }
 
     override fun onDestroy() {
+        historySamplingSession = false
+        historySampling.stop()
+        if (historyPowerReceiverRegistered) unregisterReceiver(historyPowerReceiver)
         chargingLimitScope.cancel()
         contentResolver.unregisterContentObserver(chargingLimitObserver)
         stopAcquisition()
@@ -646,11 +688,15 @@ class BatteryInfoService : Service() {
             return START_NOT_STICKY
         }
         if (!BackgroundServiceWatchdog.isServiceDesired(this)) {
+            historySamplingSession = false
+            historySampling.stop()
             diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
             stopSelf(startId)
             return START_NOT_STICKY
         }
+        historySamplingSession = true
         if (diagnosticsReceiver != null) {
+            historySampling.reconcile()
             update(null, diagnosticsReceiver)
             return START_STICKY
         }
@@ -659,6 +705,7 @@ class BatteryInfoService : Service() {
             applySettingsSnapshot(snapshot)
             snapshot.getBundle(EXTRA_PREDICTOR_SNAPSHOT)?.let(::reloadPredictor)
         }
+        historySampling.reconcile()
         configureBatteryCurrent()
         configureChipContent()
         updateChipSwitcher(false)
@@ -925,6 +972,7 @@ class BatteryInfoService : Service() {
         thresholdAlarmEvaluator.reset()
         loadSettingsFiles()
         settingsSnapshot?.let(::applySettingsSnapshot)
+        historySampling.reconcile()
         configureBatteryCurrent()
         configureChipContent()
 
@@ -1070,7 +1118,11 @@ class BatteryInfoService : Service() {
     }
 
 
-    private fun update(intent: Intent?, diagnosticsReceiver: ResultReceiver? = null) {
+    private fun update(
+        intent: Intent?,
+        diagnosticsReceiver: ResultReceiver? = null,
+        historySampleWakeLock: PowerManager.WakeLock? = null
+    ) {
         val acquiredAt = BatteryMeasurementTime.now()
         val batteryIntent = try {
             intent ?: registerReceiver(null, batteryChanged)
@@ -1088,7 +1140,8 @@ class BatteryInfoService : Service() {
             PendingBatteryUpdate(
                 batteryIntent?.let(::Intent) ?: Intent(Intent.ACTION_BATTERY_CHANGED),
                 acquiredAt,
-                diagnosticsReceiver
+                diagnosticsReceiver,
+                historySampleWakeLock
             )
         )
         processNextBatteryUpdate()
@@ -1126,6 +1179,7 @@ class BatteryInfoService : Service() {
                 }
             } catch (error: Exception) {
                 Log.e(LOG_TAG, "Could not acquire battery readings", error)
+                pending.historySampleWakeLock?.release()
                 mHandler.post {
                     pending.diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
                     resolvingBatteryUpdate = false
@@ -1198,6 +1252,9 @@ class BatteryInfoService : Service() {
                         Log.e(LOG_TAG, "Battery monitoring update failed", error)
                         pending.diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
                     } finally {
+                        pending.historySampleWakeLock?.let { lock ->
+                            monitoringPersistence.execute { lock.release() }
+                        }
                         resolvingBatteryUpdate = false
                         processNextBatteryUpdate()
                     }
@@ -1880,6 +1937,9 @@ class BatteryInfoService : Service() {
     private fun recordHistory(fields: Map<String, Int>, elapsed: Long) {
         val logging = settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
         if (!logging) return
+        val refreshExactAlarm = settings.getString(
+            SettingsContract.KEY_HISTORY_SAMPLING_MODE, null
+        ) == SettingsContract.HISTORY_SAMPLING_MODE_EXACT_ALARM
         val observation = batteryHistoryObservation(
             fields, now, currentMicroAmps, info!!.remainingChargeUah, info!!.percent
         )
@@ -1927,6 +1987,9 @@ class BatteryInfoService : Service() {
                     MonitoringHealthStore.record(
                         context, databaseElapsed = SystemClock.elapsedRealtime()
                     )
+                    if (refreshExactAlarm) mHandler.post {
+                        if (!destroyed) historySampling.reconcile()
+                    }
                 }
             }
         }

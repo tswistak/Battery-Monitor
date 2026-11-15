@@ -26,6 +26,7 @@ class SettingsBackupValidationTest {
                 SettingsContract.KEY_DISCHARGING_TARGET to 99,
                 SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL to "3600",
                 SettingsContract.KEY_CHIP_SWITCHING_INTERVAL to "1",
+                SettingsContract.KEY_HISTORY_SAMPLING_MODE to SettingsContract.HISTORY_SAMPLING_MODE_EXACT_ALARM,
                 SettingsContract.KEY_PREDICTION_TYPE to "600000",
                 SettingsContract.KEY_MAX_LOG_AGE to "-1",
                 SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER to "-1000"
@@ -34,9 +35,20 @@ class SettingsBackupValidationTest {
     }
 
     @Test
+    fun `current backups accept custom chart gap minutes and never`() {
+        for (value in listOf("2", "17", Int.MAX_VALUE.toString(), "never")) {
+            SettingsBackupValidation.validate(
+                mapOf(SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES to value),
+                Version4SettingsImporter.schema
+            )
+        }
+    }
+
+    @Test
     fun `invalid types choices bounds and action sentinels are rejected before restore`() {
         val invalidValues = listOf(
             SettingsContract.KEY_ENABLE_LOGGING to "true",
+            SettingsContract.KEY_HISTORY_SAMPLING_MODE to "unknown-mode",
             SettingsContract.KEY_CUSTOM_CHARGING_TARGET to 101,
             SettingsContract.KEY_DISCHARGING_TARGET to -1,
             SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL to "custom",
@@ -45,6 +57,10 @@ class SettingsBackupValidationTest {
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER to "0",
             SettingsContract.KEY_PREDICTION_TYPE to "0",
             SettingsContract.KEY_MAX_LOG_AGE to "-2",
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES to "1",
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES to "2.5",
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES to "2147483648",
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES to "custom",
             SettingsContract.KEY_TEMPERATURE_UNIT to "kelvin",
             "ui_brightness" to "invalid"
         )

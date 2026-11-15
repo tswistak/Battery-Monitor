@@ -64,6 +64,8 @@ class SettingsDefinitionsTest {
             SettingsContract.KEY_CHIP_INDICATE_CHARGING to true,
             SettingsContract.KEY_USE_PRIVILEGED_ACCESS to false,
             SettingsContract.KEY_ENABLE_LOGGING to true,
+            SettingsContract.KEY_HISTORY_SAMPLING_MODE to "standard",
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES to "20",
             SettingsContract.KEY_MAX_LOG_AGE to "672",
         )
         assertEquals(expected, SettingsDefinitions.defaultValues(resourceDefaults::getValue))

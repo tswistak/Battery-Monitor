@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Process;
 import android.os.SystemClock;
+import android.util.Base64;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -33,12 +34,14 @@ import org.json.JSONArray;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,6 +75,12 @@ public final class StorageProbe extends Probe {
                 break;
             case "seedBackupData":
                 seedBackupData(context);
+                break;
+            case "settingsDefaults":
+                result.putString("defaultsJson", settingsDefaults(context).toString());
+                return;
+            case "seedPortableSettings":
+                seedPortableSettings(context);
                 break;
             case "seedSentinelData":
                 seedSentinelData(context);
@@ -241,6 +250,53 @@ public final class StorageProbe extends Probe {
         require(predictor.getFloat("key_ave_recharge_ac", -1) == 123456f && predictor.getFloat("key_ave_recharge_wl", -1) == 234567f && predictor.getFloat("key_ave_recharge_usb", -1) == 345678f, "Historical charging predictor values changed: " + predictor.getAll());
         require(context.getSharedPreferences("sp_store_main", 0).getBoolean("serviceDesired", !running) == running, "Explicit monitoring choice changed across upgrade");
         report(snapshot(context).toString());
+    }
+
+    private JSONObject settingsDefaults(Context context) throws Exception {
+        // The inventory comes from the app's settings definitions, independent of its backup schema.
+        Class<?> function = context.getClassLoader().loadClass("kotlin.jvm.functions.Function1");
+        Object strings = Proxy.newProxyInstance(context.getClassLoader(), new Class<?>[]{function},
+                (proxy, method, args) -> context.getString((Integer) args[0]));
+        Object definitions = singleton(context, "settings.SettingsDefinitions");
+        JSONObject defaults = new JSONObject((java.util.Map<?, ?>) invoke(definitions, "defaultValues", function, strings));
+
+        Object contract = singleton(context, "settings.SettingsContract");
+        Class<?> theme = type(context, "ui.theme.ThemeSettingsKt");
+        defaults.put("ui_color_source", ((Enum<?>) theme.getMethod("colorSource", String.class).invoke(null, (String) null)).name());
+        defaults.put("ui_brightness", ((Enum<?>) theme.getMethod("brightness", String.class).invoke(null, (String) null)).name());
+        defaults.put("chip_content", JSONObject.wrap(invoke(contract, "getDEFAULT_CHIP_CONTENT")));
+        defaults.put("vital_signs_content", JSONObject.wrap(invoke(contract, "getDEFAULT_VITAL_SIGNS_CONTENT")));
+        defaults.put("chip_content_order", defaultSettingsOrder(context, "ChipContentOrder"));
+        defaults.put("vital_signs_order", defaultSettingsOrder(context, "VitalSignsOrder"));
+        return defaults;
+    }
+
+    @SuppressWarnings("unchecked")
+    private String defaultSettingsOrder(Context context, String name) throws Exception {
+        Object order = singleton(context, "settings." + name);
+        return String.join(",", (List<String>) invoke(order, "parse", String.class, null));
+    }
+
+    private void seedPortableSettings(Context context) throws Exception {
+        JSONObject fixture = new JSONObject(new String(
+                Base64.decode(arguments.getString("fixture"), Base64.URL_SAFE), StandardCharsets.UTF_8));
+        stopCurrentMonitoring(context);
+        SharedPreferences.Editor editor = context.getSharedPreferences(SETTINGS, 0).edit()
+                .remove("battery_current_multiplier_detection_pending");
+        for (Iterator<String> keys = fixture.keys(); keys.hasNext(); ) {
+            String key = keys.next();
+            Object value = fixture.get(key);
+            if (value instanceof Boolean) editor.putBoolean(key, (Boolean) value);
+            else if (value instanceof Integer) editor.putInt(key, (Integer) value);
+            else if (value instanceof String) editor.putString(key, (String) value);
+            else if (value instanceof JSONArray) {
+                JSONArray values = (JSONArray) value;
+                HashSet<String> set = new HashSet<>();
+                for (int i = 0; i < values.length(); i++) set.add(values.getString(i));
+                editor.putStringSet(key, set);
+            } else throw new IllegalArgumentException("Unsupported fixture value for " + key);
+        }
+        require(editor.commit(), "Could not seed portable settings");
     }
 
     private void seedBackupData(Context context) throws Exception {

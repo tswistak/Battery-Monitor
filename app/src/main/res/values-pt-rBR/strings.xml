@@ -438,6 +438,15 @@
     <string name="pref_enable_logging" formatted="false">Ativar Relatórios</string>
     <string name="pref_enable_logging_summary" formatted="false">Registrar mudanças no estado da bateria?</string>
     <string name="pref_enable_logging_help" formatted="false">Salve observações e mudanças de estado da bateria para o “Histórico”. As medições disponíveis incluem nível, temperatura, tensão, corrente instantânea original e carga restante. A potência é calculada a partir da tensão e corrente ao ser apresentada ou exportada; não é salva separadamente. Desativar o registro não apaga o histórico existente nem interrompe as estimativas de tempo.</string>
+    <string name="pref_history_sampling_mode">Medições em repouso</string>
+    <string name="pref_history_sampling_standard">Padrão</string>
+    <string name="pref_history_sampling_exact_alarm">Alarmes exatos de ativação</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Manter o processador ativo</string>
+    <string name="pref_history_sampling_mode_help">Escolha como o Battery Monitor registra as medições enquanto o seu dispositivo está em repouso. A opção “Padrão” pode deixar lacunas. A opção “Alarmes exatos de ativação” desperta brevemente o processador para fazer medições. A opção “Manter o processador ativo” consome mais bateria. As duas opções exigem que você desative a otimização da bateria para o Battery Monitor e buscam fazer medições a cada dois minutos.</string>
+    <string name="pref_chart_gap_threshold">Limite de intervalo nos gráficos</string>
+    <string name="pref_chart_gap_never">Nunca mostrar lacunas</string>
+    <string name="pref_chart_gap_custom_message">Digite um número inteiro maior que 1 (em minutos).</string>
+    <string name="pref_chart_gap_threshold_help">Defina o intervalo máximo entre medições que os gráficos podem conectar. Intervalos maiores aparecem como lacunas na aba “Histórico” e no widget “Tendência da bateria”. “Nunca mostrar lacunas” conecta as medições salvas independentemente do intervalo.</string>
     <string name="pref_max_log_age" formatted="false">Idade Máxima dos Relatórios</string>
     <string name="pref_max_log_age_help" formatted="false">Quando o registro está ativado, os registros anteriores a este limite são removidos automaticamente durante a manutenção do histórico. “Sem limite” mantém-nos até que os apague manualmente. Se a exportação automática estiver ativada, o Battery Monitor exporta os registros pendentes antes de eliminar os antigos; uma falha na exportação impede essa eliminação.</string>
     <string name="age_1_day" formatted="false">1\u00A0dia</string>

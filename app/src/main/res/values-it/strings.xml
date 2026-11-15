@@ -438,6 +438,15 @@
     <string name="pref_enable_logging" formatted="false">Abilita registro</string>
     <string name="pref_enable_logging_summary" formatted="false">Registrare i cambiamenti di stato della batteria?</string>
     <string name="pref_enable_logging_help" formatted="false">Salva osservazioni della batteria e cambiamenti di stato per la «Cronologia». Le misurazioni disponibili includono livello, temperatura, tensione, corrente istantanea originale e carica residua. La potenza viene calcolata da tensione e corrente quando viene mostrata o esportata; non è salvata separatamente. Disattivare la registrazione non cancella la cronologia esistente né interrompe le stime del tempo.</string>
+    <string name="pref_history_sampling_mode">Misurazioni durante la sospensione</string>
+    <string name="pref_history_sampling_standard">Standard</string>
+    <string name="pref_history_sampling_exact_alarm">Allarmi di riattivazione esatti</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Mantieni attivo il processore</string>
+    <string name="pref_history_sampling_mode_help">Scegli come Battery Monitor registra le misurazioni mentre il dispositivo è in sospensione. Con «Standard» possono esserci interruzioni. L’opzione «Allarmi di riattivazione esatti» riattiva brevemente il processore per effettuare le misurazioni. «Mantieni attivo il processore» consuma più batteria. Entrambe le opzioni richiedono di disattivare l’ottimizzazione della batteria per Battery Monitor e puntano a effettuare misurazioni ogni due minuti.</string>
+    <string name="pref_chart_gap_threshold">Soglia delle interruzioni nei grafici</string>
+    <string name="pref_chart_gap_never">Non mostrare mai interruzioni</string>
+    <string name="pref_chart_gap_custom_message">Inserisci un numero intero maggiore di 1 (in minuti).</string>
+    <string name="pref_chart_gap_threshold_help">Imposta l’intervallo massimo entro cui i grafici possono collegare due misurazioni. Gli intervalli più lunghi appaiono come interruzioni nella scheda «Cronologia» e nel widget «Andamento della batteria». «Non mostrare mai interruzioni» collega le misurazioni salvate a prescindere dall’intervallo.</string>
     <string name="pref_max_log_age" formatted="false">Periodo massimo registro</string>
     <string name="pref_max_log_age_help" formatted="false">Quando la registrazione è abilitata, i registri più vecchi di questo limite vengono rimossi automaticamente durante la manutenzione della cronologia. «Nessun limite» li mantiene finché non li cancelli manualmente. Se l’esportazione automatica è abilitata, Battery Monitor esporta i registri in attesa prima di eliminare le vecchie voci; un’esportazione non riuscita impedisce tale eliminazione.</string>
     <string name="age_1_day" formatted="false">1\u00A0giorno</string>

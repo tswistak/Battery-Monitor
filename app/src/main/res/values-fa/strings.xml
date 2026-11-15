@@ -434,6 +434,15 @@
     <string name="pref_enable_logging" formatted="false">Logging را فعال کنید</string>
     <string name="pref_enable_logging_summary" formatted="false">گزارش وضعیت باتری تغییر می کند؟</string>
     <string name="pref_enable_logging_help" formatted="false">مشاهدات باتری و تغییرات وضعیت را برای «تاریخچه» ذخیره کنید. اندازه‌گیری‌های موجود شامل سطح، دما، ولتاژ، جریان لحظه‌ای اصلی و شارژ باقی‌مانده هستند. توان هنگام نمایش یا برون‌ریزی از ولتاژ و جریان محاسبه می‌شود؛ جداگانه ذخیره نمی‌شود. خاموش کردن ثبت گزارش، تاریخچه موجود را پاک نمی‌کند و تخمین زمان را متوقف نمی‌کند.</string>
+    <string name="pref_history_sampling_mode">اندازه‌گیری‌ها هنگام خواب دستگاه</string>
+    <string name="pref_history_sampling_standard">استاندارد</string>
+    <string name="pref_history_sampling_exact_alarm">بیدار کردن دستگاه در زمان‌های دقیق</string>
+    <string name="pref_history_sampling_keep_cpu_awake">فعال نگه داشتن پردازنده</string>
+    <string name="pref_history_sampling_mode_help">انتخاب کنید که Battery Monitor هنگام خواب دستگاه چگونه اندازه‌گیری‌ها را ثبت کند. حالت «استاندارد» ممکن است در ثبت اندازه‌گیری‌ها وقفه ایجاد کند. گزینهٔ «بیدار کردن دستگاه در زمان‌های دقیق» پردازنده را برای اندازه‌گیری مدت کوتاهی بیدار می‌کند. گزینهٔ «فعال نگه داشتن پردازنده» باتری بیشتری مصرف می‌کند. هر دو گزینهٔ اخیر به معافیت برنامه از بهینه‌سازی باتری نیاز دارند و هدفشان ثبت یک اندازه‌گیری در هر دو دقیقه است.</string>
+    <string name="pref_chart_gap_threshold">آستانهٔ نمایش گسست در نمودار</string>
+    <string name="pref_chart_gap_never">هرگز گسست‌ها را نشان نده</string>
+    <string name="pref_chart_gap_custom_message">تعداد دقیقه‌ها را به‌صورت عدد صحیح بزرگ‌تر از ۱ وارد کنید.</string>
+    <string name="pref_chart_gap_threshold_help">بیشترین فاصلهٔ زمانی مجاز برای اتصال دو اندازه‌گیری در نمودارها را تنظیم کنید. فاصله‌های طولانی‌تر در زبانهٔ «تاریخچه» و ابزارک «روند باتری» به‌صورت گسست نمایش داده می‌شوند. گزینهٔ «هرگز گسست‌ها را نشان نده» اندازه‌گیری‌های ذخیره‌شده را بدون توجه به فاصلهٔ زمانی آن‌ها به هم وصل می‌کند.</string>
     <string name="pref_max_log_age" formatted="false">حداکثر سن ورود</string>
     <string name="pref_max_log_age_help" formatted="false">وقتی ثبت گزارش فعال باشد، گزارش‌های قدیمی‌تر از این حد به‌طور خودکار هنگام نگهداری تاریخچه حذف می‌شوند. گزینه «بدون محدودیت» آن‌ها را تا پاک کردن دستی نگه می‌دارد. اگر برون‌ریزی خودکار فعال باشد، Battery Monitor گزارش‌های در انتظار را پیش از حذف ورودی‌های قدیمی برون‌ریزی می‌کند؛ ناموفق بودن برون‌ریزی مانع این حذف می‌شود.</string>
     <string name="age_1_day" formatted="false">1\u00A0روز</string>

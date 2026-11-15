@@ -8,13 +8,21 @@
 package codes.swistak.batterymonitor.logs
 
 import android.content.Context
+import codes.swistak.batterymonitor.settings.SettingsContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
+internal fun readChartGapThresholdMillis(context: Context): Long? = chartGapThresholdMillis(
+    context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+        .getString(SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES, null)
+)
+
 internal class LogsRepository(context: Context) {
     private val appContext = context.applicationContext
+
+    val chartGapMillis: Long? get() = readChartGapThresholdMillis(appContext)
 
     suspend fun historyChanges(since: Long?, range: HistoryRangeState?): HistoryChanges =
         withContext(Dispatchers.IO) { database { historyChanges(since, range) } }
@@ -22,13 +30,18 @@ internal class LogsRepository(context: Context) {
     suspend fun chart(
         range: HistoryRangeState,
         selectedKey: HistoryKey? = null,
-        metrics: Collection<HistoryMetric> = HistoryMetric.entries
+        metrics: Collection<HistoryMetric> = HistoryMetric.entries,
+        gapThresholdMillis: Long? = chartGapMillis
     ): HistoryChartModel = withContext(Dispatchers.IO) {
         val coroutine = currentCoroutineContext()
         database {
             readHistory(historyQuery(range)) {
                 historyChart(
-                    range, it.onEach { coroutine.ensureActive() }, selectedKey, metrics
+                    range,
+                    it.onEach { coroutine.ensureActive() },
+                    selectedKey,
+                    metrics,
+                    gapThresholdMillis
                 )
             }
         }
@@ -38,7 +51,8 @@ internal class LogsRepository(context: Context) {
         range: HistoryRangeState,
         metrics: List<HistoryMetric>,
         viewport: HistoryRangeState = range,
-        pixelWidth: Int
+        pixelWidth: Int,
+        gapThresholdMillis: Long? = chartGapMillis
     ): Map<HistoryMetric, DetailedHistoryChartModel> = withContext(Dispatchers.IO) {
         require(viewport.start >= range.start && viewport.end <= range.end)
         val coroutine = currentCoroutineContext()
@@ -58,7 +72,7 @@ internal class LogsRepository(context: Context) {
                     before?.let { yield(it) }
                     yieldAll(visible)
                     after?.let { yield(it) }
-                }.onEach { coroutine.ensureActive() })
+                }.onEach { coroutine.ensureActive() }, gapThresholdMillis)
             }
         }
     }

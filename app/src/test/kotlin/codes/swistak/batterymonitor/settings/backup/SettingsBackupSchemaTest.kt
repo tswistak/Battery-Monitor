@@ -52,7 +52,7 @@ class SettingsBackupSchemaTest {
             SettingsContract.KEY_COLOR_SOURCE, SettingsContract.KEY_BRIGHTNESS
         )
         assertEquals(
-            "Classify each new user setting as portable or intentionally device-specific",
+            "Include each portable user setting in the backup schema",
             SettingCatalog.routes.keys - SettingCatalog.diagnosticRoutes.keys,
             scalarSettings.map { it.key }.toSet() + appearanceSettings + encodedSettings + actions
         )

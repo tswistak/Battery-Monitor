@@ -7,6 +7,7 @@
 */
 package codes.swistak.batterymonitor.settings
 
+import android.content.res.Resources
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import codes.swistak.batterymonitor.R
@@ -25,11 +26,18 @@ internal sealed interface SettingsControl {
     data object Action : SettingsControl
     data class Toggle(val defaultValue: Boolean) : SettingsControl
     data class Choice(
-        @param:ArrayRes val entries: Int,
         @param:ArrayRes val entryValues: Int,
         val defaultValue: SettingsTextDefault,
-        @param:StringRes val dialogTitle: Int? = null
-    ) : SettingsControl
+        @param:StringRes val dialogTitle: Int? = null,
+        val labels: (Resources) -> List<CharSequence>,
+    ) : SettingsControl {
+        constructor(
+            @ArrayRes entries: Int,
+            @ArrayRes entryValues: Int,
+            defaultValue: SettingsTextDefault,
+            @StringRes dialogTitle: Int? = null,
+        ) : this(entryValues, defaultValue, dialogTitle, { it.getTextArray(entries).asList() })
+    }
 
     data class Number(
         val defaultValue: Int,
@@ -340,6 +348,40 @@ internal object SettingsDefinitions {
                         title = R.string.pref_enable_logging,
                         summary = R.string.pref_enable_logging_summary,
                         control = SettingsControl.Toggle(true),
+                    ),
+                    SettingsPreferenceDefinition(
+                        key = SettingsContract.KEY_HISTORY_SAMPLING_MODE,
+                        title = R.string.pref_history_sampling_mode,
+                        control = SettingsControl.Choice(
+                            entries = R.array.history_sampling_mode_entries,
+                            entryValues = R.array.history_sampling_mode_values,
+                            defaultValue = SettingsTextDefault.Literal(SettingsContract.HISTORY_SAMPLING_MODE_STANDARD),
+                        ),
+                    ),
+                    SettingsPreferenceDefinition(
+                        key = SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES,
+                        title = R.string.pref_chart_gap_threshold,
+                        control = SettingsControl.Choice(
+                            entryValues = R.array.chart_gap_threshold_values,
+                            defaultValue = SettingsTextDefault.Literal(SettingsContract.DEFAULT_CHART_GAP_THRESHOLD_MINUTES),
+                        ) { resources ->
+                            resources.getStringArray(R.array.chart_gap_threshold_values)
+                                .map { value ->
+                                    when (value) {
+                                        SettingsContract.CHART_GAP_THRESHOLD_NEVER -> resources.getString(
+                                            R.string.pref_chart_gap_never
+                                        )
+
+                                        "custom" -> resources.getString(R.string.chip_switching_interval_custom)
+                                        else -> {
+                                            val minutes = value.toInt()
+                                            resources.getQuantityString(
+                                                R.plurals.n_minutes_long, minutes, minutes
+                                            )
+                                        }
+                                    }
+                                }
+                        },
                     ),
                     SettingsPreferenceDefinition(
                         key = SettingsContract.KEY_MAX_LOG_AGE,

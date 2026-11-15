@@ -434,6 +434,15 @@
     <string name="pref_enable_logging" formatted="false">Enable Logging</string>
     <string name="pref_enable_logging_summary" formatted="false">Log battery state changes?</string>
     <string name="pref_enable_logging_help" formatted="false">Save battery observations and status changes for “History”. Available measurements include level, temperature, voltage, original instantaneous current, and remaining charge. Power is calculated from voltage and current when displayed or exported; it is not stored separately. Turning logging off does not erase existing history or stop time estimates.</string>
+    <string name="pref_history_sampling_mode">Readings during sleep</string>
+    <string name="pref_history_sampling_standard">Standard</string>
+    <string name="pref_history_sampling_exact_alarm">Exact wakeup alarms</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Keep CPU awake</string>
+    <string name="pref_history_sampling_mode_help">Choose how Battery Monitor records readings while your device sleeps. “Standard” may leave gaps. The “Exact wakeup alarms” option briefly wakes the CPU to take readings. “Keep CPU awake” uses more battery. Both options require turning off battery optimization for Battery Monitor and aim to take readings every two minutes.</string>
+    <string name="pref_chart_gap_threshold">Chart gap threshold</string>
+    <string name="pref_chart_gap_never">Never show gaps</string>
+    <string name="pref_chart_gap_custom_message">Enter a whole number greater than 1 (in minutes).</string>
+    <string name="pref_chart_gap_threshold_help">Set the longest interval over which charts connect readings. Longer intervals appear as gaps in the “History” tab and the “Battery trend” widget. “Never show gaps” connects stored readings regardless of the interval.</string>
     <string name="pref_max_log_age" formatted="false">Maximum Log Age</string>
     <string name="pref_max_log_age_help" formatted="false">When logging is enabled, logs older than the selected age are automatically removed during history maintenance. “No limit” keeps them until you clear them manually. If automatic export is enabled, Battery Monitor exports pending logs before deleting old entries; a failed export prevents that deletion.</string>
     <string name="age_1_day" formatted="false">1\u00A0day</string>

@@ -14,6 +14,7 @@ package codes.swistak.batterymonitor.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import codes.swistak.batterymonitor.settings.backup.Version4SettingsImporter
@@ -28,14 +29,13 @@ import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
 import codes.swistak.batterymonitor.ui.theme.brightness
 import codes.swistak.batterymonitor.ui.theme.colorSource
-import android.net.Uri
-import java.io.File
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.io.File
 import java.util.UUID
 
 class SettingsCompatibilityInstrumentedTest {
@@ -137,6 +137,11 @@ class SettingsCompatibilityInstrumentedTest {
 
     @Test
     fun stored_preferences_export_and_restore_all_portable_effective_settings() {
+        assertEquals(
+            SettingsContract.HISTORY_SAMPLING_MODE_STANDARD,
+            SettingsBackup.exportToJson(source).getJSONObject("settings")
+                .getString(SettingsContract.KEY_HISTORY_SAMPLING_MODE)
+        )
         val portable = mapOf(
             SettingsContract.KEY_TEMPERATURE_UNIT to "fahrenheit",
             SettingsContract.KEY_LONG_DURATION_FORMAT to "hours_only",
@@ -163,6 +168,8 @@ class SettingsCompatibilityInstrumentedTest {
             SettingsContract.KEY_CHIP_INDICATE_CHARGING to false,
             SettingsContract.KEY_USE_PRIVILEGED_ACCESS to true,
             SettingsContract.KEY_ENABLE_LOGGING to false,
+            SettingsContract.KEY_HISTORY_SAMPLING_MODE to SettingsContract.HISTORY_SAMPLING_MODE_KEEP_CPU_AWAKE,
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES to "17",
             SettingsContract.KEY_MAX_LOG_AGE to "-1",
             SettingsContract.KEY_COLOR_SOURCE to "BatteryBlue",
             SettingsContract.KEY_BRIGHTNESS to "TrueBlack",
@@ -213,7 +220,10 @@ class SettingsCompatibilityInstrumentedTest {
         assertFalse(json.getBoolean("chip_content_percentage"))
         assertEquals(0, json.getInt("vital_signs_status_duration_order"))
 
-        write(restored, excluded)
+        write(
+            restored,
+            excluded + (SettingsContract.KEY_HISTORY_SAMPLING_MODE to SettingsContract.HISTORY_SAMPLING_MODE_STANDARD)
+        )
         val file = File.createTempFile("settings-export-", ".json", context.cacheDir)
         try {
             val uri = Uri.fromFile(file)

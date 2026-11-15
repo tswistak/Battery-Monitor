@@ -257,12 +257,20 @@ internal object SettingCatalog {
                             val choice = control as SettingsControl.Choice
                             val index = resources.getStringArray(choice.entryValues)
                                 .indexOf(seconds.toString())
-                            val label = resources.getTextArray(choice.entries).getOrNull(index)
+                            val label = choice.labels(resources).getOrNull(index)
                                 ?: MeasureFormat.getInstance(
                                     resources.configuration.locales[0],
                                     MeasureFormat.FormatWidth.WIDE
                                 ).formatMeasures(Measure(seconds, MeasureUnit.SECOND))
                             text(R.string.currently_set_to) + label
+                        }
+
+                        SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES -> SettingsContract.parseChartGapThresholdMinutes(
+                            value as? String
+                        )?.let { minutes ->
+                            text(R.string.currently_set_to) + resources.getQuantityString(
+                                R.plurals.n_minutes_long, minutes, minutes
+                            )
                         }
 
                         SettingsContract.KEY_MAX_LOG_AGE -> if (logging) null else text(R.string.currently_disabled)
@@ -272,7 +280,7 @@ internal object SettingCatalog {
                         is SettingsControl.Choice -> {
                             val index = resources.getStringArray(control.entryValues)
                                 .indexOf(value as? String)
-                            resources.getTextArray(control.entries).getOrNull(index)?.let {
+                            control.labels(resources).getOrNull(index)?.let {
                                 text(R.string.currently_set_to) + it
                             }
                         }
@@ -290,7 +298,7 @@ internal object SettingCatalog {
                         notificationDisabledReason(key, sdkInt, notification) ?: when (key) {
                             SettingsContract.KEY_CHANGE_APP_LANGUAGE -> R.string.settings_app_language_unavailable.takeIf { sdkInt < 33 }
 
-                            SettingsContract.KEY_MAX_LOG_AGE, SettingsContract.KEY_AUTO_LOG_EXPORT -> R.string.settings_dependency_disabled.takeUnless { logging }
+                            SettingsContract.KEY_HISTORY_SAMPLING_MODE, SettingsContract.KEY_MAX_LOG_AGE, SettingsContract.KEY_AUTO_LOG_EXPORT -> R.string.settings_dependency_disabled.takeUnless { logging }
 
                             SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> R.string.settings_dependency_disabled.takeIf { chipMetrics.size < 2 || liveDisplay == "never" }
 

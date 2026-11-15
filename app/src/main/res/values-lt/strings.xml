@@ -442,6 +442,15 @@
     <string name="pref_enable_logging" formatted="false">Įjungti įrašų sudarymą</string>
     <string name="pref_enable_logging_summary" formatted="false">Įrašinėti baterijos būsenos pakitimus?</string>
     <string name="pref_enable_logging_help" formatted="false">Išsaugokite akumuliatoriaus stebėjimus ir būsenos pokyčius skiltyje „Istorija“. Galimi matavimai: lygis, temperatūra, įtampa, pradinė momentinė srovė ir likęs krūvis. Galia apskaičiuojama iš įtampos ir srovės rodant arba eksportuojant; atskirai ji nesaugoma. Išjungus registravimą esama istorija neištrinama ir laiko įverčiai nesustabdomi.</string>
+    <string name="pref_history_sampling_mode">Matavimai įrenginiui miegant</string>
+    <string name="pref_history_sampling_standard">Standartinis</string>
+    <string name="pref_history_sampling_exact_alarm">Tikslūs pažadinimo signalai</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Neleisti procesoriui užmigti</string>
+    <string name="pref_history_sampling_mode_help">Pasirinkite, kaip Battery Monitor įrašys matavimus įrenginiui miegant. Pasirinkus „Standartinis“, kai kurių matavimų gali trūkti. Parinktis „Tikslūs pažadinimo signalai“ trumpam pažadina procesorių, kad būtų atliktas matavimas. Parinktis „Neleisti procesoriui užmigti“ naudoja daugiau akumuliatoriaus energijos. Abi pastarąsias parinktis galima naudoti tik jei programai taikoma akumuliatoriaus optimizavimo išimtis. Jos skirtos matavimams kas dvi minutes.</string>
+    <string name="pref_chart_gap_threshold">Diagramų tarpų riba</string>
+    <string name="pref_chart_gap_never">Niekada nerodyti tarpų</string>
+    <string name="pref_chart_gap_custom_message">Įveskite sveikąjį skaičių, didesnį už 1 (minutėmis).</string>
+    <string name="pref_chart_gap_threshold_help">Nustatykite ilgiausią laiko tarpą, per kurį diagramos dar sujungia du matavimus. Ilgesni laiko tarpai rodomi kaip spragos kortelėje „Istorija“ ir valdiklyje „Akumuliatoriaus kitimas“. Parinktis „Niekada nerodyti tarpų“ sujungia įrašytus matavimus nepriklausomai nuo laiko tarpo.</string>
     <string name="pref_max_log_age" formatted="false">Ilgiausias įrašo gyvavimas</string>
     <string name="pref_max_log_age_help" formatted="false">Kai registravimas įjungtas, už šią ribą senesni žurnalai automatiškai pašalinami tvarkant istoriją. „Be apribojimų“ juos saugo iki rankinio išvalymo. Jei įjungtas automatinis eksportas, Battery Monitor prieš trindamas senus įrašus eksportuoja laukiančius žurnalus; nepavykęs eksportas neleidžia trinti.</string>
     <string name="age_1_day" formatted="false">1\u00A0diena</string>

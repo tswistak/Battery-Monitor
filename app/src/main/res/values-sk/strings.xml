@@ -442,6 +442,15 @@
     <string name="pref_enable_logging" formatted="false">Zapnúť zaznamenávanie</string>
     <string name="pref_enable_logging_summary" formatted="false">Zaznamenávať zmeny stavu batérie?</string>
     <string name="pref_enable_logging_help" formatted="false">Ukladajte pozorovania batérie a zmeny stavu do časti „História“. Dostupné merania zahŕňajú úroveň, teplotu, napätie, pôvodný okamžitý prúd a zostávajúci náboj. Výkon sa pri zobrazení alebo exporte vypočíta z napätia a prúdu; neukladá sa samostatne. Vypnutie záznamu nevymaže existujúcu históriu ani nezastaví odhady času.</string>
+    <string name="pref_history_sampling_mode">Merania v režime spánku</string>
+    <string name="pref_history_sampling_standard">Štandardný</string>
+    <string name="pref_history_sampling_exact_alarm">Presné budiace alarmy</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Udržiavať procesor aktívny</string>
+    <string name="pref_history_sampling_mode_help">Vyberte, ako má Battery Monitor zaznamenávať merania, keď je zariadenie v režime spánku. Pri voľbe „Štandardný“ môžu niektoré merania chýbať. Voľba „Presné budiace alarmy“ na chvíľu prebudí procesor na meranie. Voľba „Udržiavať procesor aktívny“ zvyšuje spotrebu energie. Pri oboch posledných možnostiach musí byť Battery Monitor vyňatý z optimalizácie batérie. Cieľom je merať každé dve minúty.</string>
+    <string name="pref_chart_gap_threshold">Hranica pre medzery v grafoch</string>
+    <string name="pref_chart_gap_never">Nikdy nezobrazovať medzery</string>
+    <string name="pref_chart_gap_custom_message">Zadajte celé číslo väčšie ako 1 (v minútach).</string>
+    <string name="pref_chart_gap_threshold_help">Nastavte najdlhší interval, cez ktorý grafy ešte spoja dve merania. Dlhšie intervaly sa zobrazia ako medzery na karte „História“ a vo widgete „Vývoj batérie“. Voľba „Nikdy nezobrazovať medzery“ spojí uložené merania bez ohľadu na dĺžku intervalu.</string>
     <string name="pref_max_log_age" formatted="false">Maximálny vek záznamu</string>
     <string name="pref_max_log_age_help" formatted="false">Ak je záznam zapnutý, záznamy staršie než tento limit sa automaticky odstraňujú pri údržbe histórie. „Bez obmedzenia“ ich uchová, kým ich nevymažete ručne. Ak je zapnutý automatický export, Battery Monitor pred odstránením starých položiek exportuje čakajúce záznamy; neúspešný export odstráneniu zabráni.</string>
     <string name="age_1_day" formatted="false">1\u00A0deň</string>

@@ -104,7 +104,11 @@ import codes.swistak.batterymonitor.logs.detailedHistoryCoordinateRange
 import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
+import codes.swistak.batterymonitor.ui.components.ConnectedMarkerDash
+import codes.swistak.batterymonitor.ui.components.DisconnectedMarkerDash
 import codes.swistak.batterymonitor.ui.components.HistoryChartScale
+import codes.swistak.batterymonitor.ui.components.PowerMarkerGap
+import codes.swistak.batterymonitor.ui.components.PowerMarkerStrokeWidth
 import codes.swistak.batterymonitor.ui.components.RebootMarkerRadius
 import codes.swistak.batterymonitor.ui.components.RebootMarkerSpacing
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
@@ -900,10 +904,7 @@ internal fun FullscreenChartScreen(
                             }
                         }
                         (rendererXAxis as FullscreenEventRenderer).updateEvents(
-                            eventTimes,
-                            timeAxis,
-                            colors.outline.toArgb(),
-                            colors.onSurfaceVariant.toArgb()
+                            eventTimes, timeAxis, colors.onSurfaceVariant.toArgb()
                         )
                         notifyDataSetChanged()
                         setVisibleXRangeMinimum(minOf(1f, xAxis.axisMaximum))
@@ -1116,27 +1117,25 @@ private class FullscreenEventRenderer(private val chart: LineChartView) : XAxisR
 ) {
     private val position = FloatArray(2)
     private val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val connectedLine = powerLine(4f, 5f)
-    private val disconnectedLine = powerLine(10f, 7f)
+    private val connectedLine = powerLine(ConnectedMarkerDash.value)
+    private val disconnectedLine = powerLine(DisconnectedMarkerDash.value)
     private var times: Map<Int, List<Long>> = emptyMap()
     private var timeAxis: DetailedHistoryTimeAxis? = null
 
-    private fun powerLine(dash: Float, gap: Float) = LimitLine(0f).apply {
-        lineWidth = 0.7f
-        enableDashedLine(dash, gap, 0f)
+    private fun powerLine(dashDp: Float) = LimitLine(0f).apply {
+        val density = chart.resources.displayMetrics.density
+        lineWidth = PowerMarkerStrokeWidth.value
+        enableDashedLine(dashDp * density, PowerMarkerGap.value * density, 0f)
     }
 
     fun updateEvents(
-        times: Map<Int, List<Long>>,
-        timeAxis: DetailedHistoryTimeAxis,
-        powerColor: Int,
-        rebootColor: Int
+        times: Map<Int, List<Long>>, timeAxis: DetailedHistoryTimeAxis, eventColor: Int
     ) {
         this.times = times
         this.timeAxis = timeAxis
-        connectedLine.lineColor = powerColor
-        disconnectedLine.lineColor = powerColor
-        dotPaint.color = rebootColor
+        connectedLine.lineColor = eventColor
+        disconnectedLine.lineColor = eventColor
+        dotPaint.color = eventColor
     }
 
     override fun renderLimitLines(c: NativeCanvas) {

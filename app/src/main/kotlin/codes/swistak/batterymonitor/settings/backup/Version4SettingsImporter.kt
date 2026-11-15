@@ -33,6 +33,8 @@ internal object Version4SettingsImporter : SettingsImporter {
         put(SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS, Boolean::class.java)
         put(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, Boolean::class.java)
         put(SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY, Boolean::class.java)
+        put(SettingsContract.KEY_HISTORY_SAMPLING_MODE, String::class.java)
+        put(SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES, String::class.java)
     }
 
     override fun restore(

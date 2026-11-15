@@ -181,6 +181,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
             SettingsContract.KEY_TOP_LINE,
             SettingsContract.KEY_BOTTOM_LINE,
             SettingsContract.KEY_ENABLE_LOGGING,
+            SettingsContract.KEY_HISTORY_SAMPLING_MODE,
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES,
             SettingsContract.KEY_CHANGE_APP_LANGUAGE,
             SettingsContract.KEY_MAX_LOG_AGE,
             SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
@@ -411,16 +413,24 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
         when {
             choice != null -> {
                 val values = resources.getStringArray(choice.entryValues).toList()
-                dialog = SettingsDialog.Choices(
-                    title = choice.dialogTitle?.let(::getString) ?: row.title,
-                    options = resources.getStringArray(choice.entries).toList(),
-                    selected = setOf(
-                        if (key == SettingsContract.KEY_CHIP_SWITCHING_INTERVAL) {
-                            chipSwitchingIntervalChoiceIndex(row.value as? String, values)
-                        } else values.indexOf(row.value as? String)
-                    ),
-                    multiple = false,
-                    onConfirm = { selected -> changeSetting(key, values[selected.single()]) })
+                dialog =
+                    SettingsDialog.Choices(
+                        title = choice.dialogTitle?.let(::getString) ?: row.title,
+                        options = choice.labels(resources).map(CharSequence::toString),
+                        selected = setOf(
+                            when (key) {
+                            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> chipSwitchingIntervalChoiceIndex(
+                                row.value as? String, values
+                            )
+
+                            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES -> values.indexOf(
+                                row.value as? String
+                            ).takeIf { it >= 0 } ?: values.indexOf("custom")
+
+                            else -> values.indexOf(row.value as? String)
+                        }),
+                        multiple = false,
+                        onConfirm = { selected -> changeSetting(key, values[selected.single()]) })
                 rememberPreferenceDialog(key)
             }
 
@@ -475,6 +485,13 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                     return
                 }
             }
+
+            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES -> {
+                if (value == "custom") {
+                    showCustomChartGapThresholdDialog()
+                    return
+                }
+            }
         }
         mSharedPreferences.edit {
             when (value) {
@@ -519,6 +536,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
         when (request.getString("action")) {
             "preference" -> request.getString("key")?.let(::activatePreference)
             "interval" -> showCustomChipSwitchingIntervalDialog()
+            "chart_gap_threshold" -> showCustomChartGapThresholdDialog()
 
             "auto_export" -> showAutoLogExportDialog(
                 request.getString("directory")?.let(Uri::parse),
@@ -1142,6 +1160,22 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
             error = getString(R.string.pref_chip_switching_interval_error),
             onConfirm = { seconds -> changeSetting(key, seconds.toString()) })
         dialogRequest = Bundle().apply { putString("action", "interval") }
+    }
+
+    private fun showCustomChartGapThresholdDialog() {
+        val key = SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES
+        val row = settingsRows.firstOrNull { it.key == key && it.unavailable == null } ?: return
+        val message = getString(R.string.pref_chart_gap_custom_message)
+        dialog = SettingsDialog.Number(
+            title = row.title,
+            message = message,
+            initial = SettingsContract.parseChartGapThresholdMinutes(row.value as? String)
+                ?: SettingsContract.DEFAULT_CHART_GAP_THRESHOLD_MINUTES.toInt(),
+            min = SettingsContract.MIN_CHART_GAP_THRESHOLD_MINUTES,
+            max = Int.MAX_VALUE,
+            error = message,
+            onConfirm = { minutes -> changeSetting(key, minutes.toString()) })
+        dialogRequest = Bundle().apply { putString("action", "chart_gap_threshold") }
     }
 
     private fun setupTimeEstimatePreferences() {

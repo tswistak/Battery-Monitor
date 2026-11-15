@@ -42,6 +42,43 @@ class DetailedHistoryModelTest {
     }
 
     @Test
+    fun `compact and detailed charts use the selected gap limit and always break at reboot`() {
+        val minute = 60_000L
+        val range = HistoryRangeState(0, 3 * 60 * minute)
+        val metric = HistoryMetric.LEVEL
+        val records = listOf(
+            HistoryRecord(1, observation.copy(time = minute)),
+            HistoryRecord(2, observation.copy(time = 6 * minute)),
+            HistoryRecord(3, observation.copy(time = 11 * minute + 1)),
+            HistoryRecord(4, observation.copy(time = 26 * minute + 1)),
+            HistoryRecord(5, observation.copy(time = 70 * minute)),
+            HistoryRecord(
+                6, observation.copy(time = 100 * minute, status = LogDatabase.STATUS_BOOT_COMPLETED)
+            ),
+            HistoryRecord(7, observation.copy(time = 110 * minute))
+        )
+        for ((choice, expected) in listOf(
+            "5" to listOf(0L, 0L, 1L, 2L, 3L, 5L),
+            "7" to listOf(0L, 0L, 0L, 1L, 2L, 4L),
+            "never" to listOf(0L, 0L, 0L, 0L, 0L, 1L),
+            "1" to listOf(0L, 0L, 0L, 0L, 1L, 2L)
+        )) {
+            val threshold = chartGapThresholdMillis(choice)
+            val compact = historyChart(
+                range,
+                records.asSequence(),
+                metrics = listOf(metric),
+                gapThresholdMillis = threshold
+            ).series.getValue(metric)
+            val detailed = detailedHistoryCharts(
+                range, range, listOf(metric), 800, records.asSequence(), threshold
+            ).getValue(metric)
+            assertEquals(expected, compact.points.filter { it.value != null }.map { it.segment })
+            assertEquals(expected, detailed.points.filter { it.value != null }.map { it.segment })
+        }
+    }
+
+    @Test
     fun `narrow views keep every observation and duplicate timestamp identity`() {
         val range = HistoryRangeState(1_000, 901_000)
         val records = rows(8).toMutableList()

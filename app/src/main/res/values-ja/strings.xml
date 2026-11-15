@@ -430,6 +430,15 @@
     <string name="pref_enable_logging" formatted="false">ログを有効にする</string>
     <string name="pref_enable_logging_summary" formatted="false">バッテリーステータスの変更ログを取得しますか?</string>
     <string name="pref_enable_logging_help" formatted="false">「履歴」用にバッテリーの観測値と状態変化を保存します。取得できる測定値には、残量、温度、電圧、元の瞬間電流、残りの充電量があります。電力は表示時やエクスポート時に電圧と電流から計算し、個別には保存しません。記録をオフにしても、既存の履歴は消えず、時間の推定も続きます。</string>
+    <string name="pref_history_sampling_mode">スリープ中の測定</string>
+    <string name="pref_history_sampling_standard">標準</string>
+    <string name="pref_history_sampling_exact_alarm">正確なウェイクアップアラーム</string>
+    <string name="pref_history_sampling_keep_cpu_awake">CPU をスリープさせない</string>
+    <string name="pref_history_sampling_mode_help">端末のスリープ中に Battery Monitor が測定値を記録する方法を選びます。「標準」では記録が途切れることがあります。「正確なウェイクアップアラーム」は測定のために CPU を一時的に起こします。「CPU をスリープさせない」を選ぶと、バッテリーの消費が増えます。後者の 2 つのオプションは、アプリをバッテリー最適化の対象外にする必要があり、2 分ごとの測定を目指します。</string>
+    <string name="pref_chart_gap_threshold">グラフで線を結ぶ最長間隔</string>
+    <string name="pref_chart_gap_never">線を途切れさせない</string>
+    <string name="pref_chart_gap_custom_message">1 より大きい整数を分単位で入力してください。</string>
+    <string name="pref_chart_gap_threshold_help">グラフで測定値を線で結ぶ最長の時間間隔を設定します。これより長い間隔では、「履歴」タブと「バッテリーの推移」ウィジェットのグラフで線が途切れます。「線を途切れさせない」を選ぶと、間隔にかかわらず保存済みの測定値を線で結びます。</string>
     <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
     <string name="pref_max_log_age_help" formatted="false">記録が有効な場合、この期間より古いログは履歴のメンテナンス時に自動的に削除されます。「制限なし」では、手動で消去するまで保持します。自動エクスポートが有効な場合、Battery Monitor は古い項目を削除する前に未処理のログをエクスポートします。失敗した場合は削除しません。</string>
     <string name="age_1_day" formatted="false">1\u00A0日</string>

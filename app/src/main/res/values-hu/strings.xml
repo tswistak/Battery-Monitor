@@ -434,6 +434,15 @@
     <string name="pref_enable_logging" formatted="false">Naplózás engedélyezése</string>
     <string name="pref_enable_logging_summary" formatted="false">Naplózza az akku állapotának változásait?</string>
     <string name="pref_enable_logging_help" formatted="false">Mentse az akkumulátor megfigyeléseit és állapotváltozásait az „Előzmények” részhez. Az elérhető mérések a töltöttség, hőmérséklet, feszültség, eredeti pillanatnyi áram és hátralévő töltés. A teljesítményt megjelenítéskor vagy exportáláskor számítjuk a feszültségből és áramból; külön nincs tárolva. A naplózás kikapcsolása nem törli az előzményeket, és nem állítja le az időbecsléseket.</string>
+    <string name="pref_history_sampling_mode">Mérések alvó állapotban</string>
+    <string name="pref_history_sampling_standard">Normál</string>
+    <string name="pref_history_sampling_exact_alarm">Pontos ébresztések</string>
+    <string name="pref_history_sampling_keep_cpu_awake">A processzor ébren tartása</string>
+    <string name="pref_history_sampling_mode_help">Válassza ki, hogyan naplózza a Battery Monitor a méréseket, amikor az eszköz alvó állapotban van. A „Normál” módban egyes mérések kimaradhatnak. A „Pontos ébresztések” beállítás rövid időre felébreszti a processzort a mérésekhez. Az „A processzor ébren tartása” beállítás növeli az energiafogyasztást. Az utóbbi két lehetőséghez ki kell venni az alkalmazást az akkumulátor-optimalizálás alól. A cél mindkét esetben a kétpercenkénti mérés.</string>
+    <string name="pref_chart_gap_threshold">A grafikonhézagok küszöbértéke</string>
+    <string name="pref_chart_gap_never">Soha ne jelenjenek meg hézagok</string>
+    <string name="pref_chart_gap_custom_message">Adjon meg 1-nél nagyobb egész számot (percben).</string>
+    <string name="pref_chart_gap_threshold_help">Állítsa be, legfeljebb mekkora időköz esetén kössék össze a grafikonok a méréseket. A hosszabb időközök hézagként jelennek meg az „Előzmények” lapon és az „Akkumulátor alakulása” widgeten. A „Soha ne jelenjenek meg hézagok” beállítással a grafikonok az időköztől függetlenül összekötik a mentett méréseket.</string>
     <string name="pref_max_log_age" formatted="false">Napló időszaka</string>
     <string name="pref_max_log_age_help" formatted="false">Engedélyezett naplózásnál az ennél régebbi naplók az előzmények karbantartása során automatikusan törlődnek. A „Nincs korlát” beállítás kézi törlésig megőrzi őket. Automatikus exportálás esetén a Battery Monitor előbb exportálja a függő naplókat; sikertelen exportáláskor nem törli a régi bejegyzéseket.</string>
     <string name="age_1_day" formatted="false">1\u00A0nap</string>

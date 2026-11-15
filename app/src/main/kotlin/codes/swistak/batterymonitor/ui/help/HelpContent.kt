@@ -345,6 +345,18 @@ internal fun helpSections(
                     ),
                     HelpParagraph(R.string.pref_enable_logging_help),
                     HelpParagraph(
+                        R.string.pref_history_sampling_mode,
+                        subheading = true,
+                        controlKey = SettingsContract.KEY_HISTORY_SAMPLING_MODE
+                    ),
+                    HelpParagraph(R.string.pref_history_sampling_mode_help),
+                    HelpParagraph(
+                        R.string.pref_chart_gap_threshold,
+                        subheading = true,
+                        controlKey = SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES
+                    ),
+                    HelpParagraph(R.string.pref_chart_gap_threshold_help),
+                    HelpParagraph(
                         R.string.pref_max_log_age,
                         subheading = true,
                         controlKey = SettingsContract.KEY_MAX_LOG_AGE

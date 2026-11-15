@@ -81,11 +81,14 @@ internal fun detailedHistoryCharts(
     viewport: HistoryRangeState,
     metrics: List<HistoryMetric>,
     pixelWidth: Int,
-    records: Sequence<HistoryRecord>
+    records: Sequence<HistoryRecord>,
+    gapThresholdMillis: Long? = DEFAULT_CHART_GAP_THRESHOLD_MS
 ): Map<HistoryMetric, DetailedHistoryChartModel> {
     require(viewport.start >= range.start && viewport.end <= range.end)
     require(metrics.size in 1..2 && metrics.distinct().size == metrics.size)
-    val reducers = metrics.associateWith { DetailedHistoryReducer(range, viewport, it, pixelWidth) }
+    val reducers = metrics.associateWith {
+        DetailedHistoryReducer(range, viewport, it, pixelWidth, gapThresholdMillis)
+    }
     for (entry in records) {
         if (range.contains(entry.record.time)) reducers.values.forEach { it.add(entry) }
     }
@@ -96,7 +99,8 @@ private class DetailedHistoryReducer(
     private val range: HistoryRangeState,
     private val viewport: HistoryRangeState,
     private val metric: HistoryMetric,
-    pixelWidth: Int
+    pixelWidth: Int,
+    private val gapThresholdMillis: Long?
 ) {
     private val width = pixelWidth.coerceIn(1, 4096)
     private val bucketCount = (width / 3).coerceAtLeast(1)
@@ -151,7 +155,10 @@ private class DetailedHistoryReducer(
         val record = entry.record
         val visible = viewport.contains(record.time)
         val value = historyObservationValue(metric, record)
-        if (value == null || historyHasTimeGap(previous?.key?.time, record.time)) segment++
+        if (value == null || historyHasTimeGap(
+                previous?.key?.time, record.time, gapThresholdMillis
+            )
+        ) segment++
         val point = HistoryPoint(entry.key, value, segment)
         val eventCode = historyEventCode(record.status)
         val eventIndex = HistoryEvent.indexFor(eventCode)

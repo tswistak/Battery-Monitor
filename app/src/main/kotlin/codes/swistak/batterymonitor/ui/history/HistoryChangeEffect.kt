@@ -16,6 +16,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,6 +27,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.settings.SettingsContract
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -43,17 +45,27 @@ internal fun HistoryChangeEffect(onActivated: () -> Unit, onChanged: () -> Unit)
     DisposableEffect(context, lifecycle) {
         var registered = false
         var pending: Job? = null
+        val settings =
+            context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+
+        fun scheduleChange() {
+            pending?.cancel()
+            pending = scope.launch {
+                delay(HISTORY_CHANGE_DEBOUNCE_MS.milliseconds)
+                if (registered && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) changed.value()
+            }
+        }
+
+        val settingsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == null || key == SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES) scheduleChange()
+        }
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent?.action != LogDatabase.ACTION_HISTORY_CHANGED || !registered || !lifecycle.currentState.isAtLeast(
                         Lifecycle.State.STARTED
                     )
                 ) return
-                pending?.cancel()
-                pending = scope.launch {
-                    delay(HISTORY_CHANGE_DEBOUNCE_MS.milliseconds)
-                    if (registered && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) changed.value()
-                }
+                scheduleChange()
             }
         }
 
@@ -65,12 +77,16 @@ internal fun HistoryChangeEffect(onActivated: () -> Unit, onChanged: () -> Unit)
                 IntentFilter(LogDatabase.ACTION_HISTORY_CHANGED),
                 ContextCompat.RECEIVER_NOT_EXPORTED
             )
+            settings.registerOnSharedPreferenceChangeListener(settingsListener)
             registered = true
         }
 
         fun stop() {
             pending?.cancel()
-            if (registered) context.unregisterReceiver(receiver)
+            if (registered) {
+                context.unregisterReceiver(receiver)
+                settings.unregisterOnSharedPreferenceChangeListener(settingsListener)
+            }
             registered = false
         }
 

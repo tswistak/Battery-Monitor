@@ -82,6 +82,7 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
     private var pixelWidth = 800
     private var boundsStale = true
     private var appliedRevision: Long? = null
+    private var appliedChartGapMillis: Long? = null
     private var freshness: Job? = null
 
     fun historyChanged() {
@@ -96,6 +97,9 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
                     appliedRevision, current.range.takeUnless { current.rangeLabel == "all" })
                 if (requestGeneration != generation) return@launch
                 if (changes.affectsRange) refresh()
+                else if (current.charts.isNotEmpty() && appliedChartGapMillis != repository.chartGapMillis) load(
+                    debounce = false
+                )
                 else {
                     appliedRevision = changes.revision
                     if (mutable.value?.error == true) mutable.value =
@@ -250,12 +254,14 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
                     boundsStale = false
                     mutable.value = mutable.value?.copy(boundsByMetric = bounds)
                 }
+                val gapMillis = repository.chartGapMillis
                 val charts = repository.detailedCharts(
-                    resolved.range, resolved.metrics, resolved.viewport, width
+                    resolved.range, resolved.metrics, resolved.viewport, width, gapMillis
                 )
                 ensureActive()
                 if (requestGeneration == generation) {
                     appliedRevision = revision
+                    appliedChartGapMillis = gapMillis
                     mutable.value = mutable.value?.copy(
                         range = resolved.range,
                         viewport = resolved.viewport,

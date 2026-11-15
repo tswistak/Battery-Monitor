@@ -17,6 +17,7 @@ import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.historyChart
 import codes.swistak.batterymonitor.logs.historyQuery
+import codes.swistak.batterymonitor.logs.readChartGapThresholdMillis
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -35,7 +36,12 @@ internal object WidgetUpdateDispatcher {
     private var queued = false
     private var latestSnapshot: WidgetSnapshot? = null
     private var persistedSnapshot: WidgetSnapshot? = null
-    private val trends = mutableMapOf<Pair<Int, HistoryMetric>, Pair<Long, WidgetTrend>>()
+
+    private data class CachedTrend(
+        val updatedAt: Long, val gapMillis: Long?, val chart: WidgetTrend
+    )
+
+    private val trends = mutableMapOf<Pair<Int, HistoryMetric>, CachedTrend>()
 
     suspend fun previewData(
         context: Context, trendHours: Int?, trendMetric: HistoryMetric = HistoryMetric.LEVEL
@@ -193,17 +199,18 @@ internal object WidgetUpdateDispatcher {
     private fun trend(context: Context, key: Pair<Int, HistoryMetric>): WidgetTrend? {
         val (hours, metric) = key
         val elapsed = SystemClock.elapsedRealtime()
-        trends[key]?.let { (last, trend) ->
-            if (elapsed - last in 0..<15 * 60_000L) return trend
+        val gapMillis = readChartGapThresholdMillis(context)
+        trends[key]?.let { (last, cachedGapMillis, chart) ->
+            if (cachedGapMillis == gapMillis && elapsed - last in 0..<15 * 60_000L) return chart
         }
         val range = HistoryRangeState.lastHours(hours)
         val db = LogDatabase(context)
         return try {
             val chart = db.readHistory(historyQuery(range)) {
-                historyChart(range, it, metrics = listOf(metric))
+                historyChart(range, it, metrics = listOf(metric), gapThresholdMillis = gapMillis)
             }
             WidgetTrend.fromHistory(chart, metric).also {
-                trends[key] = elapsed to it
+                trends[key] = CachedTrend(elapsed, gapMillis, it)
             }
         } catch (error: Exception) {
             Log.w("WidgetDispatcher", "Unable to read widget history", error)

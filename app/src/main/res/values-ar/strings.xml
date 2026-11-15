@@ -450,6 +450,15 @@
     <string name="pref_enable_logging" formatted="false">تمكين التسجيل</string>
     <string name="pref_enable_logging_summary" formatted="false">تسجيل حالة تغيير البطارية ؟</string>
     <string name="pref_enable_logging_help" formatted="false">احفظ قراءات البطارية وتغييرات الحالة لـ «السجل». تشمل القياسات المتاحة المستوى والحرارة والجهد والتيار اللحظي الأصلي والشحنة المتبقية. تُحسب القدرة من الجهد والتيار عند العرض أو التصدير؛ ولا تُحفظ منفصلة. إيقاف التسجيل لا يمسح السجل الموجود ولا يوقف تقديرات الوقت.</string>
+    <string name="pref_history_sampling_mode">القراءات أثناء السكون</string>
+    <string name="pref_history_sampling_standard">قياسي</string>
+    <string name="pref_history_sampling_exact_alarm">إيقاظ في أوقات محددة بدقة</string>
+    <string name="pref_history_sampling_keep_cpu_awake">إبقاء المعالج نشطًا</string>
+    <string name="pref_history_sampling_mode_help">اختر كيف يسجل Battery Monitor القراءات أثناء سكون جهازك. قد يترك خيار «قياسي» فجوات. يوقظ خيار «إيقاظ في أوقات محددة بدقة» المعالج لفترة قصيرة لأخذ القراءات. يستهلك خيار «إبقاء المعالج نشطًا» المزيد من طاقة البطارية. يتطلب الخياران الأخيران استثناء التطبيق من تحسين البطارية، ويهدفان إلى أخذ قراءة كل دقيقتين.</string>
+    <string name="pref_chart_gap_threshold">الحد الزمني لفجوات المخططات</string>
+    <string name="pref_chart_gap_never">عدم إظهار الفجوات مطلقًا</string>
+    <string name="pref_chart_gap_custom_message">أدخل عددًا صحيحًا من الدقائق أكبر من ١.</string>
+    <string name="pref_chart_gap_threshold_help">حدّد أطول فاصل زمني يمكن للمخططات أن تصل خلاله بين قراءتين. تظهر الفواصل الأطول كفجوات في علامة التبويب «السجل» وأداة «اتجاه البطارية». يصل خيار «عدم إظهار الفجوات مطلقًا» بين القراءات المحفوظة مهما طال الفاصل بينها.</string>
     <string name="pref_max_log_age" formatted="false">الاحد الاقصى للسجلات</string>
     <string name="pref_max_log_age_help" formatted="false">عند تفعيل التسجيل، تُزال السجلات الأقدم من هذا الحد تلقائيًا أثناء صيانة السجل. يبقي خيار «بلا حد» السجلات حتى تمسحها يدويًا. إذا فُعّل التصدير التلقائي، يصدّر Battery Monitor السجلات المعلقة قبل حذف الإدخالات القديمة؛ وفشل التصدير يمنع هذا الحذف.</string>
     <string name="age_1_day" formatted="false">يوم واحد</string>

@@ -442,6 +442,15 @@
     <string name="pref_enable_logging" formatted="false">Omogoči beleženje</string>
     <string name="pref_enable_logging_summary" formatted="false">Beležim spremembo stanj baterije?</string>
     <string name="pref_enable_logging_help" formatted="false">Shranjujte opažanja baterije in spremembe stanja za razdelek „Zgodovina“. Razpoložljive meritve vključujejo raven, temperaturo, napetost, izvirni trenutni tok in preostali naboj. Moč se izračuna iz napetosti in toka ob prikazu ali izvozu; ne shranjuje se ločeno. Izklop beleženja ne izbriše obstoječe zgodovine ali ustavi ocen časa.</string>
+    <string name="pref_history_sampling_mode">Meritve med mirovanjem</string>
+    <string name="pref_history_sampling_standard">Standardno</string>
+    <string name="pref_history_sampling_exact_alarm">Natančni alarmi za prebujanje</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Ohrani procesor buden</string>
+    <string name="pref_history_sampling_mode_help">Izberite, kako naj Battery Monitor beleži meritve, ko naprava miruje. Pri možnosti »Standardno« lahko nekatere meritve manjkajo. Možnost »Natančni alarmi za prebujanje« za meritev na kratko prebudi procesor. Možnost »Ohrani procesor buden« porabi več energije. Za zadnji dve možnosti mora biti Battery Monitor izvzet iz optimizacije baterije. Namenjeni sta zajemu meritev vsaki dve minuti.</string>
+    <string name="pref_chart_gap_threshold">Prag za vrzeli v grafih</string>
+    <string name="pref_chart_gap_never">Nikoli ne prikaži vrzeli</string>
+    <string name="pref_chart_gap_custom_message">Vnesite celo število, večje od 1 (v minutah).</string>
+    <string name="pref_chart_gap_threshold_help">Nastavite najdaljši časovni razmik, pri katerem grafi še povežejo dve meritvi. Daljši razmiki se prikažejo kot vrzeli na zavihku »Zgodovina« in v pripomočku »Trend baterije«. Možnost »Nikoli ne prikaži vrzeli« poveže shranjene meritve ne glede na dolžino razmika.</string>
     <string name="pref_max_log_age" formatted="false">Največja starost poročila</string>
     <string name="pref_max_log_age_help" formatted="false">Ko je beleženje omogočeno, se dnevniki, starejši od te omejitve, samodejno odstranijo med vzdrževanjem zgodovine. „Brez omejitve“ jih ohrani do ročnega brisanja. Če je omogočen samodejni izvoz, Battery Monitor pred brisanjem starih vnosov izvozi čakajoče dnevnike; neuspešen izvoz prepreči brisanje.</string>
     <string name="age_1_day" formatted="false">1\u00A0dan</string>

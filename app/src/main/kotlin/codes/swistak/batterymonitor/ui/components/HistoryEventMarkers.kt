@@ -13,6 +13,7 @@ import codes.swistak.batterymonitor.logs.HistoryEvent
 internal val RebootMarkerRadius = 1.5.dp
 internal val RebootMarkerSpacing = 7.dp
 
+internal val PowerMarkerStrokeWidth = 2.dp
 internal val ConnectedMarkerDash = 3.dp
 internal val DisconnectedMarkerDash = 7.dp
 internal val PowerMarkerGap = 4.dp

@@ -20,6 +20,11 @@ internal object SettingsBackupValidation {
         SettingsContract.KEY_ICON_CONTENT to setOf("percentage", "temperature"),
         SettingsContract.KEY_CHIP_CONTENT to (SettingsContract.ALL_CHIP_CONTENT + "switching").toSet(),
         SettingsContract.KEY_LIVE_UPDATE_DISPLAY to setOf("always", "charging", "never"),
+        SettingsContract.KEY_HISTORY_SAMPLING_MODE to setOf(
+            SettingsContract.HISTORY_SAMPLING_MODE_STANDARD,
+            SettingsContract.HISTORY_SAMPLING_MODE_EXACT_ALARM,
+            SettingsContract.HISTORY_SAMPLING_MODE_KEEP_CPU_AWAKE
+        ),
         SettingsContract.KEY_TOP_LINE to setOf("remaining", "since", "vitals"),
         SettingsContract.KEY_BOTTOM_LINE to setOf("remaining", "since", "vitals"),
         SettingsContract.KEY_TIME_REMAINING_VERBOSITY to setOf("condensed", "normal", "verbose"),
@@ -51,6 +56,10 @@ internal object SettingsBackupValidation {
 
                 SettingsContract.KEY_MAX_LOG_AGE -> (value as String).toIntOrNull()
                     ?.let { it == -1 || it > 0 } == true
+
+                SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES -> value == SettingsContract.CHART_GAP_THRESHOLD_NEVER || SettingsContract.parseChartGapThresholdMinutes(
+                    value as String
+                ) != null
 
                 SettingsContract.KEY_PREDICTION_TYPE -> (value as String).toIntOrNull()
                     ?.let { it in -3..-1 || it > 0 } == true

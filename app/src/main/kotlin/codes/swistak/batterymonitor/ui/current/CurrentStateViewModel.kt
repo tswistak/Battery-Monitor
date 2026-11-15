@@ -21,6 +21,7 @@ internal class CurrentStateViewModel : ViewModel() {
 
     var trend: HistoryChartModel? = null
     var trendRevision: Long? = null
+    private var trendGapMillis: Long? = null
 
     suspend fun refreshTrend(
         repository: LogsRepository, activated: Boolean, now: () -> Long = System::currentTimeMillis
@@ -29,11 +30,15 @@ internal class CurrentStateViewModel : ViewModel() {
         while (true) {
             val range = HistoryRangeState.lastHours(24, now())
             val changes = repository.historyChanges(trendRevision, range)
-            if (!activation && !changes.affectsRange) {
+            val gapMillis = repository.chartGapMillis
+            if (!activation && !changes.affectsRange && trendGapMillis == gapMillis) {
                 trendRevision = changes.revision
                 return trend
             }
-            trend = repository.chart(range, metrics = listOf(HistoryMetric.LEVEL))
+            trend = repository.chart(
+                range, metrics = listOf(HistoryMetric.LEVEL), gapThresholdMillis = gapMillis
+            )
+            trendGapMillis = gapMillis
             trendRevision = changes.revision
             activation = false
             if (repository.historyChanges(

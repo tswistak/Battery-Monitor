@@ -434,6 +434,15 @@
     <string name="pref_enable_logging" formatted="false">Protokollierung einschalten</string>
     <string name="pref_enable_logging_summary" formatted="false">Batteriestatusänderungen protokollieren?</string>
     <string name="pref_enable_logging_help" formatted="false">Speichern Sie Akkubeobachtungen und Statusänderungen für den „Verlauf“. Verfügbare Messwerte umfassen Ladestand, Temperatur, Spannung, ursprünglichen Momentanstrom und verbleibende Ladung. Leistung wird beim Anzeigen oder Exportieren aus Spannung und Strom berechnet und nicht separat gespeichert. Das Ausschalten der Protokollierung löscht weder den bestehenden Verlauf noch stoppt es Zeitschätzungen.</string>
+    <string name="pref_history_sampling_mode">Messwerte im Ruhezustand</string>
+    <string name="pref_history_sampling_standard">Standard</string>
+    <string name="pref_history_sampling_exact_alarm">Exakte Weckalarme</string>
+    <string name="pref_history_sampling_keep_cpu_awake">CPU wach halten</string>
+    <string name="pref_history_sampling_mode_help">Wählen Sie, wie Battery Monitor Messwerte erfasst, während sich Ihr Gerät im Ruhezustand befindet. Bei „Standard“ können Lücken entstehen. Die Option „Exakte Weckalarme“ weckt die CPU für Messungen kurz auf. „CPU wach halten“ verbraucht mehr Akku. Beide Optionen setzen voraus, dass die Akkuoptimierung für Battery Monitor deaktiviert ist, und sollen alle zwei Minuten einen Messwert erfassen.</string>
+    <string name="pref_chart_gap_threshold">Grenzwert für Diagrammlücken</string>
+    <string name="pref_chart_gap_never">Nie Lücken anzeigen</string>
+    <string name="pref_chart_gap_custom_message">Geben Sie eine ganze Zahl größer als 1 ein (in Minuten).</string>
+    <string name="pref_chart_gap_threshold_help">Legen Sie den größten Zeitabstand fest, über den Diagramme Messwerte verbinden. Größere Abstände erscheinen als Lücken im Tab „Verlauf“ und im Widget „Akkuverlauf“. „Nie Lücken anzeigen“ verbindet gespeicherte Messwerte unabhängig vom Abstand.</string>
     <string name="pref_max_log_age" formatted="false">Maximales Protokollalter</string>
     <string name="pref_max_log_age_help" formatted="false">Bei aktivierter Protokollierung werden Protokolle, die älter als diese Grenze sind, bei der Verlaufswartung automatisch entfernt. „Unbegrenzt“ behält sie bis zum manuellen Löschen. Bei aktiviertem automatischem Export exportiert Battery Monitor ausstehende Protokolle vor dem Löschen alter Einträge; ein fehlgeschlagener Export verhindert dieses Löschen.</string>
     <string name="age_1_day" formatted="false">1\u00A0Tag</string>

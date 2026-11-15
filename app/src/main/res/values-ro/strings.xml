@@ -438,6 +438,15 @@
     <string name="pref_enable_logging" formatted="false">Activați înregistrarea</string>
     <string name="pref_enable_logging_summary" formatted="false">Înregistrați modificările stării bateriei?</string>
     <string name="pref_enable_logging_help" formatted="false">Salvează observațiile și schimbările de stare ale bateriei pentru „Istoric”. Măsurătorile disponibile includ nivelul, temperatura, tensiunea, curentul instantaneu original și încărcarea rămasă. Puterea se calculează din tensiune și curent la afișare sau export; nu este stocată separat. Dezactivarea înregistrării nu șterge istoricul existent și nu oprește estimările de timp.</string>
+    <string name="pref_history_sampling_mode">Măsurători în repaus</string>
+    <string name="pref_history_sampling_standard">Standard</string>
+    <string name="pref_history_sampling_exact_alarm">Alarme exacte de trezire</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Menține procesorul activ</string>
+    <string name="pref_history_sampling_mode_help">Alege cum înregistrează Battery Monitor măsurătorile când dispozitivul este în repaus. În modul „Standard”, unele măsurători pot lipsi. Opțiunea „Alarme exacte de trezire” activează procesorul pentru scurt timp pentru a efectua măsurătorile. Opțiunea „Menține procesorul activ” consumă mai multă energie. Ultimele două opțiuni necesită exceptarea aplicației de la optimizarea bateriei și urmăresc să efectueze o măsurătoare la fiecare două minute.</string>
+    <string name="pref_chart_gap_threshold">Prag pentru întreruperile din grafice</string>
+    <string name="pref_chart_gap_never">Nu afișa goluri niciodată</string>
+    <string name="pref_chart_gap_custom_message">Introdu un număr întreg mai mare decât 1 (în minute).</string>
+    <string name="pref_chart_gap_threshold_help">Setează intervalul maxim pentru care graficele unesc două măsurători. Intervalele mai lungi apar ca goluri în fila „Istoric” și în widgetul „Evoluția bateriei”. Opțiunea „Nu afișa goluri niciodată” unește măsurătorile salvate indiferent de interval.</string>
     <string name="pref_max_log_age" formatted="false">Vârsta maximă a jurnalului</string>
     <string name="pref_max_log_age_help" formatted="false">Când înregistrarea este activată, jurnalele mai vechi decât această limită sunt eliminate automat în timpul întreținerii istoricului. „Fără limită” le păstrează până când le ștergi manual. Dacă exportul automat este activat, Battery Monitor exportă jurnalele în așteptare înainte de a șterge intrările vechi; un export eșuat împiedică ștergerea.</string>
     <string name="age_1_day" formatted="false">1\u00A0zi</string>

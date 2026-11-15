@@ -438,6 +438,15 @@
     <string name="pref_enable_logging" formatted="false">אפשר רישום</string>
     <string name="pref_enable_logging_summary" formatted="false">לרשום שינויים במצב הסוללה?</string>
     <string name="pref_enable_logging_help" formatted="false">שמירת תצפיות סוללה ושינויי מצב עבור ״היסטוריה״. המדידות הזמינות כוללות רמה, טמפרטורה, מתח, זרם רגעי מקורי ומטען שנותר. ההספק מחושב מהמתח ומהזרם בעת הצגה או ייצוא; הוא אינו נשמר בנפרד. כיבוי הרישום אינו מוחק היסטוריה קיימת ואינו עוצר הערכות זמן.</string>
+    <string name="pref_history_sampling_mode">מדידות במצב שינה</string>
+    <string name="pref_history_sampling_standard">רגילה</string>
+    <string name="pref_history_sampling_exact_alarm">תזמון מדויק של השכמה</string>
+    <string name="pref_history_sampling_keep_cpu_awake">השארת המעבד פעיל</string>
+    <string name="pref_history_sampling_mode_help">בחרו כיצד Battery Monitor מתעד מדידות כשהמכשיר במצב שינה. במצב ״רגילה״ עלולים להופיע פערים. האפשרות ״תזמון מדויק של השכמה״ מעירה את המעבד לזמן קצר כדי לבצע מדידה. האפשרות ״השארת המעבד פעיל״ מגבירה את צריכת הסוללה. שתי האפשרויות האחרונות מחייבות החרגה של האפליקציה ממיטוב הסוללה, ומטרתן לבצע מדידה כל שתי דקות.</string>
+    <string name="pref_chart_gap_threshold">סף פערים בתרשים</string>
+    <string name="pref_chart_gap_never">לעולם לא להציג פערים</string>
+    <string name="pref_chart_gap_custom_message">הזינו מספר שלם של דקות, גדול מ־1.</string>
+    <string name="pref_chart_gap_threshold_help">הגדירו את פרק הזמן הארוך ביותר בין שתי מדידות שהתרשימים עדיין יחברו. פרקי זמן ארוכים יותר יופיעו כפערים בכרטיסייה ״היסטוריה״ ובווידג׳ט ״מגמת הסוללה״. האפשרות ״לעולם לא להציג פערים״ מחברת את המדידות השמורות בלי קשר לזמן שעבר ביניהן.</string>
     <string name="pref_max_log_age" formatted="false">גיל יומן מקסימלי</string>
     <string name="pref_max_log_age_help" formatted="false">כשהרישום מופעל, יומנים ישנים ממגבלה זו מוסרים אוטומטית במהלך תחזוקת ההיסטוריה. ״ללא הגבלה״ שומר אותם עד לניקוי ידני. אם ייצוא אוטומטי מופעל, Battery Monitor מייצא יומנים ממתינים לפני מחיקת רשומות ישנות; כישלון בייצוא מונע מחיקה זו.</string>
     <string name="age_1_day" formatted="false">יום אחד</string>

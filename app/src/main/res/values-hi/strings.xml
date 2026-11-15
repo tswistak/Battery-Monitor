@@ -434,6 +434,15 @@
     <string name="pref_enable_logging" formatted="false">लॉगिंग सक्षम करें</string>
     <string name="pref_enable_logging_summary" formatted="false">लॉग बैटरी स्थिति में परिवर्तन?</string>
     <string name="pref_enable_logging_help" formatted="false">“इतिहास” के लिए बैटरी अवलोकन और स्थिति बदलाव सहेजें। उपलब्ध मापों में स्तर, तापमान, वोल्टेज, मूल तात्कालिक करंट और शेष चार्ज शामिल हैं। पावर दिखाते या निर्यात करते समय वोल्टेज व करंट से निकाली जाती है; यह अलग से सहेजी नहीं जाती। लॉगिंग बंद करने से मौजूदा इतिहास नहीं मिटता और समय अनुमान नहीं रुकते।</string>
+    <string name="pref_history_sampling_mode">डिवाइस के स्लीप मोड में माप</string>
+    <string name="pref_history_sampling_standard">मानक</string>
+    <string name="pref_history_sampling_exact_alarm">तय समय पर जगाने वाले अलार्म</string>
+    <string name="pref_history_sampling_keep_cpu_awake">सीपीयू को सक्रिय रखें</string>
+    <string name="pref_history_sampling_mode_help">चुनें कि डिवाइस के स्लीप मोड में होने पर Battery Monitor माप कैसे दर्ज करे। “मानक” मोड में कुछ माप छूट सकते हैं। “तय समय पर जगाने वाले अलार्म” माप लेने के लिए सीपीयू को कुछ देर के लिए जगाते हैं। “सीपीयू को सक्रिय रखें” से बैटरी की खपत बढ़ती है। दोनों विकल्पों के लिए ऐप को बैटरी ऑप्टिमाइज़ेशन से छूट देनी होगी। इनका लक्ष्य हर दो मिनट में एक माप दर्ज करना है।</string>
+    <string name="pref_chart_gap_threshold">चार्ट में माप जोड़ने का अधिकतम अंतराल</string>
+    <string name="pref_chart_gap_never">लाइन कभी न तोड़ें</string>
+    <string name="pref_chart_gap_custom_message">मिनटों की संख्या ऐसे पूर्णांक में दर्ज करें जो 1 से बड़ा हो।</string>
+    <string name="pref_chart_gap_threshold_help">चार्ट में दो मापों को जोड़ने का अधिकतम समय अंतराल तय करें। इससे लंबे अंतराल पर “इतिहास” टैब और “बैटरी का रुझान” विजेट के चार्ट में लाइन टूट जाएगी। “लाइन कभी न तोड़ें” चुनने पर, सहेजे गए माप समय अंतराल की परवाह किए बिना जुड़ेंगे।</string>
     <string name="pref_max_log_age" formatted="false">अधिकतम लॉग आयु</string>
     <string name="pref_max_log_age_help" formatted="false">लॉगिंग सक्षम होने पर इस सीमा से पुराने लॉग इतिहास के रखरखाव के दौरान अपने आप हटा दिए जाते हैं। “कोई सीमा नहीं” चुनने पर लॉग हाथ से साफ़ करने तक रहते हैं। स्वचालित निर्यात सक्षम हो तो Battery Monitor पुराने रिकॉर्ड हटाने से पहले लंबित लॉग निर्यात करता है; निर्यात विफल होने पर वे नहीं हटते।</string>
     <string name="age_1_day" formatted="false">1\u00A0दिन</string>

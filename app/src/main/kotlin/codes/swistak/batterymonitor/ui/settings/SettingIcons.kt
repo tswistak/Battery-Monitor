@@ -151,6 +151,16 @@ private val settingIcons = listOf(
         SettingsContract.KEY_ENABLE_LOGGING, R.string.pref_enable_logging, R.drawable.ui_storage
     ),
     SettingIcon(
+        SettingsContract.KEY_HISTORY_SAMPLING_MODE,
+        R.string.pref_history_sampling_mode,
+        R.drawable.ui_clock
+    ),
+    SettingIcon(
+        SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES,
+        R.string.pref_chart_gap_threshold,
+        R.drawable.ui_history
+    ),
+    SettingIcon(
         SettingsContract.KEY_MAX_LOG_AGE, R.string.pref_max_log_age, R.drawable.ui_calendar
     ),
     SettingIcon(

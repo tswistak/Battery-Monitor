@@ -438,6 +438,15 @@
     <string name="pref_enable_logging" formatted="false">Activer la journalisation</string>
     <string name="pref_enable_logging_summary" formatted="false">Enregistrer les états de la batterie ?</string>
     <string name="pref_enable_logging_help" formatted="false">Enregistrez les observations de batterie et les changements d’état pour «\u00A0Historique\u00A0». Les mesures disponibles comprennent le niveau, la température, la tension, le courant instantané d’origine et la charge restante. La puissance est calculée à partir de la tension et du courant à l’affichage ou à l’export ; elle n’est pas stockée séparément. Désactiver l’enregistrement n’efface pas l’historique existant et n’arrête pas les estimations du temps.</string>
+    <string name="pref_history_sampling_mode">Mesures pendant la veille</string>
+    <string name="pref_history_sampling_standard">Standard</string>
+    <string name="pref_history_sampling_exact_alarm">Alarmes de réveil exactes</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Maintenir le processeur actif</string>
+    <string name="pref_history_sampling_mode_help">Choisissez comment Battery Monitor enregistre les mesures lorsque votre appareil est en veille. Le réglage « Standard » peut laisser des lacunes. L’option « Alarmes de réveil exactes » réveille brièvement le processeur pour prendre des mesures. « Maintenir le processeur actif » consomme plus de batterie. Ces deux options nécessitent de désactiver l’optimisation de la batterie pour Battery Monitor et visent à prendre des mesures toutes les deux minutes.</string>
+    <string name="pref_chart_gap_threshold">Seuil des interruptions du graphique</string>
+    <string name="pref_chart_gap_never">Ne jamais afficher d’interruptions</string>
+    <string name="pref_chart_gap_custom_message">Saisissez un nombre entier supérieur à 1 (en minutes).</string>
+    <string name="pref_chart_gap_threshold_help">Définissez l’intervalle maximal entre deux mesures que les graphiques peuvent relier. Les intervalles plus longs apparaissent sous forme d’interruptions dans l’onglet « Historique » et le widget « Évolution de la batterie ». « Ne jamais afficher d’interruptions » relie les mesures enregistrées quel que soit l’intervalle.</string>
     <string name="pref_max_log_age" formatted="false">Âge maximal du journal</string>
     <string name="pref_max_log_age_help" formatted="false">Lorsque l’enregistrement est activé, les journaux plus anciens que cette limite sont automatiquement supprimés lors de la maintenance de l’historique. «\u00A0Sans limite\u00A0» les conserve jusqu’à leur effacement manuel. Si l’export automatique est activé, Battery Monitor exporte les journaux en attente avant de supprimer les anciennes entrées ; un échec d’export empêche cette suppression.</string>
     <string name="age_1_day" formatted="false">1\u00A0jour</string>

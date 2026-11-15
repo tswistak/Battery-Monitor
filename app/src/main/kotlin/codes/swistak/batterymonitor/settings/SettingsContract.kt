@@ -62,6 +62,19 @@ internal object SettingsContract {
     const val KEY_LAST_AUTO_LOG_EXPORT_ID = "last_auto_log_export_id"
 
     const val KEY_ENABLE_LOGGING: String = "enable_logging"
+
+    const val KEY_HISTORY_SAMPLING_MODE = "history_sampling_mode"
+    const val HISTORY_SAMPLING_MODE_STANDARD = "standard"
+    const val HISTORY_SAMPLING_MODE_EXACT_ALARM = "exact_alarm"
+    const val HISTORY_SAMPLING_MODE_KEEP_CPU_AWAKE = "keep_cpu_awake"
+    const val KEY_CHART_GAP_THRESHOLD_MINUTES = "chart_gap_threshold_minutes"
+    const val DEFAULT_CHART_GAP_THRESHOLD_MINUTES = "20"
+    const val CHART_GAP_THRESHOLD_NEVER = "never"
+    const val MIN_CHART_GAP_THRESHOLD_MINUTES = 2
+
+    fun parseChartGapThresholdMinutes(value: String?): Int? = value?.toIntOrNull()
+        ?.takeIf { it >= MIN_CHART_GAP_THRESHOLD_MINUTES && it.toString() == value }
+
     const val KEY_DEBUG_LOGGING: String = "debug_logging"
 
     const val KEY_MAX_LOG_AGE: String = "max_log_age"
