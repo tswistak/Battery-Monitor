@@ -442,7 +442,7 @@
     <string name="pref_history_sampling_standard">Standard</string>
     <string name="pref_history_sampling_exact_alarm">Alarmes de réveil exactes</string>
     <string name="pref_history_sampling_keep_cpu_awake">Maintenir le processeur actif</string>
-    <string name="pref_history_sampling_mode_help">Choisissez comment Battery Monitor enregistre les mesures lorsque votre appareil est en veille. Le réglage « Standard » peut laisser des lacunes. L’option « Alarmes de réveil exactes » réveille brièvement le processeur pour prendre des mesures. « Maintenir le processeur actif » consomme plus de batterie. Ces deux options nécessitent de désactiver l’optimisation de la batterie pour Battery Monitor et visent à prendre des mesures toutes les deux minutes.</string>
+    <string name="pref_history_sampling_mode_help">Choisissez comment Battery Monitor enregistre les mesures lorsque votre appareil est en veille. Le réglage « Standard » peut laisser des lacunes. L’option « Alarmes de réveil exactes » réveille brièvement le processeur pour prendre des mesures. « Maintenir le processeur actif » consomme plus de batterie. Ces deux dernières options nécessitent de désactiver l’optimisation de la batterie pour Battery Monitor et visent à prendre des mesures toutes les deux minutes.</string>
     <string name="pref_chart_gap_threshold">Seuil des interruptions du graphique</string>
     <string name="pref_chart_gap_never">Ne jamais afficher d’interruptions</string>
     <string name="pref_chart_gap_custom_message">Saisissez un nombre entier supérieur à 1 (en minutes).</string>

@@ -446,11 +446,11 @@
     <string name="pref_history_sampling_standard">Standardowe</string>
     <string name="pref_history_sampling_exact_alarm">Dokładne alarmy budzenia</string>
     <string name="pref_history_sampling_keep_cpu_awake">Utrzymuj procesor wybudzony</string>
-    <string name="pref_history_sampling_mode_help">Wybierz, jak Monitor baterii ma rejestrować odczyty podczas uśpienia Twojego urządzenia. „Standardowe” może pozostawiać przerwy. „Dokładne alarmy budzenia” na krótko wybudza procesor na czas odczytów. „Utrzymuj aktywność procesora” zużywa więcej baterii. Obie opcje wymagają wyłączenia optymalizacji baterii i dążą do wykonania odczytów co dwie minuty.</string>
+    <string name="pref_history_sampling_mode_help">Wybierz, jak Monitor baterii ma rejestrować odczyty podczas uśpienia Twojego urządzenia. „Standardowe” może pozostawiać przerwy. „Dokładne alarmy budzenia” na krótko wybudza procesor na czas odczytów. „Utrzymuj aktywność procesora” zużywa więcej baterii. Obie ostatnie opcje wymagają wyłączenia optymalizacji baterii i dążą do wykonania odczytów co dwie minuty.</string>
     <string name="pref_chart_gap_threshold">Próg przerw na wykresie</string>
     <string name="pref_chart_gap_never">Nigdy nie pokazuj przerw</string>
     <string name="pref_chart_gap_custom_message">Wprowadź liczbę całkowitą (minuty) większą od 1.</string>
-    <string name="pref_chart_gap_threshold_help">Ustaw najdłuższy interwał, którego wykresy mogą łączyć między odczytami. Dłuższe interwały pojawiają się jako przerwy w karcie „Historia” i widżecie „Wykres baterii”. „Nigdy nie pokazuj przerw” łączy przechowywane odczyty między dowolnymi interwałami.</string>
+    <string name="pref_chart_gap_threshold_help">Ustaw najdłuższy interwał, w ramach którego wykresy mają połączone odczyty. Dłuższe interwały pojawiają się jako przerwy w karcie „Historia” i widżecie „Wykres baterii”. „Nigdy nie pokazuj przerw” łączy przechowywane odczyty między dowolnymi interwałami.</string>
     <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
     <string name="pref_max_log_age_help" formatted="false">Gdy logowanie jest włączone, logi starsze niż ten limit są automatycznie usuwane podczas porządkowania historii. „Bez limitu” przechowuje je, dopóki nie wyczyścisz ich ręcznie. Jeśli automatyczny eksport jest włączony, Monitor baterii eksportuje oczekujące logi przed usunięciem starych wpisów; nieudany eksport uniemożliwia to usunięcie.</string>
     <string name="age_1_day" formatted="false">1\u00A0dzień</string>

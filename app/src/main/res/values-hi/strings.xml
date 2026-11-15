@@ -438,7 +438,7 @@
     <string name="pref_history_sampling_standard">मानक</string>
     <string name="pref_history_sampling_exact_alarm">तय समय पर जगाने वाले अलार्म</string>
     <string name="pref_history_sampling_keep_cpu_awake">सीपीयू को सक्रिय रखें</string>
-    <string name="pref_history_sampling_mode_help">चुनें कि डिवाइस के स्लीप मोड में होने पर Battery Monitor माप कैसे दर्ज करे। “मानक” मोड में कुछ माप छूट सकते हैं। “तय समय पर जगाने वाले अलार्म” माप लेने के लिए सीपीयू को कुछ देर के लिए जगाते हैं। “सीपीयू को सक्रिय रखें” से बैटरी की खपत बढ़ती है। दोनों विकल्पों के लिए ऐप को बैटरी ऑप्टिमाइज़ेशन से छूट देनी होगी। इनका लक्ष्य हर दो मिनट में एक माप दर्ज करना है।</string>
+    <string name="pref_history_sampling_mode_help">चुनें कि डिवाइस के स्लीप मोड में होने पर Battery Monitor माप कैसे दर्ज करे। “मानक” मोड में कुछ माप छूट सकते हैं। “तय समय पर जगाने वाले अलार्म” माप लेने के लिए सीपीयू को कुछ देर के लिए जगाते हैं। “सीपीयू को सक्रिय रखें” से बैटरी की खपत बढ़ती है। आखिरी दो विकल्पों के लिए ऐप को बैटरी ऑप्टिमाइज़ेशन से छूट देनी होगी। इनका लक्ष्य हर दो मिनट में एक माप दर्ज करना है।</string>
     <string name="pref_chart_gap_threshold">चार्ट में माप जोड़ने का अधिकतम अंतराल</string>
     <string name="pref_chart_gap_never">लाइन कभी न तोड़ें</string>
     <string name="pref_chart_gap_custom_message">मिनटों की संख्या ऐसे पूर्णांक में दर्ज करें जो 1 से बड़ा हो।</string>

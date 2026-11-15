@@ -438,7 +438,7 @@
     <string name="pref_history_sampling_standard">Standard</string>
     <string name="pref_history_sampling_exact_alarm">Exakte Weckalarme</string>
     <string name="pref_history_sampling_keep_cpu_awake">CPU wach halten</string>
-    <string name="pref_history_sampling_mode_help">Wählen Sie, wie Battery Monitor Messwerte erfasst, während sich Ihr Gerät im Ruhezustand befindet. Bei „Standard“ können Lücken entstehen. Die Option „Exakte Weckalarme“ weckt die CPU für Messungen kurz auf. „CPU wach halten“ verbraucht mehr Akku. Beide Optionen setzen voraus, dass die Akkuoptimierung für Battery Monitor deaktiviert ist, und sollen alle zwei Minuten einen Messwert erfassen.</string>
+    <string name="pref_history_sampling_mode_help">Wählen Sie, wie Battery Monitor Messwerte erfasst, während sich Ihr Gerät im Ruhezustand befindet. Bei „Standard“ können Lücken entstehen. Die Option „Exakte Weckalarme“ weckt die CPU für Messungen kurz auf. „CPU wach halten“ verbraucht mehr Akku. Die letzten beiden Optionen setzen voraus, dass die Akkuoptimierung für Battery Monitor deaktiviert ist, und sollen alle zwei Minuten einen Messwert erfassen.</string>
     <string name="pref_chart_gap_threshold">Grenzwert für Diagrammlücken</string>
     <string name="pref_chart_gap_never">Nie Lücken anzeigen</string>
     <string name="pref_chart_gap_custom_message">Geben Sie eine ganze Zahl größer als 1 ein (in Minuten).</string>

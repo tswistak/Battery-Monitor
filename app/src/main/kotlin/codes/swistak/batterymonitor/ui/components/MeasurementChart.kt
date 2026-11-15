@@ -79,7 +79,7 @@ internal fun historyValue(
         HistoryMetric.LEVEL -> String.format(locale, "%.0f%%", value)
         HistoryMetric.TEMPERATURE -> String.format(
             locale,
-            "%.1f\u00A0%s",
+            "%.1f%s",
             if (fahrenheit) value * 1.8 + 32 else value,
             if (fahrenheit) "°F" else "°C"
         )

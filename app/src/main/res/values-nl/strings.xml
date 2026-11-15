@@ -438,7 +438,7 @@
     <string name="pref_history_sampling_standard">Standaard</string>
     <string name="pref_history_sampling_exact_alarm">Exacte wekalarmen</string>
     <string name="pref_history_sampling_keep_cpu_awake">CPU wakker houden</string>
-    <string name="pref_history_sampling_mode_help">Kies hoe Battery Monitor metingen vastlegt terwijl je apparaat in de slaapstand staat. Bij ‘Standaard’ kunnen gaten ontstaan. De optie ‘Exacte wekalarmen’ wekt de CPU kort voor metingen. ‘CPU wakker houden’ verbruikt meer batterij. Voor beide opties moet batterijoptimalisatie voor Battery Monitor zijn uitgeschakeld. Ze proberen elke twee minuten te meten.</string>
+    <string name="pref_history_sampling_mode_help">Kies hoe Battery Monitor metingen vastlegt terwijl je apparaat in de slaapstand staat. Bij ‘Standaard’ kunnen gaten ontstaan. De optie ‘Exacte wekalarmen’ wekt de CPU kort voor metingen. ‘CPU wakker houden’ verbruikt meer batterij. Voor de laatste twee opties moet batterijoptimalisatie voor Battery Monitor zijn uitgeschakeld. Ze proberen elke twee minuten te meten.</string>
     <string name="pref_chart_gap_threshold">Drempel voor gaten in grafieken</string>
     <string name="pref_chart_gap_never">Nooit gaten tonen</string>
     <string name="pref_chart_gap_custom_message">Voer een geheel getal groter dan 1 in (in minuten).</string>

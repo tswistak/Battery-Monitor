@@ -128,13 +128,13 @@
     <string name="time_estimates_settings" formatted="false">Time estimates</string>
     <string name="time_estimates_settings_summary" formatted="false">Choose how remaining time is calculated and which battery levels it targets</string>
     <string name="time_estimates_settings_help" formatted="false">Choose how Battery Monitor estimates remaining time and the target battery levels. Targets also apply to “Charging target reached” and “Discharging target reached” alarms. Battery Monitor does not start or stop charging.</string>
-    <string name="pref_cat_predictor" formatted="false">Time-Remaining Estimates</string>
-    <string name="pref_prediction_type" formatted="false">Estimate Type</string>
-    <string name="pref_prediction_type_help" formatted="false">“Sensitive” uses the recent five-minute rate. “Conservative”, the default, combines recent rates with the learned long-term average to reduce sudden changes. “Since Status Change” uses the current charging or discharging session. “Long-term Average” uses the learned rate for discharge or the active charging source. Until enough observations are available, estimates use the stored average or an initial default.</string>
+    <string name="pref_cat_predictor" formatted="false">Time-remaining estimates</string>
+    <string name="pref_prediction_type" formatted="false">Estimate type</string>
+    <string name="pref_prediction_type_help" formatted="false">“Sensitive” uses the recent five-minute rate. “Conservative”, the default, combines recent rates with the learned long-term average to reduce sudden changes. “Since status change” uses the current charging or discharging session. “Long-term average” uses the learned rate for discharge or the active charging source. Until enough observations are available, estimates use the stored average or an initial default.</string>
     <string name="predictor_sensitive" formatted="false">Sensitive</string>
     <string name="predictor_conservative" formatted="false">Conservative</string>
-    <string name="predictor_since_status_change" formatted="false">Since Status Change</string>
-    <string name="predictor_long_term_ave" formatted="false">Long-term Average</string>
+    <string name="predictor_since_status_change" formatted="false">Since status change</string>
+    <string name="predictor_long_term_ave" formatted="false">Long-term average</string>
     <string name="pref_cat_target_levels" formatted="false">Target levels</string>
     <string name="pref_charging_target_mode" formatted="false">Charging target</string>
     <string name="pref_charging_target_mode_help" formatted="false">“Automatic” uses a fixed device charging target when Battery Monitor can read one, and otherwise uses 100%. Adaptive charging still targets 100%. “Custom” uses your chosen level for charging estimates and “Charging target reached” alarms.\n
@@ -167,17 +167,17 @@
     <string name="notifications_onboarding_message">Battery Monitor needs your permission to show the battery level in the status bar and notify you about alarms.\n
     \n
     Note: Granting this permission may occasionally cause the app to close. If it does, please simply reopen it.</string>
-    <string name="pref_cat_channel_settings" formatted="false">Notification Channel Settings</string>
-    <string name="pref_manage_main_channel" formatted="false">Manage Main Channel</string>
+    <string name="pref_cat_channel_settings" formatted="false">Notification channel settings</string>
+    <string name="pref_manage_main_channel" formatted="false">Manage main channel</string>
     <string name="pref_manage_main_channel_summary" formatted="false">Open Android settings for the main notification channel</string>
     <string name="pref_cat_notification_content" formatted="false">Content</string>
-    <string name="pref_top_line_content" formatted="false">Top Line Content</string>
-    <string name="pref_top_line_content_help" formatted="false">Choose whether the top notification line shows estimated “Time Remaining”, “Time Since Status Change”, or the configured “Vital Signs”.</string>
-    <string name="pref_bottom_line_content" formatted="false">Bottom Line Content</string>
+    <string name="pref_top_line_content" formatted="false">Top line content</string>
+    <string name="pref_top_line_content_help" formatted="false">Choose whether the top notification line shows estimated “Time remaining”, “Time since status change”, or the configured “Vital signs”.</string>
+    <string name="pref_bottom_line_content" formatted="false">Bottom line content</string>
     <string name="pref_bottom_line_content_help" formatted="false">You have the same options for the bottom line as for the top line.</string>
-    <string name="time_remaining" formatted="false">Time Remaining</string>
-    <string name="time_since_status_change" formatted="false">Time Since Status Change</string>
-    <string name="vital_signs" formatted="false">Vital Signs</string>
+    <string name="time_remaining" formatted="false">Time remaining</string>
+    <string name="time_since_status_change" formatted="false">Time since status change</string>
+    <string name="vital_signs" formatted="false">Vital signs</string>
     <string name="notification_until_charged" formatted="true">%1$s until charged</string>
     <string name="notification_until_drained_mixed" formatted="true">%1$s left</string>
     <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s left</string>
@@ -193,31 +193,31 @@
         <item quantity="one">%1$s left</item>
         <item quantity="other">%1$s left</item>
     </plurals>
-    <string name="pref_time_remaining_verbosity" formatted="false">Time Remaining Verbosity</string>
+    <string name="pref_time_remaining_verbosity" formatted="false">Time remaining verbosity</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Devices come in all shapes and sizes, so most translations need to use abbreviations to ensure that the time-remaining estimate fits comfortably in the notification area. If it still doesn\'t fit, you can opt for the “Condensed” format. If you have plenty of room, you might prefer the “Verbose” setting.</string>
     <string name="condensed" formatted="false">Condensed</string>
     <string name="normal" formatted="false">Normal</string>
     <string name="verbose" formatted="false">Verbose</string>
-    <string name="pref_vital_signs_content" formatted="false">Vital Signs Content</string>
-    <string name="pref_vital_signs_content_summary" formatted="false">Which values should be included in “Vital Signs”, and in what order?</string>
+    <string name="pref_vital_signs_content" formatted="false">Vital signs content</string>
+    <string name="pref_vital_signs_content_summary" formatted="false">Which values should be included in “Vital signs”, and in what order?</string>
     <string name="pref_vital_signs_content_help" formatted="false">Select values and use the move buttons to set their order. All values may be deselected.</string>
     <string name="pref_expanded_notification" formatted="false">Expand notification details</string>
     <string name="pref_expanded_notification_summary" formatted="false">Show labeled details when the notification is expanded?</string>
-    <string name="pref_expanded_notification_help" formatted="false">If enabled, expanding the main notification shows “Time Remaining”, “Time Since Status Change”, and each “Vital Signs” value on its own labeled line instead of the single-line summary.</string>
+    <string name="pref_expanded_notification_help" formatted="false">If enabled, expanding the main notification shows “Time remaining”, “Time since status change”, and each “Vital signs” value on its own labeled line instead of the single-line summary.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
-    <string name="status_bar_icon_settings" formatted="false">Status Bar Icon</string>
+    <string name="status_bar_icon_settings" formatted="false">Status bar icon</string>
     <string name="status_bar_icon_availability_help" formatted="false">Starting with Android 16, the status bar icon may not work on every OS variant.</string>
-    <string name="pref_icon_content" formatted="false">Icon Content</string>
+    <string name="pref_icon_content" formatted="false">Icon content</string>
     <string name="pref_icon_content_help" formatted="false">Choose whether the status bar icon shows battery percentage or battery temperature. Temperature follows your selected unit.</string>
-    <string name="pref_content_percent" formatted="false">Battery Percentage</string>
-    <string name="pref_content_temperature" formatted="false">Battery Temperature</string>
-    <string name="pref_show_icon_unit" formatted="false">Show Unit Symbol</string>
+    <string name="pref_content_percent" formatted="false">Battery percentage</string>
+    <string name="pref_content_temperature" formatted="false">Battery temperature</string>
+    <string name="pref_show_icon_unit" formatted="false">Show unit symbol</string>
     <string name="pref_show_icon_unit_summary" formatted="false">Show the unit symbol beside the value in the status bar icon?</string>
     <string name="pref_show_icon_unit_help" formatted="false">If enabled, the icon shows a percent sign for battery percentage and a degree symbol for battery temperature. Disable it to show only the number.</string>
-    <string name="pref_indicate_charging" formatted="false">Indicate Charging</string>
+    <string name="pref_indicate_charging" formatted="false">Indicate charging</string>
     <string name="pref_indicate_charging_summary" formatted="false">Alter icon to indicate when charging?</string>
     <string name="pref_indicate_charging_help" formatted="false">Icon can show a lightning bolt below the number during charging. Disable this setting if you would prefer the same icon all the time.</string>
-    <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
+    <string name="status_bar_chip_settings" formatted="false">Status bar chip</string>
     <string name="status_bar_chip_availability_help" formatted="false">Availability also depends on the device and system notification settings.</string>
     <string name="settings_live_update_summary">Allow or block promoted battery notifications in Android settings</string>
     <string name="settings_live_update_help">Allow or block promoted battery notifications in Android settings.</string>
@@ -244,8 +244,8 @@
     <string name="pref_live_update_keep_main_notification_help" formatted="false">If enabled, the main notification remains visible in addition to the status bar chip.</string>
     <string name="pref_expanded_live_update" formatted="false">Expand Live Update details</string>
     <string name="pref_expanded_live_update_summary" formatted="false">Show labeled details in the Live Update notification?</string>
-    <string name="pref_expanded_live_update_help" formatted="false">Live Update notifications are always shown expanded. If enabled, the Live Update shows “Time Remaining”, “Time Since Status Change”, and each “Vital Signs” value on its own labeled line.</string>
-    <string name="pref_chip_content" formatted="false">Chip Content</string>
+    <string name="pref_expanded_live_update_help" formatted="false">Live Update notifications are always shown expanded. If enabled, the Live Update shows “Time remaining”, “Time since status change”, and each “Vital signs” value on its own labeled line.</string>
+    <string name="pref_chip_content" formatted="false">Chip content</string>
     <string name="pref_chip_content_summary" formatted="false">Which values should be shown in the chip, and in what order?</string>
     <string name="pref_chip_content_help" formatted="false">Choose which values the status bar chip cycles through and arrange their order. At least one value must remain selected.</string>
     <string name="pref_chip_switching_interval" formatted="false">Switching interval</string>
@@ -259,11 +259,11 @@
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0seconds</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0seconds</string>
     <string name="chip_switching_interval_custom">Custom</string>
-    <string name="pref_chip_indicate_charging" formatted="false">Show Charging Emoji</string>
+    <string name="pref_chip_indicate_charging" formatted="false">Show charging emoji</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Show a lightning emoji when charging or fully charged?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">If enabled, the status bar chip will show a lightning emoji next to the chip value while charging or when fully charged.</string>
 
-    <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
+    <string name="alarm_settings_subtitle" formatted="false">Alarm settings</string>
     <string name="alarm_settings" formatted="false">Alarms</string>
     <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
     <string name="alarms_overview_channels_help" formatted="false">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. Disabled values remain listed. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.\n
@@ -317,7 +317,7 @@
     <string name="alarm_notifs_disabled_summary" formatted="false">You have disabled the alarm notification group for this app. Enable it in Android settings to receive alarm notifications.</string>
     <string name="alarms_open_notification_settings">Open Android notification settings</string>
     <string name="alarm_chan_disabled" formatted="false">You have disabled notifications for this alarm type.  Please enable them to use this type of alarm.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Manage This Alarm Type</string>
+    <string name="alarm_chan_settings_b" formatted="false">Manage this alarm type</string>
     <string name="alarms_options_title" formatted="false">Alarm options</string>
     <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain</string>
@@ -431,19 +431,19 @@
     <string name="after_nm_ms_unplugged" formatted="true">After %1$dm %2$ds unplugged</string>
     <string name="after_nm_ms_plugged_in" formatted="true">After %1$dm %2$ds plugged in</string>
     <string name="pref_cat_logging" formatted="false">Logging</string>
-    <string name="pref_enable_logging" formatted="false">Enable Logging</string>
+    <string name="pref_enable_logging" formatted="false">Enable logging</string>
     <string name="pref_enable_logging_summary" formatted="false">Log battery state changes?</string>
     <string name="pref_enable_logging_help" formatted="false">Save battery observations and status changes for “History”. Available measurements include level, temperature, voltage, original instantaneous current, and remaining charge. Power is calculated from voltage and current when displayed or exported; it is not stored separately. Turning logging off does not erase existing history or stop time estimates.</string>
     <string name="pref_history_sampling_mode">Readings during sleep</string>
     <string name="pref_history_sampling_standard">Standard</string>
     <string name="pref_history_sampling_exact_alarm">Exact wakeup alarms</string>
     <string name="pref_history_sampling_keep_cpu_awake">Keep CPU awake</string>
-    <string name="pref_history_sampling_mode_help">Choose how Battery Monitor records readings while your device sleeps. “Standard” may leave gaps. The “Exact wakeup alarms” option briefly wakes the CPU to take readings. “Keep CPU awake” uses more battery. Both options require turning off battery optimization for Battery Monitor and aim to take readings every two minutes.</string>
+    <string name="pref_history_sampling_mode_help">Choose how Battery Monitor records readings while your device sleeps. “Standard” may leave gaps. The “Exact wakeup alarms” option briefly wakes the CPU to take readings. “Keep CPU awake” uses more battery. The last two options require turning off battery optimization for Battery Monitor and aim to take readings every two minutes.</string>
     <string name="pref_chart_gap_threshold">Chart gap threshold</string>
     <string name="pref_chart_gap_never">Never show gaps</string>
     <string name="pref_chart_gap_custom_message">Enter a whole number greater than 1 (in minutes).</string>
     <string name="pref_chart_gap_threshold_help">Set the longest interval over which charts connect readings. Longer intervals appear as gaps in the “History” tab and the “Battery trend” widget. “Never show gaps” connects stored readings regardless of the interval.</string>
-    <string name="pref_max_log_age" formatted="false">Maximum Log Age</string>
+    <string name="pref_max_log_age" formatted="false">Maximum log age</string>
     <string name="pref_max_log_age_help" formatted="false">When logging is enabled, logs older than the selected age are automatically removed during history maintenance. “No limit” keeps them until you clear them manually. If automatic export is enabled, Battery Monitor exports pending logs before deleting old entries; a failed export prevents that deletion.</string>
     <string name="age_1_day" formatted="false">1\u00A0day</string>
     <string name="age_2_days" formatted="false">2\u00A0days</string>
@@ -558,7 +558,7 @@
     \n
     Allowing unrestricted background execution may increase background battery use. You can change this later in Android “Settings” → “Apps” → “Battery Monitor” → “Battery”. Menu names vary by device.</string>
     <string name="pref_cat_autostart" formatted="false">Autostart</string>
-    <string name="pref_autostart_at_boot" formatted="false">Autostart at Boot</string>
+    <string name="pref_autostart_at_boot" formatted="false">Autostart at boot</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Start Battery Monitor when device boots</string>
     <string name="pref_autostart_at_boot_help" formatted="false">“Always” starts background monitoring after a device restart. “Never” skips the automatic start at boot. “If running on shutdown” follows whether you last started or stopped monitoring in Battery Monitor. Closing the app or ending its process does not count as stopping monitoring. Widgets do not override this choice.</string>
     <string name="boot_pref_always" formatted="false">Always</string>

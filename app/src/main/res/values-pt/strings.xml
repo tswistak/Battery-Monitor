@@ -442,7 +442,7 @@
     <string name="pref_history_sampling_standard">Padrão</string>
     <string name="pref_history_sampling_exact_alarm">Alarmes exatos de ativação</string>
     <string name="pref_history_sampling_keep_cpu_awake">Manter o processador ativo</string>
-    <string name="pref_history_sampling_mode_help">Escolha como o Battery Monitor regista as medições enquanto o seu dispositivo está em repouso. A opção «Padrão» pode deixar lacunas. A opção «Alarmes exatos de ativação» desperta brevemente o processador para efetuar medições. A opção «Manter o processador ativo» consome mais bateria. Ambas as opções exigem que desative a otimização da bateria para o Battery Monitor e procuram efetuar medições a cada dois minutos.</string>
+    <string name="pref_history_sampling_mode_help">Escolha como o Battery Monitor regista as medições enquanto o seu dispositivo está em repouso. A opção «Padrão» pode deixar lacunas. A opção «Alarmes exatos de ativação» desperta brevemente o processador para efetuar medições. A opção «Manter o processador ativo» consome mais bateria. As duas últimas opções exigem que desative a otimização da bateria para o Battery Monitor e procuram efetuar medições a cada dois minutos.</string>
     <string name="pref_chart_gap_threshold">Limite de intervalo nos gráficos</string>
     <string name="pref_chart_gap_never">Nunca mostrar lacunas</string>
     <string name="pref_chart_gap_custom_message">Introduza um número inteiro superior a 1 (em minutos).</string>

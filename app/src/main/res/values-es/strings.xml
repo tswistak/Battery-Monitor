@@ -442,7 +442,7 @@
     <string name="pref_history_sampling_standard">Estándar</string>
     <string name="pref_history_sampling_exact_alarm">Alarmas exactas de activación</string>
     <string name="pref_history_sampling_keep_cpu_awake">Mantener la CPU activa</string>
-    <string name="pref_history_sampling_mode_help">Elige cómo registra Battery Monitor las mediciones mientras tu dispositivo está en reposo. «Estándar» puede dejar huecos. La opción «Alarmas exactas de activación» activa brevemente la CPU para tomar mediciones. «Mantener la CPU activa» consume más batería. Ambas opciones requieren desactivar la optimización de batería para Battery Monitor e intentan tomar mediciones cada dos minutos.</string>
+    <string name="pref_history_sampling_mode_help">Elige cómo registra Battery Monitor las mediciones mientras tu dispositivo está en reposo. «Estándar» puede dejar huecos. La opción «Alarmas exactas de activación» activa brevemente la CPU para tomar mediciones. «Mantener la CPU activa» consume más batería. Estas dos últimas opciones requieren desactivar la optimización de batería para Battery Monitor e intentan tomar mediciones cada dos minutos.</string>
     <string name="pref_chart_gap_threshold">Umbral de huecos en los gráficos</string>
     <string name="pref_chart_gap_never">Nunca mostrar huecos</string>
     <string name="pref_chart_gap_custom_message">Introduce un número entero mayor que 1 (en minutos).</string>

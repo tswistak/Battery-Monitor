@@ -442,7 +442,7 @@
     <string name="pref_history_sampling_standard">Standard</string>
     <string name="pref_history_sampling_exact_alarm">Allarmi di riattivazione esatti</string>
     <string name="pref_history_sampling_keep_cpu_awake">Mantieni attivo il processore</string>
-    <string name="pref_history_sampling_mode_help">Scegli come Battery Monitor registra le misurazioni mentre il dispositivo è in sospensione. Con «Standard» possono esserci interruzioni. L’opzione «Allarmi di riattivazione esatti» riattiva brevemente il processore per effettuare le misurazioni. «Mantieni attivo il processore» consuma più batteria. Entrambe le opzioni richiedono di disattivare l’ottimizzazione della batteria per Battery Monitor e puntano a effettuare misurazioni ogni due minuti.</string>
+    <string name="pref_history_sampling_mode_help">Scegli come Battery Monitor registra le misurazioni mentre il dispositivo è in sospensione. Con «Standard» possono esserci interruzioni. L’opzione «Allarmi di riattivazione esatti» riattiva brevemente il processore per effettuare le misurazioni. «Mantieni attivo il processore» consuma più batteria. Le ultime due opzioni richiedono di disattivare l’ottimizzazione della batteria per Battery Monitor e puntano a effettuare misurazioni ogni due minuti.</string>
     <string name="pref_chart_gap_threshold">Soglia delle interruzioni nei grafici</string>
     <string name="pref_chart_gap_never">Non mostrare mai interruzioni</string>
     <string name="pref_chart_gap_custom_message">Inserisci un numero intero maggiore di 1 (in minuti).</string>
