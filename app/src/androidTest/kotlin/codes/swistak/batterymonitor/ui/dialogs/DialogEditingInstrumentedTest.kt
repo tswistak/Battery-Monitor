@@ -15,7 +15,6 @@ package codes.swistak.batterymonitor.ui.dialogs
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
-import android.view.KeyEvent
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -36,6 +35,7 @@ import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
 import codes.swistak.batterymonitor.testsupport.awaitCondition
 import codes.swistak.batterymonitor.testsupport.clickSemantics
 import codes.swistak.batterymonitor.testsupport.composeWindowNodes
+import codes.swistak.batterymonitor.testsupport.dispatchComposeDialogBack
 import codes.swistak.batterymonitor.ui.alarms.AlarmDraft
 import codes.swistak.batterymonitor.ui.alarms.AlarmsState
 import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
@@ -149,9 +149,10 @@ class DialogEditingInstrumentedTest {
         await { dialogs() == 0 }
         assertNull(saved)
         main { visible.value = true }
-        await { dialogs() == 1 }
-        instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-        await { dialogs() == 0 }
+        dispatchComposeDialogBack()
+        await("Back did not dismiss the numeric dialog") {
+            main { activity.hasWindowFocus() && dialogs() == 0 }
+        }
         assertNull(saved)
     }
 

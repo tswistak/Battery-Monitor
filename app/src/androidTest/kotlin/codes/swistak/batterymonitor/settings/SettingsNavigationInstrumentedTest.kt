@@ -14,7 +14,6 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Build
-import android.view.KeyEvent
 import android.widget.FrameLayout
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -53,6 +52,7 @@ import codes.swistak.batterymonitor.testsupport.awaitCondition
 import codes.swistak.batterymonitor.testsupport.clickSemantics
 import codes.swistak.batterymonitor.testsupport.composeNodes
 import codes.swistak.batterymonitor.testsupport.composeWindowNodes
+import codes.swistak.batterymonitor.testsupport.dispatchComposeDialogBack
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsFormat
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsProjectionCache
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsScreen
@@ -183,10 +183,19 @@ class SettingsNavigationInstrumentedTest {
                         })
                     }
                     select(choice)
-                    instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-                    instrumentation.waitForIdleSync()
+                    val choiceText = localized.getString(choice)
+                    await("Appearance dialog did not select '$choiceText'") {
+                        nodes(includeDialogs = true).any { node ->
+                            node.config.getOrNull(SemanticsProperties.Selected) == true && node.config.getOrNull(
+                                SemanticsProperties.Text
+                            )?.any { it.text == choiceText } == true
+                        }
+                    }
+                    dispatchComposeDialogBack()
+                    await("Back did not dismiss the appearance dialog for '$choiceText'") {
+                        activity.hasWindowFocus() && !hasText(choiceText)
+                    }
                     assertEquals(committed, settings.getString(keyAndValue.first, null))
-                    await { !hasText(localized.getString(choice)) }
                     select(title)
                     await { hasText(localized.getString(choice)) }
                     select(choice)
@@ -786,8 +795,7 @@ class SettingsNavigationInstrumentedTest {
         resources: Resources = activity.resources, values: Map<String, *> = emptyMap<String, Any>()
     ) = SettingCatalog.entries(
         resources, values, Build.VERSION.SDK_INT, NotificationAvailability(
-            appEnabled = true, mainEnabled = true,
-            liveEnabled = true
+            appEnabled = true, mainEnabled = true, liveEnabled = true
         )
     )
 
@@ -814,10 +822,8 @@ class SettingsNavigationInstrumentedTest {
         if (includeDialogs && Build.VERSION.SDK_INT >= 29) composeWindowNodes { it.isShown }
         else composeNodes(activity.window.decorView)
 
-    private fun await(ready: () -> Boolean) =
-        awaitCondition({ "Settings navigation did not reach its expected destination" }) {
-            main(
-                ready
-            )
-        }
+    private fun await(
+        diagnostic: String = "Settings navigation did not reach its expected destination",
+        ready: () -> Boolean
+    ) = awaitCondition({ diagnostic }) { main(ready) }
 }

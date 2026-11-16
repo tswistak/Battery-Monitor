@@ -20,6 +20,8 @@ import android.os.Looper
 import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.ComponentDialog
+import androidx.activity.findViewTreeOnBackPressedDispatcherOwner
 import androidx.compose.ui.node.RootForTest
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
@@ -51,6 +53,22 @@ internal fun composeWindowNodes(includeWindow: (View) -> Boolean = { true }): Li
         WindowInspectorCompat.getGlobalWindowViews().filter(includeWindow)
             .flatMap { composeNodes(it) }
     }
+
+@SuppressLint("RestrictedApi")
+internal fun dispatchComposeDialogBack() {
+    awaitCondition({ "A single Compose dialog was not ready to handle Back" }) {
+        runOnMain {
+            // Send Back to the dialog's handler without relying on emulator input routing.
+            val dialog =
+                WindowInspectorCompat.getGlobalWindowViews().asSequence().filter { it.isShown }
+                    .mapNotNull { it.findViewTreeOnBackPressedDispatcherOwner() as? ComponentDialog }
+                    .singleOrNull { it.onBackPressedDispatcher.hasEnabledCallbacks() }
+                    ?: return@runOnMain false
+            dialog.onBackPressedDispatcher.onBackPressed()
+            true
+        }
+    }
+}
 
 internal fun SemanticsNode.clickSemantics() {
     assertTrue(
