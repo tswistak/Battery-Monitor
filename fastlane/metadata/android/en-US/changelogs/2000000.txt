@@ -1,0 +1,19 @@
+New:
+
+- New UI based on Material Design.
+- Charts in history view.
+- Diagnostics screen for detailed stats, instead of an Advanced tab.
+- New, configurable widgets.
+- Battery power measurement.
+
+Improved:
+
+- Possibility to change app theme, including true black for AMOLED screens.
+- Using system color palette on supported Android versions.
+- Redesigned and simplified alarms.
+- Searchable settings.
+- Accessibility.
+
+Fixed:
+
+- Expandable details for Live Updates.

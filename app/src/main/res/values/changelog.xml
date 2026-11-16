@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="latest_release_changelog" translatable="false" formatted="false">Improved:\n\n- Main notification is now expandable with vital signs details (#129, thanks @LiberiFatali).</string>
+    <string name="latest_release_changelog" translatable="false" formatted="false">New:\n\n- New UI based on Material Design.\n- Charts in history view.\n- Diagnostics screen for detailed stats, instead of an Advanced tab.\n- New, configurable widgets.\n- Battery power measurement.\n\nImproved:\n\n- Possibility to change app theme, including true black for AMOLED screens.\n- Using system color palette on supported Android versions.\n- Redesigned and simplified alarms.\n- Searchable settings.\n- Accessibility.\n\nFixed:\n\n- Expandable details for Live Updates.</string>
 </resources>
