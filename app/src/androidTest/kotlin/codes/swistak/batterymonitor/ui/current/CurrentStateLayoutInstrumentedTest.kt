@@ -288,6 +288,12 @@ class CurrentStateLayoutInstrumentedTest {
         scenario.use { scenario ->
             scenario.onActivity { activity = it }
             main { DisplayStrings.setResources(activity.resources) }
+            fun dismissSheet(text: String) {
+                await { hasText(text, focusedOnly = true) }
+                instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+                await { !hasText(text) }
+            }
+
             render(390, 280)
             await { hasHero() }
             assertFalse(hasText(context.getString(R.string.history_level_24h)))
@@ -313,8 +319,7 @@ class CurrentStateLayoutInstrumentedTest {
             )
             await { hasText(detailSource) }
             assertTrue(hasText(context.getString(R.string.current_detail_unit, "°C")))
-            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-            await { !hasText(detailSource) }
+            dismissSheet(detailSource)
 
             click(labels.last())
             val healthExplanation = context.getString(R.string.current_health_explanation)
@@ -327,8 +332,7 @@ class CurrentStateLayoutInstrumentedTest {
                         ?.any { it.text.startsWith(unitPrefix) } == true
                 })
             }
-            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-            await { !hasText(healthExplanation) }
+            dismissSheet(healthExplanation)
 
             scrollTo("trend_history")
             await { hasText(context.getString(R.string.history_level_24h)) }
@@ -349,9 +353,7 @@ class CurrentStateLayoutInstrumentedTest {
             }
 
             click(labels.first())
-            await { hasText(detailSource) }
-            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-            await { !hasText(detailSource) }
+            dismissSheet(detailSource)
 
             for (direction in listOf(LayoutDirection.Ltr, LayoutDirection.Rtl)) {
                 render(1000, 700, direction = direction)
@@ -362,9 +364,7 @@ class CurrentStateLayoutInstrumentedTest {
                     }
                 }
                 click(labels.first())
-                await { hasText(detailSource) }
-                instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-                await { !hasText(detailSource) }
+                dismissSheet(detailSource)
             }
         }
     }
@@ -495,10 +495,10 @@ class CurrentStateLayoutInstrumentedTest {
         instrumentation.waitForIdleSync()
     }
 
-    private fun hasText(text: String): Boolean {
+    private fun hasText(text: String, focusedOnly: Boolean = false): Boolean {
         var found = false
         main {
-            found = nodes().any {
+            found = composeWindowNodes { !focusedOnly || it.hasWindowFocus() }.any {
                 it.config.getOrNull(SemanticsProperties.Text)
                     ?.any { value -> value.text == text } == true
             }

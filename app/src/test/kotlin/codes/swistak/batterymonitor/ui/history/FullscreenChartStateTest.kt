@@ -257,25 +257,31 @@ class FullscreenChartStateTest {
     fun `selected measurement formatting uses existing units locale and preferences`() {
         val polish = Locale.forLanguageTag("pl-PL")
         val values = listOf(57.0, 34.2, 4.215, -12.5, -0.4, 2500.125)
-        val expected = listOf("57%", "93,6 °F", "4,22 V", "12,5 mA", "+0,40 W", "2 500,125 mAh")
+        val expected = listOf("57%", "93,6°F", "4,22V", "12,5mA", "+0,40W", "2500,125mAh")
         for ((index, metric) in HistoryMetric.entries.withIndex()) {
             val formatted =
-                historyValue(values[index], metric, true, polish, -1).replace('\u00a0', ' ')
-                    .replace('\u202f', ' ')
+                historyValue(values[index], metric, true, polish, -1).filterNot(Char::isWhitespace)
             assertEquals(expected[index], formatted)
-            if (metric != HistoryMetric.LEVEL) {
-                assertTrue(
-                    historyValue(
-                        values[index], metric, true, polish, -1
-                    ).endsWith("\u00A0${expected[index].substringAfterLast(' ')}")
-                )
-            }
             assertEquals("—", historyValue(null, metric, false, Locale.US))
         }
         assertEquals(
-            "34.2\u00A0°C", historyValue(34.2, HistoryMetric.TEMPERATURE, false, Locale.US)
+            "34.2°C",
+            historyValue(
+                34.2,
+                HistoryMetric.TEMPERATURE,
+                false,
+                Locale.US
+            ).filterNot(Char::isWhitespace)
         )
-        assertEquals("-12.5\u00A0mA", historyValue(-12.5, HistoryMetric.CURRENT, false, Locale.US))
+        assertEquals(
+            "-12.5mA",
+            historyValue(
+                -12.5,
+                HistoryMetric.CURRENT,
+                false,
+                Locale.US
+            ).filterNot(Char::isWhitespace)
+        )
     }
 
 

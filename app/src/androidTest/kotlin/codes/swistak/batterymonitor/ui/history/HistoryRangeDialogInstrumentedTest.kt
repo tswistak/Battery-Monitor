@@ -139,7 +139,7 @@ class HistoryRangeDialogInstrumentedTest {
             click(all)
             toggleFirstFilter()
             assertEquals(committed, model.state.value.filters)
-            val filterConfirm = confirmAction()
+            val filterConfirm = confirmAction(R.string.configure_log_filter)
             main { filterConfirm(); filterConfirm() }
             await { model.state.value.filters == committed - key }
             await { changes.get() == 1 }
@@ -229,9 +229,8 @@ class HistoryRangeDialogInstrumentedTest {
             click(week)
             click(context.getString(R.string.history_custom_range))
             click(context.getString(R.string.okay))
-            await { textVisible(context.getString(R.string.history_calendar_days)) }
+            val finalConfirm = confirmAction(R.string.history_calendar_days)
             assertEquals(1, commits)
-            val finalConfirm = confirmAction()
             main { finalConfirm(); finalConfirm() }
             await { commits == 2 }
             assertEquals("custom", state.value.rangeLabel)
@@ -447,16 +446,28 @@ class HistoryRangeDialogInstrumentedTest {
         return count
     }
 
-    private fun confirmAction(): () -> Boolean {
+    private fun confirmAction(dialogTextId: Int): () -> Boolean {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val dialogText = context.getString(dialogTextId)
+        val label = context.getString(R.string.okay)
+        fun SemanticsNode.hasText(text: String) =
+            config.getOrNull(SemanticsProperties.Text)?.any { it.text == text } == true
+
         var action: (() -> Boolean)? = null
-        main {
-            val label =
-                InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.okay)
-            action = windowSemanticsNodes(focusedOnly = true).first {
-                it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
-                    SemanticsProperties.Text
-                )?.any { text -> text.text == label } == true
-            }.config[SemanticsActions.OnClick].action
+        await("The focused dialog containing '$dialogText' must expose its '$label' action") {
+            main {
+                val nodes = windowSemanticsNodes(focusedOnly = true)
+                if (nodes.any { it.hasText(dialogText) }) {
+                    action = nodes.firstNotNullOfOrNull { node ->
+                        node.config.getOrNull(SemanticsActions.OnClick)?.action?.takeIf {
+                            node.hasText(
+                                label
+                            )
+                        }
+                    }
+                }
+            }
+            action != null
         }
         return requireNotNull(action)
     }

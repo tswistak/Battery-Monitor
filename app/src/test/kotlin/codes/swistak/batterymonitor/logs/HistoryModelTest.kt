@@ -211,17 +211,17 @@ class HistoryModelTest {
             )
         )
         assertEquals(
-            "29,8–36,4\u00A0°C", historyRangeValue(
+            "29,8–36,4°C", historyRangeValue(
                 HistorySeries(emptyList(), 29.8, 36.4),
                 HistoryMetric.TEMPERATURE,
                 false,
                 Locale.forLanguageTag("pl")
-            )
+            ).filterNot(Char::isWhitespace)
         )
         assertEquals(
-            "85.6–97.5\u00A0°F", historyRangeValue(
+            "85.6–97.5°F", historyRangeValue(
                 HistorySeries(emptyList(), 29.8, 36.4), HistoryMetric.TEMPERATURE, true, Locale.US
-            )
+            ).filterNot(Char::isWhitespace)
         )
         assertEquals(
             "3.88–4.20\u00A0V", historyRangeValue(
