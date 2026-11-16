@@ -12,12 +12,6 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 
 internal fun Context.showToast(
-    message: CharSequence, duration: Int = Toast.LENGTH_LONG
-) {
-    Toast.makeText(this, message, duration).show()
-}
-
-internal fun Context.showToast(
     @StringRes message: Int, duration: Int = Toast.LENGTH_LONG
 ) {
     Toast.makeText(this, message, duration).show()

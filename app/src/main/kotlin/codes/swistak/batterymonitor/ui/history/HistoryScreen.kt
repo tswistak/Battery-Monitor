@@ -1,0 +1,1241 @@
+/*
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+*/
+package codes.swistak.batterymonitor.ui.history
+
+import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SecondaryTabRow
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.core.content.edit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.devicebackup.LogImportMode
+import codes.swistak.batterymonitor.logs.HistoryEvent
+import codes.swistak.batterymonitor.logs.HistoryExportRequest
+import codes.swistak.batterymonitor.logs.HistoryMetric
+import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogExport
+import codes.swistak.batterymonitor.logs.LogExportFormat
+import codes.swistak.batterymonitor.logs.LogRecord
+import codes.swistak.batterymonitor.logs.historyFilterKeys
+import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.temperatureUnit
+import codes.swistak.batterymonitor.ui.components.MeasurementChart
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
+import codes.swistak.batterymonitor.ui.components.groupedCardBorder
+import codes.swistak.batterymonitor.ui.components.historyRangeValue
+import codes.swistak.batterymonitor.ui.components.historyValue
+import kotlinx.coroutines.flow.distinctUntilChanged
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.Date
+import java.util.TimeZone
+
+internal fun historyTimeZone(broadcastId: String?, fallback: ZoneId): ZoneId =
+    broadcastId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: fallback
+
+@Composable
+internal fun rememberHistoryTimeZone(): ZoneId {
+    val appContext = LocalContext.current.applicationContext
+    var zone by remember { mutableStateOf(ZoneId.systemDefault()) }
+    DisposableEffect(appContext) {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == Intent.ACTION_TIMEZONE_CHANGED) {
+                    zone = historyTimeZone(
+                        intent.getStringExtra("time-zone"), ZoneId.systemDefault()
+                    )
+                }
+            }
+        }
+        ContextCompat.registerReceiver(
+            appContext,
+            receiver,
+            IntentFilter(Intent.ACTION_TIMEZONE_CHANGED),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+        onDispose { appContext.unregisterReceiver(receiver) }
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { zone = ZoneId.systemDefault() }
+    return zone
+}
+
+@Composable
+internal fun HistoryActionsMenu(enabled: Boolean, onAction: (String) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    val label = stringResource(R.string.nav_actions)
+    val preferences = LocalContext.current.getSharedPreferences(
+        SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
+    )
+    Box {
+        TooltipIconButton(label = label, onClick = {
+            expanded = true
+        }, enabled = enabled, modifier = Modifier.semantics {
+            contentDescription = label
+        }) { Icon(painterResource(R.drawable.ui_more), null) }
+        DropdownMenu(expanded, onDismissRequest = { expanded = false }) {
+            listOf(
+                R.string.log_export_mode_title to "export",
+                R.string.log_import_mode_title to "import",
+                R.string.menu_clear to "delete",
+                (if (preferences.getBoolean(
+                        "show_seconds", false
+                    )
+                ) R.string.menu_hide_seconds else R.string.menu_show_seconds) to "seconds"
+            ).forEach { (label, action) ->
+                DropdownMenuItem(text = { Text(stringResource(label)) }, leadingIcon = {
+                    Icon(
+                        painterResource(
+                            when (action) {
+                                "export" -> R.drawable.ui_export
+                                "import" -> R.drawable.ui_down
+                                "delete" -> R.drawable.ui_minus
+                                else -> R.drawable.ui_clock
+                            }
+                        ), null
+                    )
+                }, onClick = {
+                    expanded = false
+                    onAction(action)
+                })
+            }
+        }
+    }
+}
+
+@Composable
+internal fun HistoryRoute(
+    viewModel: HistoryViewModel,
+    requestedAction: String?,
+    onActionHandled: () -> Unit,
+    onOpenFullscreen: (HistoryMetric, codes.swistak.batterymonitor.logs.HistoryRangeState, String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val appContext = context.applicationContext
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    HistoryChangeEffect(onActivated = viewModel::resume, onChanged = viewModel::historyChanged)
+    val zone = rememberHistoryTimeZone()
+    val today = LocalDate.now(zone)
+    val locale = LocalConfiguration.current.locales[0]
+    val settings = remember {
+        appContext.getSharedPreferences(
+            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+        )
+    }
+    val mainPreferences = remember {
+        appContext.getSharedPreferences(
+            SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
+        )
+    }
+    var settingsVersion by remember { mutableIntStateOf(0) }
+    DisposableEffect(settings, mainPreferences) {
+        val listener =
+            android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> settingsVersion++ }
+        settings.registerOnSharedPreferenceChangeListener(listener)
+        mainPreferences.registerOnSharedPreferenceChangeListener(listener)
+        onDispose {
+            settings.unregisterOnSharedPreferenceChangeListener(listener)
+            mainPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+    val defaultTemperature = stringResource(R.string.default_temperature_unit)
+    val fahrenheit = remember(
+        settingsVersion, defaultTemperature
+    ) { settings.temperatureUnit(defaultTemperature).convertToFahrenheit }
+    val currentMultiplier = remember(settingsVersion) {
+        settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull() ?: 1
+    }
+    val seconds = remember(settingsVersion) { mainPreferences.getBoolean("show_seconds", false) }
+    var draftFilters by rememberSaveable { mutableStateOf<List<String>>(ArrayList(state.filters)) }
+    var dialog by rememberSaveable { mutableStateOf(if (viewModel.pendingImportUri != null) "importMode" else null) }
+    LaunchedEffect(requestedAction) {
+        if (requestedAction != null) {
+            if (requestedAction == "seconds") mainPreferences.edit {
+                putBoolean("show_seconds", !seconds)
+            }
+            else dialog = requestedAction
+            onActionHandled()
+        }
+    }
+    var detailsId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var detailsTime by rememberSaveable { mutableStateOf<Long?>(null) }
+    var importingJson by rememberSaveable { mutableStateOf(false) }
+    var exportFormat by rememberSaveable { mutableStateOf(LogExportFormat.CSV) }
+    var exportError by rememberSaveable { mutableStateOf<String?>(null) }
+    val statuses = stringArrayResource(R.array.history_statuses)
+    val oldStatuses = stringArrayResource(R.array.history_statuses_old)
+    val plugged = stringArrayResource(R.array.pluggeds)
+    val boot = stringResource(R.string.status_boot_completed)
+    val unknown = stringResource(R.string.status_unknown)
+    val measurement = stringResource(R.string.history_periodic_measurement)
+
+    fun status(record: LogRecord): String {
+        if (record.status == -1) return boot
+        val code = LogDatabase.decodeStatus(record.status)
+        val prefix = if (code[2] == LogDatabase.STATUS_SAMPLE) "$measurement · " else ""
+        return prefix + (if (code[2] != LogDatabase.STATUS_NEW) oldStatuses else statuses).getOrElse(
+            code[0]
+        ) { unknown } + (plugged.getOrNull(
+            code[1]
+        )?.takeIf { code[1] > 0 }?.let { " · $it" } ?: "")
+    }
+
+    fun result(success: Boolean, successText: Int) {
+        Toast.makeText(
+            appContext,
+            if (success) successText else R.string.history_operation_failed,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    val exporter =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val uri = it.data?.data
+            if (it.resultCode == Activity.RESULT_OK && uri != null) viewModel.export(uri) { success, formatError ->
+                if (formatError != null) exportError = formatError
+                else result(success, R.string.file_written)
+            }
+            else viewModel.pendingExport = null
+        }
+    val importer =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                viewModel.pendingImportUri = uri.toString()
+                viewModel.pendingImportJson = importingJson
+                dialog = "importMode"
+            }
+        }
+
+    fun export(format: LogExportFormat, scope: String) {
+        val through = System.currentTimeMillis()
+        val since = scope == "since" || scope == "append"
+        val after = when {
+            since -> if (settings.contains(SettingsContract.KEY_LAST_LOG_EXPORT_TIME)) settings.getLong(
+                SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0
+            ) else null
+
+            scope == "all" -> null
+            else -> state.range.exportAfter
+        }
+        viewModel.pendingExport = HistoryExportRequest(
+            after,
+            if (scope == "selected") state.range.exportThrough else through,
+            format,
+            scope == "append",
+            since || scope == "all"
+        )
+        exporter.launch(
+            Intent(if (scope == "append") Intent.ACTION_OPEN_DOCUMENT else Intent.ACTION_CREATE_DOCUMENT).addCategory(
+                Intent.CATEGORY_OPENABLE
+            )
+                .setType(if (scope == "append") "*/*" else if (format == LogExportFormat.CSV) "text/csv" else "application/json")
+                .putExtra(Intent.EXTRA_TITLE, LogExport.fileName(format, through))
+        )
+        dialog = null
+    }
+
+    val chartList = rememberLazyListState()
+    val logList = rememberLazyListState(viewModel.scrollIndex, viewModel.scrollOffset)
+    LaunchedEffect(logList) {
+        snapshotFlow { logList.firstVisibleItemIndex to logList.firstVisibleItemScrollOffset }.distinctUntilChanged()
+            .collect { (index, offset) -> viewModel.scroll(index, offset) }
+    }
+    val list = if (state.tab == "charts") chartList else logList
+    LaunchedEffect(state.range, state.ascending, state.filters, state.anchor, state.tab) {
+        if (viewModel.scrollIndex == 0 && viewModel.scrollOffset == 0) logList.scrollToItem(0)
+    }
+    val logDays = remember(state.page, zone) {
+        state.page.groupBy { Instant.ofEpochMilli(it.record.time).atZone(zone).toLocalDate() }
+    }
+    val dateFormat = remember(locale) {
+        DateTimeFormatter.ofPattern(
+            android.text.format.DateFormat.getBestDateTimePattern(
+                locale, "MMMMd"
+            ), locale
+        )
+    }
+    val timestampFormat = remember(locale, zone) {
+        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale).withZone(zone)
+    }
+    BoxWithConstraints(modifier) {
+        val twoPane = maxWidth >= 800.dp * LocalDensity.current.fontScale && maxHeight >= 480.dp
+        LaunchedEffect(twoPane) { viewModel.twoPane(twoPane) }
+        val eventIndices = remember(logDays) {
+            buildMap {
+                var index = 1
+                logDays.values.forEach { entries ->
+                    index++
+                    entries.forEach { put(it.id, index++) }
+                }
+            }
+        }
+        LaunchedEffect(twoPane, state.eventToReveal, state.page, state.loading) {
+            val id = state.eventToReveal
+            val index = eventIndices[id]
+            if (twoPane && !state.loading && id != null && index != null) {
+                logList.animateScrollToItem(index)
+                viewModel.eventRevealed(id)
+            }
+        }
+        val charts: LazyListScope.() -> Unit = {
+            item {
+                FlowRow(
+                    Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HistoryMetric.entries.forEach { metric ->
+                        FilterChip(
+                            state.metric == metric,
+                            { viewModel.metric(metric) },
+                            shape = RoundedCornerShape(11.dp),
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            label = { Text(metricLabel(metric)) })
+                    }
+                }
+            }
+            item {
+                val chart = state.chart
+                OutlinedCard(
+                    Modifier.fillMaxWidth(),
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
+                    colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                ) {
+                    Column(
+                        Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Row(
+                            Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                if (state.metric == HistoryMetric.LEVEL) stringResource(R.string.history_battery_level)
+                                else metricLabel(state.metric),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.weight(1f)
+                            )
+                            TooltipIconButton(
+                                label = stringResource(R.string.history_open_fullscreen),
+                                onClick = {
+                                    onOpenFullscreen(
+                                        state.metric, state.range, state.rangeLabel
+                                    )
+                                },
+                                enabled = chart?.series?.get(state.metric)?.points?.any { it.value != null } == true,
+                                modifier = Modifier.size(48.dp)) {
+                                Icon(
+                                    painterResource(R.drawable.ui_fullscreen),
+                                    stringResource(R.string.history_open_fullscreen),
+                                    Modifier.size(24.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                        if (chart != null && chart.count > 0) {
+                            MeasurementChart(
+                                chart,
+                                state.metric,
+                                fahrenheit,
+                                state.selectedPointId,
+                                viewModel::selectPoint,
+                                currentMultiplier = currentMultiplier,
+                                linksToEvents = twoPane,
+                                zone = zone
+                            )
+                        } else if (state.loading) Spacer(Modifier.height(280.dp))
+                        else Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(280.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (!state.error) Text(
+                                stringResource(R.string.logs_empty),
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                            )
+                        }
+                    }
+                }
+            }
+            state.chart?.takeIf { it.count > 0 }?.let { chart ->
+                item {
+                    BoxWithConstraints(Modifier.fillMaxWidth()) {
+                        val cardWidth =
+                            if (state.metric == HistoryMetric.CURRENT || state.metric == HistoryMetric.POWER || state.metric == HistoryMetric.REMAINING_CHARGE || LocalDensity.current.fontScale >= 1.3f) maxWidth
+                            else with(LocalDensity.current) {
+                                ((constraints.maxWidth - 12.dp.roundToPx()) / 2).toDp()
+                            }
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Card(
+                                Modifier.width(cardWidth),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+                            ) {
+                                Column(
+                                    Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Text(
+                                        historyRangeValue(
+                                            chart.series.getValue(state.metric),
+                                            state.metric,
+                                            fahrenheit,
+                                            locale,
+                                            currentMultiplier
+                                        ).let {
+                                            if (state.metric == HistoryMetric.CURRENT || state.metric == HistoryMetric.POWER) it.replace(
+                                                "–", " – "
+                                            ) else it
+                                        }, style = MaterialTheme.typography.titleLarge
+                                    )
+                                    Text(
+                                        stringResource(R.string.history_reading_range_label),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                }
+                            }
+                            Card(
+                                Modifier.width(cardWidth),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+                            ) {
+                                Column(
+                                    Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Text(
+                                        chart.events.filter { it.code == HistoryEvent.CONNECTED }
+                                            .sumOf { it.count }.toString(),
+                                        style = MaterialTheme.typography.titleLarge
+                                    )
+                                    Text(
+                                        stringResource(R.string.history_connections),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Text(
+                        stringResource(
+                            R.string.history_event_counts,
+                            chart.events.filter { it.code == HistoryEvent.CONNECTED }
+                                .sumOf { it.count },
+                            chart.events.filter { it.code == HistoryEvent.DISCONNECTED }
+                                .sumOf { it.count },
+                            chart.events.filter { it.code == HistoryEvent.REBOOT }
+                                .sumOf { it.count }),
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+            }
+        }
+        val events: LazyListScope.() -> Unit = {
+            item {
+                Row(
+                    Modifier.padding(bottom = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    FilterChip(
+                        selected = state.filters.size == historyFilterKeys.size,
+                        onClick = {
+                            draftFilters = ArrayList(state.filters)
+                            dialog = "filters"
+                        },
+                        shape = RoundedCornerShape(11.dp),
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        ),
+                        label = {
+                            Text(
+                                if (state.filters.size == historyFilterKeys.size) stringResource(
+                                    R.string.history_all_types
+                                )
+                                else stringResource(
+                                    R.string.history_filtered_types,
+                                    state.filters.size,
+                                    historyFilterKeys.size
+                                ), fontWeight = FontWeight.SemiBold
+                            )
+                        })
+                    OutlinedButton(
+                        onClick = { viewModel.reverse() },
+                        shape = RoundedCornerShape(11.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            stringResource(if (state.ascending) R.string.history_oldest else R.string.history_newest),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Icon(
+                            painterResource(if (state.ascending) R.drawable.ui_up else R.drawable.ui_down),
+                            null,
+                            Modifier.size(16.dp)
+                        )
+                    }
+                }
+                if (!state.loading && !state.error && state.page.isEmpty()) Text(stringResource(R.string.logs_empty))
+            }
+            logDays.forEach { (date, entries) ->
+                item(key = "day:$date", contentType = "day") {
+                    val day = if (date.year == today.year) dateFormat.format(date)
+                    else DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
+                        .format(date)
+                    Text(
+                        when (date) {
+                            today -> stringResource(R.string.history_today, day)
+                            today.minusDays(1) -> stringResource(
+                                R.string.history_yesterday, day
+                            )
+
+                            else -> day
+                        },
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
+                    )
+                }
+                itemsIndexed(
+                    entries,
+                    key = { _, entry -> entry.id },
+                    contentType = { _, _ -> "log" }) { index, entry ->
+                    val emphasized = twoPane && state.selectedPointId == entry.id
+                    val foreground =
+                        if (emphasized) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
+                    val secondary =
+                        if (emphasized) foreground else MaterialTheme.colorScheme.onSurfaceVariant
+                    val selectionColor = MaterialTheme.colorScheme.primary
+                    val first = index == 0
+                    val last = index == entries.lastIndex
+                    val shape = RoundedCornerShape(
+                        topStart = if (first) 20.dp else 0.dp,
+                        topEnd = if (first) 20.dp else 0.dp,
+                        bottomStart = if (last) 20.dp else 0.dp,
+                        bottomEnd = if (last) 20.dp else 0.dp
+                    )
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .clip(shape)
+                            .background(if (emphasized) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface)
+                            .groupedCardBorder(
+                                first, last, MaterialTheme.colorScheme.outlineVariant
+                            )
+                    ) {
+                        val record = entry.record
+                        val code = LogDatabase.decodeStatus(record.status)
+                        val icon = when {
+                            record.status == -1 -> R.drawable.ui_refresh
+                            code[0] == 0 && code[2] == 0 -> R.drawable.ui_plug
+                            code[0] == 2 -> R.drawable.ui_bolt
+                            code[0] == 5 -> R.drawable.ui_battery
+                            else -> R.drawable.ui_down
+                        }
+                        val title = when {
+                            code[0] == 0 && code[2] == 0 -> stringResource(R.string.history_disconnected)
+                            code[0] == 2 && code[2] == 0 -> stringResource(R.string.history_charge_started)
+                            else -> status(record).substringBefore(" · ")
+                        }
+                        val description =
+                            if (record.status == -1) stringResource(R.string.history_system_event)
+                            else listOfNotNull(
+                                HistoryMetric.CURRENT.value(record)?.let {
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.CURRENT,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
+                                HistoryMetric.POWER.value(record)?.let {
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.POWER,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
+                                plugged.getOrNull(code[1])?.takeIf { code[1] > 0 },
+                                HistoryMetric.TEMPERATURE.value(record)?.let {
+                                    historyValue(
+                                        it, HistoryMetric.TEMPERATURE, fahrenheit, locale
+                                    )
+                                },
+                                HistoryMetric.VOLTAGE.value(record)?.let {
+                                    historyValue(
+                                        it, HistoryMetric.VOLTAGE, fahrenheit, locale
+                                    )
+                                }).joinToString(" · ")
+                                .ifEmpty { stringResource(R.string.current_unavailable) }
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    detailsId = entry.id
+                                    detailsTime = entry.record.time
+                                }
+                                .then(if (twoPane) Modifier.semantics {
+                                    selected = emphasized
+                                } else Modifier)
+                                .drawBehind {
+                                    if (emphasized) {
+                                        val width = 3.dp.toPx()
+                                        val x =
+                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                        drawRect(
+                                            selectionColor,
+                                            topLeft = Offset(x, 0f),
+                                            size = Size(width, size.height)
+                                        )
+                                    }
+                                }
+                                .heightIn(min = 67.dp)
+                                .padding(horizontal = 13.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(11.dp)) {
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (emphasized) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
+                            ) {
+                                Box(
+                                    Modifier.size(35.dp), contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        painterResource(icon),
+                                        null,
+                                        Modifier.size(19.dp),
+                                        tint = if (emphasized) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+                            Column(Modifier.weight(1f)) {
+                                Text(
+                                    title,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = foreground
+                                )
+                                Text(
+                                    description,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = secondary,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                            Column(horizontalAlignment = Alignment.End) {
+                                Text(
+                                    historyValue(
+                                        HistoryMetric.LEVEL.value(record),
+                                        HistoryMetric.LEVEL,
+                                        fahrenheit,
+                                        locale
+                                    ),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = foreground
+                                )
+                                HistoryMetric.REMAINING_CHARGE.value(record)?.let {
+                                    Text(
+                                        historyValue(
+                                            it, HistoryMetric.REMAINING_CHARGE, fahrenheit, locale
+                                        ),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = secondary
+                                    )
+                                }
+                                Text(
+                                    DisplayStrings.formatTime(
+                                        context,
+                                        Date(record.time),
+                                        seconds,
+                                        timeZone = TimeZone.getTimeZone(zone)
+                                    ), style = MaterialTheme.typography.bodySmall, color = secondary
+                                )
+                            }
+                        }
+                        if (!last) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                    }
+                }
+            }
+            if (state.page.isNotEmpty()) item {
+                Text(
+                    stringResource(R.string.history_raw_observations),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp)
+                )
+            }
+            if (state.hasPrevious || state.hasNext) item {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextButton(
+                        onClick = { viewModel.next(true) },
+                        enabled = state.hasPrevious && !state.loading
+                    ) { Text(stringResource(R.string.history_previous_page)) }
+                    TextButton(
+                        onClick = { viewModel.next(false) },
+                        enabled = state.hasNext && !state.loading
+                    ) { Text(stringResource(R.string.history_next_page)) }
+                }
+            }
+        }
+        val exportAction: @Composable (Modifier) -> Unit = { actionModifier ->
+            OutlinedButton(
+                onClick = { dialog = "export" },
+                modifier = actionModifier.fillMaxWidth(),
+                enabled = !state.busy,
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                contentPadding = PaddingValues(12.dp)
+            ) {
+                Icon(painterResource(R.drawable.ui_export), null, Modifier.size(19.dp))
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.history_export_selected))
+            }
+        }
+        Column(Modifier.fillMaxSize()) {
+            Column(
+                Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                HistoryRangeControl(state, viewModel::range, zone)
+                if (!twoPane) {
+                    SecondaryTabRow(
+                        selectedTabIndex = if (state.tab == "logs") 1 else 0,
+                        containerColor = MaterialTheme.colorScheme.background,
+                        indicator = {
+                            TabRowDefaults.PrimaryIndicator(
+                                modifier = Modifier.tabIndicatorOffset(
+                                    if (state.tab == "logs") 1 else 0, matchContentSize = false
+                                ),
+                                width = 46.dp,
+                                height = 3.dp,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }) {
+                        Tab(
+                            state.tab != "logs",
+                            { viewModel.tab("charts") },
+                            selectedContentColor = MaterialTheme.colorScheme.primary,
+                            unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = {
+                                Text(
+                                    stringResource(R.string.history_charts),
+                                    fontWeight = if (state.tab == "charts") FontWeight.SemiBold else FontWeight.Normal
+                                )
+                            })
+                        Tab(
+                            state.tab == "logs",
+                            { viewModel.tab("logs") },
+                            selectedContentColor = MaterialTheme.colorScheme.primary,
+                            unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = {
+                                Text(
+                                    stringResource(R.string.history_events),
+                                    fontWeight = if (state.tab == "logs") FontWeight.SemiBold else FontWeight.Normal
+                                )
+                            })
+                    }
+                }
+            }
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(4.dp)
+            ) {
+                if (state.loading || state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+            }
+            if (state.error) {
+                Column(Modifier.padding(horizontal = 20.dp)) {
+                    Text(
+                        stringResource(R.string.history_load_failed),
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    TextButton(onClick = { viewModel.refresh() }) {
+                        Text(stringResource(R.string.diag_action_refresh))
+                    }
+                }
+            }
+            if (twoPane) {
+                Row(
+                    Modifier
+                        .weight(1f)
+                        .padding(horizontal = 20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+                    Column(Modifier.weight(1.1f)) {
+                        Text(
+                            stringResource(R.string.history_charts),
+                            Modifier
+                                .padding(vertical = 12.dp)
+                                .semantics { heading() },
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        LazyColumn(
+                            Modifier.weight(1f),
+                            state = chartList,
+                            contentPadding = PaddingValues(top = 8.dp, bottom = 20.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            content = charts
+                        )
+                    }
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            stringResource(R.string.history_events),
+                            Modifier
+                                .padding(vertical = 12.dp)
+                                .semantics { heading() },
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        LazyColumn(
+                            Modifier.weight(1f),
+                            state = logList,
+                            contentPadding = PaddingValues(top = 8.dp, bottom = 20.dp),
+                            content = events
+                        )
+                    }
+                }
+                HorizontalDivider(
+                    Modifier.padding(horizontal = 20.dp),
+                    color = MaterialTheme.colorScheme.outlineVariant
+                )
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp), contentAlignment = Alignment.Center
+                ) {
+                    exportAction(Modifier.widthIn(max = 480.dp))
+                }
+            } else {
+                key(state.tab) {
+                    LazyColumn(
+                        Modifier.weight(1f),
+                        state = list,
+                        contentPadding = PaddingValues(
+                            start = 20.dp, end = 20.dp, top = 8.dp, bottom = 20.dp
+                        ),
+                        verticalArrangement = if (state.tab == "logs") Arrangement.Top else Arrangement.spacedBy(
+                            12.dp
+                        )
+                    ) {
+                        if (state.tab == "charts") charts() else events()
+                        item { exportAction(Modifier.padding(top = if (state.tab == "logs") 12.dp else 0.dp)) }
+                    }
+                }
+            }
+        }
+    }
+
+    val dialogsAllowed = applicationDialogsAllowed()
+    if (dialogsAllowed && exportError != null) AlertDialog(onDismissRequest = {
+        exportError = null
+    }, title = { Text(stringResource(R.string.history_operation_failed)) }, text = {
+        Text(exportError.orEmpty(), Modifier.verticalScroll(rememberScrollState()))
+    }, confirmButton = {
+        TextButton(onClick = { exportError = null }) { Text(stringResource(R.string.okay)) }
+    })
+    if (dialogsAllowed && state.importError != null) AlertDialog(
+        onDismissRequest = viewModel::acknowledgeImportError,
+        title = { Text(stringResource(R.string.log_import_mode_title)) },
+        text = {
+            Text(
+                state.importError.orEmpty(), Modifier.verticalScroll(rememberScrollState())
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = viewModel::acknowledgeImportError) {
+                Text(stringResource(R.string.okay))
+            }
+        })
+    val filterLabels = stringArrayResource(R.array.log_filters).toList() + measurement
+    if (dialogsAllowed && dialog == "filters") {
+        var handled by remember { mutableStateOf(false) }
+        AlertDialog(onDismissRequest = {
+            if (!handled && dialog == "filters") {
+                handled = true
+                dialog = null
+            }
+        }, title = { Text(stringResource(R.string.configure_log_filter)) }, text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                historyFilterKeys.forEachIndexed { index, key ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .toggleable(
+                                key in draftFilters,
+                                role = Role.Checkbox,
+                                onValueChange = { checked ->
+                                    draftFilters = ArrayList(
+                                        if (checked) draftFilters + key else draftFilters - key
+                                    )
+                                }),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(key in draftFilters, null)
+                        Text(filterLabels[index], Modifier.padding(vertical = 12.dp))
+                    }
+                }
+            }
+        }, confirmButton = {
+            TextButton(onClick = {
+                if (!handled && dialog == "filters") {
+                    handled = true
+                    dialog = null
+                    viewModel.filters(draftFilters.toSet())
+                }
+            }) { Text(stringResource(R.string.okay)) }
+        }, dismissButton = {
+            TextButton(onClick = {
+                if (!handled && dialog == "filters") {
+                    handled = true
+                    dialog = null
+                }
+            }) { Text(stringResource(R.string.cancel)) }
+        })
+    }
+    if (dialog == "export") ChoiceDialog(
+        R.string.log_export_mode_title, { dialog = null }, listOf(
+            DialogChoice(R.string.history_export_selected, { export(exportFormat, "selected") }),
+            DialogChoice(R.string.log_export_all_logs, { export(exportFormat, "all") }),
+            DialogChoice(R.string.log_export_from_last, { export(exportFormat, "since") }),
+            DialogChoice(
+                R.string.log_export_append,
+                { export(exportFormat, "append") },
+                R.string.log_export_append_description
+            )
+        ), header = {
+            Text(stringResource(R.string.pref_auto_log_export_format))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                LogExportFormat.entries.forEach { format ->
+                    FilterChip(
+                        selected = exportFormat == format,
+                        onClick = { exportFormat = format },
+                        label = { Text(format.name) })
+                }
+            }
+        })
+    if (dialog == "import") ChoiceDialog(
+        R.string.log_import_mode_title,
+        { dialog = null },
+        listOf(DialogChoice(R.string.pref_import_logs_csv, {
+            importingJson = false
+            importer.launch(arrayOf("*/*"))
+            dialog = null
+        }), DialogChoice(R.string.history_import_json, {
+            importingJson = true
+            importer.launch(arrayOf("*/*"))
+            dialog = null
+        }))
+    )
+    if (dialogsAllowed && dialog == "importMode") AlertDialog(onDismissRequest = {
+        dialog = null
+        viewModel.pendingImportUri = null
+    }, title = { Text(stringResource(R.string.log_import_mode_title)) }, text = {
+        Column {
+            Text(stringResource(if (viewModel.pendingImportJson) R.string.device_data_backup_warning else R.string.csv_logs_import_warning))
+            Text(stringResource(R.string.log_import_mode_message))
+        }
+    }, confirmButton = {
+        Column {
+            TextButton(onClick = {
+                viewModel.import(LogImportMode.ADD) { result(true, R.string.csv_logs_imported) }
+                dialog = null
+            }) { Text(stringResource(R.string.log_import_add)) }
+            TextButton(onClick = {
+                dialog = "replace"
+            }) { Text(stringResource(R.string.log_import_replace)) }
+        }
+    }, dismissButton = {
+        TextButton(onClick = {
+            dialog = null
+            viewModel.pendingImportUri = null
+        }) { Text(stringResource(R.string.cancel)) }
+    })
+    if (dialogsAllowed && dialog == "replace") AlertDialog(
+        onDismissRequest = {
+            dialog = null
+            viewModel.pendingImportUri = null
+        },
+        title = { Text(stringResource(R.string.log_import_replace)) },
+        text = { Text(stringResource(R.string.confirm_clear_logs)) },
+        confirmButton = {
+            TextButton(onClick = {
+                viewModel.import(LogImportMode.REPLACE) {
+                    result(
+                        true, R.string.device_data_imported
+                    )
+                }
+                dialog = null
+            }) { Text(stringResource(R.string.yes)) }
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                dialog = null
+                viewModel.pendingImportUri = null
+            }) { Text(stringResource(R.string.cancel)) }
+        })
+    if (dialog == "delete") ChoiceDialog(
+        R.string.menu_clear, { dialog = null }, listOf(
+            DialogChoice(R.string.history_delete_selected, { dialog = "deleteSelected" }),
+            DialogChoice(R.string.history_delete_all, { dialog = "deleteAll" })
+        )
+    )
+    if (dialogsAllowed && (dialog == "deleteSelected" || dialog == "deleteAll")) AlertDialog(
+        onDismissRequest = {
+            dialog = null
+        },
+        title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(if (dialog == "deleteAll") R.string.confirm_clear_logs else R.string.history_delete_selected_confirm))
+                if (dialog == "deleteSelected") Text(
+                    "${timestampFormat.format(Instant.ofEpochMilli(state.range.start))} – ${
+                        timestampFormat.format(
+                            Instant.ofEpochMilli(state.range.end - 1)
+                        )
+                    }"
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                viewModel.delete(dialog == "deleteAll") {
+                    result(
+                        it, R.string.history_deleted
+                    )
+                }
+                dialog = null
+            }) { Text(stringResource(R.string.menu_clear)) }
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                dialog = null
+            }) { Text(stringResource(R.string.cancel)) }
+        })
+    val detail = state.page.firstOrNull { it.id == detailsId && it.record.time == detailsTime }
+    if (detail != null) {
+        val duration by produceState<Long?>(null, detail, state.revision) {
+            value = try {
+                viewModel.duration(detail)
+            } catch (exception: kotlinx.coroutines.CancellationException) {
+                throw exception
+            } catch (_: Exception) {
+                null
+            }
+        }
+        if (dialogsAllowed) AlertDialog(
+            onDismissRequest = { detailsId = null },
+            title = { Text(status(detail.record)) },
+            text = {
+                Column(
+                    Modifier.verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(timestampFormat.format(Instant.ofEpochMilli(detail.record.time)))
+                    HistoryMetric.entries.forEach { metric ->
+                        if (metric == HistoryMetric.POWER && metric.value(detail.record) == null) return@forEach
+                        Text(
+                            "${metricLabel(metric)}: ${
+                                historyValue(
+                                    metric.value(detail.record),
+                                    metric,
+                                    fahrenheit,
+                                    locale,
+                                    currentMultiplier
+                                )
+                            }"
+                        )
+                    }
+                    duration?.let { millis ->
+                        val mins = millis / 60_000
+                        val pluggedBefore = LogDatabase.decodeStatus(detail.record.status)[0] != 2
+                        Text(
+                            if (mins >= 60) stringResource(
+                                if (pluggedBefore) R.string.after_nh_mm_plugged_in else R.string.after_nh_mm_unplugged,
+                                mins / 60,
+                                mins % 60
+                            )
+                            else stringResource(
+                                if (pluggedBefore) R.string.after_nm_ms_plugged_in else R.string.after_nm_ms_unplugged,
+                                mins,
+                                millis / 1000 % 60
+                            )
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    detailsId = null
+                }) { Text(stringResource(R.string.okay)) }
+            })
+    }
+}
+
+@Composable
+internal fun metricLabel(metric: HistoryMetric): String = stringResource(
+    when (metric) {
+        HistoryMetric.LEVEL -> R.string.history_level
+        HistoryMetric.TEMPERATURE -> R.string.current_temperature
+        HistoryMetric.VOLTAGE -> R.string.current_voltage
+        HistoryMetric.CURRENT -> R.string.pref_cat_battery_current_main
+        HistoryMetric.POWER -> R.string.battery_power
+        HistoryMetric.REMAINING_CHARGE -> R.string.remaining_charge
+    }
+)
+
+private data class DialogChoice(
+    val label: Int, val action: () -> Unit, val description: Int? = null
+)
+
+@Composable
+private fun ChoiceDialog(
+    title: Int,
+    onDismiss: () -> Unit,
+    choices: List<DialogChoice>,
+    header: @Composable () -> Unit = {}
+) {
+    if (applicationDialogsAllowed()) AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(title)) },
+        text = {
+            Column(
+                Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                header()
+                choices.forEach { (label, action, description) ->
+                    OutlinedButton(
+                        onClick = action,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = if (description == null) ButtonDefaults.outlinedShape else MaterialTheme.shapes.medium
+                    ) {
+                        Column(
+                            Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(stringResource(label), Modifier.fillMaxWidth())
+                            if (description != null) Text(
+                                stringResource(description),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } })
+}

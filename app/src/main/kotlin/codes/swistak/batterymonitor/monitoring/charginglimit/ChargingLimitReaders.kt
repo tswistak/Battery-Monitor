@@ -20,10 +20,7 @@ import android.os.BatteryManager
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
-import codes.swistak.batterymonitor.common.CommandExecutor
-import codes.swistak.batterymonitor.common.PrivilegedShellExecutor
 import java.io.File
-
 
 internal class AndroidSettingReader(
     context: Context,
@@ -31,8 +28,20 @@ internal class AndroidSettingReader(
     private val privilegedCommand: (String) -> String?
 ) : SettingReader {
     private val contentResolver = context.applicationContext.contentResolver
+    private val packageManager = context.applicationContext.packageManager
 
     override fun read(namespace: SettingNamespace, key: String): ReadResult<String> {
+        if (namespace == SettingNamespace.LINEAGE_SYSTEM) {
+            return readTrustedLineageSetting(trustedProvider = {
+                DeviceProfileSignals.lineageProvider(
+                    packageManager
+                )
+            }, direct = { readDirect(namespace, key) }, privileged = {
+                readSettingWithPrivilegedFallback(
+                    it, privilegedAccessEnabled(), namespace, key, privilegedCommand
+                )
+            })
+        }
         val direct = readDirect(namespace, key)
         return readSettingWithPrivilegedFallback(
             direct, privilegedAccessEnabled(), namespace, key, privilegedCommand
@@ -62,8 +71,8 @@ internal class AndroidSettingReader(
     }
 
     private fun readLineageSystem(key: String): ReadResult<String> {
-        val uri = Uri.Builder().scheme("content").authority("lineagesettings").appendPath("system")
-            .appendPath(key).build()
+        val uri = Uri.Builder().scheme("content").authority(DeviceProfileSignals.LINEAGE_PROVIDER)
+            .appendPath("system").appendPath(key).build()
         return contentResolver.query(uri, arrayOf(LINEAGE_VALUE_COLUMN), null, null, null)
             ?.use { cursor ->
                 if (!cursor.moveToFirst()) {
@@ -82,6 +91,20 @@ internal class AndroidSettingReader(
 
 }
 
+internal fun readTrustedLineageSetting(
+    trustedProvider: () -> LineageProviderIdentity?,
+    direct: () -> ReadResult<String>,
+    privileged: (ReadResult<String>) -> ReadResult<String>
+): ReadResult<String> {
+    val owner = trustedProvider() ?: return ReadResult.Absent(ReadSource.CONTENT_RESOLVER)
+    val untrusted = ReadResult.Failed(ReadFailureReason.ACCESS_DENIED, ReadSource.CONTENT_RESOLVER)
+    val directResult = direct()
+    if (owner != trustedProvider()) return untrusted
+    if (directResult is ReadResult.Value) return directResult
+    val result = privileged(directResult)
+    return if (owner == trustedProvider()) result else untrusted
+}
+
 internal fun readSettingWithPrivilegedFallback(
     direct: ReadResult<String>,
     privilegedAccessEnabled: Boolean,
@@ -91,7 +114,7 @@ internal fun readSettingWithPrivilegedFallback(
 ): ReadResult<String> {
     if (direct is ReadResult.Value || !privilegedAccessEnabled) return direct
     val command = when (namespace) {
-        SettingNamespace.LINEAGE_SYSTEM -> "content query --uri content://lineagesettings/system/$key --projection value"
+        SettingNamespace.LINEAGE_SYSTEM -> "content query --uri content://${DeviceProfileSignals.LINEAGE_PROVIDER}/system/$key --projection value"
 
         else -> "settings get ${namespace.commandName} $key"
     }
@@ -134,40 +157,15 @@ internal fun parsePrivilegedSettingOutput(
     }
 }
 
-internal class AndroidSystemPropertyReader(
-    private val executor: CommandExecutor = PrivilegedShellExecutor()
-) : SystemPropertyReader {
-    override fun read(key: String): ReadResult<String> {
-        val output = executor.run("getprop $key") ?: return ReadResult.Failed(
-            ReadFailureReason.COMMAND_FAILED, ReadSource.APP_SHELL
-        )
-        val value = output.trim()
-        return if (value.isEmpty()) {
-            ReadResult.Absent(ReadSource.APP_SHELL)
-        } else {
-            ReadResult.Value(value, ReadSource.APP_SHELL)
-        }
-    }
-}
-
 internal object AndroidDeviceProfile {
     fun current(context: Context): DeviceProfile {
-        val properties = AndroidSystemPropertyReader()
         val appContext = context.applicationContext
         return DeviceProfile(
             manufacturer = Build.MANUFACTURER.orEmpty(),
             model = Build.MODEL.orEmpty(),
             device = Build.DEVICE.orEmpty(),
             sdkInt = Build.VERSION.SDK_INT,
-            properties = mapOf(
-                ChargingLimitPropertyKeys.LINEAGE_VERSION to properties.read(
-                    ChargingLimitPropertyKeys.LINEAGE_VERSION
-                )
-            ),
-            hasLineageOsFeature = DeviceProfileSignals.hasLineageFeature(appContext.packageManager),
-            hasLineageSettingsProvider = DeviceProfileSignals.hasLineageProvider(
-                appContext.packageManager
-            ),
+            hasLineageSettingsProvider = DeviceProfileSignals.lineageProvider(appContext.packageManager) != null,
             hasGrapheneOsSystemPackage = DeviceProfileSignals.hasGrapheneSystemPackage(appContext)
         )
     }

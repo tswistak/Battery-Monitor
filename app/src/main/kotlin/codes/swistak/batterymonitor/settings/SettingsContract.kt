@@ -22,7 +22,10 @@ internal object SettingsContract {
     const val KEY_NOTIFICATION_SETTINGS: String = "notification_settings"
     const val KEY_CURRENT_STATE_SETTINGS: String = "current_state_settings"
     const val KEY_ALARMS_SETTINGS: String = "alarms_settings"
-    const val KEY_ALARM_EDIT_SETTINGS: String = "alarm_edit_settings"
+    const val DEFAULT_DISMISS_LOW_BATTERY_ON_RECOVERY = false
+
+    const val KEY_DISMISS_LOW_BATTERY_ON_RECOVERY: String = "dismiss_low_battery_on_recovery"
+
     const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
     const val KEY_OTHER_SETTINGS: String = "other_settings"
     const val KEY_TIME_ESTIMATES_SETTINGS: String = "time_estimates_settings"
@@ -31,14 +34,10 @@ internal object SettingsContract {
 
     const val KEY_BACKUP_RESTORE_SETTINGS: String = "backup_restore_settings"
     const val KEY_DIAGNOSTICS_SETTINGS: String = "diagnostics_settings"
-    const val KEY_CHANGE_APP_LANGUAGE_HOLDER: String = "change_app_language_holder"
     const val KEY_CHANGE_APP_LANGUAGE: String = "change_app_language"
-    const val KEY_PLUGIN_SETTINGS: String = "plugin_settings"
-    const val KEY_CAT_STATUS_BAR_CHIP: String = "category_status_bar_chip"
     const val KEY_FIRST_RUN: String = "first_run"
     const val KEY_MIGRATED_SERVICE_DESIRED: String = "service_desired_migrated_to_sp_main"
     const val KEY_ENABLE_NOTIFS_B: String = "enable_notifications_button"
-    const val KEY_ENABLE_NOTIFS_SUMMARY: String = "enable_notifications_summary"
     const val KEY_EXPORT_SETTINGS: String = "export_settings_backup"
     const val KEY_IMPORT_SETTINGS: String = "import_settings_backup"
     const val KEY_EXPORT_ALARMS: String = "export_alarms_backup"
@@ -48,6 +47,8 @@ internal object SettingsContract {
     const val KEY_IMPORT_LOGS_CSV: String = "import_logs_csv_backup"
     const val KEY_EXPORT_GENERAL_BACKUP: String = "export_general_backup"
     const val KEY_IMPORT_GENERAL_BACKUP: String = "import_general_backup"
+    const val KEY_RESET_DEFAULT_SETTINGS = "reset_default_settings"
+    const val KEY_LIVE_UPDATE_SYSTEM_SETTINGS = "live_update_system_settings"
 
     const val KEY_AUTO_LOG_EXPORT: String = "auto_log_export"
     const val KEY_LAST_LOG_EXPORT_TIME: String = "last_log_export_time"
@@ -57,8 +58,23 @@ internal object SettingsContract {
     const val KEY_AUTO_LOG_EXPORT_DIRECTORY: String = "auto_log_export_directory"
     const val KEY_LAST_AUTO_LOG_EXPORT_TIME: String = "last_auto_log_export_time"
     const val KEY_NEXT_AUTO_LOG_EXPORT_TIME: String = "next_auto_log_export_time"
+    const val KEY_LAST_LOG_EXPORT_ID = "last_log_export_id"
+    const val KEY_LAST_AUTO_LOG_EXPORT_ID = "last_auto_log_export_id"
 
     const val KEY_ENABLE_LOGGING: String = "enable_logging"
+
+    const val KEY_HISTORY_SAMPLING_MODE = "history_sampling_mode"
+    const val HISTORY_SAMPLING_MODE_STANDARD = "standard"
+    const val HISTORY_SAMPLING_MODE_EXACT_ALARM = "exact_alarm"
+    const val HISTORY_SAMPLING_MODE_KEEP_CPU_AWAKE = "keep_cpu_awake"
+    const val KEY_CHART_GAP_THRESHOLD_MINUTES = "chart_gap_threshold_minutes"
+    const val DEFAULT_CHART_GAP_THRESHOLD_MINUTES = "20"
+    const val CHART_GAP_THRESHOLD_NEVER = "never"
+    const val MIN_CHART_GAP_THRESHOLD_MINUTES = 2
+
+    fun parseChartGapThresholdMinutes(value: String?): Int? = value?.toIntOrNull()
+        ?.takeIf { it >= MIN_CHART_GAP_THRESHOLD_MINUTES && it.toString() == value }
+
     const val KEY_DEBUG_LOGGING: String = "debug_logging"
 
     const val KEY_MAX_LOG_AGE: String = "max_log_age"
@@ -68,7 +84,6 @@ internal object SettingsContract {
 
     const val KEY_LONG_DURATION_FORMAT: String = "long_duration_format"
 
-    const val KEY_NOTIFY_STATUS_DURATION: String = "notify_status_duration"
     const val KEY_AUTOSTART: String = "autostart"
     const val KEY_PREDICTION_TYPE: String = "prediction_type"
     const val KEY_CHARGING_TARGET_MODE: String = "charging_target_mode"
@@ -79,7 +94,6 @@ internal object SettingsContract {
     const val DEFAULT_CUSTOM_CHARGING_TARGET: Int = 80
     const val DEFAULT_DISCHARGING_TARGET: Int = 0
 
-    const val KEY_STATUS_DUR_EST: String = "status_dur_est"
     const val KEY_INDICATE_CHARGING: String = "indicate_charging"
     const val KEY_CHIP_CONTENT: String = "chip_content"
     const val KEY_CHIP_CONTENT_ORDER: String = "chip_content_order"
@@ -101,12 +115,6 @@ internal object SettingsContract {
     const val KEY_CHIP_INDICATE_CHARGING: String = "chip_indicate_charging"
     const val KEY_LIVE_UPDATE_DISPLAY: String = "live_update_display"
     const val KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION: String = "live_update_keep_main_notification"
-    const val KEY_RED: String = "use_red"
-    const val KEY_RED_THRESH: String = "red_threshold"
-    const val KEY_AMBER: String = "use_amber"
-    const val KEY_AMBER_THRESH: String = "amber_threshold"
-    const val KEY_GREEN: String = "use_green"
-    const val KEY_GREEN_THRESH: String = "green_threshold"
     const val KEY_TOP_LINE: String = "top_line"
     const val KEY_BOTTOM_LINE: String = "bottom_line"
     const val KEY_TIME_REMAINING_VERBOSITY: String = "time_remaining_verbosity"
@@ -131,8 +139,8 @@ internal object SettingsContract {
         VITAL_SIGN_STATUS_DURATION
     )
     val DEFAULT_VITAL_SIGNS_CONTENT: Set<String> = ALL_VITAL_SIGNS_CONTENT.take(3).toSet()
-    const val KEY_ENABLE_BATTERY_CURRENT: String = "enable_battery_current"
     const val KEY_USE_PRIVILEGED_ACCESS: String = "use_privileged_access"
+
     const val KEY_BATTERY_CURRENT_MULTIPLIER: String = "battery_current_multiplier"
     const val KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING: String =
         "battery_current_multiplier_detection_pending"
@@ -143,8 +151,8 @@ internal object SettingsContract {
 
     const val KEY_SHOW_REMAINING_CHARGE: String = "show_remaining_charge"
 
-    const val KEY_UI_COLOR: String = "ui_color"
-    const val KEY_ENABLE_ADVANCED_STATS: String = "enable_advanced_stats"
+    const val KEY_COLOR_SOURCE: String = "ui_color_source"
+    const val KEY_BRIGHTNESS: String = "ui_brightness"
 
     const val LEGACY_KEY_ENABLE_CURRENT = "enable_current_hack"
     const val LEGACY_KEY_CONVERT_F = "convert_to_fahrenheit"

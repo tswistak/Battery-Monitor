@@ -18,13 +18,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.DocumentsContract
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.edit
+import codes.swistak.batterymonitor.devicebackup.BackupExportOutputStream
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
+import codes.swistak.batterymonitor.devicebackup.writeStagedBackupExport
 import codes.swistak.batterymonitor.settings.SettingsContract
-import java.io.OutputStream
-import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
 internal enum class AutoLogExportFrequency(
@@ -41,7 +44,7 @@ internal enum class AutoLogExportFrequency(
 
         fun enabledForRetention(maxLogAgeHours: Int): List<AutoLogExportFrequency> =
             entries.filter { frequency ->
-                frequency.intervalHours?.let { maxLogAgeHours < 0 || it <= maxLogAgeHours } == true
+                frequency.intervalHours?.let { maxLogAgeHours !in 0..<it } == true
             }
 
         fun cappedForRetention(
@@ -81,7 +84,12 @@ internal fun shouldRunAutoLogExport(
 internal object AutoLogExportScheduler {
     private const val REQUEST_CODE = 3084
 
-    fun ensureScheduled(context: Context) {
+    fun ensureScheduled(context: Context) = AutoLogExportProvider.schedule(context, "ensure")
+    fun reschedule(context: Context) = AutoLogExportProvider.schedule(context, "reschedule")
+    fun scheduleAfterRun(context: Context) = AutoLogExportProvider.schedule(context, "after")
+    fun cancel(context: Context) = AutoLogExportProvider.schedule(context, "cancel")
+
+    internal fun ensureScheduledInMainProcess(context: Context) {
         val preferences = preferences(context)
         val frequency = AutoLogExportFrequency.fromPreference(
             preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, null)
@@ -92,7 +100,7 @@ internal object AutoLogExportScheduler {
                 preferences.contains(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)
             )
         ) {
-            cancel(context)
+            cancelInMainProcess(context)
             return
         }
 
@@ -103,9 +111,9 @@ internal object AutoLogExportScheduler {
         scheduleAlarm(context, next)
     }
 
-    fun reschedule(context: Context) {
+    internal fun rescheduleInMainProcess(context: Context) {
         preferences(context).edit { remove(SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME) }
-        ensureScheduled(context)
+        ensureScheduledInMainProcess(context)
     }
 
     fun startInitialExport(context: Context) {
@@ -117,7 +125,7 @@ internal object AutoLogExportScheduler {
         )
     }
 
-    fun scheduleAfterRun(context: Context) {
+    internal fun scheduleAfterRunInMainProcess(context: Context) {
         val preferences = preferences(context)
         val frequency = AutoLogExportFrequency.fromPreference(
             preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, null)
@@ -128,7 +136,7 @@ internal object AutoLogExportScheduler {
                 preferences.contains(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)
             )
         ) {
-            cancel(context)
+            cancelInMainProcess(context)
             return
         }
         val next = nextOccurrence(System.currentTimeMillis(), frequency)
@@ -136,7 +144,7 @@ internal object AutoLogExportScheduler {
         scheduleAlarm(context, next)
     }
 
-    fun cancel(context: Context) {
+    internal fun cancelInMainProcess(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         alarmManager?.cancel(pendingIntent(context))
         preferences(context).edit { remove(SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME) }
@@ -183,6 +191,7 @@ internal class AutoLogExportReceiver : BroadcastReceiver() {
                 AutoLogExporter.export(context.applicationContext, createFileWhenEmpty)
             } catch (exception: Exception) {
                 Log.e("AutoLogExport", "Automatic log export failed", exception)
+                AutoLogExporter.showRecoveryFailure(context, exception)
             } finally {
                 AutoLogExportScheduler.scheduleAfterRun(context.applicationContext)
                 result.finish()
@@ -216,123 +225,119 @@ internal object AutoLogExporter {
     private fun exportBeforeLogDeletion(
         context: Context, rescheduleAfterExport: Boolean
     ): Boolean {
-        if (!isEnabled(context)) return true
         return try {
             export(context)
             if (rescheduleAfterExport) AutoLogExportScheduler.reschedule(context)
             true
         } catch (exception: Exception) {
             Log.e(LOG_TAG, "Skipping log deletion because automatic export failed", exception)
+            showRecoveryFailure(context, exception)
             false
         }
     }
 
-    @Synchronized
-    fun export(context: Context, createFileWhenEmpty: Boolean = false) {
-        if (!isEnabled(context)) return
-        val preferences = context.getSharedPreferences(
-            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-        )
-        val treeUri = preferences.getString(
-            SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, null
-        )?.let(Uri::parse) ?: return
-        val format = LogExportFormat.fromPreference(
-            preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, null)
-        )
-        val mode = AutoLogExportMode.fromPreference(
-            preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, null)
-        )
-        val exportThrough = System.currentTimeMillis()
-        val lastAutomaticExport = preferences.takeIf {
-            it.contains(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME)
-        }?.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0L)
-
-        when (mode) {
-            AutoLogExportMode.NEW_FILE -> {
-                val records = LogExport.loadRecords(
-                    context, afterExclusive = lastAutomaticExport, throughInclusive = exportThrough
-                )
-                if (shouldCreateNewAutoLogExportFile(records.isNotEmpty(), createFileWhenEmpty)) {
-                    val uri = createDocument(
-                        context,
-                        treeUri,
-                        mimeType(format),
-                        LogExport.fileName(format, exportThrough)
-                    )
-                    writeNewFile(context, uri, format, records)
-                }
-            }
-
-            AutoLogExportMode.APPEND -> {
-                val fileName = LogExport.appendFileName(format)
-                val existingUri = findDocument(context, treeUri, fileName)
-                val records = LogExport.loadRecords(
-                    context,
-                    afterExclusive = lastAutomaticExport.takeIf { existingUri != null },
-                    throughInclusive = exportThrough
-                )
-                if (records.isNotEmpty() || existingUri == null) {
-                    val uri = existingUri ?: createDocument(
-                        context, treeUri, mimeType(format), fileName
-                    )
-                    appendToFile(context, uri, format, records, existingUri != null)
-                }
-            }
-        }
-        preferences.edit {
-            putLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, exportThrough)
+    internal fun showRecoveryFailure(context: Context, exception: Exception) {
+        if (exception is LogExportRecoveryException) Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context.applicationContext, exception.message, Toast.LENGTH_LONG).show()
         }
     }
+
+    fun export(context: Context, createFileWhenEmpty: Boolean = false) =
+        AutoLogExportProvider.export(context, createFileWhenEmpty)
+
+    internal fun exportInMainProcess(context: Context, createFileWhenEmpty: Boolean = false) =
+        LogExport.withDocumentLock(context) {
+            if (!isEnabled(context)) return@withDocumentLock
+            val preferences = context.getSharedPreferences(
+                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+            )
+            val treeUri = preferences.getString(
+                SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, null
+            )?.let(Uri::parse) ?: return@withDocumentLock
+            val format = LogExportFormat.fromPreference(
+                preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, null)
+            )
+            val mode = AutoLogExportMode.fromPreference(
+                preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, null)
+            )
+            val exportThrough = System.currentTimeMillis()
+            val timeKey = SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME
+            val idKey = SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_ID
+            val previous = preferences.takeIf { it.contains(timeKey) }?.getLong(timeKey, 0)
+            var lastWritten: HistoryKey? = null
+            fun record(row: HistoryRecord): LogRecord {
+                lastWritten = row.key
+                return row.record
+            }
+
+            val database = LogDatabase(context.applicationContext)
+            try {
+                when (mode) {
+                    AutoLogExportMode.NEW_FILE -> database.readExportRecords(
+                        previous,
+                        exportThrough,
+                        preferences.exportWatermarkId(previous, timeKey, idKey)
+                    ) { rows ->
+                        val iterator = rows.iterator()
+                        if (shouldCreateNewAutoLogExportFile(
+                                iterator.hasNext(), createFileWhenEmpty
+                            )
+                        ) {
+                            writeNewFile(context, format, iterator.asSequence().map(::record)) {
+                                createDocument(
+                                    context,
+                                    treeUri,
+                                    mimeType(format),
+                                    LogExport.fileName(format, exportThrough)
+                                )
+                            }
+                        }
+                    }
+
+                    AutoLogExportMode.APPEND -> {
+                        val fileName = LogExport.appendFileName(format)
+                        val existingUri = findDocument(context, treeUri, fileName)
+                        val after = previous.takeIf { existingUri != null }
+                        val uri = existingUri ?: createDocument(
+                            context, treeUri, mimeType(format), fileName
+                        )
+                        database.readExportRecords(
+                            after,
+                            exportThrough,
+                            preferences.exportWatermarkId(after, timeKey, idKey)
+                        ) { rows ->
+                            val records = rows.map(::record)
+                            when (format) {
+                                LogExportFormat.CSV -> LogExport.appendCsv(context, uri, records)
+                                LogExportFormat.JSON -> LogExport.appendJson(context, uri, records)
+                            }
+                        }
+                    }
+                }
+            } finally {
+                database.close()
+            }
+            lastWritten?.let { last ->
+                LogExport.withWatermarkLock(context) {
+                    preferences.saveExportWatermark(timeKey, idKey, last)
+                }
+            }
+        }
 
     private fun writeNewFile(
-        context: Context, uri: Uri, format: LogExportFormat, records: List<LogRecord>
-    ) {
-        context.contentResolver.openOutputStream(uri, "w")?.use { output ->
-            write(context, output, format, records, includeCsvHeader = true)
-        } ?: error("Could not open automatic export file")
-    }
-
-    private fun appendToFile(
         context: Context,
-        uri: Uri,
         format: LogExportFormat,
-        records: List<LogRecord>,
-        existed: Boolean
+        records: Sequence<LogRecord>,
+        destination: () -> Uri
     ) {
-        if (format == LogExportFormat.CSV) {
-            context.contentResolver.openOutputStream(uri, if (existed) "wa" else "w")?.use {
-                LogExport.writeCsv(context, it, records, includeHeader = !existed)
-            } ?: error("Could not open automatic export file")
-            return
-        }
+        writeStagedBackupExport(context, destination) { output ->
+            when (format) {
+                LogExportFormat.CSV -> LogExport.writeCsv(
+                    context, BackupExportOutputStream(output), records, includeHeader = true
+                )
 
-        val existingRecords = if (existed) {
-            context.contentResolver.openInputStream(uri)?.bufferedReader(StandardCharsets.UTF_8)
-                ?.use { DeviceDataBackup.readLogsFromJson(it.readText()) }.orEmpty()
-        } else {
-            emptyList()
-        }
-        context.contentResolver.openOutputStream(uri, "w")?.use { output ->
-            write(context, output, format, existingRecords + records, includeCsvHeader = true)
-        } ?: error("Could not open automatic export file")
-    }
-
-    private fun write(
-        context: Context,
-        output: OutputStream,
-        format: LogExportFormat,
-        records: List<LogRecord>,
-        includeCsvHeader: Boolean
-    ) {
-        when (format) {
-            LogExportFormat.CSV -> LogExport.writeCsv(
-                context, output, records, includeCsvHeader
-            )
-
-            LogExportFormat.JSON -> output.write(
-                DeviceDataBackup.exportLogsToJson(context, records).toString()
-                    .toByteArray(StandardCharsets.UTF_8)
-            )
+                LogExportFormat.JSON -> DeviceDataBackup.writeHistory(context, output, records)
+            }
         }
     }
 

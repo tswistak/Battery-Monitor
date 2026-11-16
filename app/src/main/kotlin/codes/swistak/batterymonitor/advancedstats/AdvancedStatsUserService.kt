@@ -50,11 +50,16 @@ class AdvancedStatsUserService : Binder {
 
     private val context: Context?
 
+    // Shizuku instantiates this fallback constructor reflectively before API v13.
+    @Keep
+    @Suppress("unused")
     constructor() {
         this.context = null
     }
 
+    // Shizuku API v13+ selects this constructor reflectively to supply the package context.
     @Keep
+    @Suppress("unused")
     constructor(context: Context?) {
         this.context = context?.applicationContext
     }

@@ -29,9 +29,9 @@ internal data class ResolvedTarget(
 
 internal class ChargingTargetResolver(
     private val preferences: SharedPreferences,
-    private val chargingLimitProvider: ChargingLimitProvider
+    private val chargingLimitProvider: ChargingLimitProvider? = null
 ) {
-    fun resolveChargingTarget(): ResolvedTarget {
+    fun resolveChargingTarget(state: ChargingLimitState? = null): ResolvedTarget {
         val mode = preferences.getString(
             SettingsContract.KEY_CHARGING_TARGET_MODE,
             SettingsContract.CHARGING_TARGET_MODE_AUTOMATIC
@@ -45,7 +45,7 @@ internal class ChargingTargetResolver(
             )
         }
 
-        return resolveDetectedChargingTarget(chargingLimitProvider.readState())
+        return resolveDetectedChargingTarget(state ?: chargingLimitProvider?.readState())
     }
 
     fun resolveDischargingTarget(): ResolvedTarget = ResolvedTarget(
@@ -55,7 +55,7 @@ internal class ChargingTargetResolver(
     )
 }
 
-internal fun resolveDetectedChargingTarget(state: ChargingLimitState): ResolvedTarget =
+internal fun resolveDetectedChargingTarget(state: ChargingLimitState?): ResolvedTarget =
     if (state is ChargingLimitState.Fixed && state.isValid) {
         ResolvedTarget(state.effectivePercent, TargetSource.DEVICE)
     } else {

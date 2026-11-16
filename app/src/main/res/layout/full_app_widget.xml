@@ -1,79 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:padding="@dimen/widget_margin"
-             android:id="@+id/widget_layout"
->
-  <LinearLayout android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/full_widget_rounded_rectangle"
-  >
-    <LinearLayout android:orientation="vertical"
-                  android:layout_height="fill_parent"
-                  android:layout_width="0px"
-                  android:layout_weight="0.3"
-                  android:background="@drawable/full_widget_rounded_rectangle"
-                  android:weightSum="1"
-    >
-      <TextView android:layout_width="wrap_content"
-            android:layout_height="0px"
-            android:layout_weight="0.15"
-      />
-      <ImageView android:id="@+id/battery_level_view"
-                 android:scaleType="fitCenter"
-                 android:paddingLeft="4dp"
-                 android:paddingRight="4dp"
-                 android:layout_width="wrap_content"
-                 android:layout_height="0px"
-                 android:layout_weight="0.7"
-      />
-    </LinearLayout>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin"
+    tools:ignore="SpUsage">
 
-    <TextView android:id="@+id/level"
-              android:layout_height="fill_parent"
-	      android:layout_width="wrap_content"
-              android:gravity="center_horizontal|center_vertical"
-              android:textColor="@color/widgetTextColor"
-              android:textSize="40dp"
-              android:text="XX%"
-    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/full_widget_rounded_rectangle"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
-    <FrameLayout android:layout_height="fill_parent"
-                 android:layout_width="0px"
-                 android:layout_weight="0.5"
-    >
-      <TextView android:id="@+id/fully_charged"
-	        android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.3"
+            android:background="@drawable/full_widget_rounded_rectangle"
+            android:orientation="vertical"
+            android:weightSum="1"
+            tools:ignore="NestedWeights">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0px"
+                android:layout_weight="0.15" />
+
+            <ImageView
+                android:id="@+id/battery_level_view"
+                android:layout_width="wrap_content"
+                android:layout_height="0px"
+                android:layout_weight="0.7"
+                android:importantForAccessibility="no"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:scaleType="fitCenter" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/widget_value_placeholder"
+            android:textColor="@color/widgetTextColor"
+            android:textSize="40dp" />
+
+        <FrameLayout
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:id="@+id/fully_charged"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_horizontal|center_vertical"
                 android:textColor="@color/widgetTextColor"
-                android:textSize="20dp"
-      />
+                android:textSize="20dp" />
 
-      <LinearLayout android:orientation="vertical"
-                    android:layout_height="fill_parent"
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/time_remaining"
                     android:layout_width="fill_parent"
-      >
-        <TextView android:id="@+id/time_remaining"
-	          android:layout_width="fill_parent"
-                  android:layout_height="0px"
-                  android:layout_weight="0.5"
-                  android:gravity="center_horizontal|bottom"
-                  android:textColor="@color/widgetTextColor"
-                  android:textSize="20dp"
-        />
+                    android:layout_height="0px"
+                    android:layout_weight="0.5"
+                    android:gravity="center_horizontal|bottom"
+                    android:textColor="@color/widgetTextColor"
+                    android:textSize="20dp" />
 
-        <TextView android:id="@+id/until_what"
-	          android:layout_width="fill_parent"
-                  android:layout_height="0px"
-                  android:layout_weight="0.5"
-                  android:gravity="center_horizontal|top"
-                  android:textColor="@color/widgetTextColor"
-                  android:textSize="14dp"
-        />
-      </LinearLayout>
-    </FrameLayout>
-  </LinearLayout>
+                <TextView
+                    android:id="@+id/until_what"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="0.5"
+                    android:gravity="center_horizontal|top"
+                    android:textColor="@color/widgetTextColor"
+                    android:textSize="14dp" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 </FrameLayout>

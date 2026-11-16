@@ -58,4 +58,27 @@ class RemainingChargeTest {
         assertEquals(1, failures)
     }
 
+    @Test
+    fun `valid Android charge including zero takes precedence without requesting privileged access`() {
+        for (charge in listOf(0, 2_847_300)) {
+            val reader = RemainingChargeReader({ charge })
+            assertEquals(charge.toLong(), reader.readMicroAmpHours {
+                error("Valid Android charge must not request a fallback")
+            })
+        }
+    }
+
+    @Test
+    fun `missing or failed Android charge uses a validated fallback in microamp hours`() {
+        for (reader in listOf(
+            RemainingChargeReader({ Int.MIN_VALUE }),
+            RemainingChargeReader({ -1 }),
+            RemainingChargeReader({ throw SecurityException("unsupported") })
+        )) {
+            assertEquals(2_847_300L, reader.readMicroAmpHours { 2_847_300L })
+            assertEquals(0L, reader.readMicroAmpHours { 0L })
+            assertNull(reader.readMicroAmpHours { -1L })
+        }
+    }
+
 }

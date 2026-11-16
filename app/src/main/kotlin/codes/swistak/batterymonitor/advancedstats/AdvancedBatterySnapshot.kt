@@ -13,6 +13,11 @@
 package codes.swistak.batterymonitor.advancedstats
 
 import android.os.Bundle
+import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
+
+internal data class DiagnosticCheck(
+    val time: BatteryMeasurementTime, val failed: Boolean = false, val retained: Boolean = false
+)
 
 internal class AdvancedBatterySnapshot {
     companion object {
@@ -47,6 +52,24 @@ internal class AdvancedBatterySnapshot {
         fun fromBundle(bundle: Bundle): AdvancedBatterySnapshot {
             val snapshot = AdvancedBatterySnapshot()
 
+            snapshot.capturedAtMillis = bundle.getLong("captured_at")
+            snapshot.sourceReadTimes.putAll(BatteryMeasurementTime.readMap(bundle.getBundle("source_read_times")))
+            bundle.getBundle("diagnostic_checks")?.let { checks ->
+                checks.keySet().forEach { key ->
+                    checks.getBundle(key)?.let { check ->
+                        BatteryMeasurementTime.fromBundle(check)?.let { time ->
+                            snapshot.checks[key] = DiagnosticCheck(
+                                time, check.getBoolean("failed"), check.getBoolean("retained")
+                            )
+                        }
+                    }
+                }
+            }
+            bundle.getBundle("field_sources")?.let { sources ->
+                sources.keySet().forEach { key ->
+                    sources.getString(key)?.let { snapshot.fieldSources[key] = it }
+                }
+            }
             snapshot.accessMethod = bundle.getString(KEY_ACCESS_METHOD)
             snapshot.remoteUid = bundle.getInt(KEY_REMOTE_UID, -1)
             snapshot.shizukuVersion = bundle.getInt(KEY_SHIZUKU_VERSION, -1)
@@ -98,6 +121,116 @@ internal class AdvancedBatterySnapshot {
         }
     }
 
+    var capturedAtMillis: Long = 0
+    val sourceReadTimes = linkedMapOf<String, BatteryMeasurementTime>()
+    val checks = linkedMapOf<String, DiagnosticCheck>()
+
+    fun recordCheck(
+        source: String, fields: Collection<String>, time: BatteryMeasurementTime, failed: Boolean
+    ) {
+        if (Thread.currentThread().isInterrupted) return
+        val check = DiagnosticCheck(time, failed)
+        checks[source] = check
+        fields.forEach { checks[it] = check }
+    }
+
+    fun retainingWithChecksFrom(attempt: AdvancedBatterySnapshot): AdvancedBatterySnapshot =
+        fromBundle(toBundle()).apply {
+            checks.putAll(attempt.checks.mapValues { (_, check) -> check.copy(retained = true) })
+        }
+
+    fun retainFailedReadingsFrom(previous: AdvancedBatterySnapshot?): AdvancedBatterySnapshot {
+        if (previous == null) return this
+        fun <T> keep(key: String, current: T?, old: T?, assign: (T) -> Unit) {
+            val check = checks[key] ?: return
+            if (current != null || old == null || !check.failed) return
+            assign(old)
+            previous.fieldSources[key]?.let { source ->
+                fieldSources[key] = source
+                previous.sourceReadTimes[source]?.let { sourceReadTimes[source] = it }
+            }
+            checks[key] = check.copy(retained = true)
+        }
+        keep("charge_counter", chargeCounterUah, previous.chargeCounterUah) {
+            chargeCounterUah = it
+        }
+        keep("current_now", currentNowUa, previous.currentNowUa) { currentNowUa = it }
+        keep("current_average", currentAverageUa, previous.currentAverageUa) {
+            currentAverageUa = it
+        }
+        keep("energy_counter", energyCounterNwh, previous.energyCounterNwh) {
+            energyCounterNwh = it
+        }
+        keep("cycle_count", cycleCount, previous.cycleCount) { cycleCount = it }
+        keep("charge_full", fullChargeUah, previous.fullChargeUah) { fullChargeUah = it }
+        keep("charge_full_design", designChargeUah, previous.designChargeUah) {
+            designChargeUah = it
+        }
+        keep(
+            "capacity", reportedCapacityPercent, previous.reportedCapacityPercent
+        ) { reportedCapacityPercent = it }
+        keep(
+            "state_of_health", stateOfHealthPercent, previous.stateOfHealthPercent
+        ) { stateOfHealthPercent = it }
+        keep(
+            "charge_time_remaining", chargeTimeRemainingMs, previous.chargeTimeRemainingMs
+        ) { chargeTimeRemainingMs = it }
+        keep(
+            "max_charging_current", maxChargingCurrentUa, previous.maxChargingCurrentUa
+        ) { maxChargingCurrentUa = it }
+        keep(
+            "max_charging_voltage", maxChargingVoltageUv, previous.maxChargingVoltageUv
+        ) { maxChargingVoltageUv = it }
+        keep("charging_policy", chargingPolicy, previous.chargingPolicy) { chargingPolicy = it }
+        keep("charging_state", chargingState, previous.chargingState) { chargingState = it }
+        keep("capacity_level", capacityLevel, previous.capacityLevel) { capacityLevel = it }
+        fun keepRows(
+            labels: ArrayList<String>,
+            values: ArrayList<String>,
+            oldLabels: ArrayList<String>,
+            oldValues: ArrayList<String>,
+            source: String
+        ) {
+            oldLabels.zip(oldValues).forEach { (key, value) ->
+                val canonical = when {
+                    key.startsWith("cmd battery ") -> key.substringBefore(" 2>")
+                    source == "/sys/class/power_supply" -> "$source/$key"
+                    else -> "$source / $key"
+                }
+                val check = checks[canonical] ?: checks[source] ?: return@forEach
+                if (key in labels || !check.failed) return@forEach
+                labels.add(key)
+                values.add(value)
+                previous.sourceReadTimes[canonical]?.let { sourceReadTimes[canonical] = it }
+                checks[canonical] = check.copy(retained = true)
+            }
+        }
+        keepRows(
+            serviceLabels,
+            serviceValues,
+            previous.serviceLabels,
+            previous.serviceValues,
+            if (accessMethod == "Android") "ACTION_BATTERY_CHANGED" else "dumpsys battery"
+        )
+        keepRows(
+            sysfsLabels,
+            sysfsValues,
+            previous.sysfsLabels,
+            previous.sysfsValues,
+            "/sys/class/power_supply"
+        )
+        keepRows(
+            metadataLabels,
+            metadataValues,
+            previous.metadataLabels,
+            previous.metadataValues,
+            "BatteryManager"
+        )
+        return this
+    }
+
+    val fieldSources = linkedMapOf<String, String>()
+
     var accessMethod: String? = null
     var remoteUid: Int = -1
     var shizukuVersion: Int = -1
@@ -124,15 +257,27 @@ internal class AdvancedBatterySnapshot {
     var metadataValues = ArrayList<String>()
 
     fun hasStats(): Boolean {
-        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || reportedCapacityPercent != null || stateOfHealthPercent != null || chargeTimeRemainingMs != null || !serviceLabels!!.isEmpty() || !sysfsLabels!!.isEmpty() || !metadataLabels!!.isEmpty()
+        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || reportedCapacityPercent != null || stateOfHealthPercent != null || chargeTimeRemainingMs != null || serviceLabels.isNotEmpty() || sysfsLabels.isNotEmpty() || metadataLabels.isNotEmpty()
     }
 
-    fun hasPrivilegedStats(): Boolean {
-        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || !serviceLabels!!.isEmpty() || !sysfsLabels!!.isEmpty() || !metadataLabels!!.isEmpty()
-    }
 
     fun toBundle(): Bundle {
         val bundle = Bundle()
+        bundle.putLong("captured_at", capturedAtMillis)
+        bundle.putBundle("source_read_times", Bundle().apply {
+            sourceReadTimes.forEach { (source, time) -> putBundle(source, time.toBundle()) }
+        })
+        bundle.putBundle("diagnostic_checks", Bundle().apply {
+            checks.forEach { (source, check) ->
+                putBundle(source, check.time.toBundle().apply {
+                    putBoolean("failed", check.failed)
+                    putBoolean("retained", check.retained)
+                })
+            }
+        })
+        bundle.putBundle(
+            "field_sources",
+            Bundle().apply { fieldSources.forEach { (key, value) -> putString(key, value) } })
 
         if (accessMethod != null) bundle.putString(KEY_ACCESS_METHOD, accessMethod)
         bundle.putInt(KEY_REMOTE_UID, remoteUid)

@@ -22,8 +22,7 @@ internal object ChipContentMigration : SettingsMigration {
     override fun migrate(
         preferences: SharedPreferences, editor: SharedPreferences.Editor
     ) {
-        val storedValue = preferences.all[SettingsContract.KEY_CHIP_CONTENT]
-        val content = when (storedValue) {
+        val content = when (val storedValue = preferences.all[SettingsContract.KEY_CHIP_CONTENT]) {
             is Set<*> -> storedValue.filterIsInstance<String>().filterTo(linkedSetOf()) {
                 it in SettingsContract.ALL_CHIP_CONTENT
             }.ifEmpty { SettingsContract.DEFAULT_CHIP_CONTENT }

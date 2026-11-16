@@ -1,0 +1,447 @@
+/*
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+*/
+package codes.swistak.batterymonitor.ui.settings
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
+import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
+import codes.swistak.batterymonitor.ui.theme.BatterySpacing
+import java.io.Serializable
+import java.util.Collections
+
+internal data class SettingsOrderItem(val value: String, val label: String, val selected: Boolean) :
+    Serializable
+
+internal sealed interface SettingsDialog {
+    data class Choices(
+        val title: String,
+        val message: String? = null,
+        val options: List<String>,
+        val selected: Set<Int>,
+        val multiple: Boolean = true,
+        val allowEmpty: Boolean = false,
+        val supportingText: String? = null,
+        val onConfirm: (Set<Int>) -> Unit
+    ) : SettingsDialog
+
+    data class Number(
+        val title: String,
+        val message: String,
+        val initial: Int,
+        val min: Int,
+        val max: Int,
+        val error: String,
+        val onConfirm: (Int) -> Unit
+    ) : SettingsDialog
+
+    data class Ordered(
+        val title: String,
+        val message: String?,
+        val items: List<SettingsOrderItem>,
+        val allowEmpty: Boolean,
+        val onConfirm: (List<SettingsOrderItem>) -> Unit
+    ) : SettingsDialog
+
+    data class AutoExport(
+        val title: String,
+        val directoryLabel: String,
+        val frequencyLabels: List<String>,
+        val frequencyEnabled: List<Boolean>,
+        val frequencyIndex: Int,
+        val modeLabels: List<String>,
+        val modeIndex: Int,
+        val formatLabels: List<String>,
+        val formatIndex: Int,
+        val configured: Boolean,
+        val onConfirm: (Int, Int, Int) -> Unit,
+        val onChooseDirectory: (Int, Int, Int) -> Unit,
+        val onDisable: () -> Unit
+    ) : SettingsDialog
+
+    data class Confirm(
+        val message: String,
+        val title: String? = null,
+        val confirmLabel: Int = R.string.yes,
+        val onConfirm: () -> Unit
+    ) : SettingsDialog
+
+    data class Message(val message: String) : SettingsDialog
+}
+
+@Composable
+internal fun SettingsDialogs(
+    dialog: SettingsDialog?, busy: Boolean, onDismiss: () -> Unit, beforeConfirm: () -> Unit
+) {
+    if (busy) {
+        if (applicationDialogsAllowed()) AlertDialog(
+            onDismissRequest = {},
+            confirmButton = {},
+            text = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(BatterySpacing.md)
+                ) {
+                    CircularProgressIndicator()
+                    Text(stringResource(R.string.settings_operation_processing))
+                }
+            })
+        return
+    }
+    if (dialog == null) return
+    val identity = when (dialog) {
+        is SettingsDialog.Choices -> listOf(dialog.title, dialog.options, dialog.selected)
+        is SettingsDialog.Number -> listOf(dialog.title, dialog.initial, dialog.min, dialog.max)
+        is SettingsDialog.Ordered -> listOf(dialog.title, dialog.items)
+        is SettingsDialog.AutoExport -> listOf(dialog.title)
+        is SettingsDialog.Confirm -> listOf(dialog.title, dialog.message)
+        is SettingsDialog.Message -> listOf(dialog.message)
+    }
+    key(dialog.javaClass.name, identity) {
+        when (dialog) {
+            is SettingsDialog.Choices -> ChoicesDialog(dialog, onDismiss, beforeConfirm)
+            is SettingsDialog.Number -> NumberDialog(dialog, onDismiss)
+            is SettingsDialog.Ordered -> OrderedDialog(dialog, onDismiss)
+            is SettingsDialog.AutoExport -> AutoExportDialog(dialog, onDismiss)
+            is SettingsDialog.Confirm -> SettingsAlert(
+                title = dialog.title,
+                onDismiss = onDismiss,
+                onConfirm = dialog.onConfirm,
+                beforeConfirm = beforeConfirm,
+                confirmLabel = dialog.confirmLabel
+            ) { Text(dialog.message) }
+
+            is SettingsDialog.Message -> SettingsAlert(
+                onDismiss = onDismiss, onConfirm = {}, cancellable = false
+            ) { Text(dialog.message) }
+        }
+    }
+}
+
+@Composable
+private fun SettingsAlert(
+    title: String? = null,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+    beforeConfirm: () -> Unit = onDismiss,
+    enabled: Boolean = true,
+    confirmLabel: Int = R.string.okay,
+    cancellable: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    var handled by remember { mutableStateOf(false) }
+    fun dismiss() {
+        if (!handled) {
+            handled = true
+            onDismiss()
+        }
+    }
+    if (applicationDialogsAllowed()) AlertDialog(
+        modifier = Modifier.imePadding(),
+        properties = DialogProperties(decorFitsSystemWindows = false),
+        onDismissRequest = ::dismiss,
+        title = title?.let { { Text(it) } },
+        text = {
+            Column(
+                Modifier
+                    .heightIn(max = 440.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+            ) { content() }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                if (!handled && enabled) {
+                    handled = true
+                    beforeConfirm()
+                    onConfirm()
+                }
+            }, enabled = enabled) { Text(stringResource(confirmLabel)) }
+        },
+        dismissButton = if (cancellable) {
+            { TextButton(onClick = ::dismiss) { Text(stringResource(R.string.cancel)) } }
+        } else null)
+}
+
+@Composable
+private fun ChoicesDialog(
+    dialog: SettingsDialog.Choices, onDismiss: () -> Unit, beforeConfirm: () -> Unit
+) {
+    var selected by rememberSaveable {
+        mutableStateOf(dialog.selected.filter { it in dialog.options.indices }.toSet())
+    }
+    SettingsAlert(
+        title = dialog.title,
+        onDismiss = onDismiss,
+        onConfirm = { dialog.onConfirm(selected) },
+        beforeConfirm = beforeConfirm,
+        enabled = dialog.allowEmpty || selected.isNotEmpty()
+    ) {
+        dialog.message?.let { Text(it) }
+        Column(if (dialog.multiple) Modifier else Modifier.selectableGroup()) {
+            dialog.options.forEachIndexed { index, label ->
+                val checked = index in selected
+                val rowModifier = if (dialog.multiple) {
+                    Modifier.toggleable(checked, role = Role.Checkbox) {
+                        selected = if (it) selected + index else selected - index
+                    }
+                } else {
+                    Modifier.selectable(checked, role = Role.RadioButton) {
+                        selected = setOf(index)
+                    }
+                }
+                Row(
+                    rowModifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+                ) {
+                    if (dialog.multiple) Checkbox(checked, onCheckedChange = null)
+                    else RadioButton(checked, onClick = null)
+                    Text(label)
+                }
+            }
+        }
+        dialog.supportingText?.let {
+            Text(it, style = MaterialTheme.typography.bodySmall)
+        }
+    }
+}
+
+@Composable
+private fun NumberDialog(dialog: SettingsDialog.Number, onDismiss: () -> Unit) {
+    NumericValueDialog(
+        label = dialog.title,
+        fieldLabel = stringResource(R.string.settings_numeric_value),
+        supportingText = dialog.message,
+        unit = "",
+        initialValue = dialog.initial,
+        min = dialog.min,
+        max = dialog.max,
+        step = 1,
+        saveLabel = stringResource(R.string.okay),
+        cancelLabel = stringResource(R.string.cancel),
+        errorMessage = { dialog.error },
+        onSave = {
+            onDismiss()
+            dialog.onConfirm(it)
+        },
+        onCancel = onDismiss
+    )
+}
+
+@Composable
+private fun OrderedDialog(dialog: SettingsDialog.Ordered, onDismiss: () -> Unit) {
+    var items by rememberSaveable { mutableStateOf(dialog.items) }
+    SettingsAlert(
+        title = dialog.title,
+        onDismiss = onDismiss,
+        onConfirm = { dialog.onConfirm(items) },
+        enabled = dialog.allowEmpty || items.any { it.selected }) {
+        dialog.message?.let { Text(it) }
+        items.forEachIndexed { index, item ->
+            key(item.value) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        Modifier
+                            .weight(1f)
+                            .heightIn(min = 48.dp)
+                            .toggleable(item.selected, role = Role.Checkbox) { checked ->
+                                items =
+                                    items.map { if (it.value == item.value) it.copy(selected = checked) else it }
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+                    ) {
+                        Checkbox(item.selected, onCheckedChange = null)
+                        Text(item.label)
+                    }
+                    TooltipIconButton(
+                        label = stringResource(R.string.settings_move_item_up, item.label),
+                        onClick = {
+                            items = items.toMutableList()
+                                .apply { Collections.swap(this, index, index - 1) }
+                        },
+                        enabled = index > 0
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ui_up),
+                            stringResource(R.string.settings_move_item_up, item.label)
+                        )
+                    }
+                    TooltipIconButton(
+                        label = stringResource(R.string.settings_move_item_down, item.label),
+                        onClick = {
+                            items = items.toMutableList()
+                                .apply { Collections.swap(this, index, index + 1) }
+                        },
+                        enabled = index < items.lastIndex
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ui_down),
+                            stringResource(R.string.settings_move_item_down, item.label)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () -> Unit) {
+    var frequency by rememberSaveable { mutableIntStateOf(dialog.frequencyIndex) }
+    var mode by rememberSaveable { mutableIntStateOf(dialog.modeIndex) }
+    var format by rememberSaveable { mutableIntStateOf(dialog.formatIndex) }
+    SettingsAlert(
+        title = dialog.title,
+        onDismiss = onDismiss,
+        onConfirm = { dialog.onConfirm(frequency, mode, format) },
+        enabled = frequency in dialog.frequencyLabels.indices && dialog.frequencyEnabled.getOrNull(
+            frequency
+        ) == true && mode in dialog.modeLabels.indices && format in dialog.formatLabels.indices
+    ) {
+        SettingsDropdown(
+            SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY,
+            stringResource(R.string.pref_auto_log_export_frequency),
+            dialog.frequencyLabels,
+            frequency,
+            { frequency = it },
+            dialog.frequencyEnabled
+        )
+        SettingsDropdown(
+            SettingsContract.KEY_AUTO_LOG_EXPORT_MODE,
+            stringResource(R.string.pref_auto_log_export_mode),
+            dialog.modeLabels,
+            mode,
+            { mode = it })
+        SettingsDropdown(
+            SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT,
+            stringResource(R.string.pref_auto_log_export_format),
+            dialog.formatLabels,
+            format,
+            { format = it })
+        Text(
+            stringResource(R.string.pref_auto_log_export_path, dialog.directoryLabel),
+            modifier = Modifier.fillMaxWidth(),
+            style = MaterialTheme.typography.bodySmall
+        )
+        TextButton(onClick = {
+            dialog.onChooseDirectory(frequency, mode, format)
+        }) {
+            Icon(
+                painterResource(settingIcon(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)),
+                null,
+                Modifier.size(20.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.pref_auto_log_export_directory))
+        }
+        if (dialog.configured) TextButton(onClick = {
+            onDismiss()
+            dialog.onDisable()
+        }) {
+            Icon(
+                painterResource(R.drawable.ui_close),
+                null,
+                Modifier.size(20.dp),
+                tint = MaterialTheme.colorScheme.error
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                stringResource(R.string.pref_disable_auto_log_export),
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+    }
+}
+
+@Composable
+private fun SettingsDropdown(
+    settingKey: String,
+    label: String,
+    options: List<String>,
+    selected: Int,
+    onSelect: (Int) -> Unit,
+    enabled: List<Boolean> = List(options.size) { true }
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Column {
+        Text(label, style = MaterialTheme.typography.labelMedium)
+        Box {
+            OutlinedButton(onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()) {
+                Icon(painterResource(settingIcon(settingKey)), null, Modifier.size(20.dp))
+                Spacer(Modifier.width(8.dp))
+                Text(options.getOrNull(selected).orEmpty(), modifier = Modifier.weight(1f))
+                Icon(painterResource(R.drawable.ui_chev), contentDescription = null)
+            }
+            DropdownMenu(
+                expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.heightIn(max = 320.dp)
+            ) {
+                options.forEachIndexed { index, option ->
+                    DropdownMenuItem(
+                        text = { Text(option) }, onClick = {
+                        expanded = false
+                        onSelect(index)
+                    }, enabled = enabled.getOrNull(index) == true
+                    )
+                }
+            }
+        }
+    }
+}

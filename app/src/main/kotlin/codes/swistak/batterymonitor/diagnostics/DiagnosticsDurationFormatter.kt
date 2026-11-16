@@ -8,27 +8,17 @@
 package codes.swistak.batterymonitor.diagnostics
 
 import android.content.Context
-import android.icu.text.MeasureFormat
-import android.icu.util.Measure
-import android.icu.util.MeasureUnit
+import codes.swistak.batterymonitor.common.DurationFormatter
 import java.util.Locale
 
 internal object DiagnosticsDurationFormatter {
     fun format(context: Context, elapsedMilliseconds: Long): String {
-        return format(context.resources.configuration.locales[0], elapsedMilliseconds)
+        return format(
+            context.resources.configuration.locales[0], elapsedMilliseconds, context::getString
+        )
     }
 
-    fun format(locale: Locale, elapsedMilliseconds: Long): String {
-        val totalSeconds = (elapsedMilliseconds / 1000L).coerceAtLeast(0L)
-        val hours = totalSeconds / 3600L
-        val minutes = totalSeconds % 3600L / 60L
-        val seconds = totalSeconds % 60L
-        val measures = buildList {
-            if (hours > 0L) add(Measure(hours, MeasureUnit.HOUR))
-            if (minutes > 0L) add(Measure(minutes, MeasureUnit.MINUTE))
-            if (seconds > 0L || isEmpty()) add(Measure(seconds, MeasureUnit.SECOND))
-        }
-        return MeasureFormat.getInstance(locale, MeasureFormat.FormatWidth.NARROW)
-            .formatMeasures(*measures.toTypedArray())
-    }
+    fun format(
+        locale: Locale, elapsedMilliseconds: Long, unitPattern: (Int) -> String
+    ): String = DurationFormatter.formatCompact(locale, elapsedMilliseconds, unitPattern)
 }

@@ -39,9 +39,9 @@ internal object Version1DeviceDataImporter {
     )
 
     fun restoreLog(values: Map<String, Any?>): LogRecord = LogRecord(
-        status = values.requiredInt(KEY_LOG_STATUS),
+        status = values.requiredStatus(),
         charge = values.optionalInt(KEY_LOG_CHARGE),
-        time = values.requiredLong(KEY_LOG_TIME),
+        time = values.requiredTime(),
         temperature = values.optionalInt(KEY_LOG_TEMPERATURE),
         voltage = values.optionalInt(KEY_LOG_VOLTAGE)
     )
@@ -57,7 +57,8 @@ internal object Version1DeviceDataImporter {
         }
     }
 
-    private fun Map<String, Any?>.requiredInt(key: String): Int {
+    private fun Map<String, Any?>.requiredStatus(): Int {
+        val key = KEY_LOG_STATUS
         require(containsKey(key)) { "Missing log value '$key'" }
         return integerValue(key, get(key))
     }
@@ -67,7 +68,8 @@ internal object Version1DeviceDataImporter {
         return integerValue(key, value)
     }
 
-    private fun Map<String, Any?>.requiredLong(key: String): Long {
+    private fun Map<String, Any?>.requiredTime(): Long {
+        val key = KEY_LOG_TIME
         require(containsKey(key)) { "Missing log value '$key'" }
         val value = get(key)
         require(value is Number) { "Invalid log value for '$key'" }

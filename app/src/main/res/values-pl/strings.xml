@@ -1,717 +1,976 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_launcher_name" formatted="false">Monitor baterii</string>
-  <string name="settings_activity_subtitle" formatted="false">Ustawienia</string>
-  <string name="help_activity_subtitle" formatted="false">Pomoc</string>
+    <string name="app_launcher_name" formatted="false">Monitor baterii</string>
+    <string name="yes" formatted="false">Tak</string>
+    <string name="okay" formatted="false">OK</string>
+    <string name="cancel" formatted="false">Anuluj</string>
+    <string name="currently_set_to" formatted="false">"Ustawione na: "</string>
+    <string name="currently_disabled" formatted="false">Wyłączone</string>
+    <string name="settings_numeric_value">Wartość</string>
+    <string name="settings_move_item_up">Przesuń %1$s w górę</string>
+    <string name="settings_move_item_down">Przesuń %1$s w dół</string>
+    <string name="settings_operation_processing">Przetwarzanie…</string>
 
-  <string name="battery_use_b" formatted="false">Wyświetl zużycie baterii</string>
-  <string name="circle_widget" formatted="false">Okrągły</string>
-  <string name="full_widget" formatted="false">Pełny</string>
-  <string name="yes" formatted="false">Tak</string>
-  <string name="cancel" formatted="false">Anuluj</string>
+    <string name="nav_battery_group">Bateria</string>
+    <string name="nav_current">Aktualny stan</string>
+    <string name="nav_history">Historia</string>
+    <string name="nav_alarms">Alarmy</string>
+    <string name="nav_tools_group">Narzędzia i aplikacja</string>
+    <string name="nav_diagnostics">Diagnostyka</string>
+    <string name="nav_settings">Ustawienia</string>
+    <string name="nav_help">Pomoc i o aplikacji</string>
+    <string name="nav_help_version">%1$s %2$s</string>
+    <string name="nav_open_menu">Otwórz menu</string>
+    <string name="nav_focus_menu">Przejdź do menu</string>
+    <string name="nav_close_menu">Zamknij menu</string>
+    <string name="nav_up">Nawiguj w górę</string>
+    <string name="nav_actions">Więcej działań</string>
+    <string name="tab_current_info" formatted="false">Aktualny stan</string>
+    <string name="tab_history" formatted="false">Historia</string>
+    <string name="menu_help" formatted="false">Pomoc</string>
 
-  <string name="confirm_close" formatted="false">Czy naprawdę zamknąć?</string>
-  <string name="confirm_close_hint" formatted="false">Monitor baterii zostanie całkowicie zamknięty i nie będziesz go już widzieć na pasku stanu. Wszelkie widżety na ekranie głównym staną się bezużyteczne.\n
+    <string name="current_monitor_data">Dane monitora · %1$s</string>
+    <string name="current_last_reading">Ostatni odczyt · %1$s</string>
+    <string name="current_waiting">Oczekiwanie na dane monitora</string>
+    <string name="current_monitor_disabled">Monitorowanie jest wyłączone</string>
+    <string name="current_stale">Dane monitora są nieaktualne</string>
+    <string name="current_monitor_action">Sprawdź działanie monitora w „Diagnostyka”.</string>
+    <string name="current_monitor_attention">Monitor wymaga uwagi</string>
+    <string name="current_notifications_off">Powiadomienia są wyłączone</string>
+    <string name="current_notifications_off_body">Powiadomienia Monitora baterii są wyłączone. Przerzyj ustawienia powiadomień, aby przywrócić alarmy.</string>
+    <string name="current_power_optimized">Działanie w tle może być ograniczone</string>
+    <string name="current_power_optimized_body">Optymalizacja baterii w Androidzie potrafi opóźniać aktualizacje monitora. Przejrzyj ustawienie baterii dla tej aplikacji, jeśli aktualizacje się zatrzymają.</string>
+    <string name="current_paused">Podłączono · Nie ładuje</string>
+    <string name="current_target_reached">Osiągnięto cel %1$d%%</string>
+    <string name="current_below_target">Poniżej celu %1$d%%</string>
+    <string name="current_low">Poziom naładowania baterii jest bardzo niski</string>
+    <string name="current_low_body">Sprawdź swoje aktywne alarmy i podłącz zasilanie, jeśli jest to potrzebne.</string>
+    <string name="status_unknown" formatted="false">Nieznany</string>
+    <string name="status_unplugged" formatted="false">Odłączony</string>
+    <string name="status_plugged_in" formatted="false">Podłączony</string>
+    <string name="status_charging" formatted="false">Ładowanie</string>
+    <string name="status_discharging" formatted="false">Rozładowywanie</string>
+    <string name="status_not_charging" formatted="false">Nie ładuje</string>
+    <string name="status_fully_charged" formatted="false">W pełni naładowany</string>
+    <string name="status_boot_completed" formatted="false">Uruchamianie zakończone</string>
+    <string name="plugged_unplugged" formatted="false">Odłączony</string>
+    <string name="plugged_ac" formatted="false">(AC)</string>
+    <string name="plugged_usb" formatted="false">(USB)</string>
+    <string name="plugged_wireless" formatted="false">(bezprzewodowe)</string>
+    <string name="plugged_unknown" formatted="false">(?)</string>
+    <string name="current_measurements">Pomiary</string>
+    <string name="current_temperature">Temperatura</string>
+    <string name="current_voltage">Napięcie</string>
+    <string name="vital_sign_voltage" formatted="false">Napięcie baterii</string>
+    <string name="vital_sign_current_label" formatted="false">Prąd</string>
+    <string name="pref_cat_battery_current_main" formatted="false">Prąd baterii</string>
+    <string name="remaining_charge" formatted="false">Pozostały poziom naładowania</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
+    <string name="remaining_charge_unavailable">Pozostały poziom naładowania niedostępny</string>
+    <string name="current_remaining_charge">Pozostały poziom naładowania: %1$s\u00A0mAh</string>
+    <string name="battery_power">Moc baterii</string>
+    <string name="battery_power_explanation">Obliczana z napięcia i prądu baterii; dodatnia podczas ładowania, ujemna podczas rozładowywania. Jest to moc po stronie baterii, a nie ładowarki.</string>
+    <string name="current_android_health">Stan według Androida</string>
+    <string name="current_health_explanation">Ten stan Androida nie jest procentową kondycją baterii.</string>
+    <string name="health_unknown" formatted="false">Nieznane</string>
+    <string name="health_good" formatted="false">Zdrowa</string>
+    <string name="health_overheat" formatted="false">Przegrzana</string>
+    <string name="health_dead" formatted="false">Martwa</string>
+    <string name="health_overvoltage" formatted="false">Przeładowana</string>
+    <string name="health_failure" formatted="false">Uszkodzona</string>
+    <string name="health_cold" formatted="false">Zimna</string>
+    <string name="notification_battery_health">Kondycja baterii</string>
+    <string name="notification_health_unknown">nieznane</string>
+    <string name="notification_health_good">zdrowa</string>
+    <string name="notification_health_overheat">przegrzana</string>
+    <string name="notification_health_dead">martwa</string>
+    <string name="notification_health_overvoltage">przeładowana</string>
+    <string name="notification_health_failure">uszkodzona</string>
+    <string name="notification_health_cold">zimna</string>
+    <string name="current_unavailable">Brak odczytu</string>
+    <string name="current_current_unavailable">Brak dostępnego odczytu prądu. „Diagnostyka” może wskazać na problem z dostępem albo nieobsługiwane źródło.</string>
+    <string name="current_detail_unit">Jednostka: %1$s</string>
+    <string name="current_detail_source">Źródło: %1$s</string>
+    <string name="current_detail_time">Ostatni odczyt: %1$s</string>
+    <string name="current_history_off">Zapisywanie historii jest wyłączone · Otwórz „Historia”</string>
+    <string name="current_system_usage">Otwórz systemowe zużycie baterii</string>
+    <string name="current_usage_unavailable">Systemowy ekran zużycia baterii jest niedostępny</string>
+    <string name="current_state_settings_summary" formatted="false">Ustawienia ekranu „Aktualny stan”</string>
+    <string name="current_state_settings_help" formatted="false">Wybierz, czy pokazywać pozostały poziom naładowania i czy „Aktualny stan” ma preferować średni prąd baterii. Prąd jest zawsze mierzony, gdy odczyt jest dostępny. Mnożnik koryguje prąd i obliczaną moc w całej aplikacji; logi przechowują oryginalny prąd chwilowy, dlatego mnożnik może zostać zmieniony później.</string>
+    <string name="pref_show_remaining_charge" formatted="false">Wyświetlaj pozostały poziom naładowania</string>
+    <string name="pref_show_remaining_charge_summary" formatted="false">Czy wyświetlać odnotowany przez urządzenie pozostały poziom naładowania baterii w mAh?</string>
+    <string name="pref_show_remaining_charge_help" formatted="false">Wyświetlaj pozostały poziom naładowania baterii zgłaszany przez urządzenie w mAh.</string>
+    <string name="pref_battery_current_multiplier" formatted="false">Mnożnik</string>
+    <string name="pref_battery_current_multiplier_help" formatted="false">Niektóre urządzenia zgłaszają nieoczekiwane jednostki lub znaki. Pomnóż tutaj zgłoszoną wartość, aby poprawić wyświetlany wynik. Użyj „Wykryj automatycznie”, aby spróbować wywnioskować mnożnik prądu z odczytu baterii.\n
     \n
-    Jeśli chcesz po prostu opuścić okno główne i pozostawić usługę działającą, naciśnij Anuluj, a następnie naciśnij przycisk Wstecz swojego urządzenia, aby zamknąć okno główne.\n
+    Orientacyjnie dla urządzenia standardowy znak Androida jest dodatni podczas ładowania i ujemny podczas rozładowywania. Aktywne ładowanie często jest w przybliżeniu między +500 a +5000\u00A0mA, podczas gdy zwykłe rozładowywanie zwykle między -100 a -3000\u00A0mA. Wartości bliskie zeru mogą być normalne, gdy bateria jest prawie pełna lub urządzenie jest bezczynne. Jeśli rząd wielkości wygląda na około 1000 razy za mały lub za duży albo znak jest odwrócony, dostosuj mnożnik.</string>
+    <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
+    <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie jest niedostępne dla aktualnego stanu baterii lub odczytu</string>
+    <string name="pref_battery_current_multiplier_detection_result">Mnożnik automatycznie ustawiony na %1$d</string>
+    <string name="pref_prefer_average_battery_current" formatted="false">Preferuj średni prąd</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy używać ostatniej średniej, gdy jest dostępna?</string>
+    <string name="pref_prefer_current_avg_help" formatted="false">Niektóre urządzenia udostępniają ostatnią średnią oprócz prądu chwilowego. Okres uśredniania zależy od urządzenia. „Aktualny stan” używa prądu chwilowego, gdy średnia jest niedostępna. Ta opcja dotyczy tylko „Aktualny stan”; logi zawsze przechowują oryginalny chwilowy odczyt.</string>
+
+    <string name="activity_until_charged" formatted="false">do naładowania</string>
+    <string name="activity_until_drained" formatted="false">do rozładowania</string>
+    <string name="activity_until_target" formatted="true">do %1$d%%</string>
+    <string name="activity_target_reached" formatted="true">osiągnięto cel (%1$d%%)</string>
+    <string name="current_no_prediction">Za mało danych do oszacowania</string>
+    <string name="current_show_to_target">Pokaż do %1$d%%</string>
+    <string name="current_since_unplugged">Od odłączenia: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_since_connected">Od podłączenia: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_since_change">Od zmiany stanu: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_prediction_method">Metoda: %1$s</string>
+    <string name="current_prediction_target">Cel: %1$d%%</string>
+    <string name="current_prediction_snapshot_time">Snapshot baterii: %1$s</string>
+    <string name="current_prediction_diagnostics" formatted="false">Ostatnie tempa zmian i wyuczone średnie są dostępne w „Diagnostyka” → „Działanie aplikacji”.</string>
+    <string name="current_prediction_explanation">To szacowanie używa skonfigurowanej predykcji Monitora baterii. Jego cel nie steruje ładowaniem ani wyłączaniem.</string>
+    <string name="time_estimates_settings" formatted="false">Szacowanie czasu</string>
+    <string name="time_estimates_settings_summary" formatted="false">Wybierz, jak pozostały czas ma być obliczany i do których docelowych poziomów naładowania baterii</string>
+    <string name="time_estimates_settings_help" formatted="false">Wybierz, jak Monitor baterii ma szacować pozostały czas i docelowe poziomy naładowania baterii. Cele dotyczą także alarmów „Osiągnięto cel ładowania” i „Osiągnięto cel rozładowania”. Monitor baterii nie rozpoczyna ani nie zatrzymuje ładowania.</string>
+    <string name="pref_cat_predictor" formatted="false">Szacowanie pozostałego czasu</string>
+    <string name="pref_prediction_type" formatted="false">Typ szacowania</string>
+    <string name="pref_prediction_type_help" formatted="false">„Czułe” używa tempa z ostatnich pięciu minut. „Konserwatywne”, domyślne, łączy ostatnie tempa z wyuczoną średnią długoterminową, aby zredukować nagłe zmiany. „Od zmiany stanu” używa tempa z bieżącej sesji ładowania lub rozładowywania. „Średnie długoterminowe” używa wyuczonego tempa dla rozładowywania lub aktywnego źródła ładowania. Dopóki nie ma dostępnych wystarczających obserwacji, szacunki korzystają z przechowywanej średniej lub domyślnej początkowej.</string>
+    <string name="predictor_sensitive" formatted="false">Czułe</string>
+    <string name="predictor_conservative" formatted="false">Konserwatywne</string>
+    <string name="predictor_since_status_change" formatted="false">Od zmiany stanu</string>
+    <string name="predictor_long_term_ave" formatted="false">Średnie długoterminowe</string>
+    <string name="pref_cat_target_levels" formatted="false">Docelowe poziomy</string>
+    <string name="pref_charging_target_mode" formatted="false">Cel ładowania</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automatyczny” używa stałego celu ładowania urządzenia, gdy Monitor baterii potrafi go odczytać, a w przeciwnym razie używa 100%. Ładowanie adaptacyjne nadal ma cel 100%. „Własny” używa wybranego przez Ciebie poziomu do szacunków ładowania i alarmów „Osiągnięto cel ładowania”.\n
+    Automatyczne wykrywanie może działać na urządzeniach Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme i Sony Xperia, a także na urządzeniach z GrapheneOS lub LineageOS — szczególnie gdy możliwy jest dostęp do roota albo Shizuku. Opiera się na sygnałach programowych, dlatego dostępność i dokładność nie są gwarantowane nawet u wymienionych producentów. Nieprzetestowane modele lub wersje systemów z tych rodzin mogą również działać, ale urządzenia innych producentów nie są obecnie wykrywane automatycznie.</string>
+    <string name="pref_charging_target_mode_summary_device" formatted="true">Cel ładowania urządzenia: %1$d%%</string>
+    <string name="pref_charging_target_mode_summary_custom" formatted="false">Własny cel</string>
+    <string name="pref_charging_target_mode_summary_default" formatted="false">Nie wykryto stałego celu w urządzeniu — używane 100%</string>
+    <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    Jeśli chcesz ukryć powiadomienie, ale pozostawić widżety działające, naciśnij Anuluj, a następnie zmień ustawienia, aby ukryć powiadomienie.</string>
+    Jeśli ta wartość nie wygląda na prawidłową, możesz pomóc ulepszyć wykrywanie urządzeń. Otwórz „Ustawienia” → „Zaawansowane” → „Diagnostyka celu ładowania OEM” i wygeneruj raport, dokładnie przestrzegając instrukcji w „Pomoc”.</string>
+    <string name="charging_target_mode_automatic" formatted="false">Automatyczny (zalecany)</string>
+    <string name="charging_target_mode_custom" formatted="false">Własny</string>
+    <string name="pref_custom_charging_target" formatted="false">Własny cel ładowania</string>
+    <string name="pref_custom_charging_target_help" formatted="false">Ustaw poziom naładowania baterii używany jako punkt końcowy szacunków ładowania, gdy „Cel ładowania” jest „Własny”.</string>
+    <string name="pref_discharging_target" formatted="false">Cel rozładowania</string>
+    <string name="pref_discharging_target_help" formatted="false">Ustaw punkt końcowy szacunków rozładowywania i alarmów „Osiągnięto cel rozładowania”. Poniżej tego poziomu szacowanie czasu jest kontynuowane do 0%. Alarmy niskiego poziomu naładowania baterii ze swoim własnym progiem pozostają niezależne.</string>
+    <string name="pref_target_level_summary" formatted="true">Szacuj do %1$d%%</string>
 
-  <string name="notifications_disabled" formatted="false">Powiadomienia są wyłączone!</string>
-  <string name="notifications_disabled_message" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla Monitora baterii. To uniemożliwi aplikacji wyświetlanie jakichkolwiek powiadomień: główne powiadomienie i wszystkie ustawione przez Ciebie alarmy zostaną zablokowane.\n
+    <string name="main_notif_chan_name" formatted="false">Główne powiadomienie</string>
+    <string name="live_updates_notif_chan_name" formatted="false">Aktualizacje na żywo</string>
+    <string name="notification_settings" formatted="false">Główne powiadomienie</string>
+    <string name="notification_settings_summary" formatted="false">Skonfiguruj zawartość powiadomienia i wygląd na pasku stanu</string>
+    <string name="notification_settings_help" formatted="false">Możesz skonfigurować, co wyświetlać w rozwijanym powiadomieniu.\n
+    Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.\n
+    W Androidzie 16 lub nowszym wybierz, kiedy kapsułka Aktualizacji na żywo ma się wyświetlać, które wartości ma pokazywać kolejno i czy pokazywać emoji ładowania. Dostępność zależy także od urządzenia i ustawień powiadomień systemowych.</string>
+    <string name="notification_channels_help" formatted="false">Otwórz ustawienia powiadomień Androida, aby zezwolić na powiadomienia lub je zablokować oraz skonfigurować dźwięk, wibracje i sposób dostarczania głównego powiadomienia oraz każdego typu alarmu. Włączenie reguły alarmu nie odblokowuje kanału powiadomień.</string>
+    <string name="app_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień</string>
+    <string name="main_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) główne powiadomienie dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień</string>
+    <string name="settings_notification_disabled">Włącz powiadomienia aplikacji i główny kanał powiadomień, aby dostosować tę opcję</string>
+    <string name="notifications_onboarding_message">Monitor baterii potrzebuje Twojego uprawnienia, aby wyświetlać poziom naładowania baterii na pasku stanu i powiadamiać Cię o alarmach.\n
     \n
-    Ponieważ aplikacja pozwala Ci na osobne włączanie i wyłączanie głównego powiadomienia, jak również na tymczasowe wyłączanie utworzonych przez Ciebie alarmów, zdecydowanie zaleca się odblokować powiadomienia. Gdy są zablokowane, może się wydawać, jakby aplikacja nie działała prawidłowo.\n
-    \n
-    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz odblokować powiadomienia dla Monitora baterii.</string>
-
-  <string name="battery_optimized" formatted="false">Monitor baterii jest ograniczony!</string>
-  <string name="battery_optimized_message" formatted="false">Monitor baterii ma ograniczoną możliwość prawidłowego działania. Ta „optymalizacja baterii” to funkcja Androida zaprojektowana w celu ograniczenia działania słabo zaprojektowanych aplikacji, aby zapobiegać zbyt dużemu zużywaniu baterii w tle.\n
-    \n
-    Monitor baterii jest jednak dobrze zaprojektowaną aplikacją, która musi działać bez ograniczeń w tle, aby funkcjonować prawidłowo. Jest to niezwykle wydajne i nie będzie skracać żywotności baterii.\n
-    \n
-    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz wyłączyć optymalizację baterii dla Monitora baterii.</string>
-
-  <string name="main_notif_chan_name" formatted="false">Główne powiadomienie</string>
-  <string name="live_updates_notif_chan_name" formatted="false">Aktualizacje na żywo</string>
-  <string name="channel_group_name_alarms" formatted="false">Alarmy</string>
-
-  <string name="confirm_clear_logs" formatted="false">Czy naprawdę wyczyścić wszystkie logi?</string>
-
-  <string name="configure_log_filter" formatted="false">Które elementy logów pokazywać?</string>
-
-  <string name="okay" formatted="false">OK</string>
-
-  <string name="tab_current_info" formatted="false">Aktualny stan</string>
-  <string name="tab_history" formatted="false">Historia</string>
-  <string name="tab_advanced" formatted="false">Zaawansowane</string>
-
-  <string name="notification_until_charged" formatted="false">" do naładowania"</string>
-  <string name="notification_until_drained" formatted="false">" pozostało"</string>
-  <string name="activity_until_charged" formatted="false">do naładowania</string>
-  <string name="activity_until_drained" formatted="false">do rozładowania</string>
-
-  <string name="menu_settings" formatted="false">Ustawienia</string>
-  <string name="menu_close" formatted="false">Zamknij</string>
-  <string name="menu_help" formatted="false">Pomoc</string>
-  <string name="menu_clear" formatted="false">Wyczyść</string>
-  <string name="menu_reverse" formatted="false">Odwróć kolejność</string>
-  <string name="menu_log_filter" formatted="false">Filtruj</string>
-  <string name="menu_export" formatted="false">Eksportuj do CSV</string>
-  <string name="log_export_mode_title" formatted="false">Eksportuj logi</string>
-  <string name="log_export_append" formatted="false">Dodaj do istniejącego pliku</string>
-  <string name="log_export_new_file" formatted="false">Utwórz nowy plik</string>
-  <string name="log_export_range_title" formatted="false">Które logi powinny zostać wyeksportowane?</string>
-  <string name="log_export_all_logs" formatted="false">Wszystkie</string>
-  <string name="log_export_from_last" formatted="false">Od ostatniego eksportu</string>
-  <string name="menu_delete_alarm" formatted="false">Usuń alarm</string>
-  <string name="menu_show_seconds" formatted="false">Pokaż sekundy</string>
-  <string name="menu_hide_seconds" formatted="false">Ukryj sekundy</string>
-
-  <string name="percent_symbol" formatted="false">%</string>
-  <string name="degree_symbol" formatted="false">°</string>
-  <string name="fahrenheit" formatted="false">Fahrenheit</string>
-  <string name="fahrenheit_symbol" formatted="false">F</string>
-  <string name="celsius" formatted="false">Celsjusz</string>
-  <string name="celsius_symbol" formatted="false">C</string>
-  <string name="volt_symbol" formatted="false">V</string>
-
-  <string name="inaccessible_storage" formatted="false">Karta pamięci jest niedostępna</string>
-  <string name="inaccessible_w_reason" formatted="false">Karta pamięci niedostępna:</string>
-  <string name="read_only_storage" formatted="false">Karta pamięci jest tylko do odczytu</string>
-  <string name="no_storage_permission" formatted="false">Nie przyznano uprawnienia do pamięci</string>
-  <string name="file_written" formatted="false">Plik został zapisany w wybranej lokalizacji</string>
-
-  <string name="date" formatted="false">data</string>
-  <string name="time" formatted="false">godzina</string>
-  <string name="status" formatted="false">stan</string>
-  <string name="charge" formatted="false">poziom_naładowania</string>
-  <string name="temperature" formatted="false">stopnie_celsjusza</string>
-  <string name="temperature_f" formatted="false">stopnie_fahrenheita</string>
-  <string name="voltage" formatted="false">wolty</string>
-
-  <string name="status_unplugged" formatted="false">Odłączony</string>
-  <string name="status_unknown" formatted="false">Nieznany</string>
-  <string name="status_charging" formatted="false">Ładowanie</string>
-  <string name="status_discharging" formatted="false">Rozładowywanie</string>
-  <string name="status_not_charging" formatted="false">Nie ładuje</string>
-  <string name="status_fully_charged" formatted="false">W pełni naładowany</string>
-  <string name="status_plugged_in" formatted="false">Podłączony</string>
-
-  <string name="status_boot_completed" formatted="false">Uruchamianie zakończone</string>
-
-  <string name="health_unknown" formatted="false">Nieznane</string>
-  <string name="health_good" formatted="false">Zdrowa</string>
-  <string name="health_overheat" formatted="false">Przegrzana</string>
-  <string name="health_dead" formatted="false">Martwa</string>
-  <string name="health_overvoltage" formatted="false">Przeładowana</string>
-  <string name="health_failure" formatted="false">Uszkodzona</string>
-  <string name="health_cold" formatted="false">Zimna</string>
-  <string name="plugged_unplugged" formatted="false">Odłączony</string>
-  <string name="plugged_ac" formatted="false">(AC)</string>
-  <string name="plugged_usb" formatted="false">(USB)</string>
-  <string name="plugged_unknown" formatted="false">(?)</string>
-  <string name="plugged_wireless" formatted="false">(bezprzewodowe)</string>
-
-  <string name="alarm_type_fully_charged" formatted="false">W pełni naładowana</string>
-  <string name="alarm_type_charging_limit_met" formatted="false">Osiągnięto limit ładowania</string>
-  <string name="alarm_type_discharging_limit_met" formatted="false">Osiągnięto limit rozładowania</string>
-  <string name="alarm_type_charge_drops" formatted="false">Poziom naładowania spada poniżej</string>
-  <string name="alarm_type_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej</string>
-  <string name="alarm_type_temperature_drops" formatted="false">Temperatura spada poniżej</string>
-  <string name="alarm_type_temperature_rises" formatted="false">Temperatura wzrasta powyżej</string>
-  <string name="alarm_type_health_failure" formatted="false">Problemy ze zdrowiem</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Zostaje w pełni naładowana</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Osiągnie limit ładowania</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Osiągnie limit rozładowania</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Poziom naładowania spada poniżej…</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej…</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spada poniżej…</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura wzrasta powyżej…</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Problemy ze zdrowiem</string>
-
-  <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
-  <string name="alarm_charging_limit_met" formatted="true">Osiągnięto limit ładowania: %1$d%%</string>
-  <string name="alarm_discharging_limit_met" formatted="true">Osiągnięto limit rozładowania: %1$d%%</string>
-  <string name="alarm_charge_drops" formatted="false">"Stan naładowania baterii jest poniżej "</string>
-  <string name="alarm_charge_rises" formatted="false">"Stan naładowania baterii jest powyżej "</string>
-  <string name="alarm_temp_drops" formatted="false">"Temperatura baterii jest poniżej "</string>
-  <string name="alarm_temp_rises" formatted="false">"Temperatura baterii jest powyżej "</string>
-  <string name="alarm_health_failure" formatted="false">"Zdrowie baterii to: "</string>
-
-  <string name="logs_empty" formatted="false">Logi są puste</string>
-  <plurals name="n_log_items">
-    <item quantity="one">%d log</item>
-    <item quantity="few">%d logi</item>
-    <item quantity="many">%d logów</item>
-  </plurals>
-
-  <string name="after_nh_mm_unplugged" formatted="true">Po %1$dh %2$dm od odłączenia</string>
-  <string name="after_nh_mm_plugged_in" formatted="true">Po %1$dh %2$dm od podłączenia</string>
-  <string name="after_nm_ms_unplugged" formatted="true">Po %1$dm %2$ds od odłączenia</string>
-  <string name="after_nm_ms_plugged_in" formatted="true">Po %1$dm %2$ds od podłączenia</string>
-
-  <plurals name="n_hours_long">
-    <item quantity="one">"%d godzina, "</item>
-    <item quantity="few">"%d godziny, "</item>
-    <item quantity="many">"%d godzin, "</item>
-  </plurals>
-
-  <plurals name="n_minutes_long">
-    <item quantity="one">%d minuta</item>
-    <item quantity="few">%d minuty</item>
-    <item quantity="many">%d minut</item>
-  </plurals>
-
-  <plurals name="n_hours_medium">
-    <item quantity="one">"%d godz., "</item>
-    <item quantity="few">"%d godz., "</item>
-    <item quantity="many">"%d godz., "</item>
-  </plurals>
-
-  <plurals name="n_minutes_medium">
-    <item quantity="one">%d min</item>
-    <item quantity="few">%d min</item>
-    <item quantity="many">%d min</item>
-  </plurals>
-
-  <plurals name="n_hours_short">
-    <item quantity="one">"%dh "</item>
-    <item quantity="few">"%dh "</item>
-    <item quantity="many">"%dh "</item>
-  </plurals>
-
-  <plurals name="n_minutes_short">
-    <item quantity="one">%dm</item>
-    <item quantity="few">%dm</item>
-    <item quantity="many">%dm</item>
-  </plurals>
-
-  <plurals name="n_days">
-    <item quantity="one">"%d dzień, "</item>
-    <item quantity="few">"%d dni, "</item>
-    <item quantity="many">"%d dni, "</item>
-  </plurals>
-
-  <plurals name="n_hours">
-    <item quantity="one">%d godzina</item>
-    <item quantity="few">%d godziny</item>
-    <item quantity="many">%d godzin</item>
-  </plurals>
-
-  <plurals name="for_n_hours">
-    <item quantity="one">Przez %d godzinę</item>
-    <item quantity="few">Przez %d godziny</item>
-    <item quantity="many">Przez %d godzin</item>
-  </plurals>
-
-  <string name="duration_for">przez %1$s</string>
-  <string name="unit_days">%dd</string>
-  <string name="unit_hours">%dh</string>
-  <string name="unit_minutes">%dm</string>
-  <string name="since" formatted="false">Od</string>
-
-  <string name="currently_using" formatted="false">W użyciu</string>
-  <string name="currently_set_to" formatted="false">"Ustawione na: "</string>
-  <string name="currently_disabled" formatted="false">Wyłączone</string>
-
-  <string name="help_cat_version" formatted="false">Wersja</string>
-
-  <string name="help_cat_open_source" formatted="false">Otwarte źródło</string>
-  <string name="help_open_source" formatted="false">Ten projekt jest otwartoźródłowy. Możesz uzyskać dostęp do kodu źródłowego na <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
-
-  <string name="help_cat_privacy" formatted="false">Prywatność</string>
-  <string name="help_privacy" formatted="false">Monitor baterii przetwarza informacje o baterii i urządzeniu lokalnie, w tym wartości ujawnione przez urządzenie, takie jak numer seryjny baterii. Nie przekazuje tych informacji ani nie gromadzi ich na zewnętrznych serwerach.</string>
-
-  <string name="help_cat_no_warranty" formatted="false">Brak gwarancji</string>
-  <string name="help_no_warranty" formatted="false">Niniejsze oprogramowanie jest udostępniane w nadziei, że okaże się przydatne, jednak BEZ ŻADNEJ GWARANCJI, w tym bez dorozumianej gwarancji PRZYDATNOŚCI HANDLOWEJ lub PRZYDATNOŚCI DO OKREŚLONEGO CELU.\n
-    \n
-    Chociaż dokładam wszelkich starań, aby wszystko działało prawidłowo i nie powodowało żadnych problemów, nie ponoszę odpowiedzialności za jakiekolwiek szkody lub niedogodności, które mogą wyniknąć z tego tytułu, niezależnie od okoliczności.</string>
-
-  <string name="help_cat_acknowledgments" formatted="false">Podziękowania</string>
-  <string name="help_acknowledgments" formatted="false">Monitor baterii jest forkiem Battery Indicator Pro / BatteryBot Pro autorstwa Darshan Computing, LLC. Dziękuję autorom i współtwórcom za stworzenie i utrzymywanie projektu źródłowego.</string>
-
-  <string name="help_cat_frequently_asked_questions" formatted="false">Najczęściej zadawane pytania</string>
-  <string name="help_frequently_asked_questions" formatted="false">Możesz znaleźć odpowiedzi na najpopularniejsze pytania na <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
-
-  <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string name="help_contact" formatted="false">Jeśli masz pytanie, problem lub komentarz, napisz do mnie <a href="mailto:tomasz@swistak.codes">e-maila</a>.</string>
-
-  <string name="settings_overview" formatted="false">Przegląd</string>
-  <string name="settings_overview_help" formatted="false">Ustawienia Monitora baterii zostały zorganizowane w osobne strony jak opisano poniżej. Każda strona ustawień ma swoją własną stronę pomocy opisującą dostępne tam opcje.</string>
-
-  <string name="notifications_disabled_cat" formatted="false">Powiadomienia wyłączone</string>
-  <string name="app_notifs_disabled_b" formatted="false">Włącz powiadomienia aplikacji</string>
-  <string name="app_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień.</string>
-  <string name="main_notifs_disabled_b" formatted="false">Włącz główne powiadomienie</string>
-  <string name="main_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) główne powiadomienie dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla tej aplikacji. Włącz je, aby uzyskać dostęp do swoich alarmów.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Włącz alarmy</string>
-  <string name="alarm_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) grupę powiadomień alarmów dla tej aplikacji. Włącz ją, aby uzyskać dostęp do alarmów.</string>
-  <string name="alarm_chan_disabled" formatted="false">Wyłączyłeś(-aś) powiadomienia dla tego typu alarmu. Włącz je, aby używać tego typu alarmu.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Włącz ten typ alarmu</string>
-  <string name="alarm_chan_settings_b" formatted="false">Zarządzaj tym typem alarmu</string>
-
-  <string name="notification_settings" formatted="false">Główne powiadomienie</string>
-  <string name="notification_settings_summary" formatted="false">Skonfiguruj zawartość powiadomienia, ikonę na pasku stanu i kapsułkę aktualizacji na żywo</string>
-  <string name="notification_settings_help" formatted="false">Możesz skonfigurować, co wyświetlać w rozwijanym powiadomieniu.</string>
-  <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.</string>
-  <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Skonfiguruj, co ma pokazywać kapsułka na pasku stanu, jak często będzie się zmieniać jej zawartość i czy wyświetlać emoji ładowania.</string>
-  <string name="current_state_settings_summary" formatted="false">Ustawienia ekranu „Aktualny stan”</string>
-  <string name="current_state_settings_help" formatted="false">Skonfiguruj informacje wyświetlane na ekranie „Aktualny stan”. Opcje prądu baterii sterują bieżącym odczytem pokazywanym razem z innymi szczegółami o baterii.</string>
-  <string name="alarm_settings_subtitle" formatted="false">Ustawienia alarmów</string>
-  <string name="alarm_settings" formatted="false">Alarmy</string>
-  <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom naładowania baterii spada poniżej 20% i wiele innych).</string>
-  <string name="other_settings" formatted="false">Ogólne</string>
-  <string name="other_settings_summary" formatted="false">Skonfiguruj ogólne zachowanie aplikacji i codzienne preferencje</string>
-  <string name="other_settings_help" formatted="false">Użyj tych ustawień, aby dostosować Monitor baterii do Twojego codziennego użytkowania. Obejmują ogólne zachowanie aplikacji i preferencje, co pomaga jej dopasować się naturalnie do Twojego sposobu korzystania z urządzenia.</string>
-  <string name="advanced_settings" formatted="false">Zaawansowane</string>
-  <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
-  <string name="advanced_settings_help" formatted="false">Użyj tych ustawień, gdy chcesz większej kontroli nad tym, jak Monitor baterii działa, wykraczając poza codzienne preferencje. Wartości domyślne są odpowiednie dla większości użytkowników, a dodatkowe modyfikacje mogą pomóc dostosować aplikację do bardziej specyficznych potrzeb monitorowania.</string>
-
-  <string name="live_updates_onboarding_title">Kapsułka baterii na pasku stanu</string>
-  <string name="live_updates_onboarding_message_on">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu. Jest to włączone domyślnie.\n
+    Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
+    <string name="pref_cat_channel_settings" formatted="false">Ustawienia kanałów powiadomień</string>
+    <string name="pref_manage_main_channel" formatted="false">Zarządzaj głównym kanałem</string>
+    <string name="pref_manage_main_channel_summary" formatted="false">Otwórz ustawienia Androida dla głównego kanału powiadomień</string>
+    <string name="pref_cat_notification_content" formatted="false">Zawartość</string>
+    <string name="pref_top_line_content" formatted="false">Zawartość górnego wiersza</string>
+    <string name="pref_top_line_content_help" formatted="false">Wybierz, czy górny wiersz powiadomienia ma pokazywać szacowany „Pozostały czas”, „Czas od zmiany stanu”, czy skonfigurowane „Parametry”.</string>
+    <string name="pref_bottom_line_content" formatted="false">Zawartość dolnego wiersza</string>
+    <string name="pref_bottom_line_content_help" formatted="false">Masz te same opcje dla dolnego i górnego wiersza.</string>
+    <string name="time_remaining" formatted="false">Pozostały czas</string>
+    <string name="time_since_status_change" formatted="false">Czas od zmiany stanu</string>
+    <string name="vital_signs" formatted="false">Parametry</string>
+    <string name="notification_until_charged" formatted="true">%1$s do naładowania</string>
+    <string name="notification_until_drained_mixed" formatted="true">Pozostały czas: %1$s</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">Pozostał %1$s</item>
+        <item quantity="few">Pozostały %1$s</item>
+        <item quantity="many">Pozostało %1$s</item>
+        <item quantity="other">Pozostało %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">Pozostała %1$s</item>
+        <item quantity="few">Pozostały %1$s</item>
+        <item quantity="many">Pozostało %1$s</item>
+        <item quantity="other">Pozostało %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">Pozostała %1$s</item>
+        <item quantity="few">Pozostały %1$s</item>
+        <item quantity="many">Pozostało %1$s</item>
+        <item quantity="other">Pozostało %1$s</item>
+    </plurals>
+    <string name="pref_time_remaining_verbosity" formatted="false">Rozwlekłość pozostałego czasu</string>
+    <string name="pref_time_remaining_verbosity_help" formatted="false">Urządzenia są dostępne w różnych kształtach i rozmiarach, dlatego większość tłumaczeń wymaga używania skrótów, aby zapewnić, że szacowany pozostały czas mieści się w obszarze powiadomień. Jeśli nadal się nie mieści, możesz wybrać format „Zagęszczony”. Jeśli masz dużo miejsca, możesz preferować ustawienie „Rozwlekły”.</string>
+    <string name="condensed" formatted="false">Zagęszczony</string>
+    <string name="normal" formatted="false">Normalny</string>
+    <string name="verbose" formatted="false">Rozwlekły</string>
+    <string name="pref_vital_signs_content" formatted="false">Zawartość parametrów</string>
+    <string name="pref_vital_signs_content_summary" formatted="false">Które wartości mają być uwzglęniane w parametrach i w której kolejności?</string>
+    <string name="pref_vital_signs_content_help" formatted="false">Wybierz wartości i użyj przycisków przesuwania, aby ustawić ich kolejność. Każdą z nich można odznaczyć.</string>
+    <string name="pref_expanded_notification" formatted="false">Rozwijaj szczegóły powiadomienia</string>
+    <string name="pref_expanded_notification_summary" formatted="false">Czy wyświetlać szczegóły, gdy powiadomienie zostanie rozwinięte?</string>
+    <string name="pref_expanded_notification_help" formatted="false">Jeśli włączone, rozwinięcie głównego powiadomienia wyświetla „Pozostały czas”, „Czas od zmiany stanu” i wartość każdego z parametrów w oddzielnym wierszu zamiast jednowierszowego podsumowania.</string>
+    <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+    <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
+    <string name="status_bar_icon_availability_help" formatted="false">Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.</string>
+    <string name="pref_icon_content" formatted="false">Zawartość ikony</string>
+    <string name="pref_icon_content_help" formatted="false">Wybierz, czy ikona na pasku stanu ma pokazywać procent baterii, czy temperaturę baterii. Temperatura jest podawana w wybranej przez Ciebie jednostce.</string>
+    <string name="pref_content_percent" formatted="false">Procent baterii</string>
+    <string name="pref_content_temperature" formatted="false">Temperatura baterii</string>
+    <string name="pref_show_icon_unit" formatted="false">Pokazuj symbol jednostki</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Czy pokazywać symbol jednostki obok wartości na ikonie na pasku stanu?</string>
+    <string name="pref_show_icon_unit_help" formatted="false">Jeśli włączone, ikona pokazuje znak procenta dla poziomu naładowania baterii i symbol stopnia dla temperatury baterii. Wyłącz to ustawienie, aby pokazywać tylko liczbę.</string>
+    <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
+    <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
+    <string name="pref_indicate_charging_help" formatted="false">Ikona może pokazywać błyskawicę pod liczbą podczas ładowania. Wyłącz to ustawienie, jeśli preferujesz tę samą ikonę cały czas.</string>
+    <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
+    <string name="status_bar_chip_availability_help" formatted="false">Dostępność zależy także od urządzenia i ustawień powiadomień systemowych.</string>
+    <string name="settings_live_update_summary">Zezwól lub zablokuj promowane powiadomienia baterii w ustawieniach Androida</string>
+    <string name="settings_live_update_help">Zezwól lub zablokuj promowane powiadomienia baterii w ustawieniach Androida.</string>
+    <string name="live_updates_onboarding_title">Kapsułka baterii na pasku stanu</string>
+    <string name="live_updates_onboarding_message_on">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu. Jest to włączone domyślnie.\n
     \n
     Jeśli preferujesz tradycyjną ikonę powiadomienia, możesz wyłączyć „Aktualizacje na żywo” w ustawieniach systemowych Androida dla tej aplikacji.\n
     \n
     Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
-  <string name="live_updates_onboarding_message_off">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu, ale obecnie jest to wyłączone w ustawieniach systemowych.\n
+    <string name="live_updates_onboarding_message_off">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu, ale obecnie jest to wyłączone w ustawieniach systemowych.\n
     \n
     Zaleca się włączenie tej funkcji. Jeśli preferujesz tradycyjną ikonę powiadomienia, możesz pozostawić ją wyłączoną.\n
     \n
     Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
-  <string name="live_updates_onboarding_positive_on">Rozumiem</string>
-  <string name="live_updates_onboarding_positive_off">Przejdź do ustawień</string>
-  <string name="live_updates_onboarding_negative_off">Odrzuć</string>
+    <string name="live_updates_onboarding_positive_on">Rozumiem</string>
+    <string name="live_updates_onboarding_positive_off">Przejdź do ustawień</string>
+    <string name="live_updates_onboarding_negative_off">Odrzuć</string>
+    <string name="pref_live_update_display" formatted="false">Wyświetlaj Aktualizację na żywo</string>
+    <string name="pref_live_update_display_summary" formatted="false">Wyświetlaj na pasku stanu:</string>
+    <string name="pref_live_update_display_help" formatted="false">Wybierz, kiedy kapsułka Aktualizacji na żywo ma być wyświetlana na pasku stanu.</string>
+    <string name="pref_live_update_display_charging" formatted="false">Tylko podczas ładowania</string>
+    <string name="pref_live_update_keep_main_notification" formatted="false">Pozostawiaj główne powiadomienie</string>
+    <string name="pref_live_update_keep_main_notification_summary" formatted="false">Czy wyświetlać główne powiadomienie, gdy Aktualizacja na żywo jest aktywna?</string>
+    <string name="pref_live_update_keep_main_notification_help" formatted="false">Jeśli włączone, główne powiadomienie pozostaje widoczne razem z kapsułką na pasku stanu.</string>
+    <string name="pref_expanded_live_update" formatted="false">Rozwijaj szczegóły Aktualizacji na żywo</string>
+    <string name="pref_expanded_live_update_summary" formatted="false">Czy wyświetlać szczegóły w powiadomieniu Aktualizacji na żywo?</string>
+    <string name="pref_expanded_live_update_help" formatted="false">Powiadomienia Aktualizacji na żywo są zawsze wyświetlane rozwinięte. Jeśli włączone, Aktualizacja na żywo wyświetla „Pozostały czas”, „Czas od zmiany stanu” i wartość każdego z parametrów w oddzielnym wierszu.</string>
+    <string name="pref_chip_content" formatted="false">Zawartość kapsułki</string>
+    <string name="pref_chip_content_summary" formatted="false">Które wartości mają być wyświetlane w kapsułce i w której kolejności?</string>
+    <string name="pref_chip_content_help" formatted="false">Wybierz wartości, między którymi ma przełączać się kapsułka na pasku stanu, i ustaw ich kolejność. Co najmniej jedna wartość musi pozostać wybrana.</string>
+    <string name="pref_chip_switching_interval" formatted="false">Interwał przełączania</string>
+    <string name="pref_chip_switching_interval_summary" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość. Ustawienie to jest dostępne, gdy została wybrana więcej niż jedna wartość i „Wyświetlaj Aktualizację na żywo” nie jest ustawione na „Nigdy”.</string>
+    <string name="pref_chip_switching_interval_custom_message" formatted="false">Wprowadź interwał w sekundach (1–3600).</string>
+    <string name="pref_chip_switching_interval_error" formatted="false">Wprowadź wartość od 1 do 3600.</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0sekundy</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0sekund</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0sekund</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0sekund</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0sekund</string>
+    <string name="chip_switching_interval_custom">Niestandardowy</string>
+    <string name="pref_chip_indicate_charging" formatted="false">Pokazuj emoji ładowania</string>
+    <string name="pref_chip_indicate_charging_summary" formatted="false">Czy pokazywać emoji błyskawicy podczas ładowania lub po pełnym naładowaniu?</string>
+    <string name="pref_chip_indicate_charging_help" formatted="false">Jeśli włączone, kapsułka na pasku stanu pokazuje emoji błyskawicy obok wartości kapsułki podczas ładowania lub po pełnym naładowaniu.</string>
 
-  <string name="notifications_onboarding_message">Monitor baterii potrzebuje Twojego uprawnienia, aby wyświetlać poziom naładowania baterii na pasku stanu i powiadamiać Cię o alarmach.\n
-    \n
-    Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
+    <string name="alarm_settings_subtitle" formatted="false">Ustawienia alarmów</string>
+    <string name="alarm_settings" formatted="false">Alarmy</string>
+    <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom naładowania baterii spada poniżej 20% i wiele innych).</string>
+    <string name="alarms_overview_channels_help" formatted="false">Wszystkie osiem typów alarmów jest zawsze dostępne. Włączaj zdarzenia bezpośrednio albo używaj „Dodaj próg” dla poziomu naładowania baterii lub temperatury. Wyłączone wartości pozostają na liście. Dźwięk i wibracje są współdzielone przez typ w ustawieniach powiadomień Androida. Istniejące zduplikowane wpisy pojawiają się jako jeden logiczny alarm; przełączanie wpływa na wszystkie kopie. Alarmy ładowania i rozładowania korzystają z przybliżonych celów i nie sterują ładowaniem. Zablokowany kanał lub zatrzymany monitor nie zmienia zapisanych przełączników.\n
+    Otwórz ustawienia powiadomień Androida, aby zezwolić na powiadomienia lub je zablokować oraz skonfigurować dźwięk, wibracje i sposób dostarczania głównego powiadomienia oraz każdego typu alarmu. Włączenie reguły alarmu nie odblokowuje kanału powiadomień.</string>
+    <plurals name="alarms_active_count">
+        <item quantity="one">%1$d włączony alarm</item>
+        <item quantity="few">%1$d włączone alarmy</item>
+        <item quantity="many">%1$d włączonych alarmów</item>
+        <item quantity="other">%1$d włączonych alarmów</item>
+    </plurals>
+    <string name="channel_group_name_alarms" formatted="false">Alarmy</string>
+    <string name="alarm_type_fully_charged" formatted="false">W pełni naładowana</string>
+    <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
+    <string name="alarms_targets_group">Cele ładowania i rozładowania</string>
+    <string name="alarms_charging_target">Osiągnięto cel ładowania</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Osiągnięto cel ładowania</string>
+    <string name="alarm_charging_target_reached" formatted="true">Osiągnięto cel ładowania: %1$d%%</string>
+    <string name="alarms_discharging_target">Osiągnięto cel rozładowania</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Osiągnięto cel rozładowania</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Osiągnięto cel rozładowania: %1$d%%</string>
+    <string name="alarm_type_charge_drops" formatted="false">Gdy poziom naładowania spadnie do</string>
+    <string name="alarm_charge_drops" formatted="false">"Poziom naładowania baterii osiągnął lub spadł poniżej "</string>
+    <string name="alarm_type_charge_rises" formatted="false">Gdy poziom naładowania wzrośnie do</string>
+    <string name="alarm_charge_rises" formatted="false">"Poziom naładowania baterii osiągnął lub wzrósł powyżej "</string>
+    <string name="alarm_type_temperature_drops" formatted="false">Gdy temperatura spadnie do</string>
+    <string name="alarm_temp_drops" formatted="false">"Temperatura baterii osiągnęła lub spadła poniżej "</string>
+    <string name="alarm_type_temperature_rises" formatted="false">Gdy temperatura wzrośnie do</string>
+    <string name="alarm_temp_rises" formatted="false">"Temperatura baterii osiągnęła lub wzrosła powyżej "</string>
+    <string name="alarms_android_problem">Problem zgłoszony przez Androida</string>
+    <string name="alarms_android_problem_summary">Problem z baterią zgłoszony przez system, a nie procentowy wskaźnik jej kondycji</string>
+    <string name="alarm_type_health_failure" formatted="false">Problemy z kondycją</string>
+    <string name="alarm_health_failure" formatted="false">"Kondycja baterii to: "</string>
+    <string name="pref_alarm_threshold" formatted="false">Próg</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Dla alarmów poziomu naładowania baterii i temperatury ustaw próg i zapisz regułę. Nowe progi zostają włączone po zapisaniu. Alarm uruchomi się, gdy odczyt osiągnie lub przekroczy próg w wybranym kierunku. Kolejne odczyty równe progowi nie powtarzają alarmu. Uruchomienie monitora, import reguły lub włączenie jej po przekroczeniu progu nie uruchamia alarmu od razu; potrzebne jest kolejne przekroczenie.</string>
+    <string name="alarms_add_threshold">Dodaj próg</string>
+    <string name="alarms_edit_threshold">Edytuj próg</string>
+    <string name="alarms_edit_existing">Edytuj istniejący próg</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Naciśnij ikonę ołówka obok wartości progu, aby ją zedytować. Edycja zachowuje swój stan włączenia. Aby usunąć alarm, otwórz jego edytor, wybierz „Usuń alarm” i potwierdź usunięcie. Usunięte zostaną wszystkie kopie tego progu.</string>
+    <string name="alarms_new_enabled">Alarm zostanie włączony po dodaniu.</string>
+    <string name="alarms_edit_keeps_enabled">Edycja zachowuje bieżące ustawienie włączenia/wyłączenia.</string>
+    <string name="alarms_enabled">Włączony</string>
+    <string name="alarms_disable">Wyłącz</string>
+    <string name="alarms_options">Opcje: %1$s</string>
+    <string name="alarms_options_tooltip">Opcje</string>
+    <string name="alarms_numeric_range">Wprowadź liczbę całkowitą od %1$d do %2$d.</string>
+    <string name="alarms_temperature_range">Wprowadź liczbę od %1$d do %2$d z dokładnością do jednego miejsca po przecinku.</string>
+    <string name="alarms_duplicate">Ten próg już istnieje dla tego typu.</string>
+    <string name="alarms_discard_confirmation">Czy odrzucić zmiany w tym alarmie?</string>
+    <string name="alarms_discard">Odrzuć</string>
+    <string name="menu_delete_alarm" formatted="false">Usuń alarm</string>
+    <string name="alarms_delete_threshold_confirmation">Czy usunąć %1$s — %2$s? Wszystkie kopie tego progu zostaną usunięte.</string>
+    <string name="alarms_notifications_disabled">Powiadomienia są wyłączone. Włącz je w ustawieniach Androida, aby otrzymywać powiadomienia alarmów.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) grupę powiadomień alarmów dla tej aplikacji. Włącz ją w ustawieniach Androida, aby otrzymywać powiadomienia alarmów</string>
+    <string name="alarms_open_notification_settings">Otwórz ustawienia powiadomień Androida</string>
+    <string name="alarm_chan_disabled" formatted="false">Wyłączyłeś(-aś) powiadomienia dla tego typu alarmu. Włącz je, aby używać tego typu alarmu.</string>
+    <string name="alarm_chan_settings_b" formatted="false">Zarządzaj tym typem alarmu</string>
+    <string name="alarms_options_title" formatted="false">Opcje alarmów</string>
+    <string name="pref_dismiss_low_battery_on_recovery">Odrzucaj alarm niskiego poziomu naładowania baterii po doładowaniu</string>
+    <string name="pref_dismiss_low_battery_on_recovery_summary">Usuwaj powiadomienie o niskim poziomie naładowania, gdy poziom naładowania wzrośnie powyżej jego progu. Inne powiadomienia alarmów pozostają</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">Usuwaj powiadomienie o niskim poziomie naładowania, gdy poziom naładowania wzrośnie powyżej jego progu. Inne powiadomienia alarmów pozostają.</string>
+    <string name="alarms_settings_unavailable">Nie udało się otworzyć ustawień powiadomień Androida</string>
+    <string name="alarms_target_unknown">Cel niedostępny. Otwórz ustawienia szacowania czasu.</string>
+    <string name="alarms_monitor_stopped">Monitorowanie zostało zatrzymane. Zapisane alarmy nie są przetwarzane.</string>
+    <string name="alarms_monitor_unconfirmed">Brak bieżącego połączenia z monitorem. Ocena alarmów nie jest potwierdzana.</string>
+    <string name="alarms_state_unknown">Ustawienia alarmów niedostępne</string>
+    <string name="alarms_stale">Wyświetlane są poprzednie ustawienia. Odśwież przed wprowadzeniem zmian.</string>
+    <string name="alarms_conflict">Zmieniono zapisane alarmy. Odśwież przed wprowadzeniem zmian. Jeśli edytujesz próg, naciśnij „Anuluj” i otwórz go ponownie.</string>
+    <string name="alarms_missing_rule">Tego alarmu brakuje lub jest nieprawidłowy. Przejrzyj katalog alarmów.</string>
+    <string name="alarms_invalid_records">Niektóre zapisane alarmy są nieprawidłowe. Przejrzyj te wpisy; nie zostały usunięte.</string>
+    <string name="alarms_database_error">Nie udało się uzyskać dostępu do bazy danych alarmów. Spróbuj ponownie.</string>
+    <string name="alarms_saved">Zapisano ustawienia alarmów</string>
+    <string name="alarms_saved_reload_failed">Zapisano, ale nie udało się powiadomić monitora. Przejrzyj stan monitorowania.</string>
 
-  <string name="add_alarm" formatted="false">Dodaj alarm</string>
+    <string name="history_range">Zakres historii</string>
+    <string name="history_last_24h">Ostatnie 24\u00A0godziny</string>
+    <string name="history_last_3d">Ostatnie 3\u00A0dni</string>
+    <string name="history_last_7d">Ostatnie 7\u00A0dni</string>
+    <string name="history_all_history">Cała historia</string>
+    <string name="history_custom_range">Własny zakres dat</string>
+    <string name="history_month">Miesiąc</string>
+    <string name="history_year">Rok</string>
+    <string name="history_from">Od: %1$s</string>
+    <string name="history_through">Do: %1$s</string>
+    <string name="history_calendar_days">Uwzględnia obie wybrane daty w lokalnej strefie czasowej.</string>
+    <string name="history_invalid_range">Wprowadź prawidłowy zakres dat.</string>
+    <string name="history_invalid_month">Wprowadź prawidłowy miesiąc (1–12).</string>
+    <string name="history_invalid_year">Wprowadź prawidłowy rok (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Ten okres kalendarzowy rozpoczyna się przed obsługiwaną historią.</string>
+    <string name="history_change_range">Zmień</string>
+    <string name="history_charts">Wykresy</string>
+    <string name="history_level">Poziom</string>
+    <string name="history_level_24h">Poziom · Ostatnie 24\u00A0godziny</string>
+    <string name="history_battery_level">Poziom naładowania baterii</string>
+    <string name="history_observations">Przechowywane obserwacje, a nie ciągły pomiar. Pionowe linie oznaczają zdarzenia zasilania i ponowne uruchomienia.</string>
+    <string name="history_chart_description">Zaobserwowany zakres od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otwórz „Zdarzenia” i naciśnij wpis dla szczegółów odczytu.</string>
+    <string name="history_chart_linked_description">Zaoberwowany zakres od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Wybranie obserwacji ujawnia i wyróżnia jej zdarzenie w kolumnie „Zdarzenia”.</string>
+    <string name="history_last_reading">Ostatnio przechowany odczyt · %1$s</string>
+    <string name="history_selected_reading">Wybrana obserwacja · %1$s</string>
+    <string name="history_reading_range_label">Zakres odczytów</string>
+    <string name="history_previous_point">Poprzednia obserwacja</string>
+    <string name="history_next_point">Następna obserwacja</string>
+    <string name="history_previous_page">Poprzednia strona</string>
+    <string name="history_next_page">Następna strona</string>
+    <string name="history_connections">Podłączenia do zasilania</string>
+    <string name="history_events">Zdarzenia</string>
+    <string name="history_event_counts">Podłączony (krótkie kreski): %1$d · Rozłączony (długie kreski): %2$d · Ponownie uruchomiony (kropki): %3$d</string>
+    <string name="history_all_types">Wszystkie typy</string>
+    <string name="history_filtered_types">Typy: %1$d/%2$d</string>
+    <string name="history_newest">Najnowsze</string>
+    <string name="history_oldest">Najstarsze</string>
+    <string name="history_today">Dzisiaj · %1$s</string>
+    <string name="history_yesterday">Wczoraj · %1$s</string>
+    <string name="history_system_event">Zdarzenie systemowe</string>
+    <string name="history_disconnected">Odłączono od zasilania</string>
+    <string name="history_charge_started">Ładowanie rozpoczęte</string>
+    <string name="history_status_plugged_in" formatted="false">Podłączony</string>
+    <string name="history_status_not_charging" formatted="false">Nie ładuje</string>
+    <string name="history_status_fully_charged" formatted="false">W pełni naładowany</string>
+    <string name="history_periodic_measurement">Pomiar baterii</string>
+    <string name="history_raw_observations">Przechowywane obserwacje. Szczegóły pokazują dostępne odczyty i ich czas.</string>
+    <string name="history_export_selected">Eksportuj wybrany zakres</string>
+    <string name="history_import_json">Importuj logi z kopii zapasowej JSON</string>
+    <string name="history_delete_selected">Wyczyść wybrany zakres</string>
+    <string name="history_delete_selected_confirm">Czy na pewno wyczyścić logi z wybranego zakresu?</string>
+    <string name="history_delete_all">Wyczyść wszystkie logi</string>
+    <string name="history_deleted">Usunięto logi</string>
+    <string name="history_load_failed">Nie udało się odczytać historii</string>
+    <string name="history_operation_failed">Operacja nieudana. Sprawdź dostęp do pliku i spróbuj ponownie.</string>
+    <string name="history_open_fullscreen">Otwórz wykres na pełnym ekranie</string>
+    <string name="history_chart_description_fullscreen">%1$s. Obserwacje od %2$s do %3$s.</string>
+    <string name="history_chart_select_point">Wybierz obserwacje</string>
+    <string name="history_chart_events">Zdarzenia na wykresie</string>
+    <string name="history_chart_1h">Ostatnia godzina</string>
+    <string name="history_chart_6h">Ostatnie 6\u00A0godzin</string>
+    <string name="history_chart_zoom_in">Powiększ</string>
+    <string name="history_chart_zoom_out">Pomniejsz</string>
+    <string name="history_chart_pan_left">Wcześniejszy przedział czasu</string>
+    <string name="history_chart_pan_right">Późniejszy przedział czasu</string>
+    <string name="history_chart_reset">Dopasuj do wybranego zakresu</string>
+    <string name="history_chart_compare">Porównaj</string>
+    <string name="history_chart_no_comparison">Brak</string>
+    <string name="history_chart_more">Więcej działań na wykresie</string>
+    <string name="history_chart_settings">Ustawienia wyświetlania wykresu</string>
+    <string name="history_chart_display_style">Styl wyświetlania</string>
+    <string name="history_chart_connected">Połączone odczyty</string>
+    <string name="history_chart_points">Tylko punkty</string>
+    <string name="history_chart_value_scale">Skala wartości</string>
+    <string name="history_chart_linear">Liniowa</string>
+    <string name="history_chart_logarithmic">Logarytmiczna</string>
+    <string name="history_chart_log_unavailable">Skala logarytmiczna wymaga dodatnich obserwacji dla obu wybranych metryk.</string>
+    <string name="history_chart_scale">Skala osi Y</string>
+    <string name="history_chart_scale_auto">Automatyczna · Widoczne obserwacje</string>
+    <string name="history_chart_scale_fixed">Stała · Cały wybrany zakres</string>
+    <string name="history_chart_scale_manual">Ręczne powiększanie w pionie</string>
+    <string name="history_chart_y_auto">Y: Auto</string>
+    <string name="history_chart_y_fixed">Y: Stała</string>
+    <string name="history_chart_y_manual">Y: Ręczna</string>
 
-  <string name="pref_cat_channel_settings" formatted="false">Ustawienia kanałów powiadomień</string>
-  <string name="pref_manage_main_channel" formatted="false">Zarządzaj głównym kanałem</string>
-
-  <string name="pref_cat_notification_content" formatted="false">Zawartość</string>
-  <string name="pref_live_update_display" formatted="false">Wyświetlaj aktualizację na żywo</string>
-  <string name="pref_live_update_display_summary" formatted="false">Wyświetlaj na pasku stanu:</string>
-  <string name="pref_live_update_display_help" formatted="false">Wybierz, kiedy kapsułka aktualizacji na żywo ma być wyświetlana na pasku stanu.</string>
-  <string name="pref_live_update_display_charging" formatted="false">Tylko podczas ładowania</string>
-  <string name="pref_live_update_keep_main_notification" formatted="false">Pozostawiaj główne powiadomienie</string>
-  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Czy wyświetlać główne powiadomienie, gdy aktualizacja na żywo jest aktywna?</string>
-  <string name="pref_live_update_keep_main_notification_help" formatted="false">Jeśli włączone, główne powiadomienie pozostanie widoczne razem z kapsułką na pasku stanu.</string>
-  <string name="pref_chip_content" formatted="false">Zawartość kapsułki</string>
-  <string name="pref_chip_switching_interval" formatted="false">Interwał przełączania</string>
-  <string name="pref_chip_content_summary" formatted="false">Które wartości mają być wyświetlane w kapsułce i w której kolejności?</string>
-  <string name="pref_chip_content_help" formatted="false">Wybierz wartości, między którymi ma przełączać się kapsułka na pasku stanu, i ustaw ich kolejność.</string>
-  <string name="pref_chip_switching_interval_summary" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość.</string>
-  <string name="pref_chip_switching_interval_help" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość. Ustawienie to jest dostępne, gdy została wybrana więcej niż jedna wartość.</string>
-  <string name="pref_chip_switching_interval_custom_message" formatted="false">Wprowadź interwał w sekundach (1–3600)</string>
-  <string name="pref_chip_switching_interval_error" formatted="false">Wprowadź wartość od 1 do 3600</string>
-  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d s</string>
-  <string name="pref_chip_indicate_charging" formatted="false">Pokazuj emoji ładowania</string>
-  <string name="pref_chip_indicate_charging_summary" formatted="false">Czy pokazywać emoji błyskawicy podczas ładowania lub pełnego naładowania?</string>
-  <string name="pref_chip_indicate_charging_help" formatted="false">Jeśli włączone, kapsułka na pasku stanu pokaże emoji błyskawicy obok wartości kapsułki podczas ładowania lub po pełnym naładowaniu.</string>
-  <string name="pref_top_line_content" formatted="false">Zawartość górnego wiersza</string>
-  <string name="pref_top_line_content_help" formatted="false">Wybierz, czy górny wiersz powiadomienia ma pokazywać szacowany pozostały czas, czas od zmiany stanu, czy skonfigurowane parametry.</string>
-  <string name="pref_bottom_line_content" formatted="false">Zawartość dolnego wiersza</string>
-  <string name="pref_bottom_line_content_help" formatted="false">Masz te same opcje dla dolnego i górnego wiersza.</string>
-  <string name="time_remaining" formatted="false">Pozostały czas</string>
-  <string name="time_since_status_change" formatted="false">Czas od zmiany stanu</string>
-  <string name="vital_signs" formatted="false">Parametry</string>
-
-  <string name="pref_time_remaining_verbosity" formatted="false">Rozwlekłość pozostałego czasu</string>
-  <string name="pref_time_remaining_verbosity_help" formatted="false">Urządzenia są dostępne w różnych kształtach i rozmiarach, dlatego większość tłumaczeń wymaga używania skrótów, aby zapewnić, że szacowany pozostały czas mieści się w obszarze powiadomień. Jeśli nadal się nie mieści, możesz wybrać format zagęszczony. Jeśli masz dużo miejsca, możesz preferować ustawienie rozwlekłości.</string>
-  <string name="condensed" formatted="false">Zagęszczony</string>
-  <string name="normal" formatted="false">Normalny</string>
-  <string name="verbose" formatted="false">Rozwlekły</string>
-
-  <string name="custom" formatted="false">Niestandardowe…</string>
-
-  <string name="pref_icon_content" formatted="false">Zawartość ikony</string>
-  <string name="pref_icon_content_help" formatted="false">Wybierz, czy ikona na pasku stanu ma pokazywać procent baterii, czy temperaturę baterii. Temperatura jest podawana w wybranej przez Ciebie jednostce.</string>
-  <string name="pref_show_icon_unit" formatted="false">Pokazuj symbol jednostki</string>
-  <string name="pref_show_icon_unit_help" formatted="false">Jeśli włączone, ikona pokazuje znak procenta dla poziomu naładowania baterii i symbol stopnia dla temperatury baterii. Wyłącz to ustawienie, aby pokazywać tylko liczbę.</string>
-
-  <string name="pref_cat_battery_current_main" formatted="false">Prąd baterii</string>
-  <string name="pref_enable_battery_current" formatted="false">Włącz prąd baterii</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Czy wyświetlać prąd baterii w głównym oknie?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Gdy włączone, prąd baterii zostanie wyświetlony w głównym oknie i związane z nim opcje staną się dostępne.</string>
-
-  <string name="pref_cat_privileged_access" formatted="false">Dostęp uprzywilejowany</string>
-  <string name="pref_use_privileged_access" formatted="false">Używaj dostępu uprzywilejowanego</string>
-  <string name="pref_use_privileged_access_summary" formatted="false">Czy używać przyznanego dostępu do roota albo Shizuku dla bardziej kompletnych i dokładniejszych danych urządzenia?</string>
-  <string name="pref_use_privileged_access_help" formatted="false">Dostęp uprzywilejowany może udostępniać dodatkowe dane urządzenia i poprawiać dokładność niektórych pomiarów. Monitor baterii używa wyłącznie dostępu do roota albo Shizuku, który jawnie przyznasz.</string>
-
-  <string name="pref_battery_current_multiplier" formatted="false">Mnożnik</string>
-  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
-  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie jest niedostępne dla aktualnego stanu baterii lub odczytu</string>
-  <string name="pref_battery_current_multiplier_detection_result">Mnożnik automatycznie ustawiony na %1$d</string>
-  <string name="pref_battery_current_multiplier_help" formatted="false">Niektóre urządzenia zgłaszają nieoczekiwane jednostki lub znaki. Pomnóż tutaj zgłoszoną wartość, aby poprawić wyświetlany wynik.\n
-    \n
-    Orientacyjnie dla telefonu standardowy znak Androida jest dodatni podczas ładowania i ujemny podczas rozładowywania. Aktywne ładowanie często jest w przybliżeniu między +500 a +5000 mA, podczas gdy zwykłe rozładowywanie zwykle między -100 a -3000 mA. Wartości bliskie zeru mogą być normalne, gdy bateria jest prawie pełna lub telefon jest bezczynny. Jeśli rząd wielkości wygląda na około 1000 razy za mały lub za duży albo znak jest odwrócony, dostosuj mnożnik.</string>
-
-  <string name="pref_prefer_average_battery_current" formatted="false">Preferuj średni prąd</string>
-  <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy użyć ostatniej średniej, gdy jest dostępna?</string>
-  <string name="pref_prefer_current_avg_help" formatted="false">Niektóre systemy podają ostatnią średnią oprócz prądu chwilowego. Okres i jakość uśredniania zależą od urządzenia. Wyłącz tę opcję, jeśli średnia jest niedostępna lub nieprzydatna.</string>
-
-  <string name="pref_battery_current_refresh_interval" formatted="false">Interwał automatycznego odświeżania</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Wybierz, jak często odczyt prądu baterii ma być odświeżany, gdy główne okno jest widoczne.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Wprowadź interwał w sekundach (1-3600)</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Wprowadź wartość od 1 do 3600</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d s</string>
-
-  <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
-  <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
-  <string name="pref_indicate_charging_help" formatted="false">Ikona może pokazywać błyskawicę pod liczbą podczas ładowania. Wyłącz to ustawienie, jeśli preferujesz tę samą ikonę cały czas.</string>
-
-  <string name="pref_cat_logging" formatted="false">Logowanie</string>
-  <string name="pref_enable_logging" formatted="false">Włącz logowanie</string>
-  <string name="pref_enable_logging_summary" formatted="false">Czy logować zmiany stanu baterii?</string>
-  <string name="pref_enable_logging_help" formatted="false">Jeśli włączone, Monitor baterii będzie rejestrować zmiany stanu baterii.</string>
-  <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
-  <string name="pref_max_log_age_summary" formatted="false">Usuwaj logi starsze niż:</string>
-  <string name="pref_max_log_age_help" formatted="false">Jeśli logowanie jest włączone, kiedy tylko podłączysz swoje urządzenie, logi starsze od tej wartości zostaną usunięte. Wybierz „Nigdy nie usuwaj”, aby przechowywać logi, dopóki ich nie wyczyścisz ręcznie.</string>
-
-  <string name="pref_temperature_unit" formatted="false">Jednostka temperatury</string>
-  <string name="pref_temperature_unit_help" formatted="false">Wybierz, czy temperatury mają być wyświetlane w stopniach Celsjusza, czy Fahrenheita.</string>
-
-  <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
-  <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitora baterii podczas włączania urządzenia:</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">Określa, czy Monitor baterii ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
-    \n
-    Opcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Monitora baterii. Jeśli więc zabijasz Monitor baterii w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Monitor baterii nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
-    \n
-    UWAGA: Android będzie zawsze uruchamiać Monitora baterii przy starcie systemu, jeśli na pulpicie masz widżety Monitor baterii. W takim przypadku ustawienie to nie ma znaczenia.</string>
-
-  <string name="predictor_sensitive" formatted="false">Czułe</string>
-  <string name="predictor_conservative" formatted="false">Konserwatywne</string>
-  <string name="predictor_since_status_change" formatted="false">Od zmiany stanu</string>
-  <string name="predictor_long_term_ave" formatted="false">Średnie długoterminowe</string>
-
-  <string name="pref_cat_predictor" formatted="false">Szacowanie pozostałego czasu</string>
-  <string name="pref_prediction_type" formatted="false">Typ szacowania</string>
-  <string name="pref_prediction_type_help" formatted="false">Tutaj możesz wybrać, w jaki sposób Monitor baterii będzie przewidywać pozostały czas pracy baterii/czas do pełnego naładowania.\n
-    \n
-    Algorytm „Czułe” jest oparty wyłącznie na ostatnich pięciu minutach użytkowania. Jeśli Twoim głównym zmartwieniem jest „Jak długo moja bateria wytrzyma, jeśli dalej będę robić to, co robię?”, wtedy algorytm jest dla Ciebie.\n
-    \n
-    Algorytm „Konserwatywne” jest domyślny. Również opiera się na ostatnim użyciu, ale stara się nie odbiegać zbyt mocno od średniej długoterminowej.\n
-    \n
-    Wybierz „Od zmiany stanu”, aby mieć przewidywanie oparte wyłącznie na bieżącej sesji.\n
-    \n
-    Ostatecznie możesz mieć przewidywanie oparte wyłącznie na średnim użyciu długoterminowym.</string>
-
-  <string name="pref_cat_language" formatted="false">Język i formatowanie</string>
-  <string name="pref_change_app_language" formatted="false">Język aplikacji</string>
-  <string name="pref_change_app_language_help" formatted="false">Wybierz język używany przez Monitora baterii. Domyślny systemowy jest zgodny z językiem Twojego urządzenia.</string>
-  <string name="pref_long_duration_format" formatted="false">Format długiego czasu trwania</string>
-  <string name="pref_long_duration_format_help" formatted="false">„Dni i godziny” używa dni po 24 godzinach, np. 1d 3h. „Tylko godziny” zachowuje pełny czas trwania w godzinach, np. 27h.</string>
-  <string name="long_duration_format_days_and_hours" formatted="false">Dni i godziny</string>
-  <string name="long_duration_format_hours_only" formatted="false">Tylko godziny</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Zaawansowane statystyki baterii</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Pokazuj zaawansowane statystyki baterii</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje kartę „Zaawansowane” z diagnostyką baterii, która wymaga roota albo Shizuku.</string>
-
-  <string name="advanced_action_refresh" formatted="false">Odśwież</string>
-  <string name="advanced_status_loading" formatted="false">Ładowanie zaawansowanych statystyk baterii…</string>
-  <string name="advanced_status_no_access" formatted="false">Do wyświetlania zaawansowanych statystyk baterii potrzebny jest dostęp do roota albo Shizuku.</string>
-
-  <string name="alarms_overview" formatted="false">Przegląd alarmów</string>
-  <string name="alarms_overview_help" formatted="false">Na tej stronie możesz dodawać nowe alarmy, szybko włączać lub wyłączać już istniejące lub je usuwać.\n
-    \n
-    Aby dodać nowy alarm, naciśnij „Dodaj alarm” — to utworzy nowy alarm i przeniesie Cię na stronę ustawień alarmu, gdzie możesz sterować ustawieniami dla nowego alarmu. Zobacz pomoc na tej stronie po więcej szczegółow.\n
-    \n
-    Pod przyciskiem „Dodaj alarm” jest lista wszystkich utworzonych przez Ciebie alarmów.\n
-    \n
-    • Aby zedytować istniejący alarm, po prostu go naciśnij.\n
-    • Aby usunąć alarm, długo go naciśnij, a następnie wybierz „Usuń alarm”. (Możesz także usunąć alarm ze strony ustawień pojedynczego alarmu, naciskając MENU, a następnie „Usuń alarm”.)\n
-    • Aby łatwo włączyć/wyłączyć alarm, naciśnij przełącznik obok tekstu alarmu. (Możesz także alarm włączyć lub wyłączyć na stronie ustawień pojedynczego alarmu).</string>
-
-  <string name="pref_alarm_enabled" formatted="false">Włącz alarm</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Jeśli chcesz tymczasowo wyłączyć alarm, bez konieczności tworzenia go od nowa, gdy będziesz go potrzebować, możesz go włączyć lub wyłączyć tutaj albo na głównej stronie alarmów.</string>
-
-  <string name="pref_cat_alarm_conditions" formatted="false">Warunki uruchomienia alarmu</string>
-  <string name="pref_cat_alarm_conditions_help" formatted="false">W tym miejscu możesz określić, jakie warunki spowodują wywołanie alarmu.</string>
-  <string name="pref_alarm_type" formatted="false">Typ alarmu</string>
-  <string name="pref_alarm_type_summary" formatted="false">Wywołaj alarm, gdy bateria:</string>
-  <string name="pref_alarm_type_help" formatted="false">Obecnie możesz wybierać spośród ośmiu typów alarmu.\n
-    \n
-    Alarm „Zostaje w pełni naładowana” powiadomi Cię, gdy stan Twojej baterii zmieni się z „Ładowanie” na „W pełni naładowana”. Pamiętaj, że na wielu urządzeniach nie jest to koniecznie to samo co 100% nałdowania.\n
-    \n
-    \n
-    Alarmy „Osiągnie limit ładowania” i „Osiągnie limit rozładowania” powiadomią Cię, gdy bateria osiągnie docelowy poziom ładowania lub rozładowania. Nie wymagają progu i zawsze podążają za bieżącymi ustawieniami celu.\n
-    \n
-    Alarmy ładowania i temperatury wymagają od Ciebie ustawienia progu po wybraniu tego typu alarmu.\n
-    \n
-    Alarm „Problemy ze zdrowiem” powiadomi Cię, jeśli zdrowie Twojej baterii stanie się inne niż „Nieznane” lub „Zdrowa”, jak zgłasza Android.</string>
-  <string name="pref_alarm_threshold" formatted="false">Próg</string>
-  <string name="alarm_pref_not_used" formatted="false">Nieużywane dla tego typu alarmu</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Próg alarmu:</string>
-  <string name="pref_alarm_threshold_help" formatted="false">Dla ładowania i alarmów temperatury potrzebujesz ustawić poziom ładowania i temperaturę, który wywoła alarm.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Wprowadź temperaturę w stopniach %s</string>
-  <string name="alarm_custom_charge_message" formatted="false">Wprowadź procent naładowania (0-100)</string>
-
-  <string name="boot_pref_always" formatted="false">Zawsze</string>
-  <string name="boot_pref_never" formatted="false">Nigdy</string>
-  <string name="boot_pref_if_running" formatted="false">Jeśli działała przy wyłączaniu systemu</string>
-
-  <string name="age_1_day" formatted="false">1 dzień</string>
-  <string name="age_2_days" formatted="false">2 dni</string>
-  <string name="age_4_days" formatted="false">4 dni</string>
-  <string name="age_1_week" formatted="false">1 tydzień</string>
-  <string name="age_2_weeks" formatted="false">2 tygodnie</string>
-  <string name="age_3_weeks" formatted="false">3 tygodnie</string>
-  <string name="age_4_weeks" formatted="false">4 tygodnie</string>
-  <string name="age_never_delete" formatted="false">Nigdy nie usuwaj</string>
-  <string name="pref_content_percent" formatted="false">Procent baterii</string>
-  <string name="pref_content_temperature" formatted="false">Temperatura baterii</string>
-
-  <string name="chip_switching_interval_2_seconds" formatted="false">2 sekundy</string>
-  <string name="chip_switching_interval_5_seconds" formatted="false">5 sekund</string>
-  <string name="chip_switching_interval_10_seconds" formatted="false">10 sekund</string>
-  <string name="chip_switching_interval_15_seconds" formatted="false">15 sekund</string>
-  <string name="chip_switching_interval_30_seconds" formatted="false">30 sekund</string>
-
-  <string name="advanced_status_waiting_permission" formatted="false">Oczekiwanie na uprawnienie do Shizuku…</string>
-  <string name="shizuku_not_running" formatted="false">Uruchom Shizuku, aby nadać Monitorowi baterii dostęp uprzywilejowany</string>
-  <string name="shizuku_permission_denied_permanently" formatted="false">Nadaj Monitorowi baterii uprawnienie ręcznie w Shizuku</string>
-  <string name="advanced_status_no_stats" formatted="false">W tej chwili nie są dostępne żadne zaawansowane statystyki baterii.</string>
-  <string name="advanced_section_counters" formatted="false">Liczniki</string>
-  <string name="advanced_section_capacity" formatted="false">Pojemność</string>
-  <string name="advanced_section_charging" formatted="false">Ładowanie</string>
-  <string name="advanced_section_service" formatted="false">Usługa baterii Androida</string>
-  <string name="advanced_section_sysfs" formatted="false">Pliki power_supply jądra</string>
-  <string name="advanced_section_metadata" formatted="false">Metadane</string>
-  <string name="advanced_field_charge_counter" formatted="false">Szacunkowy pozostały poziom naładowania</string>
-  <string name="advanced_field_current_now" formatted="false">Bieżący prąd</string>
-  <string name="advanced_field_current_average" formatted="false">Średni prąd</string>
-  <string name="advanced_field_energy_counter" formatted="false">Licznik energii</string>
-  <string name="advanced_field_cycle_count" formatted="false">Liczba cykli</string>
-  <string name="advanced_field_reported_capacity" formatted="false">Zgłoszona pojemność</string>
-  <string name="advanced_field_state_of_health" formatted="false">Stan zdrowia</string>
-  <string name="advanced_field_full_charge_capacity" formatted="false">Pojemność pełnego naładowania</string>
-  <string name="advanced_field_design_capacity" formatted="false">Pojemność projektowa</string>
-  <string name="advanced_field_estimated_health" formatted="false">Szacowane zdrowie</string>
-  <string name="advanced_field_charge_time_remaining" formatted="false">Pozostały czas ładowania</string>
-  <string name="advanced_field_max_charging_current" formatted="false">Maksymalny prąd ładowania</string>
-  <string name="advanced_field_max_charging_voltage" formatted="false">Maksymalne napięcie ładowania</string>
-  <string name="advanced_field_charging_policy" formatted="false">Strategia ładowania</string>
-  <string name="advanced_field_charging_state" formatted="false">Stan ładowania</string>
-  <string name="advanced_field_capacity_level" formatted="false">Poziom pojemności</string>
-  <string name="advanced_field_manufacturing_date" formatted="false">Data produkcji</string>
-  <string name="advanced_field_first_use_date" formatted="false">Data pierwszego użycia</string>
-  <string name="advanced_field_battery_serial_number" formatted="false">Numer seryjny baterii</string>
-  <string name="advanced_field_battery_part_status" formatted="false">Stan części baterii</string>
-  <string name="advanced_field_battery_part_manufacturer" formatted="false">Producent części baterii</string>
-  <string name="advanced_field_battery_model_name" formatted="false">Nazwa modelu baterii</string>
-  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimalne napięcie projektowe</string>
-  <string name="advanced_value_not_available" formatted="false">Niedostępne</string>
-  <string name="advanced_help_overview" formatted="false">Karta „Zaawansowane” pokazuje dodatkową diagnostykę baterii zbieraną z usług systemowych Androida i z plików power_supply jądra. Dostępność zależy od urządzenia, wersji Androida, układu scalonego ładowarki, układu scalonego wskaźnika naładowania baterii i informacji udostępnionych przez producenta.</string>
-  <string name="advanced_help_counters" formatted="false">Liczniki zawierają bieżące lub niedawno spróbkowane wartości, takie jak szacunkowy pozostały poziom naładowania, prąd, licznik energii i liczba cykli. Niektóre urządzenia udostępniają jedynie część z nich, a jednostki mogą pochodzić bezpośrednio ze sterownika sprzętowego.</string>
-  <string name="advanced_help_capacity" formatted="false">Pojemność pokazuje pojemność pełnego naładowania, pojemność projektową i szacowane zdrowie. Szacowane zdrowie jest obliczane jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jego dokładność zależy od wartości odnotowanych przez urządzenie.</string>
-  <string name="advanced_help_charging" formatted="false">Ładowanie pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
-  <string name="advanced_help_service" formatted="false">Usługa baterii Androida pokazuje nieprzetworzone pola zgłoszone przez `dumpsys battery`. Są to wartości na poziomie frameworka, które często obejmują źródło ładowania, stan baterii, temperaturę, napięcie i inne stany usługi.</string>
-  <string name="advanced_help_sysfs" formatted="false">Pliki power_supply jądra pokazują nieprzetworzone jednoliniowe wartości odczytane z `/sys/class/power_supply`, takie jak węzły baterii, BMS, USB czy ładowarki bezprzewodowej. Jest to celowo niskopoziomowe i może zawierać nazwy specyficzne dla sterownika, które są przydatne głównie do debugowania.</string>
-  <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysokopoziomowe właściwości baterii udostępniane przez BatteryManager, takie jak stan zdrowia, pozostały czas ładowania, szczegóły produkcyjne czy stan zamiennika. Większość tych pól wymaga dostępu uprzywilejowanego, a wiele urządzeń udostępnia jedynie niewielką ich część.</string>
-  <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
-  <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że „Zaawansowane statystyki baterii” zostały włączone w ustawieniach. Na zrootowanych urządzeniach Monitor baterii najpierw próbuje użyć `su`. Na urządzeniach bez dostępu do roota Shizuku musi być zainstalowany i uruchomiony, a Monitor baterii musi mieć w nim przyznane uprawnienie. Niektóre urządzenia udostępniają jedynie kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
-
-  <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
-  <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
-  <string name="pref_import_settings" formatted="false">Importuj ustawienia</string>
-  <string name="pref_import_settings_summary" formatted="false">Przywróć ustawienia z pliku</string>
-  <string name="settings_exported" formatted="false">Ustawienia zostały wyeksportowane</string>
-  <string name="settings_imported" formatted="false">Ustawienia zostały zaimportowane</string>
-  <string name="invalid_settings_file" formatted="false">Nieprawidłowy plik ustawień</string>
-  <string name="settings_file_version_warning" formatted="false">Ten plik został utworzony przez nowszą wersję aplikacji. Zaimportowanie go może spowodować nieoczekiwane zachowanie. Czy kontynuować mimo to?</string>
-
-  <string name="background_service_starting" formatted="false">Monitor baterii uruchamia się…</string>
-  <string name="remaining_charge" formatted="false">Pozostały poziom naładowania</string>
-  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
-  <string name="remaining_charge_unavailable">Pozostały poziom naładowania niedostępny</string>
-  <string name="pref_show_remaining_charge" formatted="false">Wyświetlaj pozostały poziom naładowania</string>
-  <string name="pref_show_remaining_charge_summary" formatted="false">Czy wyświetlać odnotowany przez urządzenie pozostały poziom naładowania baterii w mAh?</string>
-  <string name="vital_sign_voltage" formatted="false">Napięcie baterii</string>
-
-  <string name="pref_vital_signs_content" formatted="false">Zawartość parametrów</string>
-  <string name="pref_vital_signs_content_summary" formatted="false">Które wartości mają być uwzglęniane w parametrach i w której kolejności?</string>
-  <string name="pref_vital_signs_reorder_handle" formatted="true">Zmień kolejność %1$s</string>
-
-  <string name="pref_expanded_notification" formatted="false">Rozwijaj szczegóły powiadomienia</string>
-  <string name="pref_expanded_notification_summary" formatted="false">Czy wyświetlać szczegóły, gdy powiadomienie zostanie rozwinięte?</string>
-  <string name="pref_expanded_notification_help" formatted="false">Jeśli włączone, rozwinięcie głównego powiadomienia wyświetli Pozostały czas, Czas od zmiany stanu i wartość każdego z parametrów w oddzielnym wierszu zamiast jednowierszowego podsumowania.</string>
-  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
-
-  <string name="pref_expanded_live_update" formatted="false">Rozwijaj szczegóły aktualizacji na żywo</string>
-  <string name="pref_expanded_live_update_summary" formatted="false">Czy wyświetlać szczegóły w powiadomieniu aktualizacji na żywo?</string>
-  <string name="pref_expanded_live_update_help" formatted="false">Powiadomienia aktualizacji na żywo są zawsze wyświetlane rozwinięte. Jeśli włączone, aktualizacja na żywo wyświetli Pozostały czas, Czas od zmiany stanu i wartość każdego z parametrów w oddzielnym wierszu.</string>
-
-  <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
-  <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>
-  <string name="pref_auto_log_export" formatted="false">Automatyczny eksport logów</string>
-  <string name="pref_set_auto_log_export" formatted="false">Ustaw automatyczne kopie zapasowe logów</string>
-  <string name="pref_edit_auto_log_export" formatted="false">Edytuj automatyczne kopie zapasowe logów</string>
-  <string name="pref_disable_auto_log_export" formatted="false">Anuluj automatyczny eksport logów</string>
-  <string name="pref_auto_log_export_not_set_summary" formatted="false">Okresowo zapisuj nowe logi w folderze</string>
-  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    <string name="logs_empty" formatted="false">Logi są puste.</string>
+    <string name="configure_log_filter" formatted="false">Które elementy logów pokazywać?</string>
+    <string name="menu_show_seconds" formatted="false">Pokaż sekundy</string>
+    <string name="menu_hide_seconds" formatted="false">Ukryj sekundy</string>
+    <string name="menu_clear" formatted="false">Wyczyść</string>
+    <string name="confirm_clear_logs" formatted="false">Czy naprawdę wyczyścić wszystkie logi?</string>
+    <string name="after_nh_mm_unplugged" formatted="true">Po %1$dh %2$dm od odłączenia</string>
+    <string name="after_nh_mm_plugged_in" formatted="true">Po %1$dh %2$dm od podłączenia</string>
+    <string name="after_nm_ms_unplugged" formatted="true">Po %1$dm %2$ds od odłączenia</string>
+    <string name="after_nm_ms_plugged_in" formatted="true">Po %1$dm %2$ds od podłączenia</string>
+    <string name="pref_cat_logging" formatted="false">Logowanie</string>
+    <string name="pref_enable_logging" formatted="false">Włącz logowanie</string>
+    <string name="pref_enable_logging_summary" formatted="false">Czy logować zmiany stanu baterii?</string>
+    <string name="pref_enable_logging_help" formatted="false">Zapisuj obserwacje baterii i zmiany stanu w „Historia”. Dostępne pomiary uwzględniają poziom naładowania baterii, temperaturę, napięcie, oryginalny prąd chwilowy i pozostały ładunek. Moc jest obliczana z napięcia i prądu podczas wyświetlania lub eksportu; nie jest przechowywana osobno. Wyłączenie logowania nie usuwa istniejącej historii ani nie zatrzymuje szacowania czasu.</string>
+    <string name="pref_history_sampling_mode">Odczyty podczas uśpienia</string>
+    <string name="pref_history_sampling_standard">Standardowe</string>
+    <string name="pref_history_sampling_exact_alarm">Dokładne alarmy budzenia</string>
+    <string name="pref_history_sampling_keep_cpu_awake">Utrzymuj procesor wybudzony</string>
+    <string name="pref_history_sampling_mode_help">Wybierz, jak Monitor baterii ma rejestrować odczyty podczas uśpienia Twojego urządzenia. „Standardowe” może pozostawiać przerwy. „Dokładne alarmy budzenia” na krótko wybudza procesor na czas odczytów. „Utrzymuj aktywność procesora” zużywa więcej baterii. Obie ostatnie opcje wymagają wyłączenia optymalizacji baterii i dążą do wykonania odczytów co dwie minuty.</string>
+    <string name="pref_chart_gap_threshold">Próg przerw na wykresie</string>
+    <string name="pref_chart_gap_never">Nigdy nie pokazuj przerw</string>
+    <string name="pref_chart_gap_custom_message">Wprowadź liczbę całkowitą (minuty) większą od 1.</string>
+    <string name="pref_chart_gap_threshold_help">Ustaw najdłuższy interwał, w ramach którego wykresy mają połączone odczyty. Dłuższe interwały pojawiają się jako przerwy w karcie „Historia” i widżecie „Wykres baterii”. „Nigdy nie pokazuj przerw” łączy przechowywane odczyty między dowolnymi interwałami.</string>
+    <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
+    <string name="pref_max_log_age_help" formatted="false">Gdy logowanie jest włączone, logi starsze niż ten limit są automatycznie usuwane podczas porządkowania historii. „Bez limitu” przechowuje je, dopóki nie wyczyścisz ich ręcznie. Jeśli automatyczny eksport jest włączony, Monitor baterii eksportuje oczekujące logi przed usunięciem starych wpisów; nieudany eksport uniemożliwia to usunięcie.</string>
+    <string name="age_1_day" formatted="false">1\u00A0dzień</string>
+    <string name="age_2_days" formatted="false">2\u00A0dni</string>
+    <string name="age_4_days" formatted="false">4\u00A0dni</string>
+    <string name="age_1_week" formatted="false">1\u00A0tydzień</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0tygodnie</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0tygodnie</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0tygodnie</string>
+    <string name="age_no_limit" formatted="false">Bez limitu</string>
+    <string name="log_export_mode_title" formatted="false">Eksportuj logi</string>
+    <string name="log_export_append" formatted="false">Dodaj do istniejącego pliku</string>
+    <string name="log_export_append_description" formatted="false">Pliki CSV i JSON można rozszerzać. Wybierz istniejący plik w wybranym formacie; dodawane są tylko logi od ostatniego ręcznego eksportu.</string>
+    <string name="log_json_append_invalid" formatted="false">Wybierz możliwy do odczytania plik JSON historii Monitora baterii w obsługiwanej wersji, o rozmiarze do 16 MB.</string>
+    <string name="log_export_recovery_required" formatted="true">Podłącz ponownie pamięć i ponownie wyeksportuj do tego samego pliku, aby go przywrócić. Oryginalny plik jest przechowywany w pamięci aplikacji (%1$s).</string>
+    <string name="log_export_all_logs" formatted="false">Wszystkie</string>
+    <string name="log_export_from_last" formatted="false">Od ostatniego eksportu</string>
+    <string name="pref_auto_log_export_title" formatted="false">Okresowo zapisuj nowe logi w folderze</string>
+    <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
     %4$s</string>
-  <string name="pref_auto_log_export_frequency" formatted="false">Częstotliwość eksportu</string>
-  <string name="pref_auto_log_export_mode" formatted="false">Obsługa plików</string>
-  <string name="pref_auto_log_export_format" formatted="false">Format eksportu</string>
-  <string name="pref_auto_log_export_directory" formatted="false">Zmień folder</string>
-  <string name="auto_log_export_help" formatted="false">Automatyczne eksporty zapisują logi zebrane tylko od poprzedniego automatycznego eksportu. Wybierz częstotliwość ich uruchamiania i czy każdy eksport ma tworzyć osobny plik, czy dodawać nowe wpisy do jednego bieżącego pliku. Android może opóźniać eksport, gdy urządzenie jest bezczynne.</string>
-  <string name="auto_log_export_format_help" formatted="false">Wybierz CSV do czytania, filtrowania, tworzenia wykresów lub ręcznego analizowania logów w arkuszu kalkulacyjnym albo edytorze tekstu. Wybierz JSON, gdy plik jest głównie kopią zapasową: zachowuje ustrukturyzowane dane logów Monitora baterii.</string>
-  <string name="auto_log_export_mode_new_file" formatted="false">Utwórz nowy plik</string>
-  <string name="auto_log_export_mode_append" formatted="false">Dodawaj nowe logi do istniejącego pliku</string>
-  <string name="pref_export_alarms" formatted="false">Eksportuj alarmy</string>
-  <string name="pref_export_alarms_summary" formatted="false">Zapisz bieżące alarmy do pliku</string>
-  <string name="pref_import_alarms" formatted="false">Importuj alarmy</string>
-  <string name="pref_import_alarms_summary" formatted="false">Zastąp bieżące alarmy alarmami z pliku</string>
-  <string name="alarms_exported" formatted="false">Alarmy zostały wyeksportowane</string>
-  <string name="alarms_imported" formatted="false">Alarmy zostały zaimportowane</string>
-  <string name="invalid_alarms_file" formatted="false">Nieprawidłowy plik alarmów</string>
-  <string name="pref_backup_device_data" formatted="false">Kopia zapasowa danych specyficznych dla urządzenia</string>
-  <string name="pref_export_device_data" formatted="false">Eksportuj dane specyficzne dla urządzenia</string>
-  <string name="pref_export_device_data_summary" formatted="false">Zapisz logi i dane predykcyjne do pliku</string>
-  <string name="pref_import_device_data" formatted="false">Importuj dane specyficzne dla urządzenia</string>
-  <string name="pref_import_device_data_summary" formatted="false">Przywróć logi i dane predykcyjne z pliku</string>
-  <string name="device_data_logs" formatted="false">Logi</string>
-  <string name="device_data_predictor" formatted="false">Dane predykcyjne</string>
-  <string name="device_data_backup_warning" formatted="false">Te dane specyficzne dla urządzenia należą do urządzenia, na którym zostały zebrane. Zaimportowanie ich na innym urządzeniu może spowodować błędne przewidywania lub inne nieoczekiwane zachowanie aplikacji.</string>
-  <string name="device_data_exported" formatted="false">Dane specyficzne dla urządzenia zostały wyeksportowane</string>
-  <string name="device_data_imported" formatted="false">Dane specyficzne dla urządzenia zostały zaimportowane</string>
-  <string name="invalid_device_data_file" formatted="false">Nieprawidłowy plik danych specyficznych dla urządzenia</string>
-  <string name="device_data_file_empty" formatted="false">Ten plik nie zawiera obsługiwanych danych specyficznych dla urządzenia</string>
-  <string name="pref_import_logs_csv" formatted="false">Importuj logi z pliku CSV</string>
-  <string name="pref_import_logs_csv_summary" formatted="false">Importuj logi z wyeksportowanego pliku CSV</string>
-  <string name="csv_logs_import_warning" formatted="false">Formaty CSV mogą się różnić między wersjami aplikacji, dlatego import może nie zawsze działać prawidłowo.</string>
-  <string name="csv_logs_imported" formatted="false">Logi CSV zostały zaimportowane</string>
-  <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niekompatybilny plik logów CSV</string>
-  <string name="log_import_mode_title" formatted="false">Importuj logi</string>
-  <string name="log_import_mode_message" formatted="false">Jak zaimportowane logi powinny zostać obsłużone?</string>
-  <string name="log_import_replace" formatted="false">Zastąp istniejące logi</string>
-  <string name="log_import_add" formatted="false">Dodaj do istniejących logów</string>
-  <string name="pref_general_backup" formatted="false">Ogólna kopia zapasowa aplikacji</string>
-  <string name="pref_export_general_backup" formatted="false">Eksportuj ogólną kopię zapasową</string>
-  <string name="pref_export_general_backup_summary" formatted="false">Zapisz ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP</string>
-  <string name="pref_import_general_backup" formatted="false">Importuj ogólną kopię zapasową</string>
-  <string name="pref_import_general_backup_summary" formatted="false">Przywróć wybrane dane z pliku ZIP ogólnej kopii zapasowej</string>
-  <string name="general_backup_restore_message" formatted="false">Wybierz, co chcesz przywrócić</string>
-  <string name="general_backup_exported" formatted="false">Ogólna kopia zapasowa została wyeksportowana</string>
-  <string name="general_backup_imported" formatted="false">Ogólna kopia zapasowa została zaimportowana</string>
-  <string name="invalid_general_backup_file" formatted="false">Nieprawidłowy lub niekompatybilny plik ogólnej kopii zapasowej</string>
-  <string name="backup_restore_help_overview" formatted="false">Użyj kopii zapasowych, aby zapisać kopię Twoich danych aplikacji i przywrócić ją później.</string>
-  <string name="general_backup_help" formatted="false">Ogólna kopia zapasowa zapisuje razem ustawienia, alarmy i dane specyficzne dla urządzenia. Podczas jej przywracania możesz wybrać, które dostępne dane zaimportować.</string>
-  <string name="settings_backup_help" formatted="false">Kopia zapasowa ustawień zapisuje Twoje preferencje aplikacji. Zaimportowanie jej przywraca zapisane preferencje.</string>
-  <string name="alarms_backup_help" formatted="false">Kopia zapasowa alarmów zapisuje Twoje alarmy. Zaimportowanie jej zastępuje wszystkie bieżące alarmy alarmami z kopii zapasowej.</string>
-  <string name="device_specific_backup_help" formatted="false">Kopia zapasowa danych specyficznych dla urządzenia zapisuje logi i dane predykcyjne. Możesz wybrać którekolwiek lub oba podczas importu. Dane te należą do urządzenia źródłowego; użycie ich na innym urządzeniu może spowodować błędne przewidywania lub nieoczekiwane zachowanie. Podczas importowania logów wybierz, czy je dodać, czy zastąpić istniejące logi.</string>
-  <string name="csv_logs_import_help" formatted="false">Możesz zaimportować logi z poprzednio wyeksportowanego pliku CSV. Import może nie działać prawidłowo między różnymi wersjami aplikacji. Wybierz, czy dodać zaimportowane logi, czy zastąpić istniejące.</string>
+    <string name="pref_auto_log_export_setup_summary" formatted="false">Ustaw automatyczne kopie zapasowe logów</string>
+    <string name="pref_disable_auto_log_export" formatted="false">Anuluj automatyczny eksport logów</string>
+    <string name="pref_auto_log_export_frequency" formatted="false">Częstotliwość eksportu</string>
+    <string name="pref_auto_log_export_mode" formatted="false">Obsługa plików</string>
+    <string name="pref_auto_log_export_format" formatted="false">Format eksportu</string>
+    <string name="pref_auto_log_export_directory" formatted="false">Zmień folder</string>
+    <string name="pref_auto_log_export_path" formatted="true">Ścieżka: %1$s</string>
+    <string name="auto_log_export_help" formatted="false">Wybierz folder, częstotliwość, format oraz tworzenie osobnych plików lub dopisywanie do jednego pliku. Eksport zwykle zapisuje logi od poprzedniego automatycznego eksportu; nowy plik do dopisywania obejmuje wszystkie dostępne logi. Android może opóźniać eksport podczas bezczynności. Logowanie musi pozostać włączone.\n
+    CSV ułatwia analizę w arkuszu kalkulacyjnym lub edytorze tekstu. Zawiera oryginalny prąd, pozostały ładunek oraz moc obliczoną z mnożnikiem wybranym podczas eksportu. JSON zachowuje strukturę danych logów do kopii zapasowych. Komórki z niedostępnym prądem, pozostałym ładunkiem i mocą pozostają puste.\n
+    Interwał eksportu nie może przekroczyć czasu przechowywania logów. Zmiana folderu wymaga przyznania aplikacji dostępu do tego folderu w Androidzie. Wyłączenie automatycznego eksportu pozostawia zapisane logi i istniejące pliki niezmienione.</string>
+    <string name="auto_log_export_mode_new_file" formatted="false">Twórz nowy plik</string>
+    <string name="auto_log_export_mode_append" formatted="false">Dodawaj nowe logi do istniejącego pliku</string>
+    <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="date" formatted="false">data</string>
+    <string name="time" formatted="false">godzina</string>
+    <string name="status" formatted="false">stan</string>
+    <string name="charge" formatted="false">poziom_naładowania</string>
+    <string name="temperature" formatted="false">stopnie_celsjusza</string>
+    <string name="temperature_f" formatted="false">stopnie_fahrenheita</string>
+    <string name="voltage" formatted="false">wolty</string>
+    <string name="file_written" formatted="false">Plik został zapisany w wybranej lokalizacji</string>
 
-  <string name="diagnostics" formatted="false">Diagnostyka</string>
-  <string name="diagnostics_summary" formatted="false">Sprawdź uprawnienia, niezawodność monitorowania i utwórz raport do rozwiązywania problemów</string>
-  <string name="diagnostics_permissions" formatted="false">Uprawnienia i dostęp</string>
-  <string name="diagnostics_notifications" formatted="false">Powiadomienia</string>
-  <string name="diagnostics_root" formatted="false">Dostęp do roota</string>
-  <string name="diagnostics_shizuku" formatted="false">Dostęp przez Shizuku</string>
-  <string name="diagnostics_monitoring" formatted="false">Monitorowanie w tle</string>
-  <string name="diagnostics_service" formatted="false">Usługa monitorowania</string>
-  <string name="diagnostics_database" formatted="false">Baza danych logowania</string>
-  <string name="diagnostics_battery_optimization" formatted="false">Optymalizacja baterii</string>
-  <string name="diagnostics_vendor_settings" formatted="false">Ustawienia producenta</string>
-  <string name="diagnostics_vendor_settings_summary" formatted="false">Otwórz dodatkowe ustawienia aktywności w tle lub automatycznego uruchamiania dostępne na tym urządzeniu</string>
-  <string name="diagnostics_dont_kill_my_app" formatted="false">Pomoc dotycząca aktywności w tle</string>
-  <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Otwórz wskazówki dla tego urządzenia w Don’t Kill My App</string>
-  <string name="diagnostics_device_and_logs" formatted="false">Urządzenie i raport rozwiązywania problemów</string>
-  <string name="diagnostics_debug_logs" formatted="false">Zbieraj logi debugowania</string>
-  <string name="diagnostics_export" formatted="false">Eksportuj raport diagnostyczny</string>
-  <string name="diagnostics_export_summary" formatted="false">Zapisz informacje o urządzeniu, uprawnieniach, monitorowaniu i dostępnych logach debugowania w pliku tekstowym</string>
-  <string name="diagnostics_clear" formatted="false">Usuń zebrane logi debugowania</string>
-  <string name="diagnostics_clear_summary" formatted="false">Usuń logi debugowania obecnie przechowywane przez aplikację</string>
-  <string name="diagnostics_checking" formatted="false">Sprawdzanie…</string>
-  <string name="diagnostics_root_unavailable" formatted="false">Niedostępny. Naciśnij, aby poprosić o dostęp do roota lub go sprawdzić</string>
-  <string name="diagnostics_tap_to_check" formatted="false">Nie sprawdzono. Naciśnij, aby poprosić o dostęp lub go sprawdzić</string>
-  <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Brak uprawnienia. Naciśnij, aby otworzyć ustawienia</string>
-  <string name="diagnostics_shizuku_permission_missing" formatted="false">Brak uprawnienia. Naciśnij, aby poprosić o nie w Shizuku</string>
-  <string name="diagnostics_unrestricted" formatted="false">Bez ograniczeń</string>
-  <string name="diagnostics_restricted_tap_to_fix" formatted="false">Z ograniczeniami. Naciśnij, aby zezwolić na niezawodne monitorowanie w tle</string>
-  <string name="diagnostics_not_running_tap_to_start" formatted="false">Brak ostatniej odpowiedzi. Naciśnij, aby poprosić o ponowne uruchomienie</string>
-  <string name="diagnostics_no_recent_database_access" formatted="false">Brak ostatniego udanego dostępu do bazy danych</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Działa · Ostatnia odpowiedź %1$s temu</string>
-  <string name="diagnostics_debug_logs_warning" formatted="false">Logi debugowania mogą zawierać dane osobowe. Włącz tylko podczas badania problemu, przejrzyj wyeksportowany plik i uważaj, gdy udostępniasz go publicznie</string>
-  <string name="diagnostics_logs_cleared" formatted="false">Usunięto logi debugowania</string>
-  <string name="diagnostics_logs_clear_failed" formatted="false">Nie udało się usunąć logów debugowania</string>
-  <string name="diagnostics_exported" formatted="false">Wyeksportowano raport diagnostyczny</string>
-  <string name="diagnostics_export_failed" formatted="false">Nie udało się wyeksportować raportu diagnostycznego</string>
-  <string name="diagnostics_help_title" formatted="false">Jak pomaga diagnostyka</string>
-  <string name="diagnostics_help_overview" formatted="false">Ten ekran sprawdza, czy Monitor baterii ma to, czego potrzebuje, aby utrzymywać monitorowanie w tle. Jeśli czegoś brakuje, naciśnij ten element, aby otworzyć miejsce, gdzie możesz go naprawić.</string>
-  <string name="diagnostics_help_report" formatted="false">Jeśli zgłaszasz problem, raport diagnostyczny może być istotny w znalezieniu jego przyczyny. Zawiera on informacje o urządzeniu i stanie aplikacji oraz (jeśli je włączyłeś(-aś)) logi debugowania. Logi debugowania mogą zawierać dane osobowe, dlatego przejrzyj plik i udostępnij go ostrożnie.</string>
-  <string name="diagnostics_service_restarting" formatted="false">Usługa nie odpowiedziała. Ponowne jej uruchamianie…</string>
-  <string name="diagnostics_service_restart_failed" formatted="false">Usługa monitorowania nie odpowiedziała po ponownym uruchomieniu. Spróbuj ponownie uruchomić aplikację.</string>
-  <string name="diagnostics_database_failed_storage" formatted="false">Sprawdzenie bazy danych nie powiodło się. Zwolnij trochę miejsca na urządzeniu i spróbuj ponownie.</string>
-  <string name="diagnostics_database_failed" formatted="false">Sprawdzenie bazy danych nie powiodło się. Uruchom ponownie aplikację i spróbuj ponownie.</string>
-  <string name="diagnostics_service_responded" formatted="false">Usługa monitorowania odpowiedziała</string>
-  <string name="diagnostics_database_check_succeeded" formatted="false">Sprawdzenie odczytu i zapisu bazy danych powiodło się</string>
+    <string name="widget_status">Stan baterii</string>
+    <string name="widget_measurements">Pomiary baterii</string>
+    <string name="widget_trend">Wykres baterii</string>
+    <string name="circle_widget" formatted="false">Okrągły (stary)</string>
+    <string name="full_widget" formatted="false">Pełny (stary)</string>
+    <string name="widget_configure_title">Dostosuj widżet</string>
+    <string name="widget_customize">Dostosuj</string>
+    <string name="widget_follow_app">Zgodnie z ustawieniami aplikacji</string>
+    <string name="widget_status_extra">Dodatkowy odczyt</string>
+    <string name="widget_metric_selection">Pomiary i kolejność</string>
+    <string name="widget_metric_selection_hint">Wybierz od dwóch do czterech pomiarów. Użyj strzałek, aby zmienić ich kolejność.</string>
+    <string name="widget_background_opacity">Przezroczystość tła</string>
+    <string name="widget_background_opacity_error">Wprowadź liczbę całkowitą od 0 do 100.</string>
+    <string name="widget_transparent_warning">W przypadku przezroczystego tła czytelność zależy od Twojej tapety.</string>
+    <string name="widget_y_axis_labels">Pokazuj wartości na osi Y</string>
+    <string name="widget_tap_action">Działanie po naciśnięciu</string>
+    <string name="widget_measurement_details">Szczegóły pomiaru</string>
+    <string name="widget_preview">Podgląd widżetu</string>
+    <string name="widget_preview_note">Podgląd używa ostatniego odczytu monitora. Rozmiar widżetu jest ustawiany przez Twój launcher.</string>
+    <string name="widget_read_at">Odczyt %1$s</string>
+    <string name="widget_observed_range">Zaobserwowano %1$s–%2$s</string>
+    <string name="widget_chart_description">Przechowywany poziom naładowania baterii od %1$s do %2$s. Minimum %3$s, maksimum %4$s.</string>
+    <string name="widget_save_failed">Nie udało się zapisać tego widżetu. Spróbuj ponownie.</string>
+    <string name="widget_invalid_instance">Ten widżet nie jest już dostępny</string>
 
-  <string name="charging_diagnostics_title" formatted="false">Diagnostyka limitu ładowania OEM</string>
-  <string name="charging_diagnostics_instructions_hint" formatted="false">Aby uzyskać przydatny raport, otwórz Pomoc i podążaj za przygotowanymi tam krokami przed wykonaniem snapshotów</string>
-  <string name="charging_diagnostics_capture" formatted="false">Wykonaj snapshot</string>
-  <string name="charging_diagnostics_capture_summary" formatted="false">Ustaw tryb ładowania w ustawieniach urządzenia, a następnie przechwyć jego sygnały</string>
-  <string name="charging_diagnostics_report" formatted="false">Utwórz raport porównawczy</string>
-  <string name="charging_diagnostics_report_summary" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania OEM</string>
-  <string name="charging_diagnostics_clear" formatted="false">Wyczyść snapshoty ładowania</string>
-  <string name="charging_diagnostics_clear_summary" formatted="false">Usuń lokalnie przechowywane snapshoty ładowania OEM</string>
-  <string name="charging_diagnostics_choose_state" formatted="false">Które ustawienie urządzenia jest aktywne?</string>
-  <string name="charging_diagnostics_condition_off" formatted="false">Ochrona wyłączona/bez ograniczeń</string>
-  <string name="charging_diagnostics_condition_fixed" formatted="false">Stały limit…</string>
-  <string name="charging_diagnostics_condition_adaptive" formatted="false">Ładowanie adaptacyjne/inteligentne</string>
-  <string name="charging_diagnostics_condition_scheduled" formatted="false">Zaplanowane ładowanie</string>
-  <string name="charging_diagnostics_condition_other" formatted="false">Inny tryb OEM</string>
-  <string name="charging_diagnostics_capturing" formatted="false">Przechwytywanie sygnałów ładowania…</string>
-  <string name="charging_diagnostics_captured" formatted="false">Wykonano snapshot ładowania</string>
-  <string name="charging_diagnostics_capture_failed" formatted="false">Nie udało się wykonać snapshotu ładowania</string>
-  <string name="charging_diagnostics_privileged_hint" formatted="false">Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w Zaawansowanych dla bardziej przydatnego raportu limitu ładowania OEM</string>
-  <plurals name="charging_diagnostics_snapshot_count">
-    <item quantity="one">Wykonano %1$d snapshot. Wykonaj kolejny dla innego trybu ładowania</item>
-    <item quantity="few">Wykonano %1$d snapshoty. Naciśnij, aby przejrzeć porównanie</item>
-    <item quantity="many">Wykonano %1$d snapshotów. Naciśnij, aby przejrzeć porównanie</item>
-  </plurals>
-  <string name="charging_diagnostics_need_two" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania</string>
-  <string name="charging_diagnostics_cleared" formatted="false">Usunięto snapshoty ładowania</string>
-  <string name="charging_diagnostics_copy" formatted="false">Kopiuj do schowka</string>
-  <string name="charging_diagnostics_save" formatted="false">Zapisz</string>
-  <string name="charging_diagnostics_copied" formatted="false">Skopiowano raport</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Odłącz telefon i pozostaw go odłączonego podczas wykonywania snapshotów konfiguracji. Zmieniaj tylko ustawienie ochrony ładowania OEM między snapshotami.\n
-    2. Wyłącz ochronę ładowania, odczekaj 2-5 sekund i wykonaj snapshot.\n
-    3. Wybierz dowolny stały limit, odczekaj 2-5 sekund i wykonaj kolejny snapshot. Powtórz to z co najmniej jednym innym stałym limitem, jeśli jest dostępny.\n
-    4. Włącz ładowanie adaptacyjne, inteligentne lub zaplanowane, odczekaj 2-5 sekund i wykonaj jeszcze jeden snapshot.\n
+    <string name="settings_activity_subtitle" formatted="false">Ustawienia</string>
+    <string name="settings_overview" formatted="false">Przegląd</string>
+    <string name="settings_overview_help" formatted="false">Ustawienia są pogrupowane w „Ogólne”, „Aktualny stan”, „Szacowanie czasu”, „Główne powiadomienie”, „Zaawansowane” oraz „Kopia zapasowa i przywracanie”. Użyj wyszukiwania, aby znaleźć opcję. Każda strona zawiera pomoc dotyczącą swoich ustawień. „Diagnostyka” jest dostępna osobno w menu bocznym.</string>
+    <string name="settings_search_hint">Szukaj ustawień</string>
+    <string name="search_clear">Wyczyść wyszukiwanie</string>
+    <string name="settings_search_no_results">Brak pasujących ustawień</string>
+    <string name="settings_dependency_disabled">Włącz lub skonfiguruj powiązaną opcję powyżej, aby zmienić to ustawienie</string>
+    <string name="other_settings" formatted="false">Ogólne</string>
+    <string name="settings_general_summary">Język, wygląd, jednostka temperatury i format czasu trwania</string>
+    <string name="other_settings_help" formatted="false">Wybierz paletę kolorów i jasność, język aplikacji, jednostkę temperatury, format czasu oraz sposób uruchamiania monitorowania po ponownym uruchomieniu urządzenia.</string>
+    <string name="settings_legacy_general">Inne</string>
+    <string name="pref_cat_language" formatted="false">Język i formatowanie</string>
+    <string name="pref_change_app_language" formatted="false">Język aplikacji</string>
+    <string name="pref_change_app_language_help" formatted="false">Wybierz język używany przez Monitora baterii. Domyślny systemowy jest zgodny z językiem Twojego urządzenia.</string>
+    <string name="settings_app_language_unavailable">Systemowy wybór języka aplikacji wymaga Androida 13 lub nowszego</string>
+    <string name="settings_app_language_unavailable_help">Systemowy wybór języka aplikacji wymaga Androida 13 lub nowszego.</string>
+    <string name="pref_temperature_unit" formatted="false">Jednostka temperatury</string>
+    <string name="pref_temperature_unit_help" formatted="false">Wybierz, czy temperatura baterii ma być wyświetlana w stopniach Celsjusza, czy Fahrenheita.</string>
+    <string name="celsius" formatted="false">Celsjusz</string>
+    <string name="fahrenheit" formatted="false">Fahrenheit</string>
+    <string name="pref_long_duration_format" formatted="false">Format długiego czasu trwania</string>
+    <string name="pref_long_duration_format_help" formatted="false">„Dni i godziny” używa dni po 24\u00A0godzinach, np. 1d 3h. „Tylko godziny” zachowuje pełny czas trwania w godzinach, np. 27h.</string>
+    <string name="long_duration_format_days_and_hours" formatted="false">Dni i godziny</string>
+    <string name="long_duration_format_hours_only" formatted="false">Tylko godziny</string>
+    <string name="settings_appearance">Wygląd</string>
+    <string name="settings_color_palette">Paleta kolorów</string>
+    <string name="settings_color_palette_summary">Używaj kolorów systemowych albo „Battery Blue”</string>
+    <string name="settings_color_palette_help">Używaj kolorów systemowych albo „Battery Blue”.</string>
+    <string name="settings_color_palette_material_you">Material You</string>
+    <string name="settings_color_palette_battery_blue">Battery Blue</string>
+    <string name="settings_color_palette_unavailable">Kolory systemowe wymagają Androida 12 lub nowszego. Na tym urządzeniu używana jest paleta „Battery Blue”.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">Używaj kolorów systemowych albo „Battery Blue”.\n
+    Kolory systemowe wymagają Androida 12 lub nowszego. Na tym urządzeniu używana jest paleta „Battery Blue”.</string>
+    <string name="settings_brightness">Jasność</string>
+    <string name="settings_brightness_summary">Stosuj systemową albo wybierz jasną, ciemną lub prawdziwą czerń</string>
+    <string name="settings_brightness_help">Stosuj systemową albo wybierz jasną, ciemną lub prawdziwą czerń.</string>
+    <string name="settings_brightness_system">Systemowa</string>
+    <string name="settings_brightness_light">Jasna</string>
+    <string name="settings_brightness_dark">Ciemna</string>
+    <string name="settings_brightness_true_black">Prawdziwa czerń</string>
+
+    <string name="background_service_starting" formatted="false">Monitor baterii uruchamia się…</string>
+    <string name="monitoring_state_save_failed">Nie udało się zapisać stanu monitorowania. Sprawdź dostępną pamięć i spróbuj ponownie.</string>
+    <string name="battery_optimized" formatted="false">Monitorowanie w tle</string>
+    <string name="battery_optimized_message" formatted="false">Nieograniczone wykonywanie w tle może poprawić niezawodność monitorowania. Optymalizacja baterii w Androidzie może opóźniać aktualizacje i alarmy.\n
+    \n
+    Zezwolenie na nieograniczone wykonywanie w tle może zwiększyć zużycie baterii. Możesz zmienić to później w „Ustawienia” Androida → „Aplikacje” → „Battery Monitor” → „Bateria”. Nazwy w menu różnią się w zależności od urządzenia.</string>
+    <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
+    <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitora baterii podczas włączania urządzenia</string>
+    <string name="pref_autostart_at_boot_help" formatted="false">„Zawsze” uruchamia monitorowanie w tle po ponownym uruchomieniu urządzenia. „Nigdy” pomija automatyczne uruchamianie podczas startu systemu. „Jeśli działała przy wyłączaniu systemu” zależy od tego, czy ostatnio uruchomiłeś(-aś), czy zatrzymałeś(-aś) monitorowanie w Monitorze baterii. Zamknięcie aplikacji lub zakończenie jej procesu nie jest równoznaczne z zatrzymaniem monitorowania. Widżety nie nadpisują tego wyboru.</string>
+    <string name="boot_pref_always" formatted="false">Zawsze</string>
+    <string name="boot_pref_never" formatted="false">Nigdy</string>
+    <string name="boot_pref_if_running" formatted="false">Jeśli działała przy wyłączaniu systemu</string>
+    <string name="settings_data_permissions">Dane i uprawnienia</string>
+    <string name="advanced_settings" formatted="false">Zaawansowane</string>
+    <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
+    <string name="advanced_settings_help" formatted="false">Kontroluj dostęp uprzywilejowany, zapisywanie historii, przechowywanie logów i ich automatyczny eksport. „Działanie monitora” otwiera sprawdzenia i narzędzia dotyczące uprawnień, niezawodności monitora i logów debugowania. Otwórz „Diagnostyka celu ładowania OEM”, aby uzyskać raporty dotyczące celu ładowania.</string>
+    <string name="pref_cat_privileged_access" formatted="false">Dostęp uprzywilejowany</string>
+    <string name="pref_use_privileged_access" formatted="false">Używaj dostępu uprzywilejowanego</string>
+    <string name="pref_use_privileged_access_summary" formatted="false">Czy używać przyznanego dostępu do roota albo Shizuku dla bardziej kompletnych i dokładniejszych danych urządzenia?</string>
+    <string name="pref_use_privileged_access_help" formatted="false">Włącz dodatkowe odczyty urządzenia przez dostęp do roota albo Shizuku, który przyznasz. Gdy Android nie może udostępnić obsługiwanej wartości, Monitor baterii używa tych odczytów także w „Aktualny stan” i w logach. Dodatkowa diagnostyka jest zbierana automatycznie; nie ma osobnego przełącznika dla zaawansowanych statystyk.</string>
+    <string name="shizuku_not_running" formatted="false">Uruchom Shizuku, aby przyznać Monitorowi baterii dostęp uprzywilejowany</string>
+    <string name="shizuku_permission_denied_permanently" formatted="false">Przyznaj Monitorowi baterii uprawnienie ręcznie w Shizuku</string>
+
+    <string name="diag_action_refresh" formatted="false">Odśwież</string>
+    <string name="diag_status_loading" formatted="false">Ładowanie zaawansowanych statystyk baterii…</string>
+    <string name="diag_status_no_access" formatted="false">Do wyświetlania zaawansowanych statystyk baterii potrzebny jest dostęp do roota albo Shizuku.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Oczekiwanie na uprawnienie do Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">W tej chwili nie są dostępne żadne zaawansowane statystyki baterii.</string>
+    <string name="diag_value_not_available" formatted="false">Niedostępne</string>
+    <string name="diag_help_overview" formatted="false">Łączy niezawodność monitora, zapisane dane predykcyjne i dane baterii w kartach „Działanie aplikacji”, „Bateria”, „Ładowanie” i „Surowe”. Dane Androida są dostępne bez roota. Dodatkowe dane urządzenia zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.\n
+    Dostępne odczyty Androida są zbierane automatycznie, gdy „Diagnostyka” jest otwarta. Naciśnij wartość, aby zbadać i skopiować jej odczyt, źródło i czas. Oryginalne klucze i wartości urządzenia są dostępne w „Surowe”. Włącz dostęp uprzywilejowany, aby używać również roota albo Shizuku.</string>
+    <string name="diag_section_counters" formatted="false">Liczniki</string>
+    <string name="diag_help_counters" formatted="false">Odczyty baterii są podpisane i sformatowane jako pozostały ładunek w mAh, prąd w mA, energia w mWh, napięcie w V, temperatura w wybranej przez Ciebie jednostce i moc w W. Mnożnik prądu stosuje się także do obliczanej mocy. Średni prąd i liczba cykli zależą od możliwości urządzenia.</string>
+    <string name="diag_field_charge_counter" formatted="false">Szacunkowy pozostały poziom naładowania</string>
+    <string name="diag_field_current_now" formatted="false">Bieżący prąd</string>
+    <string name="diag_field_current_average" formatted="false">Średni prąd</string>
+    <string name="diag_field_energy_counter" formatted="false">Licznik energii</string>
+    <string name="diag_section_capacity" formatted="false">Pojemność</string>
+    <string name="diag_help_capacity" formatted="false">Pokazuje pojemność pełnego naładowania, pojemność projektową i szacowaną kondycję. Szacowana kondycja jest obliczana jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jej dokładność zależy od wartości odnotowanych przez urządzenie.</string>
+    <string name="diag_field_cycle_count" formatted="false">Liczba cykli</string>
+    <string name="diag_field_reported_capacity" formatted="false">Zgłoszona pojemność</string>
+    <string name="diag_field_state_of_health" formatted="false">Kondycja</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Pojemność pełnego naładowania</string>
+    <string name="diag_field_design_capacity" formatted="false">Pojemność projektowa</string>
+    <string name="diag_field_estimated_health" formatted="false">Szacowana kondycja</string>
+    <string name="diag_capacity_inconsistent">Zgłoszona pełna pojemność przekracza pojemność projektową. Wiarygodna kondycja nie może zostać obliczona z tych odczytów.</string>
+    <string name="diag_field_capacity_level" formatted="false">Poziom pojemności</string>
+    <string name="diag_capacity_critical">Krytyczny</string>
+    <string name="diag_capacity_low">Niski</string>
+    <string name="diag_capacity_high">Wysoki</string>
+    <string name="diag_section_charging" formatted="false">Ładowanie</string>
+    <string name="diag_help_charging" formatted="false">Pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.\n
+    To szacowanie używa skonfigurowanego algorytmu predykcyjnego Monitora baterii. Jego cel nie steruje ładowaniem ani wyłączaniem.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Pozostały czas ładowania</string>
+    <string name="diag_field_max_charging_current" formatted="false">Maksymalny prąd ładowania</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Maksymalne napięcie ładowania</string>
+    <string name="diag_field_charging_policy" formatted="false">Strategia ładowania</string>
+    <string name="diag_policy_default">Domyślna</string>
+    <string name="diag_policy_fixed_target">Ochrona baterii (stały cel)</string>
+    <string name="diag_policy_adaptive_ac">Ładowanie adaptacyjne</string>
+    <string name="diag_field_charging_state" formatted="false">Stan ładowania</string>
+    <string name="diag_charging_too_cold">Za zimno, aby ładować</string>
+    <string name="diag_charging_too_hot">Za ciepło, aby ładować</string>
+    <string name="diag_section_service" formatted="false">Usługa baterii Androida</string>
+    <string name="diag_help_service" formatted="false">Pokazuje oryginalne nazwy i wartości z komunikatów baterii Androida oraz, gdy dostępne, z polecenia „dumpsys battery”. Mogą one uwzględniać źródło ładowania, stan baterii, temperaturę, napięcie i inny stan usługi baterii.</string>
+    <string name="diag_section_sysfs" formatted="false">Pliki power_supply jądra</string>
+    <string name="diag_help_sysfs" formatted="false">Pokazuje oryginalne nazwy i wartości odczytane z /sys/class/power_supply, w tym wartości wielowierszowe.</string>
+    <string name="diag_fuel_gauge">Wskaźnik poziomu naładowania baterii</string>
+    <string name="diag_mains_supply">Zasilanie sieciowe</string>
+    <string name="diag_charging_source">Źródło ładowania</string>
+    <string name="diag_wireless_supply">Zasilanie bezprzewodowe</string>
+    <string name="diag_usb_supply">Zasilanie USB</string>
+    <string name="diag_fast_charging">Szybkie ładowanie</string>
+    <string name="diag_supply_health">Zgłoszony stan</string>
+    <string name="diag_battery_technology">Technologia baterii</string>
+    <string name="diag_open_circuit_voltage">Napięcie obwodu otwartego</string>
+    <string name="diag_min_design_voltage">Minimalne napięcie projektowe</string>
+    <string name="diag_max_design_voltage">Maksymalne napięcie projektowe</string>
+    <string name="diag_charge_type">Typ ładowania</string>
+    <string name="diag_charge_trickle">Podtrzymujące</string>
+    <string name="diag_charge_fast">Szybkie</string>
+    <string name="diag_charge_standard">Standardowe</string>
+    <string name="diag_charge_long_life">Ochrona żywotności baterii</string>
+    <string name="diag_charge_bypass">Ładowanie pominięte</string>
+    <string name="diag_charging_input_enabled">Włączone wejście ładowania</string>
+    <string name="diag_battery_charging_enabled">Włączone ładowanie baterii</string>
+    <string name="diag_power_supply_state">Stan zasilania</string>
+    <string name="diag_supply_offline">Odłączone</string>
+    <string name="diag_supply_fixed">Zasilanie stałe</string>
+    <string name="diag_supply_programmable">Zasilanie programowalne</string>
+    <string name="diag_input_current">Prąd wejściowy</string>
+    <string name="diag_input_current_limit">Limit prądu wejściowego</string>
+    <string name="diag_settled_input_current">Ustalony prąd wejściowy</string>
+    <string name="diag_input_voltage">Napięcie wejściowe</string>
+    <string name="diag_input_voltage_limit">Limit napięcia wejściowego</string>
+    <string name="diag_section_metadata" formatted="false">Metadane</string>
+    <string name="diag_help_metadata" formatted="false">Pokazuje oryginalne nazwy i wartości właściwości „BatteryManager”, w tym dostępne liczniki i odczyty prądu. Dodatkowe właściwości, takie jak szczegóły produkcyjne lub stan wymiany baterii, zależą od wersji Androida, możliwości urządzenia i uprawnień.</string>
+    <string name="diag_raw">Surowe</string>
+    <string name="diag_search_key">Szukaj kluczy</string>
+    <string name="diag_no_keys">Brak pasujących kluczy w dostępnych danych</string>
+    <string name="diag_raw_values">Surowe wartości</string>
+    <string name="diag_last_checked">Ostatnie sprawdzenie: %1$s</string>
+    <string name="diag_privileged_stale">Wyświetlane są poprzednie odczyty uprzywilejowane. Odśwież, aby spróbować ponownie.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Dane Androida są zbierane automatycznie w „Diagnostyka”. W celu uzyskania dodatkowych danych z roota albo Shizuku włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego”. Monitor baterii najpierw próbuje uzyskać je z roota, potem z Shizuku. Shizuku musi być uruchomione i mieć przyznane uprawnienie. Brakujące pola pozostają niedostępne; nieudane odświeżenia zachowują poprzedni snapshot i oznaczają go jako nieaktualny.</string>
+    <string name="diag_help_raw_general" formatted="false">Pokazuje oryginalne klucze i wartości z dostępnych źródeł. Wyszukaj według klucza i naciśnij wiersz, aby wyświetlić i skopiować jego pełną wartość. Użyj „Odśwież”, aby zebrać nowe odczyty. Monitor baterii próbuje również odczytów z jego zwykłymi uprawnieniami Androida, bez roota lub Shizuku. Dostępność zależy od tego, które źródła można odczytać.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Pokazuje oryginalne klucze i wartości danych predykcyjnych, gdy są dostępne.</string>
+    <string name="diag_export_report_help" formatted="false">Utwórz raport z dostępnych odczytów diagnostycznych i danych predykcyjnych. Przejrzyj podgląd, a następnie skopiuj raport do schowka lub zapisz go do pliku tekstowego. Przed udostępnieniem dokładnie sprawdź raport, zwłaszcza jeśli uwzględnia surowe wartości i identyfikatory.</string>
+    <string name="diag_charging_source_disconnected">Odłączone</string>
+
+    <string name="diagnostics" formatted="false">Diagnostyka</string>
+    <string name="diagnostics_summary" formatted="false">Sprawdź uprawnienia, niezawodność monitorowania i utwórz raport do rozwiązywania problemów</string>
+    <string name="diag_overview">Działanie aplikacji</string>
+    <string name="diagnostics_help_overview" formatted="false">Sprawdź uprawnienia i niezawodność monitora. Używaj jego elementów sterujących, aby uruchamiać lub zatrzymywać monitorowanie, zmieniać logowanie debugowania, otwierać ustawienia optymalizacji baterii i powiadomień lub tworzyć raport do rozwiązywania problemów. Nie każdy niedostępny odczyt oznacza problem z uprawnieniami; niektóre urządzenia tego nie udostępniają.</string>
+    <string name="diagnostics_monitoring" formatted="false">Monitorowanie w tle</string>
+    <string name="diag_monitor_operation">Działanie monitora</string>
+    <string name="diag_heartbeat">Ostatni sygnał</string>
+    <string name="diagnostics_heartbeat_help" formatted="false">Czas ostatniej odpowiedzi usługi monitorowania. Stara lub niedostępna odpowiedź może oznaczać, że monitorowanie zostało zatrzymane lub nie odpowiada.</string>
+    <string name="diag_start_monitor">Uruchom monitorowanie</string>
+    <string name="diagnostics_start_help" formatted="false">Uruchom monitorowanie baterii i automatyczne odzyskiwanie w tle. Dostępne przy zatrzymanym monitorowaniu; zapisane alarmy i ustawienia historii pozostają zachowane.</string>
+    <string name="diag_stop_monitor">Zatrzymaj monitorowanie</string>
+    <string name="diag_stop_monitor_summary" formatted="false">Zatrzymaj monitorowanie baterii, zapisywanie historii i automatyczne odzyskiwanie w tle</string>
+    <string name="diag_stop_monitor_body">Monitorowanie baterii, zapisywanie historii i automatyczne odzyskiwanie w tle zostaną zatrzymane. Tutaj możesz ponownie uruchomić monitorowanie.</string>
+    <string name="diagnostics_not_running_tap_to_start" formatted="false">Brak ostatniej odpowiedzi. Naciśnij, aby poprosić o ponowne uruchomienie</string>
+    <string name="diagnostics_service" formatted="false">Usługa monitorowania</string>
+    <string name="diagnostics_service_help" formatted="false">Pokazuje, czy monitorowanie ostatnio odpowiedziało. Naciśnij, aby poprosić o odpowiedź; jeśli żadna nie nadejdzie, Monitor baterii spróbuje ponownie się uruchomieć. Dostępne tylko wtedy, gdy monitorowanie jest włączone.</string>
+    <string name="diagnostics_service_responded" formatted="false">Usługa monitorowania odpowiedziała</string>
+    <string name="diagnostics_service_restarting" formatted="false">Usługa nie odpowiedziała. Ponowne jej uruchamianie…</string>
+    <string name="diagnostics_service_restart_failed" formatted="false">Usługa monitorowania nie odpowiedziała po ponownym uruchomieniu. Spróbuj ponownie uruchomić aplikację.</string>
+    <string name="diagnostics_database" formatted="false">Baza danych logowania</string>
+    <string name="diagnostics_database_help" formatted="false">Pokazuje, czy baza danych historii ostatnio odpowiedziała. Naciśnij, aby przetestować odczyt i zapis bez zmiany zapisanej historii. Dostępne tylko wtedy, gdy zapisywanie historii jest włączone.</string>
+    <string name="diagnostics_no_recent_database_access" formatted="false">Brak ostatniego udanego dostępu do bazy danych</string>
+    <string name="diagnostics_working_last_seen" formatted="true">Działa · Ostatnia odpowiedź %1$s temu</string>
+    <string name="diagnostics_database_check_succeeded" formatted="false">Sprawdzenie odczytu i zapisu bazy danych powiodło się</string>
+    <string name="diagnostics_database_failed" formatted="false">Sprawdzenie bazy danych nie powiodło się. Uruchom ponownie aplikację i spróbuj ponownie.</string>
+    <string name="diagnostics_database_failed_storage" formatted="false">Sprawdzenie bazy danych nie powiodło się. Zwolnij trochę miejsca na urządzeniu i spróbuj ponownie.</string>
+    <string name="diagnostics_permissions" formatted="false">Uprawnienia i dostęp</string>
+    <string name="diagnostics_notifications" formatted="false">Powiadomienia</string>
+    <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Brak uprawnienia. Naciśnij, aby otworzyć ustawienia</string>
+    <string name="diagnostics_battery_optimization" formatted="false">Optymalizacja baterii</string>
+    <string name="diagnostics_battery_optimization_help" formatted="false">Otwórz ustawienia optymalizacji baterii Androida, gdy monitorowanie jest ograniczone. Jeśli jest już nieograniczone, naciśnięcie potwierdza ten stan.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">Otwórz ustawienia optymalizacji baterii Androida, gdy monitorowanie jest ograniczone. Jeśli jest już nieograniczone, naciśnięcie potwierdza ten stan.\n
+    Nieograniczone wykonywanie w tle może poprawić niezawodność monitorowania. Optymalizacja baterii w Androidzie może opóźniać aktualizacje i alarmy.\n
+    \n
+    Zezwolenie na nieograniczone wykonywanie w tle może zwiększyć zużycie baterii. Możesz zmienić to później w „Ustawienia” Androida → „Aplikacje” → „Battery Monitor” → „Bateria”. Nazwy w menu różnią się w zależności od urządzenia.</string>
+    <string name="diagnostics_unrestricted" formatted="false">Bez ograniczeń</string>
+    <string name="diagnostics_restricted_tap_to_fix" formatted="false">Z ograniczeniami. Naciśnij, aby zezwolić na niezawodne monitorowanie w tle</string>
+    <string name="diagnostics_vendor_settings" formatted="false">Ustawienia producenta</string>
+    <string name="diagnostics_vendor_settings_summary" formatted="false">Otwórz dodatkowe ustawienia aktywności w tle lub automatycznego uruchamiania dostępne na tym urządzeniu</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Otwórz dodatkowe ustawienia aktywności w tle lub automatycznego uruchamiania. Dostępne tylko na obsługiwanych urządzeniach.</string>
+    <string name="diagnostics_dont_kill_my_app" formatted="false">Pomoc dotycząca aktywności w tle</string>
+    <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Otwórz wskazówki dla tego urządzenia w Don’t Kill My App</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Otwórz wskazówki dla tego urządzenia w Don’t Kill My App.</string>
+    <string name="diagnostics_root" formatted="false">Dostęp do roota</string>
+    <string name="diagnostics_root_help" formatted="false">Naciśnij, aby sprawdzić, czy Monitor baterii może uzyskać dostęp do roota. Skonfigurowany menedżer roota może poprosić o autoryzację. Niepowodzenie może oznaczać odmowę dostępu, brak narzędzi lub inny błąd; nie dowodzi, że urządzenie jest niezrootowane. Sprawdzenie to nie rootuje urządzenia ani nie zmienia ustawienia „Używaj dostępu uprzywilejowanego”.</string>
+    <string name="diagnostics_root_unavailable" formatted="false">Niedostępny. Naciśnij, aby sprawdzić ponownie</string>
+    <string name="diagnostics_shizuku" formatted="false">Dostęp przez Shizuku</string>
+    <string name="diagnostics_shizuku_help" formatted="false">Jeśli Shizuku nie jest uruchomione, naciśnięcie otwiera jego menedżera albo wskazówki dotyczące konfiguracji, jeśli nie jest zainstalowany. Gdy zostało uruchomione bez uprawnienia, naciśnięcie prosi o dostęp albo otwiera menedżera po wcześniejszej odmowie. Jeśli dostęp jest już przyznany, naciśnięcie nic nie robi. Czynność ta nie zmienia ustawienia „Używaj dostępu uprzywilejowanego”.</string>
+    <string name="monitoring_privileged_access_help" formatted="false">Możliwości urządzenia i przyznany dostęp określają, które odczyty są dostępne. Aby używać dodatkowych odczytów, włącz „Używaj dostępu uprzywilejowanego” w „Ustawienia” → „Zaawansowane”.</string>
+    <string name="diagnostics_shizuku_permission_missing" formatted="false">Brak uprawnienia. Naciśnij, aby poprosić o nie w Shizuku</string>
+    <string name="diagnostics_checking" formatted="false">Sprawdzanie…</string>
+    <string name="diagnostics_tap_to_check" formatted="false">Nie sprawdzono. Naciśnij, aby poprosić o dostęp lub go sprawdzić</string>
+    <string name="diag_timeout">Upłynął limit czasu odczytu. Poprzedni snapshot został zachowany. Spróbuj odświeżyć ponownie.</string>
+    <string name="diag_no">Nie</string>
+    <string name="diag_additional_sources">Dodatkowe źródła</string>
+    <string name="diag_missing_reading">Włączone źródła nie zwróciły użytecznego odczytu.</string>
+    <string name="diag_missing_average">Średni prąd to odczyt urządzenia różny od prądu chwilowego. Monitor baterii nie oblicza własnej średniej, gdy urządzenie jej nie dostarcza.</string>
+    <string name="diag_missing_estimated_health">To szacowanie wymaga dodatnich wartości pojemności przy pełnym naładowaniu i pojemności projektowej tej samej baterii. Pojemność przy pełnym naładowaniu nie może przekraczać pojemności projektowej.</string>
+    <string name="diag_missing_charge_time">Jest to szacunek ładowania zgłoszony przez urządzenie. „Aktualny stan” używa skonfigurowanej metody predykcyjnej Monitora baterii i może pokazywać szacunek nawet wtedy, gdy nie jest dostępny szacunek urządzenia.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Przejrzyj zapisane średnie długoterminowe i ostatnie predykcyjne dane wejściowe. Ostatnie tempa zmian używają zmian w procentowym poziomie naładowania baterii i pokazują czas dla jednego punktu procentowego, wybraną metodę, aktywne źródło ładowania, zaobserwowane punkty i czas trwania oraz czy niedokończony interwał został uwzględniony. Pięciominutowe i pięciopuntkowe okna czasowe używają aktywnego tempa zmian długoterminowych dla niezaobserwowanych części; pominięte poziomy zostały zinterpolowane. Ostatni stan jest przechowywany w pamięci i resetowany po ponownym uruchomieniu monitorowania, przełączeniu między ładowaniem i rozładowywaniem lub zmianie źródła ładowania. Zapisane wyuczone średnie przetrwają po ponownym uruchomieniu. Dane te są niezależne od logów historii; czyszczenie logów nie resetuje szacunków.</string>
+    <string name="diag_check_failed" formatted="false">Ostatnia próba odczytu nie powiodła się.</string>
+    <string name="diag_reading_retained" formatted="false">Wyświetlany jest poprzedni odczyt.</string>
+    <string name="diag_value_copied" formatted="false">Skopiowano wartość</string>
+    <string name="diag_predictor_read_failed" formatted="false">Nie udało się odczytać zapisanych danych predykcyjnych.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Dane predykcyjne — ostatnie obliczenia</string>
+    <string name="diag_predictor_stored_title" formatted="false">Dane predykcyjne — zapisane średnie długoterminowe</string>
+    <string name="diag_predictor_recent" formatted="false">Ostatnie obliczenia</string>
+    <string name="diag_predictor_no_recent" formatted="false">Brak aktywnego oszacowania. Ostatnie dane są dostępne po odczycie monitora podczas ładowania lub rozładowywania.</string>
+    <string name="diag_predictor_active_state" formatted="false">Aktywny stan baterii</string>
+    <string name="diag_predictor_effective_rate" formatted="false">Tempo zmian używane do szacowania</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Ostatnie 5\u00A0minut</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Ostatnie 5\u00A0punktów procentowych</string>
+    <string name="diag_predictor_active_long_term_rate" formatted="false">Aktywne tempo zmian długoterminowych</string>
+    <string name="diag_predictor_observed_points" formatted="false">Ukończone punkty procentowe</string>
+    <string name="diag_predictor_observation_duration" formatted="false">Zaobserwowany czas trwania sesji</string>
+    <string name="diag_predictor_current_level_duration" formatted="false">Czas na obecnym poziomie</string>
+    <string name="diag_predictor_uses_partial" formatted="false">Uwzględniony niedokończony interwał</string>
+    <string name="diag_predictor_ac">Ładowanie (AC)</string>
+    <string name="diag_predictor_wireless">Ładowanie (bezprzewodowe)</string>
+    <string name="diag_predictor_usb">Ładowanie (USB)</string>
+    <string name="diag_predictor_version">Wersja danych</string>
+    <string name="diag_predictor_not_saved">Nie zapisano</string>
+    <string name="diag_predictor_default">Wartość domyślna</string>
+    <string name="diag_predictor_invalid">Nieprawidłowa przechowywana wartość</string>
+    <string name="diagnostics_device_and_logs" formatted="false">Urządzenie i raport rozwiązywania problemów</string>
+    <string name="diagnostics_debug_logs" formatted="false">Zbieraj logi debugowania</string>
+    <string name="diagnostics_debug_logs_warning" formatted="false">Logi debugowania mogą zawierać dane osobowe. Włącz tylko podczas badania problemu, przejrzyj wyeksportowany plik i uważaj, gdy udostępniasz go publicznie</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">Logi debugowania mogą zawierać dane osobowe. Włącz tylko podczas badania problemu, przejrzyj wyeksportowany plik i uważaj, gdy udostępniasz go publicznie.</string>
+    <string name="diagnostics_clear" formatted="false">Usuń zebrane logi debugowania</string>
+    <string name="diagnostics_clear_summary" formatted="false">Usuń logi debugowania obecnie przechowywane przez aplikację</string>
+    <string name="diagnostics_clear_help" formatted="false">Usuń logi debugowania obecnie przechowywane przez aplikację.</string>
+    <string name="diagnostics_logs_cleared" formatted="false">Usunięto logi debugowania</string>
+    <string name="diagnostics_logs_clear_failed" formatted="false">Nie udało się usunąć logów debugowania</string>
+    <string name="diagnostics_export" formatted="false">Eksportuj raport diagnostyczny</string>
+    <string name="diagnostics_export_summary" formatted="false">Zapisz informacje o urządzeniu, uprawnieniach, monitorowaniu i dostępnych logach debugowania w pliku tekstowym</string>
+    <string name="diagnostics_exported" formatted="false">Wyeksportowano raport diagnostyczny</string>
+    <string name="diagnostics_export_failed" formatted="false">Nie udało się wyeksportować raportu diagnostycznego</string>
+    <string name="diagnostics_help_report" formatted="false">Jeśli zgłaszasz problem, raport diagnostyczny może być istotny w znalezieniu jego przyczyny. Zawiera on informacje o urządzeniu i stanie aplikacji oraz (jeśli je włączyłeś(-aś)) logi debugowania. Logi debugowania mogą zawierać dane osobowe, dlatego przejrzyj plik i udostępnij go ostrożnie.</string>
+    <string name="diag_include_raw">Uwzglęnij surowe wartości i identyfikatory</string>
+    <string name="diag_include_debug">Uwzględnij zebrane logi debugowania</string>
+    <string name="diag_include_apps">Uwzględnij nazwy aplikacji systemowych</string>
+    <string name="diag_report_privacy">Wykluczone domyślnie. Dane te mogą zawierać dane osobowe. Przejrzyj podgląd przed skopiowaniem lub zapisaniem.</string>
+
+    <string name="charging_diagnostics_title" formatted="false">Diagnostyka celu ładowania OEM</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Otwórz narzędzia do snapshotów i porównań, aby zbadać, jak Monitor baterii wykrywa cel ładowania urządzenia. Instrukcje dotyczące przygotowania są dostępne w pomocy samego ekranu diagnostyki OEM.</string>
+    <string name="charging_diagnostics_instructions_hint" formatted="false">Aby uzyskać przydatny raport, otwórz „Pomoc” i podążaj za przygotowanymi tam krokami przed wykonaniem snapshotów</string>
+    <string name="charging_diagnostics_privileged_hint" formatted="false">Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego” dla bardziej przydatnego raportu celu ładowania OEM.</string>
+    <string name="charging_diagnostics_capture" formatted="false">Wykonaj snapshot</string>
+    <string name="charging_diagnostics_capture_summary" formatted="false">Ustaw tryb ładowania w ustawieniach urządzenia, a następnie przechwyć jego sygnały</string>
+    <string name="charging_diagnostics_choose_state" formatted="false">Które ustawienie urządzenia jest aktywne?</string>
+    <string name="charging_diagnostics_condition_help" formatted="false">Wybierz tryb ładowania OEM już ustawiony na urządzeniu. Dla stałego celu wprowadź jego procent. Wybór ten podpisuje snapshot; nie zmienia ochrony ładowania urządzenia.</string>
+    <string name="charging_diagnostics_condition_off" formatted="false">Ochrona wyłączona/bez ograniczeń</string>
+    <string name="charging_diagnostics_condition_fixed" formatted="false">Stały cel…</string>
+    <string name="charging_diagnostics_condition_adaptive" formatted="false">Ładowanie adaptacyjne/inteligentne</string>
+    <string name="charging_diagnostics_condition_scheduled" formatted="false">Zaplanowane ładowanie</string>
+    <string name="charging_diagnostics_condition_other" formatted="false">Inny tryb OEM</string>
+    <string name="charging_diagnostics_capturing" formatted="false">Przechwytywanie sygnałów ładowania…</string>
+    <string name="charging_diagnostics_captured" formatted="false">Wykonano snapshot ładowania</string>
+    <string name="charging_diagnostics_capture_failed" formatted="false">Nie udało się wykonać snapshotu ładowania</string>
+    <plurals name="charging_diagnostics_snapshot_count">
+        <item quantity="one">Wykonano %1$d snapshot. Wykonaj kolejny dla innego trybu ładowania</item>
+        <item quantity="few">Wykonano %1$d snapshoty. Naciśnij, aby przejrzeć porównanie</item>
+        <item quantity="many">Wykonano %1$d snapshotów. Naciśnij, aby przejrzeć porównanie</item>
+        <item quantity="other">Wykonano %1$d snapshotów. Naciśnij, aby przejrzeć porównanie</item>
+    </plurals>
+    <string name="charging_diagnostics_need_two" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania</string>
+    <string name="charging_diagnostics_report" formatted="false">Utwórz raport porównawczy</string>
+    <string name="charging_diagnostics_report_summary" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania OEM</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania OEM. Po przejrzeniu raportu skopiuj go albo zapisz i wyślij e-mailem na <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_diagnostics_copy" formatted="false">Kopiuj do schowka</string>
+    <string name="charging_diagnostics_save" formatted="false">Zapisz</string>
+    <string name="charging_diagnostics_copied" formatted="false">Skopiowano raport</string>
+    <string name="charging_diagnostics_clear" formatted="false">Wyczyść snapshoty ładowania</string>
+    <string name="charging_diagnostics_clear_summary" formatted="false">Usuń lokalnie przechowywane snapshoty ładowania OEM</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">Usuń lokalnie przechowywane snapshoty ładowania OEM.</string>
+    <string name="charging_diagnostics_cleared" formatted="false">Usunięto snapshoty ładowania</string>
+    <string name="charging_diagnostics_help_steps" formatted="false">1. Odłącz urządzenie i pozostaw je odłączone podczas wykonywania snapshotów konfiguracji. Zmieniaj tylko ustawienie ochrony ładowania OEM między snapshotami.\n
+    2. Wyłącz ochronę ładowania, odczekaj 2-5\u00A0sekund i wykonaj snapshot.\n
+    3. Wybierz dowolny stały cel, odczekaj 2-5\u00A0sekund i wykonaj kolejny snapshot. Powtórz to z co najmniej jednym innym stałym celem, jeśli jest dostępny.\n
+    4. Włącz ładowanie adaptacyjne, inteligentne lub zaplanowane, odczekaj 2-5\u00A0sekund i wykonaj jeszcze jeden snapshot.\n
     5. Jeśli porównanie konfiguracji jest niejednoznaczne, możesz opcjonalnie powtórzyć tę sekwencję podczas ładowania, aby uchwycić stan w trakcie działania.\n
     6. Utwórz i przejrzyj raport porównawczy. Dane w raporcie są przefiltrowane, a potencjalnie wrażliwe wartości ukrywane, ale nadal powinieneś/powinnaś przejrzeć kompletny raport przed jego udostępnieniem.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Po przejrzeniu raportu skopiuj go albo zapisz i wyślij e-mailem na <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
-  <string name="activity_until_target" formatted="true">do %1$d%%</string>
-  <string name="activity_target_reached" formatted="true">osiągnięto cel (%1$d%%)</string>
+    <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
+    <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>
+    <string name="backup_restore_help_overview" formatted="false">Zapisuj i przywracaj ustawienia, alarmy, logi i wyuczone dane predykcyjne. „Przywróć ustawienia domyślne” resetuje preferencje aplikacji po potwierdzeniu, jednocześnie zachowując historię, alarmy, wyuczone szacunki i czy monitorowanie jest uruchomione.</string>
+    <string name="pref_general_backup" formatted="false">Ogólna kopia zapasowa aplikacji</string>
+    <string name="pref_export_general_backup" formatted="false">Eksportuj ogólną kopię zapasową</string>
+    <string name="pref_export_general_backup_help" formatted="false">Zapisz razem ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP ogólnej kopii zapasowej w wybranej przez siebie lokalizacji.</string>
+    <string name="pref_export_general_backup_summary" formatted="false">Zapisz ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP</string>
+    <string name="general_backup_exported" formatted="false">Ogólna kopia zapasowa została wyeksportowana.</string>
+    <string name="pref_import_general_backup" formatted="false">Importuj ogólną kopię zapasową</string>
+    <string name="pref_import_general_backup_help" formatted="false">Wybierz istniejący plik ZIP ogólnej kopii zapasowej i które dostępne kategorie przywrócić. Kopie zapasowe z nowszych wersji aplikacji mogą być niekompatybilne, a przywrócenie logów lub danych predykcyjnych z innego urządzenia może powodować nieprawidłowe szacunki. Jeśli przywrócenie zostało ukończone tylko częściowo, przejrzyj zgłoszone kategorie, zanim spróbujesz ponownie. Wybrane kategorie zostają przywrócone; niewybrane kategorie pozostają niezmienione. Przywrócenie alarmów zastępuje bieżące alarmy. Dla logów wybierz, czy je dodać, czy zastąpić bieżącą historię.</string>
+    <string name="pref_import_general_backup_summary" formatted="false">Przywróć wybrane dane z pliku ZIP ogólnej kopii zapasowej</string>
+    <string name="general_backup_restore_message" formatted="false">Wybierz, co chcesz przywrócić.</string>
+    <string name="general_backup_device_data_warning">Logi i dane predykcyjne należą do urządzenia, na którym zostały zebrane. Zaimportowanie ich na innym urządzeniu może spowodować błędne predykcje lub inne nieoczekiwane zachowanie aplikacji.</string>
+    <string name="general_backup_imported" formatted="false">Ogólna kopia zapasowa została zaimportowana.</string>
+    <string name="invalid_general_backup_file" formatted="false">Nieprawidłowy lub niekompatybilny plik ogólnej kopii zapasowej.</string>
+    <string name="settings_restore_partial">Niektórych danych nie udało się przywrócić. Pomyślnie przywrócono: %1$s. Dane, które mogły zostać przywrócone częściowo: %2$s. Sprawdź te sekcje przed ponowną próbą.</string>
+    <string name="settings_restore_none">Brak</string>
+    <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
+    <string name="pref_export_settings_help" formatted="false">Zapisz swoje preferencje aplikacji. Wynikiem jest plik JSON kopii zapasowej ustawień.</string>
+    <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
+    <string name="settings_exported" formatted="false">Ustawienia zostały wyeksportowane.</string>
+    <string name="pref_import_settings" formatted="false">Importuj ustawienia</string>
+    <string name="pref_import_settings_help" formatted="false">Przywróć zapisane preferencje. Czynność ta nie przywraca historii ani wpisów alarmów.</string>
+    <string name="pref_import_settings_summary" formatted="false">Przywróć ustawienia z pliku</string>
+    <string name="settings_imported" formatted="false">Ustawienia zostały zaimportowane.</string>
+    <string name="invalid_settings_file" formatted="false">Nieprawidłowy plik ustawień.</string>
+    <string name="settings_file_version_warning" formatted="false">Ten plik został utworzony przez nowszą wersję aplikacji. Zaimportowanie go może spowodować nieoczekiwane zachowanie. Czy kontynuować mimo to?</string>
+    <string name="pref_export_alarms" formatted="false">Eksportuj alarmy</string>
+    <string name="pref_export_alarms_help" formatted="false">Zapisz swoje alarmy. Plik JSON zawiera reguły alarmów, a nie zarządzane przez Androida ustawienia kanałów powiadomień lub dźwięków.</string>
+    <string name="pref_export_alarms_summary" formatted="false">Zapisz bieżące alarmy do pliku</string>
+    <string name="alarms_exported" formatted="false">Alarmy zostały wyeksportowane.</string>
+    <string name="pref_import_alarms" formatted="false">Importuj alarmy</string>
+    <string name="pref_import_alarms_help" formatted="false">Zastąp wszystkie bieżące alarmy alarmami z kopii zapasowej. Wybierz plik JSON kopii zapasowej alarmów.</string>
+    <string name="pref_import_alarms_summary" formatted="false">Zastąp bieżące alarmy alarmami z pliku</string>
+    <string name="alarms_imported" formatted="false">Alarmy zostały zaimportowane.</string>
+    <string name="invalid_alarms_file" formatted="false">Nieprawidłowy plik alarmów.</string>
+    <string name="pref_backup_device_data" formatted="false">Kopia zapasowa danych specyficznych dla urządzenia</string>
+    <string name="device_data_logs" formatted="false">Logi</string>
+    <string name="device_data_predictor" formatted="false">Dane predykcyjne</string>
+    <string name="device_data_backup_warning" formatted="false">Te dane specyficzne dla urządzenia należą do urządzenia, na którym zostały zebrane. Zaimportowanie ich na innym urządzeniu może spowodować błędne predykcje lub inne nieoczekiwane zachowanie aplikacji.</string>
+    <string name="pref_export_device_data" formatted="false">Eksportuj dane specyficzne dla urządzenia</string>
+    <string name="pref_export_device_data_help" formatted="false">Wybierz logi, dane predykcyjne albo oba i zapisz je do kopii zapasowej JSON specyficznej dla urządzenia. Dane należą do urządzenia źródłowego.</string>
+    <string name="pref_export_device_data_summary" formatted="false">Zapisz logi i dane predykcyjne do pliku</string>
+    <string name="device_data_exported" formatted="false">Dane specyficzne dla urządzenia zostały wyeksportowane.</string>
+    <string name="pref_import_device_data" formatted="false">Importuj dane specyficzne dla urządzenia</string>
+    <string name="pref_import_device_data_help" formatted="false">Wybierz dostępne logi i/lub dane predykcyjne do przywrócenia z kopii zapasowej JSON specyficznej dla urządzenia; niewybrane kategorie pozostają niezmienione. Podczas importowania logów wybierz, czy je dodać, czy zastąpić istniejące logi. Przywrócenie logów lub danych predykcyjnych z innego urządzenia może powodować nieprawidłowe szacunki.</string>
+    <string name="pref_import_device_data_summary" formatted="false">Przywróć logi i dane predykcyjne z pliku</string>
+    <string name="device_data_imported" formatted="false">Dane specyficzne dla urządzenia zostały zaimportowane</string>
+    <string name="device_data_imported_dialog" formatted="false">Dane specyficzne dla urządzenia zostały zaimportowane.</string>
+    <string name="invalid_device_data_file" formatted="false">Nieprawidłowy plik danych specyficznych dla urządzenia.</string>
+    <string name="device_data_file_empty" formatted="false">Ten plik nie zawiera obsługiwanych danych specyficznych dla urządzenia.</string>
+    <string name="pref_import_logs_csv" formatted="false">Importuj logi z pliku CSV</string>
+    <string name="pref_import_logs_csv_summary" formatted="false">Importuj logi z wyeksportowanego pliku CSV</string>
+    <string name="csv_logs_import_help" formatted="false">Importuj logi z pliku CSV wyeksportowanego przez Monitora baterii i wybierz, czy dodać je, czy zastąpić istniejące logi. Starsze eksporty mogą nie zawierać prądu lub pozostałego poziomu naładowania; pomiary te pozostaną puste przy starszych wpisach. Kopie zapasowe JSON zachowują strukturę danych i są preferowane do ich przywracania.</string>
+    <string name="csv_logs_import_warning" formatted="false">Formaty CSV mogą się różnić między wersjami aplikacji, dlatego import może nie zawsze działać prawidłowo.</string>
+    <string name="log_import_mode_title" formatted="false">Importuj logi</string>
+    <string name="log_import_mode_message" formatted="false">Jak zaimportowane logi powinny zostać obsłużone?</string>
+    <string name="log_import_add" formatted="false">Dodaj do istniejących logów</string>
+    <string name="log_import_replace" formatted="false">Zastąp istniejące logi</string>
+    <string name="csv_logs_imported" formatted="false">Logi CSV zostały zaimportowane</string>
+    <string name="csv_logs_imported_dialog" formatted="false">Logi CSV zostały zaimportowane.</string>
+    <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niekompatybilny plik CSV logów.</string>
+    <string name="settings_reset_title">Przywróć ustawienia domyślne</string>
+    <string name="settings_reset_summary">Zresetuj preferencje aplikacji, zachowując historię, alarmy i wyuczone szacunki</string>
+    <string name="settings_reset_help" formatted="false">Zresetuj preferencje aplikacji po potwierdzeniu. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów i czy monitorowanie w tle jest uruchomione. Uprawnienia systemowe i ustawienia kanałów powiadomień nie są resetowane.</string>
+    <string name="settings_reset_question">Czy przywrócić wszystkie ustawienia aplikacji do ich wartości domyślnych? Historia, alarmy i wyuczone szacunki zostaną zachowane. Monitorowanie w tle pozostanie uruchomione lub zatrzymane, tak jak jest teraz.</string>
+    <string name="settings_reset_confirm">Przywróć domyślne</string>
+    <string name="settings_reset_done">Przywrócono ustawienia domyślne.</string>
+    <string name="settings_reset_failed">Nie udało się ukończyć przywracania ustawień domyślnych. Niektóre ustawienia mogły już zostać zmienione. Sprawdź dostępną pamięć i spróbuj ponownie.</string>
 
-  <string name="time_estimates_settings" formatted="false">Szacowanie czasu</string>
-  <string name="time_estimates_settings_summary" formatted="false">Wybierz, jak pozostały czas ma być obliczany i do których docelowych poziomów naładowania baterii</string>
-  <string name="time_estimates_settings_help" formatted="false">Te ustawienia sterują szacowaniem czasu przez Monitor baterii. Docelowe poziomy wpływają tylko na szacunki; Monitor baterii nie rozpoczyna ani nie zatrzymuje ładowania.</string>
-  <string name="pref_cat_target_levels" formatted="false">Docelowe poziomy</string>
-  <string name="pref_charging_target_mode" formatted="false">Cel ładowania</string>
-  <string name="pref_charging_target_mode_summary_device" formatted="true">Limit ładowania urządzenia: %1$d%%</string>
-  <string name="pref_charging_target_mode_summary_custom" formatted="false">Własny cel</string>
-  <string name="pref_charging_target_mode_summary_default" formatted="false">Nie wykryto stałego limitu w urządzeniu — używane 100%</string>
-  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    <string name="help_cat_version" formatted="false">Wersja</string>
+    <string name="help_cat_open_source" formatted="false">Otwarte źródło</string>
+    <string name="help_open_source" formatted="false">Ten projekt jest otwartoźródłowy. Możesz uzyskać dostęp do kodu źródłowego na <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+    <string name="help_licenses_title">Licencje otwartoźródłowe</string>
+    <string name="help_licenses_summary">Licencje i uwagi dotyczące aplikacji, grafik i bibliotek</string>
+    <string name="help_licenses_application">Aplikacja</string>
+    <string name="help_licenses_artwork">Grafiki i ikony</string>
+    <string name="help_licenses_libraries">Biblioteki</string>
+    <string name="help_licenses_loading">Ładowanie licencji…</string>
+    <string name="help_licenses_unavailable">Nie udało się odczytać informacji o tej licencji. Wróć do listy licencji lub zainstaluj ponownie aplikację.</string>
+    <string name="help_cat_privacy" formatted="false">Prywatność</string>
+    <string name="help_privacy" formatted="false">Monitor baterii przetwarza informacje o baterii i urządzeniu lokalnie, w tym wartości ujawnione przez urządzenie, takie jak numer seryjny baterii. Nie przekazuje tych informacji ani nie gromadzi ich na zewnętrznych serwerach.</string>
+    <string name="help_cat_no_warranty" formatted="false">Brak gwarancji</string>
+    <string name="help_no_warranty" formatted="false">Niniejsze oprogramowanie jest udostępniane w nadziei, że okaże się przydatne, jednak BEZ ŻADNEJ GWARANCJI, w tym bez dorozumianej gwarancji PRZYDATNOŚCI HANDLOWEJ lub PRZYDATNOŚCI DO OKREŚLONEGO CELU.\n
     \n
-    Jeśli ta wartość nie wygląda na prawidłową, możesz pomóc ulepszyć wykrywanie urządzeń. Otwórz Diagnostykę i wygeneruj raport limitu ładowania OEM, dokładnie przestrzegając instrukcji w Pomocy</string>
-  <string name="pref_charging_target_mode_help" formatted="false">„Automatyczny” używa stałego limitu ładowania urządzenia, gdy Monitor baterii może go odczytać, a w przeciwnym razie 100%. Ładowanie adaptacyjne nadal ma cel 100%. Wybierz „Własny”, aby nadpisać wartość urządzenia dla szacunków.</string>
-  <string name="pref_charging_target_mode_support_help" formatted="false">Automatyczne wykrywanie może działać na urządzeniach Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme i Sony Xperia, a także na urządzeniach z GrapheneOS lub LineageOS — szczególnie gdy możliwy jest dostęp do roota albo Shizuku. Opiera się na sygnałach programowych, dlatego dostępność i dokładność nie są gwarantowane nawet u wymienionych producentów. Nieprzetestowane modele lub wersje systemów z tych rodzin mogą również działać, ale urządzenia innych producentów nie są obecnie wykrywane automatycznie.</string>
-  <string name="charging_target_mode_automatic" formatted="false">Automatyczny (zalecany)</string>
-  <string name="charging_target_mode_custom" formatted="false">Własny</string>
-  <string name="pref_custom_charging_target" formatted="false">Własny cel ładowania</string>
-  <string name="pref_custom_charging_target_help" formatted="false">Ustaw poziom naładowania baterii używany jako punkt końcowy szacunków ładowania, gdy „Cel ładowania” jest „Własny”.</string>
-  <string name="pref_discharging_target" formatted="false">Cel rozładowania</string>
-  <string name="pref_discharging_target_help" formatted="false">Ustaw poziom naładowania baterii używany jako punkt końcowy szacunków rozładowania. Jest to niezależne od alarmów niskiego poziomu naładowania baterii.</string>
-  <string name="pref_target_level_summary" formatted="true">Szacuj do %1$d%%</string>
+    Chociaż dokładam wszelkich starań, aby wszystko działało prawidłowo i nie powodowało żadnych problemów, nie ponoszę odpowiedzialności za jakiekolwiek szkody lub niedogodności, które mogą wyniknąć z tego tytułu, niezależnie od okoliczności.</string>
+    <string name="help_cat_acknowledgments" formatted="false">Podziękowania</string>
+    <string name="help_acknowledgments" formatted="false">Monitor baterii jest forkiem Battery Indicator Pro / BatteryBot Pro autorstwa Darshan Computing, LLC. Dziękuję autorom i współtwórcom za stworzenie i utrzymywanie projektu źródłowego.</string>
+    <string name="help_cat_frequently_asked_questions" formatted="false">Najczęściej zadawane pytania</string>
+    <string name="help_frequently_asked_questions" formatted="false">Możesz znaleźć odpowiedzi na najpopularniejsze pytania na <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
+    <string name="help_cat_contact" formatted="false">Kontakt i opinie</string>
+    <string name="help_contact" formatted="false">Zapraszam do <a href="https://github.com/tswistak/Battery-Monitor/issues">zgłaszania błędów na GitHubie</a>. W razie pytań, pomysłów lub opinii dołącz do <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a>. Możesz też <a href="mailto:tomasz@swistak.codes">napisać do mnie e-maila</a>.</string>
+    <string name="changelog_title">Co nowego w Monitorze baterii</string>
+    <string name="changelog_version">Wersja %1$s</string>
+    <string name="changelog_got_it">Rozumiem</string>
+
+    <string name="percent_symbol" formatted="false">%</string>
+    <string name="degree_symbol" formatted="false">°</string>
+    <string name="celsius_symbol" formatted="false">C</string>
+    <string name="fahrenheit_symbol" formatted="false">F</string>
+    <string name="volt_symbol" formatted="false">V</string>
+    <string name="notification_status_since">%1$s od: %2$s</string>
+    <string name="notification_status_duration">%1$s przez: %2$s</string>
+    <plurals name="notification_status_duration_hours">
+        <item quantity="one">%2$s przez: %1$d\u00A0godzinę</item>
+        <item quantity="few">%2$s przez: %1$d\u00A0godziny</item>
+        <item quantity="many">%2$s przez: %1$d\u00A0godzin</item>
+        <item quantity="other">%2$s przez: %1$d\u00A0godzin</item>
+    </plurals>
+    <plurals name="n_days">
+        <item quantity="one">"%d\u00A0dzień, "</item>
+        <item quantity="few">"%d\u00A0dni, "</item>
+        <item quantity="many">"%d\u00A0dni, "</item>
+        <item quantity="other">"%d\u00A0dni, "</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="one">%d\u00A0godzina</item>
+        <item quantity="few">%d\u00A0godziny</item>
+        <item quantity="many">%d\u00A0godzin</item>
+        <item quantity="other">%d\u00A0godzin</item>
+    </plurals>
+    <plurals name="n_hours_long">
+        <item quantity="one">"%d\u00A0godzina, "</item>
+        <item quantity="few">"%d\u00A0godziny, "</item>
+        <item quantity="many">"%d\u00A0godzin, "</item>
+        <item quantity="other">"%d\u00A0godzin, "</item>
+    </plurals>
+    <plurals name="n_minutes_long">
+        <item quantity="one">%d\u00A0minuta</item>
+        <item quantity="few">%d\u00A0minuty</item>
+        <item quantity="many">%d\u00A0minut</item>
+        <item quantity="other">%d\u00A0minut</item>
+    </plurals>
+    <plurals name="n_hours_medium">
+        <item quantity="one">"%d\u00A0godz., "</item>
+        <item quantity="few">"%d\u00A0godz., "</item>
+        <item quantity="many">"%d\u00A0godz., "</item>
+        <item quantity="other">"%d\u00A0godz., "</item>
+    </plurals>
+    <plurals name="n_minutes_medium">
+        <item quantity="one">%d\u00A0min</item>
+        <item quantity="few">%d\u00A0min</item>
+        <item quantity="many">%d\u00A0min</item>
+        <item quantity="other">%d\u00A0min</item>
+    </plurals>
+    <plurals name="n_hours_short">
+        <item quantity="one">"%dh "</item>
+        <item quantity="few">"%dh "</item>
+        <item quantity="many">"%dh "</item>
+        <item quantity="other">"%dh "</item>
+    </plurals>
+    <plurals name="n_minutes_short">
+        <item quantity="one">%dm</item>
+        <item quantity="few">%dm</item>
+        <item quantity="many">%dm</item>
+        <item quantity="other">%dm</item>
+    </plurals>
+    <string name="unit_days">%dd</string>
+    <string name="unit_hours">%dh</string>
+    <string name="unit_minutes">%dm</string>
+    <string name="unit_seconds" formatted="true">%ds</string>
 </resources>

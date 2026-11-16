@@ -15,6 +15,7 @@ package codes.swistak.batterymonitor.monitoring
 import android.content.SharedPreferences
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.lang.reflect.InvocationHandler
@@ -22,6 +23,47 @@ import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 
 class PredictorStateMigrationTest {
+    @Test
+    fun `reading an empty predictor store does not supply defaults or a version`() {
+        val state = Predictor.readStoredState(emptyMap<String, Any>())
+
+        assertTrue(state.averages.isEmpty())
+        assertNull(state.version)
+    }
+
+    @Test
+    fun `reading predictor data preserves all stored categories and exceptional float values`() {
+        val values = Predictor.KEY_AVERAGE.zip(
+            listOf(-1f, Float.NaN, Float.POSITIVE_INFINITY, -20f)
+        ).toMap() + (Predictor.KEY_STATE_VERSION to 2)
+        val before = values.toMap()
+
+        val state = Predictor.readStoredState(values)
+
+        assertEquals(4, state.averages.size)
+        assertEquals(-1f, state.averages[Predictor.KEY_AVERAGE[0]])
+        assertTrue(state.averages[Predictor.KEY_AVERAGE[1]]!!.isNaN())
+        assertEquals(Float.POSITIVE_INFINITY, state.averages[Predictor.KEY_AVERAGE[2]])
+        assertEquals(-20f, state.averages[Predictor.KEY_AVERAGE[3]])
+        assertEquals(2, state.version)
+        assertEquals(before, values)
+    }
+
+    @Test
+    fun `reading predictor data ignores unknown keys and does not convert incorrectly typed values`() {
+        val values = mapOf(
+            Predictor.KEY_AVERAGE[0] to 864000,
+            Predictor.KEY_AVERAGE[1] to 108000f,
+            Predictor.KEY_STATE_VERSION to 2f,
+            "other" to 123f
+        )
+
+        val state = Predictor.readStoredState(values)
+
+        assertEquals(mapOf(Predictor.KEY_AVERAGE[1] to 108000f), state.averages)
+        assertNull(state.version)
+    }
+
     @Test
     fun `migration removes only cached discharge average and records version`() {
         val preferences = FakeSharedPreferences(

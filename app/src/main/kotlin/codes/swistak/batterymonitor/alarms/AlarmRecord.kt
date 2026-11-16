@@ -15,3 +15,7 @@ package codes.swistak.batterymonitor.alarms
 internal data class AlarmRecord(
     val enabled: Boolean, val type: String, val threshold: String
 )
+
+internal data class AlarmRule(
+    val id: Int, val enabled: Boolean, val type: String, val threshold: String
+)

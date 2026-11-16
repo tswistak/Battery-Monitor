@@ -13,7 +13,6 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -23,36 +22,15 @@ import android.graphics.RectF
 import android.util.DisplayMetrics
 import androidx.core.graphics.createBitmap
 
-internal class BatteryLevel private constructor(context: Context, sizeFactor: Float) {
+internal class BatteryLevel {
     companion object {
-        private const val FACTOR_LARGE = 33.25f
         private const val FACTOR_SMALL = 13.33f
 
-        private var largeInstance: BatteryLevel? = null
-        private var smallInstance: BatteryLevel? = null
-
-        fun getLargeInstance(context: Context): BatteryLevel {
-            if (largeInstance != null) return largeInstance!!
-
-            largeInstance = BatteryLevel(context, FACTOR_LARGE)
-
-            return largeInstance!!
-        }
-
-        fun getSmallInstance(context: Context): BatteryLevel {
-            if (smallInstance != null) return smallInstance!!
-
-            smallInstance = BatteryLevel(context, FACTOR_SMALL)
-
-            return smallInstance!!
-        }
     }
 
     private val canvas: Canvas = Canvas()
     private val paint: Paint
     private var battery: Bitmap
-    private var mLevel = 0
-    private var mColor = 0
 
     private val factorWidth = 12.0f
     private val factorBodH = 21.0f
@@ -60,12 +38,12 @@ internal class BatteryLevel private constructor(context: Context, sizeFactor: Fl
     private val factorTopH = 1.5f
     private val factorStroke = 1.0f
 
-    private val width: Int = (sizeFactor * factorWidth).toInt()
-    private val bodH: Int = (sizeFactor * factorBodH).toInt()
-    private val topW: Int = (sizeFactor * factorTopW).toInt()
-    private val topH: Int = (sizeFactor * factorTopH).toInt()
+    private val width: Int = (FACTOR_SMALL * factorWidth).toInt()
+    private val bodH: Int = (FACTOR_SMALL * factorBodH).toInt()
+    private val topW: Int = (FACTOR_SMALL * factorTopW).toInt()
+    private val topH: Int = (FACTOR_SMALL * factorTopH).toInt()
     private val totalH: Int = (bodH + topH)
-    private val strokeW: Int = (sizeFactor * factorStroke).toInt()
+    private val strokeW: Int = (FACTOR_SMALL * factorStroke).toInt()
 
     init {
         battery = createBitmap(width, totalH)
@@ -80,16 +58,8 @@ internal class BatteryLevel private constructor(context: Context, sizeFactor: Fl
         paint.strokeWidth = strokeW.toFloat()
     }
 
-    fun setColor(color: Int) {
-        mColor = color
-        setLevel(mLevel)
-    }
-
-    fun setLevel(level: Int) {
-        var level = level
-        if (level < 0) level = 0
-
-        mLevel = level
+    fun draw(percent: Int, color: Int): Bitmap {
+        val level = percent.coerceAtLeast(0)
 
         val hsw = strokeW * 0.5f
         val isw = strokeW
@@ -97,7 +67,7 @@ internal class BatteryLevel private constructor(context: Context, sizeFactor: Fl
         val outlineRect = RectF(hsw, topH + hsw, width - hsw, totalH - hsw)
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 
-        paint.setColor(mColor)
+        paint.color = color
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = strokeW.toFloat()
         canvas.drawRoundRect(outlineRect, hsw, hsw, paint)
@@ -118,7 +88,6 @@ internal class BatteryLevel private constructor(context: Context, sizeFactor: Fl
             topLeft.toFloat(), 0f, (topLeft + topW).toFloat(), (topH + strokeW).toFloat()
         )
         canvas.drawRoundRect(topRect, hsw, hsw, paint)
+        return battery
     }
-
-    fun getBitmap(): Bitmap = battery
 }

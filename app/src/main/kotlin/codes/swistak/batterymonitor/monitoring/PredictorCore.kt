@@ -15,6 +15,20 @@ package codes.swistak.batterymonitor.monitoring
 
 import kotlin.math.abs
 
+internal data class PredictorRecentState(
+    val predictionType: Int,
+    val chargingStatus: Int,
+    val effectiveMsPerPoint: Double,
+    val fiveMinuteMsPerPoint: Double,
+    val fivePointMsPerPoint: Double,
+    val sessionMsPerPoint: Double,
+    val longTermMsPerPoint: Double,
+    val observedPoints: Int,
+    val observationDurationMillis: Long,
+    val currentLevelDurationMillis: Long,
+    val usesPartial: Boolean
+)
+
 internal class PredictorCore(
     avgDischarge: Float, avgRechargeAc: Float, avgRechargeWl: Float, avgRechargeUsb: Float
 ) {
@@ -30,6 +44,9 @@ internal class PredictorCore(
         const val SINCE_STATUS_CHANGE: Int = -1
         const val LONG_TERM: Int = -2
         const val AUTOMAGIC: Int = -3
+
+        fun isDischarging(status: Int): Boolean =
+            status == BatteryInfo.STATUS_DISCHARGING || status == BatteryInfo.STATUS_UNPLUGGED
 
         private const val MIN_PREDICTION: Int = ONE_MINUTE
 
@@ -111,14 +128,14 @@ internal class PredictorCore(
     }
 
     fun update(info: BatteryInfo, whenUpdated: Long) {
+        curInfo = info
+        now = whenUpdated
+
         if (info.status == BatteryInfo.STATUS_UNKNOWN) {
             info.prediction.clear()
             info.fullRangePrediction.clear()
             return
         }
-
-        curInfo = info
-        now = whenUpdated
 
         updatePredictionState(info)
         updateExposedPredictions()
@@ -137,7 +154,10 @@ internal class PredictorCore(
             lastPrediction = now + MIN_PREDICTION
         }
 
-        if (info.status != lastStatus || info.plugged != lastPlugged || info.status == BatteryInfo.STATUS_FULLY_CHARGED || (info.status == BatteryInfo.STATUS_CHARGING && info.percent < tsHead) || (info.status == BatteryInfo.STATUS_UNPLUGGED && info.percent > tsHead)) {
+        if (info.status != lastStatus || info.plugged != lastPlugged || info.status == BatteryInfo.STATUS_FULLY_CHARGED || (info.status == BatteryInfo.STATUS_CHARGING && info.percent < tsHead) || (isDischarging(
+                info.status
+            ) && info.percent > tsHead)
+        ) {
             initial = true
             usePartial = false
 
@@ -195,6 +215,8 @@ internal class PredictorCore(
 
     private fun updateExposedPredictions() {
         val info = curInfo!!
+        info.effectivePredictionTargetPercent =
+            targetFor(info, chargingTargetPercent, dischargingTargetPercent)
         if (!canPredict()) {
             info.prediction.clear()
             info.fullRangePrediction.clear()
@@ -230,6 +252,24 @@ internal class PredictorCore(
     val longTermAverage: Double
         get() = average[curChargingStatus]
 
+    fun recentState(): PredictorRecentState? {
+        val info = curInfo ?: return null
+        if (!canPredict()) return null
+        return PredictorRecentState(
+            predictionType = predictionType,
+            chargingStatus = curChargingStatus,
+            effectiveMsPerPoint = recentAverage(),
+            fiveMinuteMsPerPoint = recentAverageByTime(FIVE_MINUTES.toDouble()),
+            fivePointMsPerPoint = recentAverageByPoints(5.0),
+            sessionMsPerPoint = recentAverageBySession(),
+            longTermMsPerPoint = longTermAverage,
+            observedPoints = abs(tsHead - info.percent),
+            observationDurationMillis = now - timestamps[tsHead],
+            currentLevelDurationMillis = now - timestamps[info.percent],
+            usesPartial = usePartial
+        )
+    }
+
     private fun shouldUsePartial(): Boolean {
         if (usePartial) return true
 
@@ -240,12 +280,8 @@ internal class PredictorCore(
     }
 
     private fun predictionIfPartial(): Long {
-        return predictionIfPartialIs(true)
-    }
-
-    private fun predictionIfPartialIs(supposed: Boolean): Long {
         val oldPartial = usePartial
-        usePartial = supposed
+        usePartial = true
         val ret = prediction(chargingTargetPercent = 100, dischargingTargetPercent = 0)
         usePartial = oldPartial
         return ret
@@ -268,7 +304,10 @@ internal class PredictorCore(
     private fun prediction(chargingTargetPercent: Int, dischargingTargetPercent: Int): Long {
         return when (curInfo!!.status) {
             BatteryInfo.STATUS_CHARGING -> whenCharged(chargingTargetPercent)
-            BatteryInfo.STATUS_UNPLUGGED -> whenDrained(dischargingTargetPercent)
+            BatteryInfo.STATUS_DISCHARGING, BatteryInfo.STATUS_UNPLUGGED -> whenDrained(
+                dischargingTargetPercent
+            )
+
             else -> 0
         }
     }
@@ -309,7 +348,7 @@ internal class PredictorCore(
 
     private fun targetFor(
         info: BatteryInfo, chargingTargetPercent: Int, dischargingTargetPercent: Int
-    ): Int = if (info.status == BatteryInfo.STATUS_UNPLUGGED) {
+    ): Int = if (isDischarging(info.status)) {
         if (dischargingTargetPercent > 0 && info.percent < dischargingTargetPercent) {
             0
         } else {
@@ -320,7 +359,7 @@ internal class PredictorCore(
     }
 
     private fun isAtDischargingTarget(info: BatteryInfo): Boolean =
-        info.status == BatteryInfo.STATUS_UNPLUGGED && dischargingTargetPercent > 0 && info.percent == dischargingTargetPercent
+        isDischarging(info.status) && dischargingTargetPercent > 0 && info.percent == dischargingTargetPercent
 
     private fun isTargetReached(info: BatteryInfo, target: Int): Boolean {
         return when {
@@ -348,7 +387,7 @@ internal class PredictorCore(
     }
 
     private fun canPredict(): Boolean {
-        return curInfo!!.status == BatteryInfo.STATUS_CHARGING || curInfo!!.status == BatteryInfo.STATUS_UNPLUGGED
+        return curInfo!!.status == BatteryInfo.STATUS_CHARGING || isDischarging(curInfo!!.status)
     }
 
     private fun recentAverage(): Double {
@@ -378,8 +417,6 @@ internal class PredictorCore(
 
         var i = start
         while (i != tsHead) {
-            val potentialMs: Double
-
             // 20170803:
             if (i < 0) i = 0
             if (i > 100) i = 100
@@ -388,9 +425,9 @@ internal class PredictorCore(
             // dir_inc is either 1 (discharging) or -1 (charging)
             // if (i + dir_inc) is outside that range, the first branch is taken
             // so an index out of range in the second branch has to be from i itself
-            if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) potentialMs =
-                (now - timestamps[curInfo!!.percent]).toDouble()
-            else potentialMs = (timestamps[i] - timestamps[i + dirInc]).toDouble()
+            val potentialMs =
+                if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) (now - timestamps[curInfo!!.percent]).toDouble()
+                else (timestamps[i] - timestamps[i + dirInc]).toDouble()
 
             if (potentialMs > neededMs) {
                 totalPoints += neededMs / potentialMs
@@ -419,11 +456,9 @@ internal class PredictorCore(
 
         var i = start
         while (i != tsHead && neededPoints > 0) {
-            val newMs: Double
-
-            if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) newMs =
-                (now - timestamps[curInfo!!.percent]).toDouble()
-            else newMs = (timestamps[i] - timestamps[i + dirInc]).toDouble()
+            val newMs =
+                if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) (now - timestamps[curInfo!!.percent]).toDouble()
+                else (timestamps[i] - timestamps[i + dirInc]).toDouble()
 
             totalMs += newMs
             neededPoints -= 1.0
@@ -445,8 +480,7 @@ internal class PredictorCore(
         }
 
         totalMs += (timestamps[curInfo!!.percent] - timestamps[tsHead]).toDouble()
-        totalPoints += (tsHead - curInfo!!.percent).toDouble()
-
+        totalPoints += abs(tsHead - curInfo!!.percent).toDouble()
         if (totalPoints < 1) return average[curChargingStatus]
 
         return totalMs / totalPoints

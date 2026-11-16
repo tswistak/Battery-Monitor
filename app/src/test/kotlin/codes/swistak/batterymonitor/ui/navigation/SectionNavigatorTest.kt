@@ -1,0 +1,121 @@
+/*
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+*/
+package codes.swistak.batterymonitor.ui.navigation
+
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+class SectionNavigatorTest {
+    @Test
+    fun `the release registry has six stable destinations and excludes the widgets gallery`() {
+        assertEquals(
+            listOf("current", "history", "alarms", "diagnostics", "settings", "help"),
+            SectionRegistry.destinations.map { it.owner.route })
+        assertEquals(SectionOwner.CURRENT, SectionRegistry.owner("widgets"))
+        assertEquals(SectionOwner.CURRENT, SectionRegistry.owner("analysis"))
+        assertEquals(SectionOwner.CURRENT, SectionRegistry.owner("unknown"))
+    }
+
+    @Test
+    fun `back from a menu section returns to current without accumulating a history stack`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.HISTORY)
+        navigator.select(SectionOwner.ALARMS)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.CURRENT, navigator.selected)
+        assertFalse(navigator.back())
+    }
+
+    @Test
+    fun `back from a contextual detail restores its origin section`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.HISTORY)
+        navigator.openDetail(SectionOwner.DIAGNOSTICS, "monitor")
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.HISTORY, navigator.selected)
+        assertEquals(null, navigator.detail)
+    }
+
+    @Test
+    fun `back from settings help preserves the category before returning to the settings root`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.SETTINGS)
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:advanced")
+        navigator.openDetail(SectionOwner.HELP, "help:advanced_settings")
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals("settings:advanced", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals(null, navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.CURRENT, navigator.selected)
+        assertFalse(navigator.back())
+    }
+
+    @Test
+    fun `leaving contextual help through the menu clears its nested return path`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.SETTINGS)
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:notification")
+        navigator.openDetail(SectionOwner.HELP, "help:notification_settings")
+        navigator.select(SectionOwner.HISTORY)
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.CURRENT, navigator.selected)
+        assertEquals(null, navigator.detail)
+        assertFalse(navigator.back())
+    }
+
+    @Test
+    fun `a diagnostics search destination returns to the originating settings category`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.SETTINGS)
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:advanced")
+        navigator.openDetail(SectionOwner.DIAGNOSTICS, "monitor:debug_logging")
+
+        assertEquals("monitor:debug_logging", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals("settings:advanced", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals(null, navigator.detail)
+    }
+
+    @Test
+    fun `license details return through the list to Help and About`() {
+        val navigator = SectionNavigator(SectionOwner.HELP)
+        navigator.openDetail(SectionOwner.HELP, "help:licenses")
+        navigator.openDetail(SectionOwner.HELP, "help:licenses:battery-monitor")
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.HELP, navigator.selected)
+        assertEquals("help:licenses", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.HELP, navigator.selected)
+        assertEquals(null, navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.CURRENT, navigator.selected)
+        assertFalse(navigator.back())
+    }
+
+    @Test
+    fun `a highlighted Settings destination returns directly to its diagnostic origin`() {
+        val navigator = SectionNavigator(SectionOwner.DIAGNOSTICS)
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:advanced:use_privileged_access")
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.DIAGNOSTICS, navigator.selected)
+        assertEquals(null, navigator.detail)
+    }
+
+}

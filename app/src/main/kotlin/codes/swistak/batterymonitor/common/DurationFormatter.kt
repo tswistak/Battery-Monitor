@@ -15,8 +15,29 @@ package codes.swistak.batterymonitor.common
 import android.content.res.Resources
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.LongDurationFormat
+import java.util.Locale
 
 internal object DurationFormatter {
+    fun formatCompact(
+        locale: Locale, elapsedMilliseconds: Long, unitPattern: (Int) -> String
+    ): String {
+        val totalSeconds = (elapsedMilliseconds / 1000L).coerceAtLeast(0L)
+        val hours = totalSeconds / 3600L
+        val minutes = totalSeconds % 3600L / 60L
+        val seconds = totalSeconds % 60L
+        return buildList {
+            if (hours > 0L) add(String.format(locale, unitPattern(R.string.unit_hours), hours))
+            if (minutes > 0L) add(
+                String.format(
+                    locale, unitPattern(R.string.unit_minutes), minutes
+                )
+            )
+            if (seconds > 0L || isEmpty()) {
+                add(String.format(locale, unitPattern(R.string.unit_seconds), seconds))
+            }
+        }.joinToString(" ")
+    }
+
     internal fun roundedDaysAndHours(
         days: Int, hours: Int, minutes: Int
     ): Pair<Int, Int> {
@@ -63,18 +84,23 @@ internal object DurationFormatter {
         )
     }
 
-    fun formatRoundedHours(
-        resources: Resources, totalHours: Int, longDurationFormat: LongDurationFormat
+    fun formatNotificationStatusDuration(
+        resources: Resources,
+        status: String,
+        totalHours: Int,
+        longDurationFormat: LongDurationFormat
     ): String {
         if (longDurationFormat != LongDurationFormat.DAYS_AND_HOURS || totalHours < 24) {
             return String.format(
-                resources.getQuantityString(R.plurals.for_n_hours, totalHours), totalHours
+                resources.getQuantityString(
+                    R.plurals.notification_status_duration_hours, totalHours
+                ), totalHours, status
             )
         }
 
         val duration = formatShort(
             resources, totalHours * 60, LongDurationFormat.DAYS_AND_HOURS
         )
-        return resources.getString(R.string.duration_for, duration)
+        return resources.getString(R.string.notification_status_duration, status, duration)
     }
 }

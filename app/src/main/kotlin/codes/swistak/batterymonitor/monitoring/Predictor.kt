@@ -18,12 +18,16 @@ import android.content.SharedPreferences
 import android.os.SystemClock
 import androidx.core.content.edit
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingTargetResolver
-import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitState
 import codes.swistak.batterymonitor.monitoring.charginglimit.ResolvedTarget
 import codes.swistak.batterymonitor.settings.SettingsContract
 
 internal data class ResolvedPredictionTargets(
     val charging: ResolvedTarget, val discharging: ResolvedTarget
+)
+
+internal data class PredictorStoredState(
+    val averages: Map<String, Float>, val version: Int?
 )
 
 internal class Predictor(context: Context) {
@@ -38,6 +42,15 @@ internal class Predictor(context: Context) {
 
         internal const val KEY_STATE_VERSION = "key_predictor_state_version"
         internal const val STATE_VERSION = 2
+
+        internal fun readStoredState(values: Map<String, *>): PredictorStoredState =
+            PredictorStoredState(
+                averages = buildMap {
+                    KEY_AVERAGE.forEach { key ->
+                        (values[key] as? Float)?.let { put(key, it) }
+                    }
+                }, version = values[KEY_STATE_VERSION] as? Int
+            )
 
         internal fun migratePredictorState(preferences: SharedPreferences): Boolean {
             if (preferences.getInt(KEY_STATE_VERSION, 1) >= STATE_VERSION) return false
@@ -56,12 +69,7 @@ internal class Predictor(context: Context) {
 
     private val settings =
         context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-    private val targetResolver = ChargingTargetResolver(
-        settings, DeviceChargingLimitProvider(
-            context, privilegedAccessEnabled = {
-                settings.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
-            })
-    )
+    private val targetResolver = ChargingTargetResolver(settings)
 
     private val editor: SharedPreferences.Editor = spPredictor.edit()
 
@@ -72,18 +80,22 @@ internal class Predictor(context: Context) {
         spPredictor.getFloat(KEY_AVERAGE[PredictorCore.RECHARGE_USB], -1f)
     )
 
+    internal fun storedState(): PredictorStoredState = readStoredState(spPredictor.all)
+
+    internal fun recentState(): PredictorRecentState? = pc.recentState()
+
     fun setPredictionType(type: String) {
         pc.setPredictionType(type.toInt())
     }
 
-    fun update(info: BatteryInfo): ResolvedPredictionTargets {
-        val chargingTarget = targetResolver.resolveChargingTarget()
+    fun update(info: BatteryInfo, chargingLimit: ChargingLimitState?): ResolvedPredictionTargets {
+        val chargingTarget = targetResolver.resolveChargingTarget(chargingLimit)
         val dischargingTarget = targetResolver.resolveDischargingTarget()
         pc.setTargets(chargingTarget.percent, dischargingTarget.percent)
         val now = SystemClock.elapsedRealtime()
         pc.update(info, now)
 
-        if (info.status == BatteryInfo.STATUS_CHARGING || info.status == BatteryInfo.STATUS_UNPLUGGED) {
+        if (info.status == BatteryInfo.STATUS_CHARGING || PredictorCore.isDischarging(info.status)) {
             editor.putFloat(
                 KEY_AVERAGE[pc.curChargingStatus], pc.longTermAverage.toFloat()
             ).apply()

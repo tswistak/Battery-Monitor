@@ -15,12 +15,12 @@ package codes.swistak.batterymonitor.monitoring.charginglimit
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.content.pm.ProviderInfo
 import android.os.SystemClock
-import android.util.Log
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 
 internal enum class ReadSource {
-    CONTENT_RESOLVER, APP_SHELL, APP_FILE, PRIVILEGED_SHELL, SYSTEM_API
+    CONTENT_RESOLVER, APP_FILE, PRIVILEGED_SHELL, SYSTEM_API
 }
 
 internal enum class ReadFailureReason {
@@ -77,18 +77,9 @@ internal data class DeviceProfile(
     val model: String,
     val device: String,
     val sdkInt: Int,
-    private val properties: Map<String, ReadResult<String>> = emptyMap(),
-    val hasLineageOsFeature: Boolean = false,
     val hasLineageSettingsProvider: Boolean = false,
     val hasGrapheneOsSystemPackage: Boolean = false
-) {
-    fun property(key: String): ReadResult<String> =
-        properties[key] ?: ReadResult.Absent(ReadSource.APP_SHELL)
-}
-
-internal object ChargingLimitPropertyKeys {
-    const val LINEAGE_VERSION = "ro.lineage.version"
-}
+)
 
 internal data class BatteryChargingSnapshot(
     val plugged: Boolean, val chargingState: Int
@@ -100,10 +91,6 @@ internal enum class SettingNamespace(val commandName: String) {
 
 internal fun interface SettingReader {
     fun read(namespace: SettingNamespace, key: String): ReadResult<String>
-}
-
-internal fun interface SystemPropertyReader {
-    fun read(key: String): ReadResult<String>
 }
 
 internal fun interface BatteryChargingStateReader {
@@ -204,40 +191,54 @@ internal class ChargingLimitDetector(
 
 internal class DeviceChargingLimitProvider(
     context: Context,
-    privilegedAccessEnabled: () -> Boolean = { false },
+    private val privilegedAccessEnabled: () -> Boolean = { false },
     privilegedCommand: (String) -> String? = PrivilegedAccess::run,
-    profile: DeviceProfile = AndroidDeviceProfile.current(context),
-    adapters: List<ChargingLimitAdapter> = DEFAULT_CHARGING_LIMIT_ADAPTERS,
-    private val cacheTtlMillis: Long = DEFAULT_CACHE_TTL_MILLIS,
+    private val profile: DeviceProfile = AndroidDeviceProfile.current(context),
+    private val adapters: List<ChargingLimitAdapter> = DEFAULT_CHARGING_LIMIT_ADAPTERS,
+    private val cacheTtlMillis: Long = CHARGING_LIMIT_CACHE_MS,
     private val elapsedRealtime: () -> Long = SystemClock::elapsedRealtime
 ) : ChargingLimitProvider {
-    companion object {
-        private const val LOG_TAG = "DeviceChargingLimit"
-        private const val DEFAULT_CACHE_TTL_MILLIS = 5_000L
-    }
+    private val packageManager = context.applicationContext.packageManager
+    private val settings = AndroidSettingReader(context, privilegedAccessEnabled, privilegedCommand)
+    private val battery = AndroidBatteryChargingStateReader(context)
+    private val powerSupply = AndroidPowerSupplyReader(privilegedAccessEnabled, privilegedCommand)
 
-    private val detector = ChargingLimitDetector(
-        profile,
-        AndroidSettingReader(context, privilegedAccessEnabled, privilegedCommand),
-        AndroidBatteryChargingStateReader(context),
-        AndroidPowerSupplyReader(privilegedAccessEnabled, privilegedCommand),
-        adapters
-    )
     private var cached: CachedState? = null
 
     @Synchronized
     override fun readState(): ChargingLimitState {
         val now = elapsedRealtime()
-        cached?.takeIf { now - it.readAtMillis < cacheTtlMillis }?.let { return it.state }
+        val access = currentAccess()
+        val owner = DeviceProfileSignals.lineageProvider(packageManager)
+        cached?.takeIf {
+            it.access == access && it.lineageOwner == owner && now - it.readAtMillis < cacheTtlMillis
+        }?.let { return it.state }
 
-        val state = detector.readState()
-        cached = CachedState(state, now)
-        Log.d(LOG_TAG, state.toString())
+        val state = ChargingLimitDetector(
+            profile.copy(hasLineageSettingsProvider = owner != null),
+            settings,
+            battery,
+            powerSupply,
+            adapters
+        ).readState()
+        if (currentAccess() != access || DeviceProfileSignals.lineageProvider(packageManager) != owner) {
+            return ChargingLimitState.Unavailable(ChargingLimitUnavailableReason.READ_FAILED)
+        }
+        cached = CachedState(state, elapsedRealtime(), access, owner)
         return state
     }
 
+    private fun currentAccess() = ChargingLimitAccess(
+        privilegedAccessEnabled(),
+        PrivilegedAccess.accessRevision,
+        PrivilegedAccess.accessChanges.value
+    )
+
     private data class CachedState(
-        val state: ChargingLimitState, val readAtMillis: Long
+        val state: ChargingLimitState,
+        val readAtMillis: Long,
+        val access: ChargingLimitAccess,
+        val lineageOwner: LineageProviderIdentity?
     )
 }
 
@@ -258,8 +259,9 @@ internal val DEFAULT_CHARGING_LIMIT_ADAPTERS: List<ChargingLimitAdapter> = listO
 )
 
 internal object DeviceProfileSignals {
-    const val LINEAGE_FEATURE = "org.lineageos.android"
     const val LINEAGE_PROVIDER = "lineagesettings"
+    const val LINEAGE_PROVIDER_PACKAGE = "org.lineageos.lineagesettings"
+
     val GRAPHENE_PACKAGES = listOf("app.grapheneos.setupwizard", "app.grapheneos.info")
 
     fun hasGrapheneSystemPackage(context: Context): Boolean = GRAPHENE_PACKAGES.any { name ->
@@ -269,13 +271,23 @@ internal object DeviceProfileSignals {
         }.getOrDefault(false)
     }
 
-    fun hasLineageFeature(packageManager: PackageManager): Boolean =
-        runCatching { packageManager.hasSystemFeature(LINEAGE_FEATURE) }.getOrDefault(false)
+    fun lineageProvider(packageManager: PackageManager): LineageProviderIdentity? = runCatching {
+        val provider = packageManager.resolveContentProvider(LINEAGE_PROVIDER, 0)
+        trustedLineageProvider(provider) {
+            packageManager.checkSignatures(
+                "android", LINEAGE_PROVIDER_PACKAGE
+            ) == PackageManager.SIGNATURE_MATCH
+        }
+    }.getOrNull()
+}
 
-    fun hasLineageProvider(packageManager: PackageManager): Boolean = runCatching {
-        packageManager.resolveContentProvider(
-            LINEAGE_PROVIDER,
-            0
-        ) != null
-    }.getOrDefault(false)
+internal data class LineageProviderIdentity(val uid: Int, val sourceDir: String?)
+
+internal fun trustedLineageProvider(
+    provider: ProviderInfo?, platformSigned: () -> Boolean
+): LineageProviderIdentity? {
+    if (provider?.packageName != DeviceProfileSignals.LINEAGE_PROVIDER_PACKAGE) return null
+    val app = provider.applicationInfo ?: return null
+    if (app.flags and (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0 || !platformSigned()) return null
+    return LineageProviderIdentity(app.uid, app.sourceDir)
 }

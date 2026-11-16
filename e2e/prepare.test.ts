@@ -1,0 +1,282 @@
+/*
+ * Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {test} from 'node:test';
+import {buildCurrentApks, isJarSignatureEntry, parseApkBadging, parseSigningCertificate,
+    prepareApks, validateUpgrade, verifyPinnedFile} from './prepare.js';
+import type {ApkMetadata} from './prepare.js';
+import {resetBattery} from './support/device.js';
+import {checkSystemAppError, launchApplication} from './support/ui.js';
+
+test('historical APK integrity rejects changed bytes, size and unpinned input', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'battery-monitor-apk-integrity-'));
+    try {
+        const path = join(directory, 'release.apk');
+        const bytes = Buffer.from('controlled APK test input');
+        writeFileSync(path, bytes);
+        const digest = createHash('sha256').update(bytes).digest('hex');
+        verifyPinnedFile(path, {sha256: digest, size: bytes.length});
+        assert.throws(() => verifyPinnedFile(path, {sha256: digest, size: bytes.length + 1}), /size mismatch/);
+        assert.throws(() => verifyPinnedFile(path, {sha256: ''}), /pinned SHA-256/);
+        writeFileSync(path, 'modified input');
+        assert.throws(() => verifyPinnedFile(path, {sha256: digest}), /SHA-256 mismatch/);
+    } finally {
+        rmSync(directory, {recursive: true, force: true});
+    }
+});
+
+test('APK metadata accepts application and test APK badging without inventing a version', () => {
+    assert.deepEqual(parseApkBadging("package: name='codes.swistak.batterymonitor' versionCode='1007003' versionName='1.7.3'"),
+        {applicationId: 'codes.swistak.batterymonitor', versionCode: 1007003, versionName: '1.7.3'});
+    assert.deepEqual(parseApkBadging("package: name='codes.swistak.batterymonitor.test' versionCode='' versionName=''"),
+        {applicationId: 'codes.swistak.batterymonitor.test', versionCode: 0, versionName: ''});
+    assert.throws(() => parseApkBadging('missing package metadata'));
+});
+
+test('signing checks accept verified legacy and modern labels and reject ambiguous identities', () => {
+    const digest = 'a'.repeat(64);
+    assert.equal(parseSigningCertificate(`Signer #1 certificate SHA-256 digest: ${digest}`), digest);
+    assert.equal(parseSigningCertificate(`V3.0 Signer: certificate SHA-256 digest: ${digest}\nV2 Signer: certificate SHA-256 digest: ${digest}`), digest);
+    assert.throws(() => parseSigningCertificate('no certificate'));
+    assert.throws(() => parseSigningCertificate(`Signer #1 certificate SHA-256 digest: ${digest}\nSigner #2 certificate SHA-256 digest: ${'b'.repeat(64)}`));
+});
+
+test('payload preservation excludes only JAR signature envelopes, retaining META-INF services and metadata', () => {
+    for (const name of ['META-INF/MANIFEST.MF', 'META-INF/CERT.SF', 'META-INF/CERT.RSA',
+        'META-INF/CERT.DSA', 'META-INF/CERT.EC', 'meta-inf/cert.sf']) {
+        assert.equal(isJarSignatureEntry(name), true, name);
+    }
+    for (const name of ['META-INF/', 'META-INF/services/example.Service',
+        'META-INF/com/android/build/gradle/app-metadata.properties', 'META-INF/example.kotlin_module',
+        'META-INF/nested/CERT.RSA', 'classes.dex', 'AndroidManifest.xml']) {
+        assert.equal(isJarSignatureEntry(name), false, name);
+    }
+});
+
+function apk(versionCode: number): ApkMetadata {
+    return {path: '/controlled/application.apk', applicationId: 'codes.swistak.batterymonitor',
+        versionCode, versionName: '1.7.3', signerSha256: 'a'.repeat(64), sha256: 'b'.repeat(64), size: 100,
+        legacyWidgetProviders: ['BatteryInfoAppWidgetProvider', 'FullAppWidgetProvider'],
+        sharedUserId: 'historical shared UID', sharedUserMaxSdkVersion: 'historical maximum SDK'};
+}
+
+test('upgrade preflight rejects incompatible package, signing, versions and historical manifest changes', () => {
+    const older = apk(1007003);
+    const current = apk(1007004);
+    validateUpgrade(older, current, older.applicationId);
+    for (const change of [
+        {applicationId: `${older.applicationId}.debug`},
+        {signerSha256: 'c'.repeat(64)},
+        {versionCode: 1007003},
+        {versionCode: 1007002},
+        {versionCode: 0},
+        {legacyWidgetProviders: ['FullAppWidgetProvider']},
+        {sharedUserId: null},
+        {sharedUserMaxSdkVersion: null},
+    ]) {
+        assert.throws(() => validateUpgrade(older, {...current, ...change}, older.applicationId),
+            `Unexpected accepted upgrade metadata: ${JSON.stringify(change)}`);
+    }
+});
+
+test('fresh build invokes repository Gradle with bounded resources and propagates a real subprocess failure', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'battery-monitor-apk-build-'));
+    try {
+        writeFileSync(join(directory, 'gradlew'), `#!${process.execPath}
+require('node:fs').writeFileSync('build-arguments.json', JSON.stringify(process.argv.slice(2)));
+console.error('controlled build failure');
+process.exit(17);
+`, {mode: 0o755});
+        assert.throws(() => buildCurrentApks(directory));
+        assert.deepEqual(JSON.parse(readFileSync(join(directory, 'build-arguments.json'), 'utf8')),
+            ['--max-workers=2', '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g',
+                '-Pe2e', ':app:assembleDebug', ':e2eHelper:assembleDebug']);
+        assert.match(readFileSync(join(directory, 'e2e/build/reports/preparation-build.txt'), 'utf8'), /controlled build failure/);
+    } finally {
+        rmSync(directory, {recursive: true, force: true});
+    }
+});
+
+test('failed preparation removes stale APK metadata before checking prerequisites', async () => {
+    const directory = mkdtempSync(join(tmpdir(), 'battery-monitor-apk-preflight-'));
+    const previousSdk = process.env.ANDROID_SDK_ROOT;
+    const previousHome = process.env.ANDROID_HOME;
+    try {
+        mkdirSync(join(directory, 'e2e/build'), {recursive: true});
+        writeFileSync(join(directory, 'e2e/build/apks.json'), '{"current":"stale"}');
+        process.env.ANDROID_SDK_ROOT = join(directory, 'missing-sdk');
+        process.env.ANDROID_HOME = join(directory, 'missing-sdk');
+        await assert.rejects(prepareApks(directory), /installed Android SDK/);
+        assert.equal(existsSync(join(directory, 'e2e/build/apks.json')), false);
+    } finally {
+        if (previousSdk === undefined) delete process.env.ANDROID_SDK_ROOT;
+        else process.env.ANDROID_SDK_ROOT = previousSdk;
+        if (previousHome === undefined) delete process.env.ANDROID_HOME;
+        else process.env.ANDROID_HOME = previousHome;
+        rmSync(directory, {recursive: true, force: true});
+    }
+});
+
+test('battery cleanup waits for the selected ADB transport once and propagates a native failure', async () => {
+    const directory = mkdtempSync(join(tmpdir(), 'battery-monitor-battery-cleanup-'));
+    const previousHome = process.env.ANDROID_HOME;
+    const previousSerial = process.env.ANDROID_SERIAL;
+    const platformTools = join(directory, 'platform-tools');
+    const invocations = join(platformTools, 'invocations.jsonl');
+    const expectedArguments = ['-s', 'controlled-emulator', 'wait-for-device', 'shell',
+        'dumpsys', 'battery', 'reset'];
+    try {
+        mkdirSync(platformTools);
+        writeFileSync(join(platformTools, 'adb'), `#!${process.execPath}
+const fs = require('node:fs');
+const path = require('node:path');
+fs.appendFileSync(path.join(__dirname, 'invocations.jsonl'), JSON.stringify(process.argv.slice(2)) + '\\n');
+if (fs.existsSync(path.join(__dirname, 'fail'))) process.exit(17);
+`, {mode: 0o755});
+        process.env.ANDROID_HOME = directory;
+        process.env.ANDROID_SERIAL = 'controlled-emulator';
+
+        await resetBattery();
+        assert.deepEqual(readFileSync(invocations, 'utf8').trim().split('\n').map(line => JSON.parse(line)),
+            [expectedArguments]);
+
+        writeFileSync(join(platformTools, 'fail'), 'controlled native failure');
+        await assert.rejects(() => resetBattery(), {status: 17});
+        assert.deepEqual(readFileSync(invocations, 'utf8').trim().split('\n').map(line => JSON.parse(line)),
+            [expectedArguments, expectedArguments]);
+    } finally {
+        if (previousHome === undefined) delete process.env.ANDROID_HOME;
+        else process.env.ANDROID_HOME = previousHome;
+        if (previousSerial === undefined) delete process.env.ANDROID_SERIAL;
+        else process.env.ANDROID_SERIAL = previousSerial;
+        rmSync(directory, {recursive: true, force: true});
+    }
+});
+
+test('system UI preparation closes only known launcher ANRs and preserves other app failures', async context => {
+    const previousBrowser = globalThis._wdioGlobals.get('browser');
+    const hadBrowser = globalThis._wdioGlobals.has('browser');
+    const warnings = context.mock.method(console, 'warn', () => {});
+    let visible = false;
+    let title = '';
+    let clicks = 0;
+    let waits = 0;
+    const selectors: string[] = [];
+    // WDIO's locked globals package resolves its browser proxy through this registration.
+    globalThis._wdioGlobals.set('browser', {
+        async $(selector: string) {
+            selectors.push(selector);
+            if (selector.endsWith('.resourceId("android:id/alertTitle")')) {
+                assert.equal(selector, 'android=new UiSelector().packageName("android").resourceId("android:id/alertTitle")');
+                return {async getText() {return title;}};
+            }
+            assert.equal(selector, 'android=new UiSelector().packageName("android").resourceId("android:id/aerr_close")');
+            return {
+                async isDisplayed() {return visible;},
+                async click() {clicks++; visible = false;},
+                async waitForDisplayed(options: {reverse: boolean; timeout: number; timeoutMsg: string}) {
+                    waits++;
+                    assert.equal(options.reverse, true);
+                    assert.equal(options.timeout, 20_000);
+                    assert.equal(options.timeoutMsg, `Launcher ANR dialog did not close: ${title}`);
+                    assert.equal(visible, false);
+                },
+            };
+        },
+    });
+    try {
+        for (const scenario of [
+            {title: null, preparation: true, dismiss: false},
+            {title: "Pixel Launcher isn't responding", preparation: true, dismiss: true},
+            {title: "Quickstep isn't responding", preparation: true, dismiss: true},
+            {title: "Pixel Launcher isn't responding", preparation: false, dismiss: false},
+            {title: "Quickstep isn't responding", preparation: false, dismiss: false},
+            {title: "Battery Monitor isn't responding", preparation: true, dismiss: false},
+            {title: 'Battery Monitor keeps stopping', preparation: true, dismiss: false},
+            {title: "System UI isn't responding", preparation: true, dismiss: false},
+            {title: "Unknown application isn't responding", preparation: true, dismiss: false},
+            {title: 'Quickstep keeps stopping', preparation: true, dismiss: false},
+        ]) {
+            title = scenario.title ?? '';
+            visible = scenario.title !== null;
+            const previousClicks = clicks;
+            const previousWaits = waits;
+            const previousWarnings = warnings.mock.calls.length;
+            selectors.length = 0;
+            const check = scenario.preparation
+                ? checkSystemAppError({dismissBootLauncherAnr: true}) : checkSystemAppError();
+            if (scenario.title !== null && !scenario.dismiss) {
+                await assert.rejects(check, {message: `Android app error blocks E2E: ${title}`});
+                assert.equal(visible, true, `Must preserve ${title}`);
+            } else {
+                await check;
+            }
+            assert.equal(selectors.length, scenario.title === null ? 1 : 2);
+            assert.equal(clicks - previousClicks, scenario.dismiss ? 1 : 0, title);
+            assert.equal(waits - previousWaits, scenario.dismiss ? 1 : 0, title);
+            assert.equal(warnings.mock.calls.length - previousWarnings, scenario.dismiss ? 1 : 0, title);
+            if (scenario.dismiss) {
+                assert.equal(visible, false);
+                assert.equal(warnings.mock.calls[previousWarnings].arguments[0],
+                    `Closing unrelated emulator dialog: ${title}`);
+            }
+        }
+    } finally {
+        if (hadBrowser) globalThis._wdioGlobals.set('browser', previousBrowser);
+        else globalThis._wdioGlobals.delete('browser');
+        warnings.mock.restore();
+    }
+});
+
+test('startup handles notification permission before waiting for the application foreground', async () => {
+    const hadBrowser = globalThis._wdioGlobals.has('browser');
+    const previousBrowser = globalThis._wdioGlobals.get('browser');
+    let permissionVisible = true;
+    let clicks = 0;
+    globalThis._wdioGlobals.set('browser', {
+        async execute(command: string, options: {component: string}) {
+            assert.equal(command, 'mobile: startActivity');
+            assert.equal(options.component, 'codes.swistak.batterymonitor/.app.BatteryInfoActivity');
+        },
+        async $(selector: string) {
+            if (selector.includes('android:id/aerr_close')) return {async isDisplayed() {return false;}};
+            assert.equal(selector, 'android=new UiSelector().resourceId("com.android.permissioncontroller:id/permission_allow_button")');
+            return {
+                async isDisplayed() {return permissionVisible;},
+                async click() {clicks++; permissionVisible = false;},
+            };
+        },
+        async getCurrentPackage() {
+            return permissionVisible ? 'com.google.android.permissioncontroller' : 'codes.swistak.batterymonitor';
+        },
+        async waitUntil(condition: () => Promise<boolean>) {
+            assert.equal(await condition(), false, 'Permission must be handled before the normal foreground poll');
+            assert.equal(await condition(), true, 'Startup must continue after permission acknowledgement');
+        },
+    });
+    try {
+        await launchApplication();
+        assert.equal(clicks, 1);
+        assert.equal(permissionVisible, false);
+    } finally {
+        if (hadBrowser) globalThis._wdioGlobals.set('browser', previousBrowser);
+        else globalThis._wdioGlobals.delete('browser');
+    }
+});

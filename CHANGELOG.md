@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## Unreleased
+
+### New
+
+- New UI based on Material Design (#44 and all sub-issues).
+- Charts in history view (#62).
+- Diagnostics screen for detailed stats, instead of an Advanced tab (#48).
+- New, configurable widgets (#8, #16, #17).
+- Battery power measurement (#158).
+
+### Improved
+
+- Possibility to change app theme, including true black for AMOLED screens (#55).
+- Using system color palette on supported Android versions (#55).
+- Redesigned and simplified alarms (#26, #24).
+- Searchable settings (#50).
+- Accessibility.
+
+### Fixed
+
+- Expandable details for Live Updates (#165).
+
 ## 1.7.3
 
 ### Improved

@@ -13,16 +13,159 @@
 package codes.swistak.batterymonitor.devicebackup
 
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogExport
 import codes.swistak.batterymonitor.logs.LogRecord
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class CsvLogImporterTest {
+    private fun parseRecords(
+        csv: String, statusCodeFor: (String) -> Int?, timestampFor: (String, String) -> Long?
+    ): List<LogRecord> = CsvLogImporter.decodeRecords(
+        CsvLogImporter.readCsvRows(csv.reader()), statusCodeFor, timestampFor
+    ).toList()
+
+    @Test
+    fun `measurement headers support translated order and bidi controls`() {
+        val prefix = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,"
+        val suffix = ",Charge (µAh),Power (W)"
+        for (header in listOf(
+            "Battery current (µA)",
+            "µA (تيار البطارية)",
+            "تيار البطارية (\u200f\u202aµA\u202c\u200f)"
+        )) {
+            assertTrue(
+                LogExport.hasMeasurementCsvHeader(
+                    CsvLogImporter.parseCsv(prefix + header + suffix).single()
+                )
+            )
+        }
+        assertFalse(
+            LogExport.hasMeasurementCsvHeader(
+                CsvLogImporter.parseCsv(prefix + "Current (mA)" + suffix).single()
+            )
+        )
+        assertFalse(
+            LogExport.hasMeasurementCsvHeader(
+                CsvLogImporter.parseCsv(prefix + "Current (µA)").single()
+            )
+        )
+    }
+
+    @Test
+    fun `CSV append needs a separator only when existing content has no line ending`() {
+        for ((text, expected) in listOf(
+            "" to false, "a,b\r\n" to false, "a,b\n" to false, "µA,b" to true
+        )) {
+            val bytes = text.toByteArray()
+            assertEquals(
+                LogExport.CsvTail(bytes.size, expected), LogExport.readCsvTail(bytes.inputStream())
+            )
+        }
+    }
+
+    @Test
+    fun `legacy CSV upgrade preserves quoted multiline and unquoted localized fields with empty current`() {
+        val csv =
+            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\r\n" + "date,time,\"Charging,\r\nUSB \"\"slow\"\"\",50,30,86,4.0\r\n" + "date,time,Charging, AC,75,31.5,88.7,4.125"
+        val writer = java.io.StringWriter()
+        val columns = listOf("µA (تيار البطارية)", "Charge (µAh)", "Power (W)")
+        LogExport.upgradeLegacyCsv(csv.reader().buffered(), writer, columns)
+        val original = CsvLogImporter.parseCsv(csv)
+        val upgraded = CsvLogImporter.parseCsv(writer.toString())
+        assertEquals(original.first() + columns, upgraded.first())
+        assertEquals(original.drop(1).map { it + listOf("", "", "") }, upgraded.drop(1))
+        assertEquals(
+            parseRecords(csv, { 122 }, { _, _ -> 1L }),
+            parseRecords(writer.toString(), { 122 }, { _, _ -> 1L })
+        )
+        for (invalid in listOf(
+            "a,b,c,d,e,f\n1,2,3,4,5,6",
+            "a,b,c,d,e,f,g,Current (µA)\n1,2,3,4,5,6,7,8",
+            "a,b,c,d,e,f,g\n1,2,3",
+            "a,b,c,d,e,f,g\n\"unterminated"
+        )) {
+            assertThrows(IllegalArgumentException::class.java) {
+                LogExport.upgradeLegacyCsv(
+                    invalid.reader().buffered(), java.io.StringWriter(), columns
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `CSV restores raw current and charge while ignoring derived power`() {
+        val csv =
+            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA),Remaining charge (µAh),Battery power (W)\n" + "date,time,Discharging,50,30,86,4.0,-250125,2500125,-1.0005\n" + "date,time,Charging,50,30,86,,0,0,\n" + "date,time,Boot Completed,0,0,32,0,,,\n"
+
+        fun parse(value: String) = parseRecords(value, {
+            when (it) {
+                "Discharging" -> 100
+                "Charging" -> 22
+                "Boot Completed" -> -1
+                else -> null
+            }
+        }, { _, _ -> 1L })
+
+        val records = parse(csv)
+        assertEquals(listOf(-250125L, 0L, null), records.map { it.currentMicroAmps })
+        assertEquals(listOf(2500125L, 0L, null), records.map { it.remainingChargeMicroampHours })
+        assertEquals(null, records[1].voltage)
+        for (invalid in listOf("-1", "1.5", "NaN", "Infinity", "9223372036854775808")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                parse(
+                    csv.replace(
+                        ",2500125,", ",$invalid,"
+                    )
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `measurement CSV rows preserve missing signed and zero current`() {
+        val csv =
+            """Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA),Remaining charge (µAh),Power (W)
+            |date,time,Discharging,50,30,86,4.0,,,
+            |date,time,Discharging,50,30,86,4.0,-240125,,
+            |date,time,Charging,50,30,86,4.0,1200250,,
+            |date,time,Charging,50,30,86,4.0,0,,
+            |date,time,Charging,50,30,86,4.0,,,
+            |date,time,Boot Completed,0,0,32,0,,,
+        """.trimMargin()
+        val records = parseRecords(csv, {
+            when (it) {
+                "Discharging" -> 100
+                "Charging" -> 122
+                "Boot Completed" -> -1
+                else -> null
+            }
+        }, { _, _ -> 1L })
+        assertEquals(
+            listOf(null, -240125L, 1200250L, 0L, null, null), records.map { it.currentMicroAmps })
+        for (invalid in listOf(
+            "NaN", "Infinity", "-Infinity", "invalid", "1.5", "9223372036854775808"
+        )) {
+            assertThrows(IllegalArgumentException::class.java) {
+                parseRecords(csv.replace("-240125", invalid), {
+                    when (it) {
+                        "Discharging" -> 100
+                        "Charging" -> 122
+                        "Boot Completed" -> -1
+                        else -> null
+                    }
+                }, { _, _ -> 1L })
+            }
+        }
+    }
+
     @Test
     fun `translated column names are ignored and columns are read by position`() {
         val statusCode = LogDatabase.encodeStatus(2, 1, LogDatabase.STATUS_NEW)
-        val records = CsvLogImporter.parseRecords(
+        val records = parseRecords(
             csv = "Data,Czas,Stan,Poziom,Temperatura C,Temperatura F,Napięcie\r\n" + "10.08.2026,12:34:56,Ładowanie AC,75,31.5,88.7,4.125\r\n",
             statusCodeFor = { label -> if (label == "Ładowanie AC") statusCode else null },
             timestampFor = { date, time ->
@@ -36,7 +179,7 @@ class CsvLogImporterTest {
 
     @Test
     fun `commas in status labels from the existing unquoted exporter are supported`() {
-        val records = CsvLogImporter.parseRecords(
+        val records = parseRecords(
             csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Charging, AC,50,20.0,68.0,4.0\n",
             statusCodeFor = { if (it == "Charging, AC") 12 else null },
             timestampFor = { _, _ -> 1L })
@@ -46,7 +189,7 @@ class CsvLogImporterTest {
 
     @Test
     fun `boot rows restore nullable database values`() {
-        val records = CsvLogImporter.parseRecords(
+        val records = parseRecords(
             csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Boot Completed,0,0.0,32.0,0.0\n",
             statusCodeFor = { LogDatabase.STATUS_BOOT_COMPLETED },
             timestampFor = { _, _ -> 1L })
@@ -59,16 +202,53 @@ class CsvLogImporterTest {
     @Test
     fun `unknown statuses and invalid rows reject the complete import`() {
         assertThrows(IllegalArgumentException::class.java) {
-            CsvLogImporter.parseRecords(
+            parseRecords(
                 csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Future Status,50,20.0,68.0,4.0\n",
                 statusCodeFor = { null },
                 timestampFor = { _, _ -> 1L })
         }
         assertThrows(IllegalArgumentException::class.java) {
-            CsvLogImporter.parseRecords(
+            parseRecords(
                 csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Charging,not-a-number,20.0,68.0,4.0\n",
                 statusCodeFor = { 2 },
                 timestampFor = { _, _ -> 1L })
         }
+        assertThrows(IllegalArgumentException::class.java) {
+            parseRecords(
+                csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "8/10/26,1:00:00 PM,Charging,50,20.0,68.0,4.0,1200000\n",
+                statusCodeFor = { 2 },
+                timestampFor = { _, _ -> 1L })
+        }
     }
+
+    @Test
+    fun `periodic CSV round trips status source and missing values without localized lookup`() {
+        val statuses =
+            arrayOf("Disconnected", "Unknown", "Connected", "Unknown", "Not charging", "Full")
+        val old = arrayOf("Discharging", "Unknown", "Charging", "Unknown", "Not charging", "Full")
+        for (status in 0..5) for (plugged in 0..4) {
+            val code = LogDatabase.encodeStatus(status, plugged, LogDatabase.STATUS_SAMPLE)
+            val label = LogExport.statusLabel(
+                code,
+                statuses,
+                old,
+                arrayOf("", "AC", "USB", "Unknown", "Wireless"),
+                "Boot",
+                "Unknown"
+            )
+            val csv =
+                "Date,Time,Status,Charge,C,F,V,Current (µA),Charge (µAh),Power (W)\ndate,time,$label,,,,,,,\n"
+            val parsed = parseRecords(csv, { null }, { _, _ -> 123 })
+            assertEquals(listOf(LogRecord(code, null, 123, null, null)), parsed)
+        }
+        for (marker in listOf("[sample=12] Charging", "[sample=299] Unknown", "[sample=no] Bad")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                parseRecords(
+                    "a,b,c,d,e,f,g,h,i,j\nd,t,$marker,50,30,86,4,1,2,3",
+                    { null },
+                    { _, _ -> 1 })
+            }
+        }
+    }
+
 }

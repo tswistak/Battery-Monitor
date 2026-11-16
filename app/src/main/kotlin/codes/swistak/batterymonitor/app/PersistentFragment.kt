@@ -13,18 +13,11 @@
 */
 package codes.swistak.batterymonitor.app
 
-
-import android.Manifest
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -32,20 +25,23 @@ import android.os.Message
 import android.os.Messenger
 import android.os.RemoteException
 import android.util.Log
-import androidx.core.content.ContextCompat
-import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
-import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.showToast
-import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
-import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
+import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
+import codes.swistak.batterymonitor.monitoring.Predictor
+import codes.swistak.batterymonitor.monitoring.PredictorStoredState
+import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
+import java.io.IOException
+import java.util.concurrent.CompletableFuture
 
 class PersistentFragment : Fragment() {
     companion object {
@@ -70,41 +66,75 @@ class PersistentFragment : Fragment() {
     private val messenger = Messenger(messageHandler)
     private var serviceConnection: BatteryInfoService.RemoteConnection? = null
     private var serviceConnected = false
-    private var cif: CurrentInfoFragment? = null
-    private var lvf: LogViewFragment? = null
+    internal val monitoring = MonitoringConnection()
+    private var currentDemand: CurrentDemand? = null
+    private var currentToken = 0L
+
+    internal fun setCurrentDemand(demand: CurrentDemand?) {
+        if (currentDemand == demand) return
+        currentDemand = demand
+        currentToken++
+        monitoring.expectCurrent(currentToken.takeIf { demand != null })
+        syncCurrentDemand()
+    }
+
+    private fun syncCurrentDemand() {
+        if (serviceMessenger == null) return
+        monitoring.expectCurrent(currentToken.takeIf { currentDemand != null })
+        val bundle = currentDemand?.toBundle(currentToken) ?: Bundle().apply {
+            putBoolean("current_active", false)
+            putLong("current_token", currentToken)
+        }
+        sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_SET_CURRENT_DEMAND, bundle)
+    }
+
+    internal fun refreshCurrent() {
+        if (currentDemand == null) return
+        sendServiceMessage(
+            BatteryInfoService.RemoteConnection.SERVICE_REFRESH_CURRENT, Bundle().apply {
+                putLong("current_token", currentToken)
+            })
+    }
+
+    private fun monitoringDisconnected() {
+        serviceMessenger = null
+        monitoring.onServiceDisconnected()
+    }
 
     lateinit var settings: SharedPreferences
-    lateinit var spService: SharedPreferences
     lateinit var spMain: SharedPreferences
     lateinit var res: Resources
 
-    private var mHasShownOnboardingInThisSession = false
 
     private fun bindService() {
         if (!serviceConnected && activity != null) {
-            requireActivity().applicationContext.bindService(
+            serviceConnected = requireActivity().applicationContext.bindService(
                 biServiceIntent!!, serviceConnection!!, 0
             )
-            serviceConnected = true
         }
     }
 
     private class MessageHandler(var pf: PersistentFragment) : Handler(Looper.getMainLooper()) {
         override fun handleMessage(incoming: Message) {
             if (!pf.serviceConnected) {
-                Log.i(LOG_TAG, "serviceConected is false; ignoring message: $incoming");
+                Log.i(LOG_TAG, "serviceConnected is false; ignoring message: $incoming")
                 return
             }
 
             when (incoming.what) {
                 BatteryInfoService.RemoteConnection.CLIENT_SERVICE_CONNECTED -> {
+                    if (!pf.monitoring.onHandshake(incoming.arg1, incoming.data)) return
                     pf.serviceMessenger = incoming.replyTo
                     pf.sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_REGISTER_CLIENT)
+                    pf.syncCurrentDemand()
                 }
 
                 BatteryInfoService.RemoteConnection.CLIENT_BATTERY_INFO_UPDATED -> {
-                    if (pf.cif != null) pf.cif!!.batteryInfoUpdated(incoming.getData())
-                    if (pf.lvf != null) pf.lvf!!.batteryInfoUpdated()
+                    if (!pf.monitoring.onSnapshot(incoming.arg1, incoming.data)) return
+                }
+
+                BatteryInfoService.RemoteConnection.CLIENT_CURRENT_UPDATED -> {
+                    pf.monitoring.onCurrent(incoming.arg1, incoming.data)
                 }
 
                 else -> super.handleMessage(incoming)
@@ -118,176 +148,76 @@ class PersistentFragment : Fragment() {
         updateResources()
     }
 
-    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setRetainInstance(true)
+        // Retain the service binding across activity recreation until it moves to a ViewModel.
+        @Suppress("DEPRECATION") setRetainInstance(true)
 
-        serviceConnection = BatteryInfoService.RemoteConnection(messenger)
+        serviceConnection = BatteryInfoService.RemoteConnection(
+            messenger,
+            generation = { monitoring.generation },
+            onConnected = { monitoring.onServiceConnected() },
+            onDisconnected = { monitoringDisconnected() })
         biServiceIntent = Intent(activity, BatteryInfoService::class.java)
 
         loadSettingsFiles()
     }
 
     override fun onDestroy() {
+        setCurrentDemand(null)
         super.onDestroy()
 
         if (serviceConnected && activity != null) {
             requireActivity().applicationContext.unbindService(serviceConnection!!)
             serviceConnected = false
         }
+        serviceConnection?.serviceMessenger = null
+        serviceMessenger = null
     }
 
     override fun onStart() {
         super.onStart()
 
-        sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_REGISTER_CLIENT)
-
-        spMain.edit { putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, true) }
-
         if (!spMain.getBoolean(
                 SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
-            )
-        ) spMain.edit {
-            putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
-        }
+            ) && !MonitoringDesiredState.initialize(requireContext())
+        ) requireContext().showToast(R.string.monitoring_state_save_failed)
+        if (BackgroundServiceWatchdog.isServiceDesired(requireContext())) {
+            monitoring.start()
+            serviceMessenger = serviceConnection?.serviceMessenger
+            if (serviceMessenger != null) {
+                monitoring.onServiceConnected()
+                sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_CLIENT_CONNECTED)
+            }
+        } else monitoring.stop()
 
         BackgroundServiceWatchdog.schedule(requireContext())
     }
 
     override fun onResume() {
         super.onResume()
-
-        if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(
-                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (spMain.getBoolean(SettingsContract.KEY_FIRST_RUN, true)) {
-                showNotificationOnboarding()
-            } else if (!mHasShownOnboardingInThisSession) {
-                requestNotificationPermission()
-                mHasShownOnboardingInThisSession = true
-            }
-            return
-        }
-
-        if (spMain.getBoolean(SettingsContract.KEY_FIRST_RUN, true)) {
-            spMain.edit { putBoolean(SettingsContract.KEY_FIRST_RUN, false) }
-        }
-
         startServiceIfNeeded()
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        if (requestCode == 101) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startServiceIfNeeded()
-            }
-        }
-    }
+    internal fun refreshMonitoringAfterPermission() = startServiceIfNeeded()
 
     private fun startServiceIfNeeded() {
-        if (Build.VERSION.SDK_INT < 33 || ContextCompat.checkSelfPermission(
-                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            val selfHealRequested = BackgroundServiceWatchdog.selfHealIfNeeded(requireContext())
-            if (!serviceConnected) {
-                if (!selfHealRequested) BatteryInfoService.startForegroundServiceSafely(
-                    requireContext()
-                )
-                bindService()
-            }
+        if (!BackgroundServiceWatchdog.isServiceDesired(requireContext())) return
+        val selfHealRequested = BackgroundServiceWatchdog.selfHealIfNeeded(requireContext())
+        if ((!serviceConnected || serviceConnection?.serviceMessenger == null) && !selfHealRequested) {
+            BatteryInfoService.startForegroundServiceSafely(requireContext())
         }
-    }
-
-    @Suppress("DEPRECATION")
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= 36) {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.POST_NOTIFICATIONS,
-                    "android.permission.POST_PROMOTED_NOTIFICATIONS"
-                ), 101
-            )
-        } else if (Build.VERSION.SDK_INT >= 33) {
-            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
-        }
-    }
-
-    private fun showNotificationOnboarding() {
-        if (mHasShownOnboardingInThisSession) return
-        mHasShownOnboardingInThisSession = true
-
-        val dialog = OnboardingDialogFragment()
-        dialog.show(getParentFragmentManager(), "onboarding")
-    }
-
-    class OnboardingDialogFragment : DialogFragment() {
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val pf = getParentFragmentManager().findFragmentByTag(FRAG_TAG) as PersistentFragment?
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setCancelable(false)
-
-            if (BatteryInfoService.supportsLiveUpdates()) {
-                val enabled: Boolean =
-                    BatteryInfoService.isLiveUpdateEnabledInSystem(requireContext())
-                builder.setTitle(R.string.live_updates_onboarding_title)
-
-                if (enabled) {
-                    builder.setMessage(R.string.live_updates_onboarding_message_on)
-                        .setPositiveButton(
-                            R.string.live_updates_onboarding_positive_on
-                        ) { _, _ -> pf?.requestNotificationPermission() }
-                } else {
-                    builder.setMessage(R.string.live_updates_onboarding_message_off)
-                        .setPositiveButton(
-                            R.string.live_updates_onboarding_positive_off
-                        ) { _, _ ->
-                            val context = requireContext()
-                            if (!NotificationSettingsNavigator.openLiveUpdates(context)) {
-                                context.showToast(R.string.advanced_value_not_available)
-                            }
-                        }.setNegativeButton(
-                            R.string.live_updates_onboarding_negative_off
-                        ) { _, _ -> pf?.requestNotificationPermission() }
-                }
-            } else {
-                builder.setTitle(R.string.app_full_name)
-                    .setMessage(R.string.notifications_onboarding_message).setPositiveButton(
-                        android.R.string.ok
-                    ) { _, _ -> pf?.requestNotificationPermission() }.setNegativeButton(
-                        R.string.cancel
-                    ) { _, _ ->
-                        if (pf != null) {
-                            pf.spMain.edit {
-                                putBoolean(SettingsContract.KEY_FIRST_RUN, false)
-                            }
-                            pf.startServiceIfNeeded()
-                        }
-                    }
-            }
-
-            return builder.create()
-        }
-
-        override fun onDismiss(dialog: DialogInterface) {
-            super.onDismiss(dialog)
-            val pf = getParentFragmentManager().findFragmentByTag(FRAG_TAG) as PersistentFragment?
-            pf?.spMain?.edit {
-                putBoolean(SettingsContract.KEY_FIRST_RUN, false)
-            }
-        }
+        bindService()
     }
 
     override fun onStop() {
         super.onStop()
 
+        setCurrentDemand(null)
+
         sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_UNREGISTER_CLIENT)
+        monitoring.stop()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -300,50 +230,120 @@ class PersistentFragment : Fragment() {
         DisplayStrings.setResources(res)
     }
 
-    fun setCIF(f: CurrentInfoFragment?) {
-        cif = f
-    }
-
-    fun setLVF(f: LogViewFragment?) {
-        lvf = f
-    }
-
     fun loadSettingsFiles() {
         settings = requireActivity().getSharedPreferences(
             SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-        )
-        spService = requireActivity().getSharedPreferences(
-            SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
         )
         spMain = requireActivity().getSharedPreferences(
             SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
         )
     }
 
-    fun sendServiceMessage(what: Int) {
-        if (serviceMessenger == null) return
+    fun sendServiceMessage(what: Int, data: Bundle? = null): Boolean {
+        if (serviceMessenger == null) return false
 
         val outgoing = Message.obtain()
         outgoing.what = what
+        outgoing.arg1 = monitoring.generation
         outgoing.replyTo = messenger
+        if (data != null) outgoing.data = data
         try {
             serviceMessenger!!.send(outgoing)
-        } catch (e: RemoteException) {
+            return true
+        } catch (_: RemoteException) {
+            monitoringDisconnected()
+            return false
         }
     }
 
-    fun closeApp() {
-        spMain.edit { putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false) }
-        if (activity != null) BackgroundServiceWatchdog.cancel(requireActivity().applicationContext)
+    internal fun predictorForBackup(): CompletableFuture<PredictorStoredState> {
+        val result = CompletableFuture<PredictorStoredState>()
+        val service = serviceMessenger
+        if (service == null) {
+            result.completeExceptionally(IOException("Monitoring service is disconnected"))
+            return result
+        }
+        val handler = Handler(Looper.getMainLooper())
+        val timeout = Runnable {
+            result.completeExceptionally(IOException("Monitoring snapshot timed out"))
+        }
+        val reply = Messenger(object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(message: Message) {
+                if (message.what != BatteryInfoService.RemoteConnection.CLIENT_BATTERY_INFO_UPDATED) return
+                runCatching {
+                    val data =
+                        requireNotNull(message.data.getBundle(MonitoringSnapshot.FIELD_PREDICTOR_DATA))
+                    // Predictor snapshots contain mixed primitive types, so typed getters cannot decode them generically.
+                    @Suppress("DEPRECATION") Predictor.readStoredState(
+                        data.keySet().associateWith { data[it] })
+                }.fold(result::complete, result::completeExceptionally)
+            }
+        })
+        result.whenComplete { _, _ ->
+            handler.post {
+                handler.removeCallbacks(timeout)
+                runCatching {
+                    service.send(Message.obtain().apply {
+                        what = BatteryInfoService.RemoteConnection.SERVICE_UNREGISTER_CLIENT
+                        replyTo = reply
+                    })
+                }
+            }
+        }
+        handler.postDelayed(timeout, 5_000L)
+        runCatching {
+            service.send(Message.obtain().apply {
+                what = BatteryInfoService.RemoteConnection.SERVICE_REGISTER_CLIENT
+                replyTo = reply
+            })
+        }.onFailure { result.completeExceptionally(it) }
+        return result
+    }
 
-        if (activity == null) return
+    internal fun reloadSettings() {
+        val context = requireContext().applicationContext
+        if (!BackgroundServiceWatchdog.isServiceDesired(context)) return
+        val snapshot = codes.swistak.batterymonitor.settings.SettingsSnapshot.capture(settings)
+        val message = Message.obtain().apply {
+            what = BatteryInfoService.RemoteConnection.SERVICE_RELOAD_SETTINGS
+            data = snapshot
+        }
+        try {
+            val service = serviceMessenger ?: error("Service is disconnected")
+            service.send(message)
+        } catch (_: Exception) {
+            BatteryInfoService.startForegroundServiceSafely(context, snapshot)
+        }
+    }
 
+    fun stopMonitoring() {
+        if (!saveMonitoringDesired(false)) return
+        setCurrentDemand(null)
+        val context = requireContext().applicationContext
+        BackgroundServiceWatchdog.cancel(context)
+        monitoring.stop()
         if (serviceConnected) {
-            requireActivity().applicationContext.unbindService(serviceConnection!!)
-            requireActivity().stopService(biServiceIntent)
+            context.unbindService(serviceConnection!!)
             serviceConnected = false
         }
+        serviceConnection?.serviceMessenger = null
+        serviceMessenger = null
+        context.stopService(biServiceIntent)
+    }
 
-        requireActivity().finish()
+    fun startMonitoring() {
+        if (!saveMonitoringDesired(true)) return
+        monitoring.start()
+        startServiceIfNeeded()
+        BackgroundServiceWatchdog.schedule(requireContext())
+    }
+
+    private fun saveMonitoringDesired(desired: Boolean): Boolean {
+        if (MonitoringDesiredState.write(requireContext(), desired)) {
+            if (!desired) WidgetSettingsReceiver.refresh(requireContext())
+            return true
+        }
+        requireContext().showToast(R.string.monitoring_state_save_failed)
+        return false
     }
 }

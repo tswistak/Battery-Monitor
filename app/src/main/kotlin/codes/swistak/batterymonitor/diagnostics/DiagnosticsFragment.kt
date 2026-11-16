@@ -8,35 +8,57 @@
 package codes.swistak.batterymonitor.diagnostics
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.NotificationManager
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteFullException
-import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.os.ResultReceiver
 import android.os.SystemClock
-import android.provider.Settings
-import android.widget.FrameLayout
-import android.widget.NumberPicker
-import android.widget.ScrollView
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import androidx.core.net.toUri
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.currentStateAsState
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.app.BatteryInfoActivity
+import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.RootExecutor
 import codes.swistak.batterymonitor.common.hasCause
@@ -50,25 +72,36 @@ import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticC
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticReport
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticStore
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitDiagnostics
-import codes.swistak.batterymonitor.privileged.PrivilegedAccess
-import codes.swistak.batterymonitor.settings.SettingsActivity
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticReportDialog
+import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
+import codes.swistak.batterymonitor.ui.diagnostics.MonitorOperationScreen
+import codes.swistak.batterymonitor.ui.help.CHARGING_TOOLS_HELP_TOPIC
+import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import rikka.shizuku.Shizuku
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.util.Date
-import java.util.Locale
+import java.util.concurrent.TimeoutException
+import java.util.concurrent.atomic.AtomicLong
 
-class DiagnosticsFragment : PreferenceFragmentCompat(),
-    SharedPreferences.OnSharedPreferenceChangeListener {
+class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     companion object {
-        private const val EXPORT_DIAGNOSTICS_REQUEST = 128
-        private const val EXPORT_CHARGING_DIAGNOSTICS_REQUEST = 129
+        internal val OVERVIEW_KEYS = listOf(
+            "diagnostics_service",
+            "diagnostics_heartbeat",
+            "diagnostics_database",
+            "diagnostics_notifications",
+            "diagnostics_live_updates",
+            "diagnostics_battery_optimization"
+        )
 
-        private const val ROOT_CHECK_COMMAND = "id"
         private const val HEALTHY_HEARTBEAT_AGE_MS = 5L * 60L * 1000L
         private const val SHIZUKU_PERMISSION_REQUEST_CODE = 7128
 
-        private const val SERVICE_RESPONSE_TIMEOUT_MS = 2500L
+        private const val SERVICE_RESPONSE_TIMEOUT_MS = 10_000L
         private const val SERVICE_RESTART_DELAY_MS = 500L
         private const val LOW_STORAGE_THRESHOLD_BYTES = 10L * 1024L * 1024L
 
@@ -78,6 +111,7 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
         private const val KEY_SHIZUKU = "diagnostics_shizuku"
 
         private const val KEY_SERVICE = "diagnostics_service"
+        private const val KEY_HEARTBEAT = "diagnostics_heartbeat"
         private const val KEY_DATABASE = "diagnostics_database"
         private const val KEY_BATTERY_OPTIMIZATION = "diagnostics_battery_optimization"
         private const val KEY_VENDOR_SETTINGS = "diagnostics_vendor_settings"
@@ -87,6 +121,8 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
         private const val KEY_CHARGING_CAPTURE = "charging_diagnostics_capture"
         private const val KEY_CHARGING_REPORT = "charging_diagnostics_report"
         private const val KEY_CHARGING_CLEAR = "charging_diagnostics_clear"
+        private const val KEY_DIALOG = "diagnostics.dialog"
+        private const val KEY_CONDITION = "diagnostics.condition"
     }
 
     private lateinit var settingsPreferences: SharedPreferences
@@ -97,9 +133,18 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
     private var serviceCheckGeneration = 0
     private var databaseCheckGeneration = 0
     private var latestServiceResponseElapsedTime = 0L
-    private var latestDatabaseResponseElapsedTime = 0L
+    internal var latestDatabaseResponseElapsedTime = 0L
+        private set
     private var serviceCheckFailed = false
     private var databaseCheckFailed = false
+    private var checkingService by mutableStateOf(false)
+    private var checkingDatabase by mutableStateOf(false)
+    private var latestServiceAttemptMillis = 0L
+    private var latestDatabaseAttemptMillis = 0L
+    private var appOperationRefreshGeneration = 0
+    private var refreshingAppOperation by mutableStateOf(false)
+    internal val appOperationRefreshing: Boolean
+        get() = refreshingAppOperation || checkingService || checkingDatabase
 
     private val shizukuPermissionListener =
         Shizuku.OnRequestPermissionResultListener { requestCode, _ ->
@@ -108,36 +153,315 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
     private val shizukuBinderListener = Shizuku.OnBinderReceivedListener { refresh() }
     private val shizukuDeadListener = Shizuku.OnBinderDeadListener { refresh() }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        preferenceManager.sharedPreferencesName = SettingsContract.SETTINGS_FILE
-        preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
-        settingsPreferences = requireNotNull(preferenceManager.sharedPreferences)
-        PrivilegedAccess.initialize(requireContext())
-        PrivilegedAccess.setEnabled(
-            settingsPreferences.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
+    private lateinit var dialogModel: DiagnosticsDialogViewModel
+    private val dialogState get() = dialogModel.state
+    private val capturing: Boolean get() = dialogState.capturing
+
+    @Volatile
+    private var rootGeneration = 0
+
+    private val refreshTick = object : Runnable {
+        override fun run() {
+            if (isResumed) {
+                refresh()
+                mainHandler.postDelayed(this, 5_000)
+            }
+        }
+    }
+    private lateinit var actions: Map<String, MonitorAction>
+    internal val monitorActions: Map<String, MonitorAction> get() = actions
+    private val actionsOnly: Boolean get() = arguments?.getBoolean("actionsOnly") == true
+    private var highlightedAction by mutableStateOf<String?>(null)
+    internal fun highlightAction(key: String?) {
+        highlightedAction = key
+    }
+
+    private fun action(key: String): MonitorAction? = actions[key]
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        settingsPreferences = requireContext().getSharedPreferences(
+            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
         )
-        setPreferencesFromResource(R.xml.diagnostics_pref_screen, rootKey)
+        dialogModel = ViewModelProvider(this)[DiagnosticsDialogViewModel::class.java]
+        if (!dialogModel.initialized) {
+            dialogState.restore(
+                savedInstanceState?.getString(KEY_DIALOG),
+                savedInstanceState?.getInt(KEY_CONDITION, -1)
+            )
+            dialogModel.initialized = true
+        }
+        actions = linkedMapOf(
+            "diagnostics_notifications" to MonitorAction(R.string.diagnostics_notifications),
+            "diagnostics_live_updates" to MonitorAction(R.string.live_updates_notif_chan_name),
+            "diagnostics_root" to MonitorAction(R.string.diagnostics_root),
+            "diagnostics_shizuku" to MonitorAction(R.string.diagnostics_shizuku),
+            "diagnostics_service" to MonitorAction(R.string.diagnostics_service),
+            "diagnostics_heartbeat" to MonitorAction(R.string.diag_heartbeat, enabled = false),
+            "diagnostics_database" to MonitorAction(R.string.diagnostics_database),
+            "diagnostics_battery_optimization" to MonitorAction(R.string.diagnostics_battery_optimization),
+            "diagnostics_vendor_settings" to MonitorAction(
+                R.string.diagnostics_vendor_settings,
+                getString(R.string.diagnostics_vendor_settings_summary)
+            ),
+            "diagnostics_dont_kill_my_app" to MonitorAction(
+                R.string.diagnostics_dont_kill_my_app,
+                getString(R.string.diagnostics_dont_kill_my_app_summary)
+            ),
+            "debug_logging" to MonitorAction(R.string.diagnostics_debug_logs),
+            "diagnostics_export" to MonitorAction(
+                R.string.diagnostics_export, getString(R.string.diagnostics_export_summary)
+            ),
+            "diagnostics_clear" to MonitorAction(
+                R.string.diagnostics_clear, getString(R.string.diagnostics_clear_summary)
+            ),
+            "hint" to MonitorAction(
+                R.string.charging_diagnostics_instructions_hint
+            ),
+            "charging_diagnostics_capture" to MonitorAction(
+                R.string.charging_diagnostics_capture,
+                getString(R.string.charging_diagnostics_capture_summary)
+            ),
+            "charging_diagnostics_report" to MonitorAction(
+                R.string.charging_diagnostics_report,
+                getString(R.string.charging_diagnostics_report_summary)
+            ),
+            "charging_diagnostics_clear" to MonitorAction(
+                R.string.charging_diagnostics_clear,
+                getString(R.string.charging_diagnostics_clear_summary)
+            ),
+            "monitor_stop" to MonitorAction(
+                R.string.diag_stop_monitor, getString(R.string.diag_stop_monitor_summary)
+            ),
+            "monitor_start" to MonitorAction(R.string.diag_start_monitor),
+        )
         bindActions()
+        action(SettingsContract.KEY_DEBUG_LOGGING)?.onClick = {
+            settingsPreferences.edit {
+                putBoolean(
+                    SettingsContract.KEY_DEBUG_LOGGING,
+                    !settingsPreferences.getBoolean(SettingsContract.KEY_DEBUG_LOGGING, false)
+                )
+            }
+        }
+        action("monitor_stop")?.onClick = {
+            dialogState.open(DiagnosticsDialog.STOP_MONITORING)
+        }
+        action("monitor_start")?.onClick = {
+            PersistentFragment.getInstance(parentFragmentManager).startMonitoring()
+            refresh()
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        if (actionsOnly) return null
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppBatteryTheme {
+                    val groups = listOf(
+                        R.string.diagnostics_permissions to listOf(
+                            "diagnostics_notifications",
+                            "diagnostics_live_updates",
+                            "diagnostics_root",
+                            "diagnostics_shizuku"
+                        ), R.string.diagnostics_monitoring to listOf(
+                            "diagnostics_service",
+                            "diagnostics_database",
+                            "diagnostics_battery_optimization",
+                            "diagnostics_vendor_settings",
+                            "diagnostics_dont_kill_my_app",
+                            "monitor_start",
+                            "monitor_stop"
+                        ), R.string.diagnostics_device_and_logs to listOf(
+                            "debug_logging", "diagnostics_export", "diagnostics_clear"
+                        ), R.string.charging_diagnostics_title to listOf(
+                            "hint",
+                            "charging_diagnostics_capture",
+                            "charging_diagnostics_report",
+                            "charging_diagnostics_clear"
+                        )
+                    ).filter { (title, _) ->
+                        (title == R.string.charging_diagnostics_title) == (arguments?.getBoolean(
+                            "charging"
+                        ) == true)
+                    }
+                    MonitorOperationScreen(groups, actions, highlightedAction)
+                    Dialogs()
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         settingsPreferences.registerOnSharedPreferenceChangeListener(this)
-        Shizuku.addBinderReceivedListenerSticky(shizukuBinderListener)
-        Shizuku.addBinderDeadListener(shizukuDeadListener)
-        Shizuku.addRequestPermissionResultListener(shizukuPermissionListener)
+        if (!actionsOnly) {
+            Shizuku.addBinderReceivedListenerSticky(shizukuBinderListener)
+            Shizuku.addBinderDeadListener(shizukuDeadListener)
+            Shizuku.addRequestPermissionResultListener(shizukuPermissionListener)
+        }
         refresh()
+        mainHandler.postDelayed(refreshTick, 5_000)
     }
 
     override fun onPause() {
+        cancelAppOperationRefresh()
+        serviceCheckGeneration++
+        databaseCheckGeneration++
+        rootGeneration++
+        checkingRoot = false
+        mainHandler.removeCallbacksAndMessages(null)
         settingsPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        Shizuku.removeBinderReceivedListener(shizukuBinderListener)
-        Shizuku.removeBinderDeadListener(shizukuDeadListener)
-        Shizuku.removeRequestPermissionResultListener(shizukuPermissionListener)
+        if (!actionsOnly) {
+            Shizuku.removeBinderReceivedListener(shizukuBinderListener)
+            Shizuku.removeBinderDeadListener(shizukuDeadListener)
+            Shizuku.removeRequestPermissionResultListener(shizukuPermissionListener)
+        }
         super.onPause()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_DIALOG, dialogState.dialog?.name)
+        outState.putInt(KEY_CONDITION, dialogState.selectedCondition ?: -1)
+    }
+
+    @Composable
+    internal fun Dialogs() {
+        val state = dialogState
+        val savedDialogs = rememberSaveableStateHolder()
+        val dialogsAllowed = applicationDialogsAllowed()
+        val lifecycleState by lifecycle.currentStateAsState()
+        val dialog = state.dialog
+        LaunchedEffect(state.capturing, lifecycleState) {
+            if (lifecycleState.isAtLeast(Lifecycle.State.RESUMED)) refresh()
+        }
+        LaunchedEffect(dialog) {
+            for (previous in DiagnosticsDialog.entries) {
+                if (previous != dialog) savedDialogs.removeState(previous.name)
+            }
+        }
+        if (!lifecycleState.isAtLeast(Lifecycle.State.RESUMED) || dialog == null || !dialogsAllowed) return
+        savedDialogs.SaveableStateProvider(dialog.name) { PresentDialog(dialog) }
+    }
+
+    @Composable
+    private fun PresentDialog(dialog: DiagnosticsDialog) {
+        val state = dialogState
+        when (dialog) {
+            DiagnosticsDialog.STOP_MONITORING -> AlertDialog(
+                onDismissRequest = state::dismiss,
+                title = { Text(stringResource(R.string.diag_stop_monitor)) },
+                text = { Text(stringResource(R.string.diag_stop_monitor_body)) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        state.dismiss()
+                        PersistentFragment.getInstance(parentFragmentManager).stopMonitoring()
+                        refresh()
+                    }) { Text(stringResource(R.string.diag_stop_monitor)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = state::dismiss) { Text(stringResource(R.string.cancel)) }
+                })
+
+            DiagnosticsDialog.CHARGING_CONDITION -> AlertDialog(
+                onDismissRequest = state::dismiss,
+                title = { Text(stringResource(R.string.charging_diagnostics_choose_state)) },
+                text = {
+                    val labels = listOf(
+                        R.string.charging_diagnostics_condition_off,
+                        R.string.charging_diagnostics_condition_fixed,
+                        R.string.charging_diagnostics_condition_adaptive,
+                        R.string.charging_diagnostics_condition_scheduled,
+                        R.string.charging_diagnostics_condition_other
+                    )
+                    Column(
+                        Modifier
+                            .verticalScroll(rememberScrollState())
+                            .selectableGroup()
+                    ) {
+                        Text(
+                            stringResource(R.string.charging_diagnostics_condition_help),
+                            Modifier.padding(bottom = 16.dp)
+                        )
+                        labels.forEachIndexed { index, label ->
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .heightIn(min = 48.dp)
+                                    .selectable(
+                                        selected = state.selectedCondition == index,
+                                        role = Role.RadioButton,
+                                        onClick = { state.selectedCondition = index })
+                                    .padding(vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = state.selectedCondition == index, onClick = null
+                                )
+                                Text(stringResource(label), Modifier.padding(start = 12.dp))
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(
+                        enabled = state.selectedCondition != null, onClick = {
+                            state.confirmCondition()?.let(::captureChargingSnapshot)
+                        }) { Text(stringResource(R.string.okay)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = state::dismiss) { Text(stringResource(R.string.cancel)) }
+                })
+
+            DiagnosticsDialog.FIXED_CHARGING_LIMIT -> NumericValueDialog(
+                label = stringResource(R.string.charging_diagnostics_condition_fixed),
+                unit = stringResource(R.string.percent_symbol),
+                initialValue = DEFAULT_FIXED_CHARGING_LIMIT_PERCENT,
+                min = ChargingDiagnosticCondition.MIN_FIXED_PERCENT,
+                max = ChargingDiagnosticCondition.MAX_FIXED_PERCENT,
+                step = 1,
+                saveLabel = stringResource(R.string.okay),
+                cancelLabel = stringResource(R.string.cancel),
+                errorMessage = {
+                    getString(
+                        R.string.alarms_numeric_range,
+                        ChargingDiagnosticCondition.MIN_FIXED_PERCENT,
+                        ChargingDiagnosticCondition.MAX_FIXED_PERCENT
+                    )
+                },
+                onSave = {
+                    state.dismiss()
+                    captureChargingSnapshot(ChargingDiagnosticCondition.Fixed(it))
+                },
+                onCancel = state::dismiss,
+                fieldLabel = stringResource(R.string.settings_numeric_value)
+            )
+
+            DiagnosticsDialog.MONITOR_REPORT, DiagnosticsDialog.CHARGING_REPORT -> {
+                val appContext = requireContext().applicationContext
+                val root = rootAvailable
+                val shizuku = shizukuReportStatus()
+                val charging = dialog == DiagnosticsDialog.CHARGING_REPORT
+                DiagnosticReportDialog(
+                    create = { include ->
+                        if (charging) ChargingDiagnosticReport.create(
+                            appContext, ChargingDiagnosticStore.read(appContext), include
+                        ) else DiagnosticsReport.create(appContext, root, shizuku, include)
+                    },
+                    optionLabel = if (charging) R.string.diag_include_apps else R.string.diag_include_debug,
+                    titleResource = if (charging) R.string.charging_diagnostics_report else R.string.diagnostics_export,
+                    onDismiss = state::dismiss
+                )
+            }
+        }
+    }
+
     override fun onDestroyView() {
+        cancelAppOperationRefresh()
         serviceCheckGeneration++
         databaseCheckGeneration++
         super.onDestroyView()
@@ -152,97 +476,76 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
     }
 
     private fun bindActions() {
-        findPreference<Preference>(KEY_NOTIFICATIONS)?.setOnPreferenceClickListener {
+        action("hint")?.onClick = {
+            (activity as? BatteryInfoActivity)?.openHelp(CHARGING_TOOLS_HELP_TOPIC)
+        }
+        action(KEY_NOTIFICATIONS)?.onClick = {
             val context = requireContext()
             if (!NotificationSettingsNavigator.openNotifications(context)) {
-                context.showToast(R.string.advanced_value_not_available)
+                context.showToast(R.string.diag_value_not_available)
             }
-            true
         }
-        findPreference<Preference>(KEY_LIVE_UPDATES)?.setOnPreferenceClickListener {
+        action(KEY_LIVE_UPDATES)?.onClick = {
             val context = requireContext()
             if (!NotificationSettingsNavigator.openLiveUpdates(context)) {
-                context.showToast(R.string.advanced_value_not_available)
+                context.showToast(R.string.diag_value_not_available)
             }
-            true
         }
-        findPreference<Preference>(KEY_ROOT)?.setOnPreferenceClickListener {
+        action(KEY_ROOT)?.onClick = {
             checkRootAccess()
-            true
         }
-        findPreference<Preference>(KEY_SHIZUKU)?.setOnPreferenceClickListener {
+        action(KEY_SHIZUKU)?.onClick = {
             requestOrOpenShizuku()
-            true
         }
-        findPreference<Preference>(KEY_SERVICE)?.setOnPreferenceClickListener {
+        action(KEY_SERVICE)?.onClick = {
             requestMonitoringServiceUpdate()
-            true
         }
-        findPreference<Preference>(KEY_DATABASE)?.setOnPreferenceClickListener {
+        action(KEY_DATABASE)?.onClick = {
             retryDatabaseLogging()
-            true
         }
-        findPreference<Preference>(KEY_BATTERY_OPTIMIZATION)?.setOnPreferenceClickListener {
+        action(KEY_BATTERY_OPTIMIZATION)?.onClick = {
             val context = requireContext()
             val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
             if (powerManager.isIgnoringBatteryOptimizations(context.packageName)) {
                 context.showToast(R.string.diagnostics_unrestricted)
             } else if (!openBatteryOptimizationSettings()) {
-                context.showToast(R.string.advanced_value_not_available)
+                context.showToast(R.string.diag_value_not_available)
             }
-            true
         }
         val family = BackgroundSettingsNavigator.vendorFamily()
-        findPreference<Preference>(KEY_VENDOR_SETTINGS)?.apply {
+        action(KEY_VENDOR_SETTINGS)?.apply {
             isVisible = family != null
-            setOnPreferenceClickListener {
+            onClick = {
                 val context = requireContext()
                 if (family != null && !BackgroundSettingsNavigator.openVendorSettings(
                         context, family
                     )
                 ) {
-                    context.showToast(R.string.advanced_value_not_available)
+                    context.showToast(R.string.diag_value_not_available)
                 }
-                true
             }
         }
-        findPreference<Preference>(KEY_DONT_KILL_MY_APP)?.setOnPreferenceClickListener {
+        action(KEY_DONT_KILL_MY_APP)?.onClick = {
             BackgroundSettingsNavigator.openDontKillMyApp(requireContext(), family)
-            true
         }
-        findPreference<Preference>(KEY_EXPORT)?.setOnPreferenceClickListener {
-            val timestamp = SimpleDateFormat(
-                "yyyy-MM-dd-HHmmss", Locale.getDefault()
-            ).format(Date())
-            startActivityForResult(
-                Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
-                    .setType("text/plain")
-                    .putExtra(Intent.EXTRA_TITLE, "battery_monitor_diagnostics_$timestamp.txt"),
-                EXPORT_DIAGNOSTICS_REQUEST
-            )
-            true
-        }
-        findPreference<Preference>(KEY_CLEAR)?.setOnPreferenceClickListener {
+        action(KEY_EXPORT)?.onClick = { dialogState.open(DiagnosticsDialog.MONITOR_REPORT) }
+        action(KEY_CLEAR)?.onClick = {
             val cleared = DebugLogCollector.clear(requireContext())
             requireContext().showToast(
                 if (cleared) R.string.diagnostics_logs_cleared else R.string.diagnostics_logs_clear_failed,
                 Toast.LENGTH_SHORT
             )
-            true
         }
-        findPreference<Preference>(KEY_CHARGING_CAPTURE)?.setOnPreferenceClickListener {
+        action(KEY_CHARGING_CAPTURE)?.onClick = {
             showChargingConditionPicker()
-            true
         }
-        findPreference<Preference>(KEY_CHARGING_REPORT)?.setOnPreferenceClickListener {
+        action(KEY_CHARGING_REPORT)?.onClick = {
             showChargingReportActions()
-            true
         }
-        findPreference<Preference>(KEY_CHARGING_CLEAR)?.setOnPreferenceClickListener {
+        action(KEY_CHARGING_CLEAR)?.onClick = {
             ChargingDiagnosticStore.clear(requireContext())
             refreshChargingDiagnosticsSummary()
             requireContext().showToast(R.string.charging_diagnostics_cleared)
-            true
         }
     }
 
@@ -251,79 +554,98 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
         val context = requireContext()
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        findPreference<Preference>(KEY_NOTIFICATIONS)?.summary = permissionSummary(
-            notificationManager.areNotificationsEnabled()
+        val checkedAtMillis = System.currentTimeMillis()
+        val notificationsAllowed = notificationManager.areNotificationsEnabled()
+        val mainChannelAllowed = notificationManager.getNotificationChannel(
+            NotificationChannels.CHAN_ID_MAIN
+        )?.importance != NotificationManager.IMPORTANCE_NONE
+        action(KEY_NOTIFICATIONS)?.summary = checkedSummary(
+            permissionSummary(notificationsAllowed && mainChannelAllowed), checkedAtMillis
         )
 
-        findPreference<Preference>(KEY_LIVE_UPDATES)?.apply {
+        action(KEY_LIVE_UPDATES)?.apply {
             isVisible = BatteryInfoService.supportsLiveUpdates()
-            summary = permissionSummary(BatteryInfoService.isLiveUpdateEnabledInSystem(context))
+            summary = checkedSummary(
+                if (settingsPreferences.getString(
+                        SettingsContract.KEY_LIVE_UPDATE_DISPLAY, null
+                    ) == "never"
+                ) {
+                    getString(R.string.currently_disabled)
+                } else permissionSummary(
+                    notificationsAllowed && BatteryInfoService.isLiveUpdateEnabledInSystem(context) && notificationManager.getNotificationChannel(
+                        NotificationChannels.CHAN_ID_LIVE_UPDATE
+                    )?.importance != NotificationManager.IMPORTANCE_NONE
+                ), checkedAtMillis
+            )
         }
 
-        findPreference<Preference>(KEY_ROOT)?.summary = when {
-            checkingRoot -> getString(R.string.diagnostics_checking)
-            rootAvailable == true -> getString(R.string.yes)
-            rootAvailable == false -> getString(R.string.diagnostics_root_unavailable)
-            else -> getString(R.string.diagnostics_tap_to_check)
+        if (!actionsOnly) {
+            action(KEY_ROOT)?.summary = when {
+                checkingRoot -> getString(R.string.diagnostics_checking)
+                rootAvailable == true -> getString(R.string.yes)
+                rootAvailable == false -> getString(R.string.diagnostics_root_unavailable)
+                else -> getString(R.string.diagnostics_tap_to_check)
+            }
+            action(KEY_SHIZUKU)?.summary = shizukuDisplayStatus()
         }
-        findPreference<Preference>(KEY_SHIZUKU)?.summary = shizukuDisplayStatus()
         refreshMonitoringStatus()
 
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        findPreference<Preference>(KEY_BATTERY_OPTIMIZATION)?.summary =
-            if (powerManager.isIgnoringBatteryOptimizations(context.packageName)) getString(R.string.diagnostics_unrestricted) else getString(
-                R.string.diagnostics_restricted_tap_to_fix
-            )
+        action(KEY_BATTERY_OPTIMIZATION)?.summary = checkedSummary(
+            if (powerManager.isIgnoringBatteryOptimizations(context.packageName)) {
+                getString(R.string.diagnostics_unrestricted)
+            } else getString(R.string.diagnostics_restricted_tap_to_fix), checkedAtMillis
+        )
 
         refreshDebugLoggingSummary()
-        refreshChargingDiagnosticsSummary()
+        action(KEY_CHARGING_CAPTURE)?.isEnabled = !capturing
+        if (!actionsOnly) {
+            refreshChargingDiagnosticsSummary()
+        }
+    }
+
+    internal fun refreshAppOperation(onComplete: () -> Unit) {
+        if (!isResumed || appOperationRefreshing) return
+        val generation = ++appOperationRefreshGeneration
+        val context = requireContext()
+        val checkService = BackgroundServiceWatchdog.isServiceDesired(context)
+        val loggingEnabled =
+            settingsPreferences.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
+        var remaining = (if (checkService) 1 else 0) + (if (loggingEnabled) 1 else 0)
+        refreshingAppOperation = true
+        refresh()
+        fun complete() {
+            if (generation != appOperationRefreshGeneration || !isResumed) return
+            if (remaining > 0) remaining--
+            if (remaining == 0) {
+                refreshingAppOperation = false
+                refresh()
+                onComplete()
+            }
+        }
+        if (remaining == 0) {
+            complete()
+            return
+        }
+        if (checkService) checkMonitoringService(allowRestart = false, onComplete = ::complete)
+        if (loggingEnabled) checkDatabase(notify = false, onComplete = ::complete)
+    }
+
+    private fun cancelAppOperationRefresh() {
+        appOperationRefreshGeneration++
+        refreshingAppOperation = false
+        checkingService = false
+        checkingDatabase = false
     }
 
     private fun showChargingConditionPicker() {
-        val labels = intArrayOf(
-            R.string.charging_diagnostics_condition_off,
-            R.string.charging_diagnostics_condition_fixed,
-            R.string.charging_diagnostics_condition_adaptive,
-            R.string.charging_diagnostics_condition_scheduled,
-            R.string.charging_diagnostics_condition_other
-        ).map(::getString).toTypedArray()
-        AlertDialog.Builder(requireContext()).setTitle(R.string.charging_diagnostics_choose_state)
-            .setItems(labels) { _, which ->
-                when (which) {
-                    0 -> captureChargingSnapshot(ChargingDiagnosticCondition.Off)
-                    1 -> showFixedChargingLimitPicker()
-                    2 -> captureChargingSnapshot(ChargingDiagnosticCondition.Adaptive)
-                    3 -> captureChargingSnapshot(ChargingDiagnosticCondition.Scheduled)
-                    4 -> captureChargingSnapshot(ChargingDiagnosticCondition.Other)
-                }
-            }.setNegativeButton(R.string.cancel, null).show()
-    }
-
-    private fun showFixedChargingLimitPicker() {
-        val context = requireContext()
-        val horizontalPadding = (24 * resources.displayMetrics.density).toInt()
-        val picker = NumberPicker(context).apply {
-            minValue = ChargingDiagnosticCondition.MIN_FIXED_PERCENT
-            maxValue = ChargingDiagnosticCondition.MAX_FIXED_PERCENT
-            value = 80
-            wrapSelectorWheel = false
-        }
-        val container = FrameLayout(context).apply {
-            setPadding(horizontalPadding, 0, horizontalPadding, 0)
-            addView(
-                picker, FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
-                )
-            )
-        }
-        AlertDialog.Builder(context).setTitle(R.string.charging_diagnostics_condition_fixed)
-            .setView(container).setPositiveButton(android.R.string.ok) { _, _ ->
-                captureChargingSnapshot(ChargingDiagnosticCondition.Fixed(picker.value))
-            }.setNegativeButton(R.string.cancel, null).show()
+        if (!capturing) dialogState.open(DiagnosticsDialog.CHARGING_CONDITION)
     }
 
     private fun captureChargingSnapshot(condition: ChargingDiagnosticCondition) {
-        val preference = findPreference<Preference>(KEY_CHARGING_CAPTURE)
+        val state = dialogState
+        if (!state.beginCapture()) return
+        val preference = action(KEY_CHARGING_CAPTURE)
         preference?.isEnabled = false
         preference?.summary = getString(R.string.charging_diagnostics_capturing)
         val context = requireContext().applicationContext
@@ -332,35 +654,28 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
         )
         Thread {
             val snapshot = runCatching {
-                ChargingLimitDiagnostics(context, { privilegedEnabled }).capture(condition)
-            }.getOrNull()
-            val snapshotCount = if (snapshot != null) {
+                val snapshot =
+                    ChargingLimitDiagnostics(context, { privilegedEnabled }).capture(condition)
                 ChargingDiagnosticStore.append(context, snapshot)
-                ChargingDiagnosticStore.read(context).size
-            } else {
-                0
-            }
-            mainHandler.post {
-                if (!isAdded) return@post
+                snapshot
+            }.getOrNull()
+            // Completion belongs to the retained model, even while its fragment is paused or recreated.
+            Handler(Looper.getMainLooper()).post {
+                state.finishCapture()
+                if (!isResumed || !isAdded) return@post
                 preference?.isEnabled = true
                 refreshChargingDiagnosticsSummary()
                 requireContext().showToast(
                     if (snapshot != null) R.string.charging_diagnostics_captured
                     else R.string.charging_diagnostics_capture_failed
                 )
-                if (snapshotCount == 1 && snapshot?.hasLimitedUnprivilegedDiscovery() == true) {
-                    AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.charging_diagnostics_title)
-                        .setMessage(R.string.charging_diagnostics_privileged_hint)
-                        .setPositiveButton(android.R.string.ok, null).show()
-                }
             }
         }.apply { name = "charging-limit-diagnostics" }.start()
     }
 
     private fun refreshChargingDiagnosticsSummary() {
         val count = ChargingDiagnosticStore.read(requireContext()).size
-        findPreference<Preference>(KEY_CHARGING_REPORT)?.apply {
+        action(KEY_CHARGING_REPORT)?.apply {
             isEnabled = count >= 2
             summary = if (count == 0) {
                 getString(R.string.charging_diagnostics_report_summary)
@@ -370,52 +685,14 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
                 )
             }
         }
-        findPreference<Preference>(KEY_CHARGING_CLEAR)?.isEnabled = count > 0
-        findPreference<Preference>(KEY_CHARGING_CAPTURE)?.summary =
-            getString(R.string.charging_diagnostics_capture_summary)
+        action(KEY_CHARGING_CLEAR)?.isEnabled = count > 0
+        action(KEY_CHARGING_CAPTURE)?.summary =
+            getString(if (capturing) R.string.charging_diagnostics_capturing else R.string.charging_diagnostics_capture_summary)
     }
 
     private fun showChargingReportActions() {
-        val snapshots = ChargingDiagnosticStore.read(requireContext())
-        if (snapshots.size < 2) {
-            requireContext().showToast(R.string.charging_diagnostics_need_two)
-            return
-        }
-        val report = ChargingDiagnosticReport.create(requireContext(), snapshots)
-        val context = requireContext()
-        val padding = (16 * resources.displayMetrics.density).toInt()
-        val reportView = TextView(context).apply {
-            text = report
-            typeface = Typeface.MONOSPACE
-            setTextIsSelectable(true)
-            setPadding(padding, padding, padding, padding)
-        }
-        val scrollView = ScrollView(context).apply { addView(reportView) }
-        AlertDialog.Builder(requireContext()).setTitle(R.string.charging_diagnostics_report)
-            .setView(scrollView).setPositiveButton(R.string.charging_diagnostics_copy) { _, _ ->
-                copyChargingReport(report)
-            }.setNeutralButton(R.string.charging_diagnostics_save) { _, _ ->
-                saveChargingReport()
-            }.setNegativeButton(R.string.cancel, null).show()
-    }
-
-    private fun copyChargingReport(report: String) {
-        val clipboard =
-            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText("OEM charging-limit diagnostics", report))
-        requireContext().showToast(R.string.charging_diagnostics_copied)
-    }
-
-    private fun saveChargingReport() {
-        val timestamp = SimpleDateFormat(
-            "yyyy-MM-dd-HHmmss", Locale.getDefault()
-        ).format(Date())
-        startActivityForResult(
-            Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("text/plain").putExtra(
-                    Intent.EXTRA_TITLE, "battery_monitor_charging_diagnostics_$timestamp.txt"
-                ), EXPORT_CHARGING_DIAGNOSTICS_REQUEST
-        )
+        if (ChargingDiagnosticStore.read(requireContext()).size < 2) requireContext().showToast(R.string.charging_diagnostics_need_two)
+        else dialogState.open(DiagnosticsDialog.CHARGING_REPORT)
     }
 
     private fun refreshMonitoringStatus() {
@@ -429,30 +706,55 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
             healthState.databaseHeartbeatElapsedTime, latestDatabaseResponseElapsedTime
         )
         val serviceDesired = BackgroundServiceWatchdog.isServiceDesired(context)
-        findPreference<Preference>(KEY_SERVICE)?.apply {
-            isEnabled = serviceDesired
-            summary = statusWithAge(
-                serviceDesired && !serviceCheckFailed && isFresh(now, heartbeat),
-                heartbeat,
-                now,
-                if (serviceDesired) R.string.diagnostics_not_running_tap_to_start else R.string.currently_disabled
+        action(KEY_SERVICE)?.apply {
+            isEnabled = serviceDesired && !checkingService && !appOperationRefreshing
+            summary = checkedSummary(
+                if (checkingService) getString(R.string.diagnostics_checking) else statusWithAge(
+                    serviceDesired && !serviceCheckFailed && isFresh(now, heartbeat),
+                    heartbeat,
+                    now,
+                    if (serviceDesired) R.string.diagnostics_not_running_tap_to_start else R.string.currently_disabled
+                ), latestServiceAttemptMillis
             )
         }
+        action(KEY_HEARTBEAT)?.summary = when {
+            heartbeat !in 1..now -> getString(R.string.diag_value_not_available)
+            !isFresh(now, heartbeat) -> getString(R.string.current_stale)
+            else -> DateFormat.getTimeInstance(DateFormat.MEDIUM)
+                .format(Date(System.currentTimeMillis() - (now - heartbeat)))
+        }
 
+        action("monitor_start")?.isVisible = !serviceDesired
+        action("monitor_stop")?.isVisible = serviceDesired
         val loggingEnabled = settingsPreferences.getBoolean(
             SettingsContract.KEY_ENABLE_LOGGING, true
         )
-        findPreference<Preference>(KEY_DATABASE)?.summary = statusWithAge(
-            loggingEnabled && !databaseCheckFailed && isFresh(now, databaseHeartbeat),
-            databaseHeartbeat,
-            now,
-            if (loggingEnabled) R.string.diagnostics_no_recent_database_access else R.string.currently_disabled
-        )
+        action(KEY_DATABASE)?.apply {
+            isEnabled = loggingEnabled && !checkingDatabase && !appOperationRefreshing
+            summary = checkedSummary(
+                if (checkingDatabase) getString(R.string.diagnostics_checking) else statusWithAge(
+                    loggingEnabled && !databaseCheckFailed && isFresh(now, databaseHeartbeat),
+                    databaseHeartbeat,
+                    now,
+                    if (!loggingEnabled) R.string.currently_disabled
+                    else if (databaseCheckFailed) R.string.diagnostics_database_failed
+                    else R.string.diagnostics_no_recent_database_access
+                ), latestDatabaseAttemptMillis
+            )
+        }
     }
+
+    private fun checkedSummary(summary: String, attemptedAtMillis: Long): String =
+        if (attemptedAtMillis <= 0L) summary else "$summary\n${
+            getString(
+                R.string.diag_last_checked,
+                DateFormat.getTimeInstance(DateFormat.MEDIUM).format(Date(attemptedAtMillis))
+            )
+        }"
 
     private fun statusWithAge(
         healthy: Boolean, timestamp: Long, now: Long, unhealthyText: Int
-    ): CharSequence {
+    ): String {
         if (!healthy) return getString(unhealthyText)
         val age = DiagnosticsDurationFormatter.format(requireContext(), now - timestamp)
         return getString(R.string.diagnostics_working_last_seen, age)
@@ -488,11 +790,15 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
 
     private fun checkRootAccess() {
         if (checkingRoot) return
+        val generation = ++rootGeneration
         checkingRoot = true
         refresh()
         Thread {
-            val available = RootExecutor().run(ROOT_CHECK_COMMAND)?.contains("uid=0") == true
+            val available = RootExecutor.requestAccess(allowed = {
+                generation == rootGeneration && isResumed
+            })
             mainHandler.post {
+                if (generation != rootGeneration || !isResumed) return@post
                 checkingRoot = false
                 rootAvailable = available
                 refresh()
@@ -538,50 +844,70 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
     }
 
     private fun requestMonitoringServiceUpdate() {
-        val generation = ++serviceCheckGeneration
-        serviceCheckFailed = false
-        findPreference<Preference>(KEY_SERVICE)?.summary = getString(R.string.diagnostics_checking)
-        requestMonitoringServiceResponse(generation, restarting = false)
+        if (checkingService || appOperationRefreshing) return
+        checkMonitoringService(allowRestart = true, onComplete = {})
     }
 
-    private fun requestMonitoringServiceResponse(generation: Int, restarting: Boolean) {
+    private fun checkMonitoringService(allowRestart: Boolean, onComplete: () -> Unit) {
+        val generation = ++serviceCheckGeneration
+        serviceCheckFailed = false
+        checkingService = true
+        requestMonitoringServiceResponse(generation, restarting = false, allowRestart, onComplete)
+    }
+
+    private fun requestMonitoringServiceResponse(
+        generation: Int, restarting: Boolean, allowRestart: Boolean, onComplete: () -> Unit
+    ) {
         val context = requireContext().applicationContext
+        latestServiceAttemptMillis = System.currentTimeMillis()
+        refreshMonitoringStatus()
         var responseReceived = false
         val receiver = object : ResultReceiver(mainHandler) {
             override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
                 if (generation != serviceCheckGeneration || !isAdded || responseReceived) return
                 responseReceived = true
                 if (resultCode != BatteryInfoService.DIAGNOSTICS_RESULT_OK) {
-                    handleMissingServiceResponse(generation, restarting)
+                    handleMissingServiceResponse(generation, restarting, allowRestart, onComplete)
                     return
                 }
                 latestServiceResponseElapsedTime = resultData?.getLong(
                     BatteryInfoService.DIAGNOSTICS_RESULT_TIMESTAMP
                 )?.takeIf { it > 0L } ?: SystemClock.elapsedRealtime()
                 serviceCheckFailed = false
+                checkingService = false
                 refreshMonitoringStatus()
-                requireContext().showToast(R.string.diagnostics_service_responded)
+                if (allowRestart) requireContext().showToast(R.string.diagnostics_service_responded)
+                onComplete()
             }
         }
         val result = BatteryInfoService.requestDiagnosticsCheck(context, receiver)
         if (!result.isRequestAccepted()) {
-            handleMissingServiceResponse(generation, restarting)
+            responseReceived = true
+            handleMissingServiceResponse(generation, restarting, allowRestart, onComplete)
             return
         }
 
         mainHandler.postDelayed({
             if (generation == serviceCheckGeneration && !responseReceived && isAdded) {
-                handleMissingServiceResponse(generation, restarting)
+                responseReceived = true
+                handleMissingServiceResponse(generation, restarting, allowRestart, onComplete)
             }
         }, SERVICE_RESPONSE_TIMEOUT_MS)
     }
 
-    private fun handleMissingServiceResponse(generation: Int, restarting: Boolean) {
+    private fun handleMissingServiceResponse(
+        generation: Int, restarting: Boolean, allowRestart: Boolean, onComplete: () -> Unit
+    ) {
         if (generation != serviceCheckGeneration || !isAdded) return
-        if (restarting) {
+        if (!allowRestart || restarting || !BackgroundServiceWatchdog.isServiceDesired(
+                requireContext()
+            )
+        ) {
             serviceCheckFailed = true
+            checkingService = false
             refreshMonitoringStatus()
-            requireContext().showToast(R.string.diagnostics_service_restart_failed)
+            if (allowRestart && restarting) requireContext().showToast(R.string.diagnostics_service_restart_failed)
+            onComplete()
             return
         }
 
@@ -591,28 +917,63 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
         context.stopService(Intent(context, BatteryInfoService::class.java))
         mainHandler.postDelayed({
             if (restartGeneration == serviceCheckGeneration && isAdded) {
-                requestMonitoringServiceResponse(restartGeneration, restarting = true)
+                requestMonitoringServiceResponse(
+                    restartGeneration, restarting = true, allowRestart, onComplete
+                )
             }
         }, SERVICE_RESTART_DELAY_MS)
     }
 
+    // This is a best-effort diagnosis after a failed write, based on immediately free space.
+    @SuppressLint("UsableSpace")
     private fun retryDatabaseLogging() {
+        if (checkingDatabase || appOperationRefreshing) return
         val context = requireContext()
         if (!settingsPreferences.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
             context.showToast(R.string.currently_disabled)
-            startActivity(
-                Intent(context, SettingsActivity::class.java).putExtra(
-                    SettingsContract.EXTRA_SCREEN, SettingsContract.KEY_OTHER_SETTINGS
-                )
-            )
             return
         }
+        checkDatabase(notify = true, onComplete = {})
+    }
 
+    @SuppressLint("UsableSpace")
+    private fun checkDatabase(notify: Boolean, onComplete: () -> Unit) {
         val generation = ++databaseCheckGeneration
         databaseCheckFailed = false
-        findPreference<Preference>(KEY_DATABASE)?.summary = getString(R.string.diagnostics_checking)
-        val appContext = context.applicationContext
+        checkingDatabase = true
+        refreshMonitoringStatus()
+        val appContext = requireContext().applicationContext
+        val attemptedAtMillis = AtomicLong()
+        var responseReceived = false
+        fun finish(checkResult: LogResult) {
+            if (generation != databaseCheckGeneration || !isAdded || responseReceived) return
+            responseReceived = true
+            checkingDatabase = false
+            latestDatabaseAttemptMillis = attemptedAtMillis.get()
+            when (checkResult) {
+                LogResult.Inserted, LogResult.Duplicate -> {
+                    latestDatabaseResponseElapsedTime = SystemClock.elapsedRealtime()
+                    databaseCheckFailed = false
+                    if (notify) requireContext().showToast(R.string.diagnostics_database_check_succeeded)
+                }
+
+                is LogResult.Failed -> {
+                    databaseCheckFailed = true
+                    if (notify) {
+                        val storageProblem =
+                            checkResult.error.hasCause<SQLiteFullException>() || appContext.filesDir.usableSpace < LOW_STORAGE_THRESHOLD_BYTES
+                        requireContext().showToast(
+                            if (storageProblem) R.string.diagnostics_database_failed_storage
+                            else R.string.diagnostics_database_failed
+                        )
+                    }
+                }
+            }
+            refreshMonitoringStatus()
+            onComplete()
+        }
         Thread {
+            attemptedAtMillis.set(System.currentTimeMillis())
             val checkResult = runCatching {
                 val database = LogDatabase(appContext)
                 try {
@@ -621,96 +982,24 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
                     database.close()
                 }
             }.getOrElse { LogResult.Failed(it) }
-            mainHandler.post {
-                if (generation != databaseCheckGeneration || !isAdded) return@post
-                when (checkResult) {
-                    LogResult.Inserted, LogResult.Duplicate -> {
-                        latestDatabaseResponseElapsedTime = SystemClock.elapsedRealtime()
-                        databaseCheckFailed = false
-                        refreshMonitoringStatus()
-                        requireContext().showToast(R.string.diagnostics_database_check_succeeded)
-                    }
-
-                    is LogResult.Failed -> {
-                        databaseCheckFailed = true
-                        refreshMonitoringStatus()
-                        val storageProblem =
-                            checkResult.error.hasCause<SQLiteFullException>() || appContext.filesDir.usableSpace < LOW_STORAGE_THRESHOLD_BYTES
-                        requireContext().showToast(
-                            if (storageProblem) {
-                                R.string.diagnostics_database_failed_storage
-                            } else {
-                                R.string.diagnostics_database_failed
-                            }
-                        )
-                    }
-                }
-            }
+            mainHandler.post { finish(checkResult) }
         }.apply { name = "diagnostics-database-check" }.start()
+        mainHandler.postDelayed({
+            finish(LogResult.Failed(TimeoutException("Diagnostics database check timed out")))
+        }, SERVICE_RESPONSE_TIMEOUT_MS)
     }
 
     private fun BatteryInfoService.ServiceStartResult.isRequestAccepted(): Boolean =
         this == BatteryInfoService.ServiceStartResult.START_REQUESTED || this == BatteryInfoService.ServiceStartResult.FALLBACK_REQUESTED
 
-    @SuppressLint("BatteryLife")
-    private fun openBatteryOptimizationSettings(): Boolean {
-        val context = requireContext()
-        val appUri = "package:${context.packageName}".toUri()
-        val intents = listOf(
-            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, appUri),
-            Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS),
-            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, appUri)
-        )
-        return intents.any { intent -> runCatching { startActivity(intent) }.isSuccess }
-    }
+    private fun openBatteryOptimizationSettings(): Boolean =
+        BackgroundSettingsNavigator.openBatteryOptimization(requireContext())
 
     private fun refreshDebugLoggingSummary() {
-        findPreference<SwitchPreferenceCompat>(SettingsContract.KEY_DEBUG_LOGGING)?.summary =
-            getString(R.string.diagnostics_debug_logs_warning)
-    }
-
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val uri: Uri = data?.data ?: return
-        if (resultCode != Activity.RESULT_OK) return
-
-        if (requestCode == EXPORT_CHARGING_DIAGNOSTICS_REQUEST) {
-            val context = requireContext().applicationContext
-            Thread {
-                val success = runCatching {
-                    val report = ChargingDiagnosticReport.create(
-                        context, ChargingDiagnosticStore.read(context)
-                    )
-                    requireNotNull(context.contentResolver.openOutputStream(uri)).bufferedWriter()
-                        .use { it.write(report) }
-                }.isSuccess
-                mainHandler.post {
-                    if (!isAdded) return@post
-                    requireContext().showToast(
-                        if (success) R.string.diagnostics_exported
-                        else R.string.diagnostics_export_failed, Toast.LENGTH_SHORT
-                    )
-                }
-            }.apply { name = "charging-diagnostics-export" }.start()
-            return
+        action(SettingsContract.KEY_DEBUG_LOGGING)?.apply {
+            summary = getString(R.string.diagnostics_debug_logs_warning)
+            checked = settingsPreferences.getBoolean(SettingsContract.KEY_DEBUG_LOGGING, false)
         }
-
-        if (requestCode != EXPORT_DIAGNOSTICS_REQUEST) return
-
-        Thread {
-            val success = runCatching {
-                DiagnosticsReport.write(
-                    requireContext().applicationContext, uri, rootAvailable, shizukuReportStatus()
-                )
-            }.isSuccess
-            mainHandler.post {
-                if (!isAdded) return@post
-                requireContext().showToast(
-                    if (success) R.string.diagnostics_exported else R.string.diagnostics_export_failed,
-                    Toast.LENGTH_SHORT
-                )
-            }
-        }.apply { name = "diagnostics-export" }.start()
     }
+
 }

@@ -12,30 +12,55 @@
 */
 package codes.swistak.batterymonitor.app
 
-
 import android.app.ActivityManager
 import android.app.Application
+import android.content.ComponentName
+import android.content.res.Configuration
 import android.os.Build
+import android.os.LocaleList
 import android.os.Process
 import codes.swistak.batterymonitor.diagnostics.DebugLogCollector
 import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.migration.SettingsMigrationManager
+import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
+import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
 
 class BatteryMonitorApplication : Application() {
+    private var notificationChannelLocales = LocaleList.getEmptyLocaleList()
+    private var ownsWidgets = false
+
     override fun onCreate() {
         super.onCreate()
 
         SettingsMigrationManager.migrate(
             getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
         )
+        NotificationChannels.refreshExistingChannelNames(this)
+        notificationChannelLocales = resources.configuration.locales
         AutoLogExportScheduler.ensureScheduled(this)
-        if (DebugLogCollector.shouldStartInProcess(currentProcessName())) {
+        val processName = currentProcessName()
+        val widgetProcessName = packageManager.getReceiverInfo(
+            ComponentName(this, WidgetSettingsReceiver::class.java), 0
+        ).processName
+        ownsWidgets = processName == widgetProcessName
+        if (DebugLogCollector.shouldStartInProcess(processName)) {
             DebugLogCollector.sync(
                 this, getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE).getBoolean(
                     SettingsContract.KEY_DEBUG_LOGGING, false
                 )
             )
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (ownsWidgets) WidgetUpdateDispatcher.refresh(this)
+        val locales = resources.configuration.locales
+        if (locales != notificationChannelLocales) {
+            NotificationChannels.refreshExistingChannelNames(this)
+            notificationChannelLocales = locales
         }
     }
 

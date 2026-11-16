@@ -71,6 +71,8 @@ internal class BatteryInfo {
         private const val FIELD_PREDICTION_WHAT = "prediction_what"
         private const val FIELD_PREDICTION_WHEN = "prediction_when"
         private const val FIELD_PREDICTION_TARGET_PERCENT = "prediction_target_percent"
+        private const val FIELD_EFFECTIVE_PREDICTION_TARGET = "effective_prediction_target"
+
         private const val FIELD_PREDICTION_TARGET_REACHED = "prediction_target_reached"
         private const val FIELD_FULL_RANGE_PREDICTION_DAYS = "full_range_prediction_days"
         private const val FIELD_FULL_RANGE_PREDICTION_HOURS = "full_range_prediction_hours"
@@ -81,6 +83,7 @@ internal class BatteryInfo {
             "full_range_prediction_target_percent"
 
         private const val FIELD_REMAINING_CHARGE_UAH = "remaining_charge_uah"
+        private const val FIELD_SOURCES = "battery_field_sources"
 
         private fun attemptOnePercentHack(percent: Int): Int {
             var percent = percent
@@ -107,11 +110,11 @@ internal class BatteryInfo {
                             "charge_counter file exists but with value $chargeCounter which is inconsistent with percent: $percent"
                         )
                     }
-                } catch (e: FileNotFoundException) {
+                } catch (_: FileNotFoundException) {
                     Log.e(LOG_TAG, "charge_counter file doesn't exist")
-                } catch (e: IOException) {
+                } catch (_: IOException) {
                     Log.e(LOG_TAG, "Error reading charge_counter file")
-                } catch (e: NumberFormatException) {
+                } catch (_: NumberFormatException) {
                     Log.e(LOG_TAG, "Read charge_counter file but couldn't convert contents to int")
                 }
             }
@@ -129,12 +132,17 @@ internal class BatteryInfo {
     var voltage: Int? = null
 
     var remainingChargeUah: Long? = null
+    var fieldSources: Map<String, String> = emptyMap()
+    var fieldMeasurementTimes: Map<String, BatteryMeasurementTime> = emptyMap()
+
     var lastStatus: Int = 0
     var lastPlugged: Int = 0
     var lastPercent: Int = 0
     var lastStatusCtm: Long = 0
     var prediction: Prediction = Prediction(this)
     var fullRangePrediction: Prediction = Prediction(this)
+
+    var effectivePredictionTargetPercent: Int = 0
 
     internal class Prediction(private val batteryInfo: BatteryInfo) {
         companion object {
@@ -163,12 +171,11 @@ internal class BatteryInfo {
             this.targetPercent = targetPercent
             targetReached = false
 
-            whatHappened =
-                when (batteryInfo.status) {
-                    STATUS_FULLY_CHARGED, STATUS_NOT_CHARGING, STATUS_UNKNOWN -> NONE
-                    STATUS_CHARGING -> UNTIL_CHARGED
-                    else -> UNTIL_DRAINED
-                }
+            whatHappened = when (batteryInfo.status) {
+                STATUS_FULLY_CHARGED, STATUS_NOT_CHARGING, STATUS_UNKNOWN -> NONE
+                STATUS_CHARGING -> UNTIL_CHARGED
+                else -> UNTIL_DRAINED
+            }
         }
 
         fun markTargetReached(targetPercent: Int) {
@@ -185,16 +192,6 @@ internal class BatteryInfo {
             this.targetPercent = targetPercent
             targetReached = true
             lastRTime.update(0, 0)
-        }
-
-        fun copyFrom(other: Prediction) {
-            whatHappened = other.whatHappened
-            whenHappened = other.whenHappened
-            targetPercent = other.targetPercent
-            targetReached = other.targetReached
-            lastRTime.days = other.lastRTime.days
-            lastRTime.hours = other.lastRTime.hours
-            lastRTime.minutes = other.lastRTime.minutes
         }
 
         fun updateRelativeTime() {
@@ -235,6 +232,7 @@ internal class BatteryInfo {
 
     fun load(intent: Intent?) {
         if (intent == null) return
+        fieldMeasurementTimes = emptyMap()
         val level = intent.getIntExtra(EXTRA_LEVEL, 50)
         val scale = intent.getIntExtra(EXTRA_SCALE, 100)
 
@@ -246,7 +244,8 @@ internal class BatteryInfo {
         voltage =
             if (BatteryVoltageValidator.isValidBroadcastMillivolts(rawVoltage)) rawVoltage else null
 
-        percent = level * 100 / scale
+        percent =
+            if (scale > 0) (level.toLong() * 100 / scale).coerceIn(0, 100).toInt() else percent
         percent = attemptOnePercentHack(percent)
 
         if (percent > 100) percent = 100
@@ -293,6 +292,7 @@ internal class BatteryInfo {
         bundle.putInt(FIELD_PREDICTION_WHAT, prediction.whatHappened)
         bundle.putLong(FIELD_PREDICTION_WHEN, prediction.whenHappened)
         bundle.putInt(FIELD_PREDICTION_TARGET_PERCENT, prediction.targetPercent)
+        bundle.putInt(FIELD_EFFECTIVE_PREDICTION_TARGET, effectivePredictionTargetPercent)
         bundle.putBoolean(FIELD_PREDICTION_TARGET_REACHED, prediction.targetReached)
         bundle.putInt(FIELD_FULL_RANGE_PREDICTION_DAYS, fullRangePrediction.lastRTime.days)
         bundle.putInt(FIELD_FULL_RANGE_PREDICTION_HOURS, fullRangePrediction.lastRTime.hours)
@@ -304,11 +304,22 @@ internal class BatteryInfo {
         )
 
         remainingChargeUah?.let { bundle.putLong(FIELD_REMAINING_CHARGE_UAH, it) }
+        bundle.putBundle(FIELD_SOURCES, Bundle().apply {
+            fieldSources.forEach { (key, source) -> putString(key, source) }
+        })
+        bundle.putBundle("field_measurement_times", Bundle().apply {
+            fieldMeasurementTimes.forEach { (key, time) -> putBundle(key, time.toBundle()) }
+        })
 
         return bundle
     }
 
     fun loadBundle(bundle: Bundle) {
+        fieldMeasurementTimes =
+            BatteryMeasurementTime.readMap(bundle.getBundle("field_measurement_times"))
+        fieldSources = bundle.getBundle(FIELD_SOURCES)?.let { sources ->
+            sources.keySet().mapNotNull { key -> sources.getString(key)?.let { key to it } }.toMap()
+        } ?: emptyMap()
         percent = bundle.getInt(FIELD_PERCENT)
         status = bundle.getInt(FIELD_STATUS)
         health = bundle.getInt(FIELD_HEALTH)
@@ -335,6 +346,9 @@ internal class BatteryInfo {
             0
         }
         prediction.targetReached = bundle.getBoolean(FIELD_PREDICTION_TARGET_REACHED, false)
+        effectivePredictionTargetPercent = bundle.getInt(
+            FIELD_EFFECTIVE_PREDICTION_TARGET, prediction.targetPercent
+        )
 
         if (bundle.containsKey(FIELD_FULL_RANGE_PREDICTION_WHAT)) {
             fullRangePrediction.lastRTime.days = bundle.getInt(FIELD_FULL_RANGE_PREDICTION_DAYS)
@@ -383,5 +397,82 @@ internal fun readVoltageField(accessor: BundleFieldAccessor): Int? {
         accessor.getInt(BatteryInfo.FIELD_VOLTAGE)
     } else {
         null
+    }
+}
+
+internal val BATTERY_READING_FIELDS = listOf(
+    "level", "scale", "status", "health", "plugged", "temperature", "voltage"
+)
+
+internal fun missingBatteryFields(fields: Map<String, Int>): Set<String> = buildSet {
+    val level = fields["level"]
+    val scale = fields["scale"]
+    if (level == null || scale == null || scale <= 0 || level !in 0..scale) {
+        add("level")
+        add("scale")
+    }
+    if (fields["status"] !in 2..BatteryInfo.STATUS_MAX) add("status")
+    if (fields["health"] !in 2..BatteryInfo.HEALTH_MAX) add("health")
+    if (fields["plugged"] !in setOf(0, 1, 2, 4)) add("plugged")
+    if (fields["temperature"] !in -1000..2000) add("temperature")
+    if (fields["voltage"]?.let(BatteryVoltageValidator::isValidBroadcastMillivolts) != true) {
+        add("voltage")
+    }
+}
+
+internal fun mergeBatteryFields(
+    fields: Map<String, Int>, fallback: PrivilegedBatteryReading?
+): Map<String, Int> {
+    if (fallback == null) return fields
+    val missing = missingBatteryFields(fields)
+    return fields.toMutableMap().apply {
+        fun fill(key: String, value: Int?) {
+            if (key in missing && value != null) put(key, value)
+        }
+        if ("level" in missing && fallback.percent != null) {
+            put("level", fallback.percent)
+            put("scale", 100)
+        }
+        fill("status", fallback.status)
+        fill("health", fallback.health)
+        fill("plugged", fallback.plugged)
+        fill("temperature", fallback.temperatureTenthsC)
+        fill("voltage", fallback.voltageMillivolts)
+    }
+}
+
+internal fun mergeBatteryFieldSources(
+    fields: Map<String, Int>, fallback: PrivilegedBatteryReading?, voltageSource: String?
+): Map<String, String> {
+    val missing = missingBatteryFields(fields)
+    return buildMap {
+        fun record(key: String, fallbackValue: Int?) {
+            val source = if (key !in missing) {
+                if (key == "voltage") voltageSource
+                else "ACTION_BATTERY_CHANGED / $key"
+            } else fallback?.fieldSources?.get(key)?.takeIf { fallbackValue != null }
+            source?.let { put(key, it) }
+        }
+        record("temperature", fallback?.temperatureTenthsC)
+        record("health", fallback?.health)
+        record("voltage", fallback?.voltageMillivolts)
+    }
+}
+
+internal fun mergeBatteryFieldMeasurementTimes(
+    fields: Map<String, Int>,
+    fallback: PrivilegedBatteryReading?,
+    direct: Map<String, BatteryMeasurementTime>
+): Map<String, BatteryMeasurementTime> {
+    val missing = missingBatteryFields(fields)
+    return buildMap {
+        fun record(key: String, fallbackValue: Int?) {
+            val time = if (key !in missing) direct[key]
+            else fallback?.fieldMeasurementTimes?.get(key)?.takeIf { fallbackValue != null }
+            time?.let { put(key, it) }
+        }
+        record("temperature", fallback?.temperatureTenthsC)
+        record("health", fallback?.health)
+        record("voltage", fallback?.voltageMillivolts)
     }
 }

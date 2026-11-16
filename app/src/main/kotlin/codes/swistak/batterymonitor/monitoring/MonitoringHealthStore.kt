@@ -8,13 +8,16 @@
 package codes.swistak.batterymonitor.monitoring
 
 import android.content.Context
+import android.provider.Settings
 import android.util.AtomicFile
 import android.util.Log
 import codes.swistak.batterymonitor.settings.SettingsContract
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
+import java.io.RandomAccessFile
 
 internal data class MonitoringHealthState(
     val serviceHeartbeatElapsedTime: Long, val databaseHeartbeatElapsedTime: Long
@@ -24,41 +27,60 @@ internal object MonitoringHealthStore {
     private const val LOG_TAG = "MonitoringHealthStore"
     private const val FILE_NAME = "monitoring_health_state"
     private const val FILE_MAGIC = 0x424D4853
-    private const val FILE_VERSION = 1
+    private const val FILE_VERSION = 2
+    private val empty = MonitoringHealthState(0L, 0L)
 
-    fun read(context: Context): MonitoringHealthState =
-        readFile(context) ?: readLegacyPreferences(context)
-
-    @Synchronized
-    fun recordServiceHeartbeat(context: Context, elapsedTime: Long) {
-        val current = read(context)
-        write(
-            context, current.copy(serviceHeartbeatElapsedTime = elapsedTime)
-        )
+    fun read(context: Context): MonitoringHealthState = try {
+        val boot = bootCount(context)
+        locked(context) { file -> readFile(file, boot) } ?: readLegacyPreferences(context)
+    } catch (error: IOException) {
+        Log.w(LOG_TAG, "Unable to read monitoring health state", error)
+        empty
     }
 
-    @Synchronized
-    fun recordDatabaseHeartbeat(context: Context, elapsedTime: Long) {
-        val current = read(context)
-        write(
-            context, current.copy(databaseHeartbeatElapsedTime = elapsedTime)
-        )
+    fun record(context: Context, serviceElapsed: Long = 0L, databaseElapsed: Long = 0L) {
+        try {
+            val boot = bootCount(context)
+            locked(context) { file ->
+                val current = readFile(file, boot, allowLegacy = false) ?: empty
+                val next = MonitoringHealthState(
+                    serviceHeartbeatElapsedTime = maxOf(
+                        current.serviceHeartbeatElapsedTime, serviceElapsed
+                    ), databaseHeartbeatElapsedTime = maxOf(
+                        current.databaseHeartbeatElapsedTime, databaseElapsed
+                    )
+                )
+                if (next != current) write(file, boot, next)
+            }
+        } catch (error: IOException) {
+            Log.e(LOG_TAG, "Unable to write monitoring health state", error)
+        }
     }
 
-    private fun readFile(context: Context): MonitoringHealthState? {
-        val file = stateFile(context)
-        if (!file.baseFile.isFile) return null
+    private fun bootCount(context: Context): Int =
+        Settings.Global.getInt(context.contentResolver, Settings.Global.BOOT_COUNT, -1)
+
+    private fun readFile(
+        file: AtomicFile, boot: Int, allowLegacy: Boolean = true
+    ): MonitoringHealthState? {
         return try {
             DataInputStream(file.openRead().buffered()).use { input ->
-                if (input.readInt() != FILE_MAGIC || input.readInt() != FILE_VERSION) return null
+                if (input.readInt() != FILE_MAGIC) return empty
+                when (input.readInt()) {
+                    1 -> if (!allowLegacy) return empty
+                    FILE_VERSION -> if (input.readInt() != boot) return empty
+                    else -> return empty
+                }
                 MonitoringHealthState(
                     serviceHeartbeatElapsedTime = input.readLong(),
                     databaseHeartbeatElapsedTime = input.readLong()
                 )
             }
+        } catch (_: FileNotFoundException) {
+            null
         } catch (error: IOException) {
             Log.w(LOG_TAG, "Unable to read monitoring health state", error)
-            null
+            empty
         }
     }
 
@@ -75,8 +97,7 @@ internal object MonitoringHealthStore {
         )
     }
 
-    private fun write(context: Context, state: MonitoringHealthState) {
-        val file = stateFile(context)
+    private fun write(file: AtomicFile, boot: Int, state: MonitoringHealthState) {
         val output = try {
             file.startWrite()
         } catch (error: IOException) {
@@ -87,6 +108,7 @@ internal object MonitoringHealthStore {
             DataOutputStream(output.buffered()).apply {
                 writeInt(FILE_MAGIC)
                 writeInt(FILE_VERSION)
+                writeInt(boot)
                 writeLong(state.serviceHeartbeatElapsedTime)
                 writeLong(state.databaseHeartbeatElapsedTime)
                 flush()
@@ -98,7 +120,11 @@ internal object MonitoringHealthStore {
         }
     }
 
-    private fun stateFile(context: Context): AtomicFile = AtomicFile(
-        File(context.noBackupFilesDir, FILE_NAME)
-    )
+    @Synchronized
+    private fun <T> locked(context: Context, operation: (AtomicFile) -> T): T =
+        RandomAccessFile(File(context.noBackupFilesDir, "$FILE_NAME.lock"), "rw").use { lockFile ->
+            lockFile.channel.lock().use {
+                operation(AtomicFile(File(context.noBackupFilesDir, FILE_NAME)))
+            }
+        }
 }

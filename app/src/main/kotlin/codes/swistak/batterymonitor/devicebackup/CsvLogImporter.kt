@@ -18,11 +18,12 @@ import android.content.res.Configuration
 import android.net.Uri
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogExport
 import codes.swistak.batterymonitor.logs.LogRecord
 import java.io.BufferedReader
-import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStreamReader
+import java.io.Reader
 import java.nio.charset.StandardCharsets
 import java.text.DateFormat
 import java.text.ParsePosition
@@ -32,7 +33,8 @@ import kotlin.math.roundToInt
 import android.text.format.DateFormat as AndroidDateFormat
 
 internal object CsvLogImporter {
-    private const val COLUMN_COUNT = 7
+    private const val LEGACY_COLUMN_COUNT = 7
+    private const val COLUMN_COUNT = 10
 
     private val supportedLocaleTags = listOf(
         "en",
@@ -66,12 +68,13 @@ internal object CsvLogImporter {
     )
 
     @Throws(IllegalArgumentException::class, IllegalStateException::class)
-    fun importFromCsv(context: Context, csv: String, logImportMode: LogImportMode): Int {
+    fun importFromReader(context: Context, reader: Reader, logImportMode: LogImportMode): Int {
         val statusCodes = localizedStatusCodes(context)
         val timestampFormats = timestampFormats(context)
         var selectedTimestampFormat: DateFormat? = null
-        val records = parseRecords(
-            csv = csv,
+        var restored = 0
+        val records = decodeRecords(
+            rows = readCsvRows(reader),
             statusCodeFor = { statusCodes[it.trim()] },
             timestampFor = { date, time ->
                 val value = "$date $time"
@@ -79,39 +82,53 @@ internal object CsvLogImporter {
                     ?: timestampFormats.firstNotNullOfOrNull { format ->
                         format.parseFully(value)?.also { selectedTimestampFormat = format }
                     }
-            })
+            }).onEach { restored++ }.iterator()
+        if (!records.hasNext()) return 0
 
         val database = LogDatabase(context)
         try {
             when (logImportMode) {
-                LogImportMode.REPLACE -> database.replaceAllLogs(records)
-                LogImportMode.ADD -> database.addLogs(records)
+                LogImportMode.REPLACE -> database.replaceAllLogs(records.asSequence())
+                LogImportMode.ADD -> database.addLogs(records.asSequence())
             }
         } finally {
             database.close()
         }
-        return records.size
+        return restored
     }
 
-    internal fun parseRecords(
-        csv: String, statusCodeFor: (String) -> Int?, timestampFor: (String, String) -> Long?
-    ): List<LogRecord> {
-        val rows = parseCsv(csv).filterNot { row -> row.all(String::isBlank) }
-        require(rows.size > 1) { "The CSV file contains no log entries" }
-
-        return rows.drop(1).mapIndexed { index, row ->
-            require(row.size >= COLUMN_COUNT) { "Invalid CSV row ${index + 2}" }
-            val trailingColumnStart = row.size - 4
+    internal fun decodeRecords(
+        rows: Sequence<List<String>>,
+        statusCodeFor: (String) -> Int?,
+        timestampFor: (String, String) -> Long?
+    ): Sequence<LogRecord> {
+        val source = rows.filterNot { row -> row.all(String::isBlank) }.iterator()
+        require(source.hasNext()) { "The CSV file contains no log header" }
+        val header = source.next()
+        val columnCount = header.size
+        require(columnCount == LEGACY_COLUMN_COUNT || columnCount == COLUMN_COUNT) {
+            "Unsupported CSV columns"
+        }
+        // Current empty exports contain a header. Importing one must not clear existing history.
+        require(source.hasNext() || LogExport.hasMeasurementCsvHeader(header)) {
+            "The CSV file contains no log entries"
+        }
+        val hasMeasurements = columnCount == COLUMN_COUNT
+        val trailingColumnCount = columnCount - 3
+        return source.asSequence().mapIndexed { index, row ->
+            require(row.size >= columnCount) { "Invalid CSV row ${index + 2}" }
+            val trailingColumnStart = row.size - trailingColumnCount
             val statusLabel = row.subList(2, trailingColumnStart).joinToString(",")
-            val statusCode = statusCodeFor(statusLabel)
-                ?: throw IllegalArgumentException("Unknown status in CSV row ${index + 2}")
+            val statusCode = sampleStatusCode(statusLabel) ?: statusCodeFor(statusLabel)
+            ?: throw IllegalArgumentException("Unknown status in CSV row ${index + 2}")
             val timestamp = timestampFor(row[0].trim(), row[1].trim())
                 ?: throw IllegalArgumentException("Invalid timestamp in CSV row ${index + 2}")
             val isBoot = statusCode == LogDatabase.STATUS_BOOT_COMPLETED
 
             LogRecord(
                 status = statusCode,
-                charge = if (isBoot) null else row[trailingColumnStart].trim().toIntOrNull()
+                charge = if (isBoot || row[trailingColumnStart].isBlank()) null
+                else row[trailingColumnStart].trim().toIntOrNull()
                     ?: throw IllegalArgumentException("Invalid charge in CSV row ${index + 2}"),
                 time = timestamp,
                 temperature = if (isBoot) null else parseScaledDecimal(
@@ -119,23 +136,38 @@ internal object CsvLogImporter {
                 ),
                 voltage = if (isBoot) null else parseScaledDecimal(
                     row[trailingColumnStart + 3], 1000.0, "voltage", index + 2
-                )
-            )
+                ),
+                currentMicroAmps = if (isBoot || !hasMeasurements) null
+                else parseOptionalLong(row[trailingColumnStart + 4], "current", index + 2),
+                remainingChargeMicroampHours = if (isBoot || !hasMeasurements) null
+                else parseOptionalLong(
+                    row[trailingColumnStart + 5], "remaining charge", index + 2
+                )?.also { require(it >= 0) { "Invalid remaining charge in CSV row ${index + 2}" } })
         }
+    }
+
+    private fun sampleStatusCode(label: String): Int? {
+        if (!label.startsWith("[sample=")) return null
+        val end = label.indexOf(']')
+        require(end >= 0) { "Invalid periodic sample status" }
+        val code = label.substring(8, end).toIntOrNull()
+        require(code != null && code in 200..299 && code % 10 in 0..5 && code / 10 % 10 in 0..4) {
+            "Invalid periodic sample status"
+        }
+        return code
     }
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String? {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return null
-        pfd.use {
+    fun <T> withCsvReader(context: Context, uri: Uri, read: (Reader) -> T): T =
+        LogExport.withReadableCsv(context, uri) {
+            val input = context.contentResolver.openInputStream(uri)
+                ?: throw IOException("Could not open CSV source")
             BufferedReader(
-                InputStreamReader(FileInputStream(it.fileDescriptor), StandardCharsets.UTF_8)
-            ).use { reader ->
-                return reader.readText()
-            }
+                InputStreamReader(BackupImportInputStream(input), StandardCharsets.UTF_8)
+            ).use(read)
         }
-    }
 
+    // Historical CSV labels need each bundled locale; releases ship a universal APK.
     @SuppressLint("AppBundleLocaleChanges")
     private fun localizedStatusCodes(context: Context): Map<String, Int> = buildMap {
         for (localeTag in supportedLocaleTags) {
@@ -174,6 +206,7 @@ internal object CsvLogImporter {
         }
     }
 
+    // Locale contexts recognize historical timestamps without changing the app locale.
     @SuppressLint("AppBundleLocaleChanges")
     private fun timestampFormats(context: Context): List<DateFormat> {
         val formats = mutableListOf<DateFormat>()
@@ -217,7 +250,13 @@ internal object CsvLogImporter {
         return if (position.index == value.length) parsed.time else null
     }
 
-    private fun parseScaledDecimal(value: String, scale: Double, name: String, row: Int): Int {
+    private fun parseOptionalLong(value: String, name: String, row: Int): Long? =
+        value.trim().takeIf(String::isNotEmpty)?.let {
+            it.toLongOrNull() ?: throw IllegalArgumentException("Invalid $name in CSV row $row")
+        }
+
+    private fun parseScaledDecimal(value: String, scale: Double, name: String, row: Int): Int? {
+        if (value.isBlank()) return null
         val parsed = value.trim().toDoubleOrNull()
             ?: throw IllegalArgumentException("Invalid $name in CSV row $row")
         require(parsed.isFinite()) { "Invalid $name in CSV row $row" }
@@ -228,7 +267,27 @@ internal object CsvLogImporter {
         return scaled.roundToInt()
     }
 
-    private fun parseCsv(csv: String): List<List<String>> {
+    internal fun readCsvRows(reader: Reader): Sequence<List<String>> = sequence {
+        val record = StringBuilder()
+        var quoted = false
+        while (true) {
+            val next = reader.read()
+            if (next == -1) break
+            val character = next.toChar()
+            if (character == '"') quoted = !quoted
+            if (!quoted && (character == '\r' || character == '\n')) {
+                if (record.isNotBlank()) yield(parseCsv(record.toString()).single())
+                record.clear()
+            } else {
+                require(record.length < 64 * 1024) { "CSV record is too large" }
+                record.append(character)
+            }
+        }
+        require(!quoted) { "Unterminated quoted CSV field" }
+        if (record.isNotBlank()) yield(parseCsv(record.toString()).single())
+    }
+
+    internal fun parseCsv(csv: String): List<List<String>> {
         val rows = mutableListOf<MutableList<String>>()
         var row = mutableListOf<String>()
         val field = StringBuilder()

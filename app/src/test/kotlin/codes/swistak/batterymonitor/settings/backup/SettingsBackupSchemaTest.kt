@@ -14,6 +14,9 @@ package codes.swistak.batterymonitor.settings.backup
 
 import android.content.SharedPreferences
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsControl
+import codes.swistak.batterymonitor.settings.SettingsDefinitions
+import codes.swistak.batterymonitor.ui.settings.SettingCatalog
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertSame
@@ -21,6 +24,67 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class SettingsBackupSchemaTest {
+    @Test
+    fun `every portable user setting remains represented in the backup schema`() {
+        val actions = setOf(
+            SettingsContract.KEY_CHANGE_APP_LANGUAGE,
+            SettingsContract.KEY_ENABLE_NOTIFS_B,
+            SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS,
+            SettingsContract.KEY_AUTO_LOG_EXPORT,
+            SettingsContract.KEY_EXPORT_GENERAL_BACKUP,
+            SettingsContract.KEY_IMPORT_GENERAL_BACKUP,
+            SettingsContract.KEY_EXPORT_SETTINGS,
+            SettingsContract.KEY_IMPORT_SETTINGS,
+            SettingsContract.KEY_EXPORT_ALARMS,
+            SettingsContract.KEY_IMPORT_ALARMS,
+            SettingsContract.KEY_EXPORT_DEVICE_DATA,
+            SettingsContract.KEY_IMPORT_DEVICE_DATA,
+            SettingsContract.KEY_IMPORT_LOGS_CSV,
+            SettingsContract.KEY_RESET_DEFAULT_SETTINGS
+        )
+        val encodedSettings = setOf(
+            SettingsContract.KEY_CHIP_CONTENT, SettingsContract.KEY_VITAL_SIGNS_CONTENT
+        )
+        val scalarSettings = SettingsDefinitions.preferences.filter {
+            it.control != SettingsControl.Action
+        }
+        val appearanceSettings = setOf(
+            SettingsContract.KEY_COLOR_SOURCE, SettingsContract.KEY_BRIGHTNESS
+        )
+        assertEquals(
+            "Include each portable user setting in the backup schema",
+            SettingCatalog.routes.keys - SettingCatalog.diagnosticRoutes.keys,
+            scalarSettings.map { it.key }.toSet() + appearanceSettings + encodedSettings + actions
+        )
+        for ((key, _, _, control) in scalarSettings) {
+            val expectedType = when (control) {
+                is SettingsControl.Toggle -> Boolean::class.java
+                is SettingsControl.Number -> Int::class.java
+                is SettingsControl.Choice -> String::class.java
+                SettingsControl.Action -> error("Unexpected action")
+            }
+            assertEquals(
+                key, expectedType, Version4SettingsImporter.schema[key]
+            )
+        }
+        for (key in appearanceSettings) {
+            assertEquals(key, String::class.java, Version4SettingsImporter.schema[key])
+        }
+        for (key in SettingsBackupCodec.chipContentByBackupKey.keys + SettingsBackupCodec.vitalSignsContentByBackupKey.keys) {
+            assertEquals(key, Boolean::class.java, Version4SettingsImporter.schema[key])
+        }
+        for (key in SettingsBackupCodec.chipContentOrderByBackupKey.keys + SettingsBackupCodec.vitalSignsOrderByBackupKey.keys) {
+            assertEquals(key, Int::class.java, Version4SettingsImporter.schema[key])
+        }
+    }
+
+    @Test
+    fun `removed advanced stats preference is ignored by every backup version`() {
+        for (version in 1..SettingsBackup.SCHEMA_VERSION) {
+            assertFalse(settingsImporterForVersion(version).schema.containsKey("enable_advanced_stats"))
+        }
+    }
+
     @Test
     fun `version three includes explicit chip content settings`() {
         assertEquals(
@@ -219,6 +283,10 @@ class SettingsBackupSchemaTest {
             Boolean::class.java,
             Version4SettingsImporter.schema[SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS]
         )
+        assertEquals(
+            Boolean::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY]
+        )
     }
 
     @Test
@@ -243,7 +311,8 @@ class SettingsBackupSchemaTest {
             SettingsContract.KEY_CHARGING_TARGET_MODE to "custom",
             SettingsContract.KEY_CUSTOM_CHARGING_TARGET to 85,
             SettingsContract.KEY_DISCHARGING_TARGET to 15,
-            SettingsContract.KEY_USE_PRIVILEGED_ACCESS to true
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS to true,
+            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY to true
         )
 
         Version4SettingsImporter.restore(editor, settings)
@@ -252,5 +321,12 @@ class SettingsBackupSchemaTest {
         assertEquals(85, restored[SettingsContract.KEY_CUSTOM_CHARGING_TARGET])
         assertEquals(15, restored[SettingsContract.KEY_DISCHARGING_TARGET])
         assertEquals(true, restored[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertEquals(true, restored[SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY])
+        restored.clear()
+        Version3SettingsImporter.restore(
+            editor, mapOf(SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT to true)
+        )
+        assertEquals(true, restored[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertFalse(restored.containsKey(SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT))
     }
 }

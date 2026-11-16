@@ -29,7 +29,8 @@ import javax.crypto.spec.SecretKeySpec
 internal sealed class ChargingDiagnosticCondition(val reportLabel: String) {
     data object Off : ChargingDiagnosticCondition("Protection off / unrestricted")
 
-    data class Fixed(val percent: Int) : ChargingDiagnosticCondition("Fixed limit $percent%") {
+    data class Fixed(val percent: Int) :
+        ChargingDiagnosticCondition("Fixed charging target $percent%") {
         init {
             require(percent in MIN_FIXED_PERCENT..MAX_FIXED_PERCENT)
         }
@@ -81,20 +82,7 @@ internal data class ChargingDiagnosticSnapshot(
     val powerSupplyNodes: Map<String, String>,
     val batteryState: Map<String, String>,
     val adapterStates: Map<String, String>
-) {
-    fun hasLimitedUnprivilegedDiscovery(): Boolean {
-        if (discoveryAccess["privileged_requested"] != "false") return false
-        val restrictedSections = listOf(
-            sectionStatus["settings/global"],
-            sectionStatus["settings/secure"],
-            sectionStatus["settings/system"],
-            sectionStatus["power_supply/local_discovery"]
-        ).count { status ->
-            status?.startsWith("FAILED") == true || status?.startsWith("UNREADABLE") == true
-        }
-        return restrictedSections >= 2
-    }
-}
+)
 
 internal class ChargingLimitDiagnostics(
     context: Context,
@@ -334,10 +322,10 @@ internal class ChargingLimitDiagnostics(
     private fun buildPowerSupplyBatchCommand(absolutePaths: List<String>): String = buildString {
         append("for f in ")
         append(absolutePaths.joinToString(" "))
-        append("; do printf '%s\\t' \"\$f\"; ")
-        append("if [ -r \"\$f\" ]; then value=\$(head -c 512 \"\$f\" 2>/dev/null); ")
-        append("code=\$?; if [ \"\$code\" -eq 0 ]; then ")
-        append("printf 'OK\\t%s\\n' \"\$value\"; else printf 'FAILED\\n'; fi; ")
+        append($$"; do printf '%s\\t' \"$f\"; ")
+        append($$"if [ -r \"$f\" ]; then value=$(head -c 512 \"$f\" 2>/dev/null); ")
+        append($$"code=$?; if [ \"$code\" -eq 0 ]; then ")
+        append($$"printf 'OK\\t%s\\n' \"$value\"; else printf 'FAILED\\n'; fi; ")
         append("else printf 'FAILED\\n'; fi; done")
     }
 
@@ -426,7 +414,7 @@ internal class ChargingLimitDiagnostics(
     }
 
     private fun wrapCommandWithExitStatus(command: String): String =
-        "{ $command; }; code=\$?; printf '\\n${COMMAND_EXIT_MARKER}%s\\n' \"\$code\""
+        $$"{ $$command; }; code=$?; printf '\\n$$COMMAND_EXIT_MARKER%s\\n' \"$code\""
 
     private fun ReadResult<String>.statusText(): String = when (this) {
         is ReadResult.Value -> "OK [${source.name}]"
@@ -496,8 +484,7 @@ internal class ChargingLimitDiagnostics(
         )
 
         private fun sanitizeKnownProperty(value: String): String =
-            Regex("(?i)(?:v)?[0-9]+(?:\\.[0-9]+)+|[0-9]+").find(value)?.value
-                ?: "<present:redacted>"
+            Regex("(?i)v?[0-9]+(?:\\.[0-9]+)+|[0-9]+").find(value)?.value ?: "<present:redacted>"
     }
 }
 
@@ -624,10 +611,17 @@ internal object ChargingDiagnosticReport {
         val values: List<Pair<ChargingDiagnosticCondition, String>>
     )
 
-    fun create(context: Context, snapshots: List<ChargingDiagnosticSnapshot>): String {
+    fun create(
+        context: Context,
+        capturedSnapshots: List<ChargingDiagnosticSnapshot>,
+        includeAppNames: Boolean = false
+    ): String {
+        val snapshots = if (includeAppNames) capturedSnapshots else capturedSnapshots.map {
+            it.copy(systemPackages = emptyMap())
+        }
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         return buildString {
-            appendLine("Battery Monitor - OEM charging-limit diagnostics")
+            appendLine("Battery Monitor - OEM charging-target diagnostics")
             appendLine("Generated: ${Instant.now()}")
             appendLine("App version: ${packageInfo.versionName}")
             append(createCandidateSection(snapshots))

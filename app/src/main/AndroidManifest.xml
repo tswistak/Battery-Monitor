@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:sharedUserId="codes.swistak.batterymonitor"
-    android:sharedUserMaxSdkVersion="32">
+    android:sharedUserMaxSdkVersion="32"
+    tools:targetApi="33">
 
     <!-- Permissions now considered "normal", automatically granted on API 23+ -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /><!-- Required on API 28+ -->
+    <!-- BatteryInfoService declares specialUse and its monitoring purpose below. -->
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE"
+        tools:ignore="ForegroundServicesPolicy" />
+    <!-- Required on API 28+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
@@ -33,6 +40,8 @@
     <application
         android:name=".app.BatteryMonitorApplication"
         android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_full_name"
@@ -40,20 +49,15 @@
         android:process="codes.swistak.batterymonitor"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        tools:targetApi="33">
 
-        <!--
-            Temporarily put these two lines in <application> above to enable debugging of release build:
-
-            android:debuggable="true"
-            tools:ignore="HardcodedDebugMode"
-        -->
         <activity
             android:name=".app.BatteryInfoActivity"
             android:exported="true"
             android:label="@string/app_launcher_name"
             android:launchMode="singleTask"
-            android:stateNotNeeded="true"
+            android:stateNotNeeded="false"
             android:theme="@style/bi_main_theme">
             <intent-filter android:label="@string/app_launcher_name">
                 <action android:name="android.intent.action.MAIN" />
@@ -62,6 +66,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.history.FullscreenChartActivity"
+            android:exported="false"
+            android:theme="@style/bi_compose_theme" />
 
         <activity
             android:name=".settings.SettingsActivity"
@@ -121,7 +130,6 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-                <!--data android:scheme="package" android:path="codes.swistak.batterymonitor" /-->
             </intent-filter>
         </receiver>
 
@@ -152,6 +160,79 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/full_app_widget_info" />
         </receiver>
+
+        <receiver
+            android:name=".widgets.WidgetSettingsReceiver"
+            android:exported="false"
+            android:process="codes.swistak.batterymonitor.BIS" />
+
+        <activity
+            android:name=".ui.widgets.WidgetConfigurationActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process="codes.swistak.batterymonitor.BIS"
+            android:taskAffinity="${applicationId}.widget_configuration"
+            android:theme="@style/bi_settings_theme">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".widgets.StatusWidgetProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/widget_status"
+            android:process="codes.swistak.batterymonitor.BIS">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_status_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.MeasurementsWidgetProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/widget_measurements"
+            android:process="codes.swistak.batterymonitor.BIS">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_measurements_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.TrendWidgetProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/widget_trend"
+            android:process="codes.swistak.batterymonitor.BIS">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_trend_info" />
+        </receiver>
+
+        <provider
+            android:name=".monitoring.charginglimit.ChargingLimitContentProvider"
+            android:authorities="${applicationId}.charging-limit"
+            android:exported="false" />
+
+        <provider
+            android:name=".logs.AutoLogExportProvider"
+            android:authorities="${applicationId}.log-export"
+            android:exported="false" />
 
         <provider
             android:name=".advancedstats.BatteryMonitorShizukuProvider"

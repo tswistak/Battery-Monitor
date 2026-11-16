@@ -26,8 +26,7 @@ internal object XiaomiChargingLimitAdapter : ChargingLimitAdapter {
         battery: BatteryChargingStateReader,
         powerSupply: PowerSupplyReader
     ): ChargingLimitState {
-        val mode = settings.read(SettingNamespace.SECURE, MODE_KEY)
-        return when (mode) {
+        return when (val mode = settings.read(SettingNamespace.SECURE, MODE_KEY)) {
             is ReadResult.Value -> when (mode.value) {
                 "0" -> noFixedLimit(NoFixedLimitKind.DISABLED, mode)
                 "1" -> noFixedLimit(NoFixedLimitKind.ADAPTIVE, mode)

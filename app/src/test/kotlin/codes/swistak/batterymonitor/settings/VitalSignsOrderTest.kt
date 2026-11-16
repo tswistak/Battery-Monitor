@@ -46,6 +46,7 @@ class VitalSignsOrderTest {
 
     @Test
     fun `missing stored order uses the default order`() {
-        assertEquals(SettingsContract.ALL_VITAL_SIGNS_CONTENT, VitalSignsOrder.parse(null))
+        val expected = SettingsContract.ALL_VITAL_SIGNS_CONTENT
+        assertEquals(expected, VitalSignsOrder.parse(null))
     }
 }

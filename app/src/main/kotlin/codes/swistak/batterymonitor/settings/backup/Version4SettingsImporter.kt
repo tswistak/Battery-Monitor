@@ -20,6 +20,8 @@ internal object Version4SettingsImporter : SettingsImporter {
 
     override val schema: Map<String, Class<*>> = buildMap {
         putAll(Version3SettingsImporter.schema)
+        put(SettingsContract.KEY_COLOR_SOURCE, String::class.java)
+        put(SettingsContract.KEY_BRIGHTNESS, String::class.java)
         remove(SettingsContract.LEGACY_KEY_CONVERT_F)
         put(SettingsContract.KEY_TEMPERATURE_UNIT, String::class.java)
         put(SettingsContract.KEY_LONG_DURATION_FORMAT, String::class.java)
@@ -30,6 +32,9 @@ internal object Version4SettingsImporter : SettingsImporter {
         put(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, Boolean::class.java)
         put(SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS, Boolean::class.java)
         put(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, Boolean::class.java)
+        put(SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY, Boolean::class.java)
+        put(SettingsContract.KEY_HISTORY_SAMPLING_MODE, String::class.java)
+        put(SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES, String::class.java)
     }
 
     override fun restore(

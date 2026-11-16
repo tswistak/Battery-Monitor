@@ -15,6 +15,8 @@ package codes.swistak.batterymonitor.settings.backup
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import codes.swistak.batterymonitor.devicebackup.readBackupJson
+import codes.swistak.batterymonitor.devicebackup.writeBackupJson
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.VitalSignsOrder
@@ -23,56 +25,46 @@ import codes.swistak.batterymonitor.settings.migration.TemperatureUnitPreference
 import codes.swistak.batterymonitor.settings.migration.VitalSignsContentMigration
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
 
 internal object SettingsBackup {
     const val SCHEMA_VERSION: Int = Version4SettingsImporter.VERSION
 
-    private fun validateSettings(
-        settings: JSONObject, schema: Map<String, Class<*>>
-    ): Map<String, Any> = buildMap {
-        val keys = settings.keys()
-        while (keys.hasNext()) {
-            val key = keys.next()
-            val expectedType = schema[key] ?: continue
-            val value = settings.get(key)
+    const val MAX_IMPORT_BYTES = 1024 * 1024
 
-            when (expectedType) {
-                Boolean::class.java -> require(value is Boolean) {
-                    "Invalid type for '$key': expected boolean"
-                }
-
-                String::class.java -> require(value is String) {
-                    "Invalid type for '$key': expected string"
-                }
-
-                Int::class.java -> require(value is Int) {
-                    "Invalid type for '$key': expected integer"
-                }
-
-                else -> error("Unsupported settings type for '$key'")
+    fun parsedSettings(root: JSONObject): Pair<Int, Map<String, Any>> {
+        val version = root.optInt("version", 0)
+        val importer = settingsImporterForVersion(version)
+        val settings = root.getJSONObject("settings")
+        val values = buildMap<String, Any> {
+            val keys = settings.keys()
+            while (keys.hasNext()) {
+                val key = keys.next()
+                if (key in importer.schema) put(key, settings.get(key))
             }
-            put(key, value)
         }
-    }
-
-    @Throws(JSONException::class)
-    fun getSchemaVersion(jsonString: String): Int {
-        return JSONObject(jsonString).optInt("version", 0)
+        SettingsBackupValidation.validate(values, importer.schema)
+        if (version >= Version3SettingsImporter.VERSION) {
+            SettingsBackupCodec.vitalSignsOrderFromBackup(values)
+            SettingsBackupCodec.chipContentOrderFromBackup(values)
+        }
+        return version to values
     }
 
     @Throws(JSONException::class)
     fun exportToJson(prefs: SharedPreferences): JSONObject {
         val settings = JSONObject()
-        for (entry in prefs.all.entries) {
-            if (Version4SettingsImporter.schema.containsKey(entry.key)) {
-                settings.put(entry.key, entry.value)
+        for ((key, value) in prefs.all) {
+            if (Version4SettingsImporter.schema.containsKey(key)) {
+                settings.put(key, value)
             }
+        }
+
+        if (!settings.has(SettingsContract.KEY_HISTORY_SAMPLING_MODE)) {
+            settings.put(
+                SettingsContract.KEY_HISTORY_SAMPLING_MODE,
+                SettingsContract.HISTORY_SAMPLING_MODE_STANDARD
+            )
         }
 
         val vitalSignsContent = prefs.getStringSet(
@@ -107,14 +99,9 @@ internal object SettingsBackup {
         return root
     }
 
-    @Throws(JSONException::class, IllegalArgumentException::class)
-    fun importFromJson(editor: SharedPreferences.Editor, jsonString: String) {
-        val root = JSONObject(jsonString)
-        val version = root.optInt("version", 0)
-        val importer = settingsImporterForVersion(version)
-        val settings = root.optJSONObject("settings") ?: return
-        val validatedSettings = validateSettings(settings, importer.schema)
-        importer.restore(editor, validatedSettings)
+    fun restore(editor: SharedPreferences.Editor, parsed: Pair<Int, Map<String, Any>>) {
+        val (version, validatedSettings) = parsed
+        settingsImporterForVersion(version).restore(editor, validatedSettings)
         TemperatureUnitPreferencesMigration.restoreImportedSettings(editor, validatedSettings)
         if (version < Version3SettingsImporter.VERSION) {
             VitalSignsContentMigration.restoreImportedSettings(editor, validatedSettings)
@@ -123,27 +110,10 @@ internal object SettingsBackup {
     }
 
     @Throws(IOException::class)
-    fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w") ?: return
-        pfd.use { pfd ->
-            val fos = FileOutputStream(pfd.fileDescriptor)
-            fos.write(json.toString().toByteArray(StandardCharsets.UTF_8))
-            fos.close()
-        }
-    }
+    fun writeToUri(context: Context, uri: Uri, json: JSONObject) =
+        writeBackupJson(context, uri, json, MAX_IMPORT_BYTES)
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String? {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return null
-        pfd.use { pfd ->
-            val reader = BufferedReader(
-                InputStreamReader(FileInputStream(pfd.fileDescriptor), StandardCharsets.UTF_8)
-            )
-            val sb = StringBuilder()
-            var line: String?
-            while ((reader.readLine().also { line = it }) != null) sb.append(line).append('\n')
-            reader.close()
-            return sb.toString()
-        }
-    }
+    fun readFromUri(context: Context, uri: Uri): Pair<Int, Map<String, Any>> =
+        parsedSettings(readBackupJson(context, uri, MAX_IMPORT_BYTES))
 }

@@ -13,216 +13,803 @@
 */
 package codes.swistak.batterymonitor.app
 
-
-import android.content.Context
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.KeyEvent
-import android.view.View
-import android.view.ViewGroup
+import android.os.PowerManager
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.viewpager.widget.PagerTitleStrip
-import androidx.viewpager.widget.ViewPager
+import androidx.fragment.app.FragmentFactory
+import androidx.fragment.app.commitNow
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.withResumed
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.advancedstats.AdvancedInfoFragment
-import codes.swistak.batterymonitor.alarms.AlarmsFragment
-import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
-import codes.swistak.batterymonitor.logs.LogViewFragment
+import codes.swistak.batterymonitor.alarms.AlarmEditActivity
+import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
+import codes.swistak.batterymonitor.common.showToast
+import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
+import codes.swistak.batterymonitor.diagnostics.DiagnosticsFragment
+import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
-import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
 import codes.swistak.batterymonitor.settings.SettingsContract
-import java.util.Locale
+import codes.swistak.batterymonitor.settings.SettingsFragment
+import codes.swistak.batterymonitor.settings.temperatureUnit
+import codes.swistak.batterymonitor.ui.alarms.AlarmsScreen
+import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
+import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
+import codes.swistak.batterymonitor.ui.current.CurrentMeasurement
+import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
+import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsRoute
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsViewModel
+import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
+import codes.swistak.batterymonitor.ui.help.HelpScreen
+import codes.swistak.batterymonitor.ui.help.LicenseScreen
+import codes.swistak.batterymonitor.ui.help.diagnosticDetailHelpTopic
+import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
+import codes.swistak.batterymonitor.ui.history.HistoryActionsMenu
+import codes.swistak.batterymonitor.ui.history.HistoryRoute
+import codes.swistak.batterymonitor.ui.history.HistoryViewModel
+import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
+import codes.swistak.batterymonitor.ui.navigation.SectionRegistry
+import codes.swistak.batterymonitor.ui.navigation.SideNavigationShell
+import codes.swistak.batterymonitor.ui.settings.SettingsCategory
 
 class BatteryInfoActivity : AppCompatActivity() {
     companion object {
-        const val PR_LVF_WRITE_STORAGE: Int = 1
+        const val EXTRA_DETAIL = "codes.swistak.batterymonitor.EXTRA_DETAIL"
+
+        const val EXTRA_SECTION = "codes.swistak.batterymonitor.EXTRA_SECTION"
+        const val EXTRA_HISTORY_HOURS = "codes.swistak.batterymonitor.EXTRA_HISTORY_HOURS"
+        const val EXTRA_HISTORY_METRIC = "codes.swistak.batterymonitor.EXTRA_HISTORY_METRIC"
     }
 
-    private var pagerAdapter: BatteryInfoPagerAdapter? = null
-    private var viewPager: ViewPager? = null
-    private var advancedStatsEnabled = false
+    private lateinit var navigator: SectionNavigator
+    private var selected by mutableStateOf(SectionOwner.CURRENT)
+    private var containerReady = false
+    private var shownDetail: String? = null
+    private var detail by mutableStateOf<String?>(null)
+    private var currentMeasurement by mutableStateOf<CurrentMeasurement?>(null)
+    private var externalNavigationRequest by mutableIntStateOf(0)
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.bi_main_theme)
+    private lateinit var diagnostics: DiagnosticsViewModel
+    private lateinit var current: CurrentStateViewModel
+    private var monitorActions by mutableStateOf<Map<String, MonitorAction>>(emptyMap())
+
+    private var shown: SectionOwner? = null
+    private lateinit var history: HistoryViewModel
+
+    private lateinit var alarms: AlarmsViewModel
+    private var pendingAlarmNavigation by mutableStateOf<AlarmEditorNavigation?>(null)
+    private val navigationBackCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            when (selected) {
+                SectionOwner.HELP if detail != null -> handleNavigationBack(this)
+                SectionOwner.ALARMS if alarms.state.value.draft != null -> leaveAlarmEditor(
+                    AlarmEditorNavigation(AlarmEditorDestination.DISMISS)
+                )
+
+                else -> leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.BACK))
+            }
+        }
+    }
+
+    private lateinit var startup: StartupDialogViewModel
+    private var activeDiagnosticsFragment by mutableStateOf<DiagnosticsFragment?>(null)
+    private val notificationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        startup.systemReturned()
+        PersistentFragment.getInstance(supportFragmentManager).refreshMonitoringAfterPermission()
+        continueStartup()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.bi_compose_theme)
+        // FragmentManager restores the released onboarding class before cleanup can run.
+        supportFragmentManager.fragmentFactory = object : FragmentFactory() {
+            override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
+                if (className == $$"codes.swistak.batterymonitor.app.PersistentFragment$OnboardingDialogFragment") {
+                    Fragment()
+                } else super.instantiate(classLoader, className)
+        }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        startup = ViewModelProvider(this)[StartupDialogViewModel::class.java]
+        startup.advance(startupEnvironment())
+        val persistent = PersistentFragment.getInstance(supportFragmentManager)
+        DisplayStrings.setResources(resources)
+        val currentSettings = getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
+        diagnostics = ViewModelProvider(this)[DiagnosticsViewModel::class.java]
+        current = ViewModelProvider(this)[CurrentStateViewModel::class.java]
+        history = ViewModelProvider(this)[HistoryViewModel::class.java]
+        alarms = ViewModelProvider(this)[AlarmsViewModel::class.java]
+        pendingAlarmNavigation = AlarmEditorNavigation.restore(
+            savedInstanceState?.getBundle("pending_alarm_navigation")
+        ).takeIf { alarms.state.value.draft != null }
+        history.restore(savedInstanceState?.getBundle("history_state"))
+        currentMeasurement =
+            CurrentMeasurement.fromRoute(savedInstanceState?.getString("current_measurement"))
+        supportFragmentManager.findFragmentByTag("onboarding")?.let { fragment ->
+            supportFragmentManager.commitNow { remove(fragment) }
+        }
 
-        supportActionBar!!.elevation = 0f
-        PersistentFragment.getInstance(supportFragmentManager)
+        navigator = SectionNavigator.restore(savedInstanceState)
+        selected = navigator.selected
+        detail = navigator.detail
+        if (savedInstanceState == null && (intent.hasExtra(EXTRA_SECTION) || intent.hasExtra(
+                BatteryInfoService.EXTRA_CURRENT_INFO
+            ) || intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS))
+        ) routeIntent(intent)
 
-        setContentView(R.layout.battery_info)
-        EdgeToEdgeHelper.applyIfNeeded(this)
+        setContentView(ComposeView(this).apply {
+            setContent {
+                LaunchedEffect(startup.systemAction) {
+                    if (startup.systemAction == null) return@LaunchedEffect
+                    // Dispose the application dialog before Android shows its permission UI.
+                    lifecycle.withResumed {
+                        dispatchStartupSystemAction()
+                    }
+                }
+                val sections = rememberSaveableStateHolder()
+                var historyAction by rememberSaveable { mutableStateOf<String?>(null) }
+                val historyState by history.state.collectAsStateWithLifecycle()
+                val alarmState by alarms.state.collectAsStateWithLifecycle()
+                val monitoringState by persistent.monitoring.state.collectAsStateWithLifecycle()
+                var alarmSettingsVersion by remember { mutableIntStateOf(0) }
+                DisposableEffect(currentSettings) {
+                    val listener =
+                        android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+                            alarmSettingsVersion++
+                        }
+                    currentSettings.registerOnSharedPreferenceChangeListener(listener)
+                    onDispose { currentSettings.unregisterOnSharedPreferenceChangeListener(listener) }
+                }
+                val temperatureUnit = remember(alarmSettingsVersion) {
+                    currentSettings.temperatureUnit(getString(R.string.default_temperature_unit))
+                }
+                val chargingTarget by alarms.chargingTarget.collectAsStateWithLifecycle()
+                val dischargingTarget = currentSettings.getInt(
+                    SettingsContract.KEY_DISCHARGING_TARGET,
+                    SettingsContract.DEFAULT_DISCHARGING_TARGET
+                ).coerceIn(0, 99)
+                LaunchedEffect(selected) {
+                    alarms.setTargetActive(
+                        selected == SectionOwner.ALARMS && lifecycle.currentState.isAtLeast(
+                            Lifecycle.State.RESUMED
+                        )
+                    )
+                    if (selected == SectionOwner.ALARMS) alarms.refresh()
+                }
+                val alarmLocale = LocalConfiguration.current.locales[0]
+                SideNavigationShell(
+                    selected = selected,
+                    externalNavigationRequest = externalNavigationRequest,
+                    detailTitle = detail?.let {
+                        getString(
+                            when {
+                                selected == SectionOwner.ALARMS -> R.string.alarm_settings_subtitle
+                                selected == SectionOwner.SETTINGS -> SettingsCategory.fromRoute(
+                                    it.substringAfter(
+                                        "settings:"
+                                    ).substringBefore(':')
+                                )?.title ?: R.string.settings_activity_subtitle
 
-        advancedStatsEnabled = isAdvancedStatsEnabled()
-        pagerAdapter = BatteryInfoPagerAdapter(supportFragmentManager, advancedStatsEnabled)
+                                selected == SectionOwner.HELP -> if (it == "help:licenses" || it.startsWith(
+                                        "help:licenses:"
+                                    )
+                                ) R.string.help_licenses_title else R.string.menu_help
 
-        pagerAdapter!!.setContext(this)
+                                it.substringBefore(':') == "charging-tools" -> R.string.charging_diagnostics_title
+                                else -> R.string.diag_monitor_operation
+                            }
+                        )
+                    },
+                    onUp = ::navigateUp,
+                    onSelect = { owner ->
+                        if (owner != this@BatteryInfoActivity.selected || this@BatteryInfoActivity.detail != null) {
+                            selectSection(owner)
+                        }
+                    },
+                    onSettings = if (selected == SectionOwner.CURRENT) {
+                        { selectSection(SectionOwner.SETTINGS) }
+                    } else null,
+                    actions = {
+                        if (selected in setOf(
+                                SectionOwner.DIAGNOSTICS, SectionOwner.ALARMS, SectionOwner.SETTINGS
+                            )
+                        ) TooltipIconButton(
+                            label = getString(R.string.menu_help), onClick = {
+                                val topic = when (selected) {
+                                    SectionOwner.ALARMS -> SettingsContract.KEY_ALARMS_SETTINGS
+                                    SectionOwner.DIAGNOSTICS -> diagnosticDetailHelpTopic(detail)
+                                    else -> when (SettingsCategory.fromRoute(
+                                        detail?.substringAfter(
+                                            "settings:"
+                                        )?.substringBefore(':')
+                                    )) {
+                                        SettingsCategory.General -> SettingsContract.KEY_OTHER_SETTINGS
+                                        SettingsCategory.Current -> SettingsContract.KEY_CURRENT_STATE_SETTINGS
+                                        SettingsCategory.Time -> SettingsContract.KEY_TIME_ESTIMATES_SETTINGS
+                                        SettingsCategory.Notification -> SettingsContract.KEY_NOTIFICATION_SETTINGS
+                                        SettingsCategory.Advanced -> SettingsContract.KEY_ADVANCED_SETTINGS
+                                        SettingsCategory.Backup -> SettingsContract.KEY_BACKUP_RESTORE_SETTINGS
+                                        else -> "settings"
+                                    }
+                                }
+                                openHelp(topic)
+                            }) {
+                            androidx.compose.material3.Icon(
+                                androidx.compose.ui.res.painterResource(R.drawable.ui_info),
+                                getString(R.string.menu_help)
+                            )
+                        }
+                        if (selected == SectionOwner.HISTORY) HistoryActionsMenu(!historyState.busy) {
+                            historyAction = it
+                        }
+                    }) { modifier ->
+                    Box(modifier) {
+                        AndroidView(
+                            factory = {
+                                // AndroidView supplies sizing; XML inflation also reattaches restored fragments.
+                                @SuppressLint("InflateParams") val container =
+                                    layoutInflater.inflate(R.layout.compose_section_container, null)
+                                container.apply {
+                                    post {
+                                        containerReady = true
+                                        showSection(selected)
+                                    }
+                                }
+                            }, modifier = Modifier.fillMaxSize()
+                        )
+                        if (selected == SectionOwner.HELP) {
+                            sections.SaveableStateProvider(detail ?: "help:root") {
+                                val topic = detail?.removePrefix("help:")
+                                if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
+                                    LicenseScreen(
+                                        componentId = topic.substringAfter(':', "")
+                                        .ifEmpty { null },
+                                        onOpenComponent = { openHelp("licenses:$it") })
+                                } else {
+                                    HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })
+                                }
+                            }
+                        }
+                        if (selected == SectionOwner.CURRENT) sections.SaveableStateProvider("current") {
+                            CurrentStateRoute(
+                                viewModel = current,
+                                monitoring = persistent.monitoring.state,
+                                serviceCurrent = persistent.monitoring.current,
+                                onCurrentDemand = persistent::setCurrentDemand,
+                                onRefreshServiceCurrent = persistent::refreshCurrent,
+                                settings = currentSettings,
+                                onSection = ::selectSection,
+                                onBatteryUsage = ::openBatteryUsage,
+                                onMonitor = { openDiagnosticDetail("monitor") },
+                                requestedMeasurement = currentMeasurement,
+                                onMeasurementHandled = { currentMeasurement = null },
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                        if (selected == SectionOwner.DIAGNOSTICS && detail == null) {
+                            sections.SaveableStateProvider("diagnostics") {
+                                DiagnosticsRoute(
+                                    diagnostics,
+                                    { openDiagnosticDetail("monitor") },
+                                    { openDiagnosticDetail("charging-tools") },
+                                    persistent.monitoring.state,
+                                    monitorActions,
+                                    onPrivilegedAccessSettings = {
+                                        openSettingsCategory(
+                                            SettingsCategory.Advanced.route,
+                                            SettingsContract.KEY_USE_PRIVILEGED_ACCESS
+                                        )
+                                    },
+                                    onRefreshAppOperation = { complete ->
+                                        activeDiagnosticsFragment?.refreshAppOperation(complete)
+                                    },
+                                    appOperationRefreshing = activeDiagnosticsFragment?.appOperationRefreshing == true,
+                                    monitoringStopped = activeDiagnosticsFragment?.monitorActions?.get(
+                                        "monitor_start"
+                                    )?.isVisible == true
+                                )
+                            }
+                        }
+                        if (selected == SectionOwner.HISTORY) sections.SaveableStateProvider("history") {
+                            HistoryRoute(
+                                history,
+                                requestedAction = historyAction,
+                                onActionHandled = { historyAction = null },
+                                onOpenFullscreen = { metric, range, label ->
+                                    history.retainExactRange()
+                                    startActivity(
+                                        FullscreenChartActivity.intent(
+                                            this@BatteryInfoActivity, metric, range, label
+                                        )
+                                    )
+                                },
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                        if (selected == SectionOwner.ALARMS) {
+                            sections.SaveableStateProvider("alarms:list") {
+                                AlarmsScreen(
+                                    state = alarmState,
+                                    convertFahrenheit = temperatureUnit.convertToFahrenheit,
+                                    chargingTarget = chargingTarget,
+                                    dischargingTarget = dischargingTarget,
+                                    monitoringAvailable = monitoringState.availability == MonitoringAvailability.LIVE,
+                                    dismissLowBatteryOnRecovery = currentSettings.getBoolean(
+                                        SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY, false
+                                    ),
+                                    onDismissLowBatteryOnRecovery = {
+                                        alarms.setDismissLowBatteryOnRecovery(
+                                            it, persistent::reloadSettings
+                                        )
+                                    },
+                                    onEdit = {
+                                        alarms.beginDraft(
+                                            it, temperatureUnit.convertToFahrenheit, alarmLocale
+                                        )
+                                    },
+                                    onAdd = {
+                                        alarms.beginThreshold(
+                                            it, temperatureUnit.convertToFahrenheit, alarmLocale
+                                        )
+                                    },
+                                    onEnabled = { type, rule, enabled ->
+                                        alarms.setEnabled(
+                                            type, rule, enabled, persistent::reloadSettings
+                                        )
+                                    },
+                                    onChannelSettings = { type ->
+                                        if (!NotificationSettingsNavigator.openNotificationChannel(
+                                                this@BatteryInfoActivity, type
+                                            )
+                                        ) {
+                                            alarms.reportSettingsFailure()
+                                        }
+                                    },
+                                    onNotificationSettings = {
+                                        if (!NotificationSettingsNavigator.openNotifications(this@BatteryInfoActivity)) {
+                                            alarms.reportSettingsFailure()
+                                        }
+                                    },
+                                    onTargets = {
+                                        openSettingsCategory(
+                                            SettingsCategory.Time.route,
+                                            SettingsContract.KEY_CHARGING_TARGET_MODE
+                                        )
+                                    },
+                                    onRetry = alarms::refresh,
+                                    onDisableInvalid = {
+                                        alarms.disableInvalid(
+                                            it, persistent::reloadSettings
+                                        )
+                                    },
+                                    onDeleteInvalid = {
+                                        alarms.deleteInvalid(
+                                            it, persistent::reloadSettings
+                                        )
+                                    },
+                                    onNoticeHandled = alarms::clearNotice,
+                                    onRevealHandled = alarms::clearReveal
+                                )
+                            }
+                            if (pendingAlarmNavigation == null) ThresholdDialog(
+                                state = alarmState,
+                                onInput = alarms::changeDraftInput,
+                                onSave = { alarms.saveDraft(persistent::reloadSettings) },
+                                onDelete = { alarms.deleteDraft(persistent::reloadSettings) },
+                                onDismiss = {
+                                    leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.DISMISS))
+                                },
+                                onCancel = {
+                                    if (!alarms.state.value.busy) {
+                                        pendingAlarmNavigation = null
+                                        alarms.discardDraft()
+                                    }
+                                },
+                                onEditExisting = alarms::editExistingThreshold,
+                                onRetry = alarms::refresh
+                            )
+                        }
+                        if (pendingAlarmNavigation != null && !startup.blocksContentDialogs) AlertDialog(
+                            modifier = Modifier.imePadding(),
+                            properties = DialogProperties(decorFitsSystemWindows = false),
+                            onDismissRequest = { pendingAlarmNavigation = null },
+                            text = {
+                                Text(
+                                    getString(R.string.alarms_discard_confirmation),
+                                    Modifier.verticalScroll(rememberScrollState())
+                                )
+                            },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    val navigation = pendingAlarmNavigation
+                                    pendingAlarmNavigation = null
+                                    alarms.discardDraft()
+                                    navigation?.let(::performAlarmNavigation)
+                                }) { Text(getString(R.string.alarms_discard)) }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { pendingAlarmNavigation = null }) {
+                                    Text(
+                                        getString(R.string.cancel)
+                                    )
+                                }
+                            })
+                        if (selected == SectionOwner.DIAGNOSTICS && detail == null) {
+                            activeDiagnosticsFragment?.let { fragment ->
+                                androidx.compose.runtime.key(fragment) { fragment.Dialogs() }
+                            }
+                        }
+                        if (startup.blocksContentDialogs) {
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .clickable(
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        indication = null,
+                                        onClick = {})
+                            )
+                        }
+                        StartupDialogs(startup, ::continueStartup)
+                    }
+                }
+            }
+        })
 
-        viewPager = findViewById<View?>(R.id.pager) as ViewPager
-        viewPager!!.setAdapter(pagerAdapter)
-
-        viewPager!!.setCurrentItem(1)
-        routeIntent(intent)
+        onBackPressedDispatcher.addCallback(this, navigationBackCallback)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        maybeRebuildPager()
-
-        val tabStrip = findViewById<View?>(R.id.pager_tab_strip) as PagerTitleStrip
-        tabStrip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16f)
+    private fun handleNavigationBack(callback: OnBackPressedCallback) {
+        if (navigator.back()) {
+            selected = navigator.selected
+            detail = navigator.detail
+            showSection(selected)
+        } else {
+            callback.isEnabled = false
+            onBackPressedDispatcher.onBackPressed()
+            callback.isEnabled = true
+        }
     }
 
-    public override fun onNewIntent(intent: Intent) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        setIntent(intent)
         routeIntent(intent)
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if (containerReady) showSection(selected)
+        if (::alarms.isInitialized) {
+            alarms.setTargetActive(selected == SectionOwner.ALARMS)
+            if (selected == SectionOwner.ALARMS) alarms.refresh()
+        }
+        dispatchStartupSystemAction()
+        continueStartup()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (::startup.isInitialized) {
+            startup.onWindowFocusChanged(hasFocus, startupEnvironment())
+        }
+    }
+
+    override fun onPause() {
+        if (::alarms.isInitialized) alarms.setTargetActive(false)
+        if (::startup.isInitialized) startup.onLeavingActivity()
+        super.onPause()
+    }
+
+    private fun continueStartup() {
+        window.decorView.post {
+            if (!isFinishing && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && window.decorView.hasWindowFocus()) startup.advance(
+                startupEnvironment()
+            )
+        }
+    }
+
+    private fun dispatchStartupSystemAction() {
+        window.decorView.post {
+            if (!isDestroyed && !isFinishing && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                startup.takeSystemAction()?.let(::launchStartupSystemAction)
+            }
+        }
+    }
+
+    private fun startupEnvironment() = StartupEnvironment(
+        notificationPermissionRequired = Build.VERSION.SDK_INT >= 33,
+        notificationsGranted = Build.VERSION.SDK_INT < 33 || ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED,
+        batteryOptimized = !(getSystemService(POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(
+            packageName
+        )
+    )
+
+    private fun launchStartupSystemAction(action: StartupSystemAction) {
+        if (isFinishing) return
+        val launched = when (action) {
+            StartupSystemAction.NOTIFICATIONS -> {
+                if (Build.VERSION.SDK_INT >= 33) {
+                    val permissions = if (Build.VERSION.SDK_INT >= 36) arrayOf(
+                        Manifest.permission.POST_NOTIFICATIONS,
+                        "android.permission.POST_PROMOTED_NOTIFICATIONS"
+                    ) else arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+                    notificationPermissionRequest.launch(permissions)
+                    true
+                } else false
+            }
+
+            StartupSystemAction.LIVE_UPDATE_SETTINGS -> NotificationSettingsNavigator.openLiveUpdates(
+                this
+            )
+
+            StartupSystemAction.BATTERY_SETTINGS -> BackgroundSettingsNavigator.openBatteryOptimization(
+                this
+            )
+        }
+        if (!launched) {
+            startup.systemReturned()
+            if (action != StartupSystemAction.NOTIFICATIONS) showToast(R.string.diag_value_not_available)
+            continueStartup()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBundle("pending_alarm_navigation", pendingAlarmNavigation?.save())
+        outState.putBundle("history_state", history.save())
+        outState.putString("current_measurement", currentMeasurement?.route)
+        navigator.save(outState)
+        super.onSaveInstanceState(outState)
+    }
+
+    internal fun selectSection(owner: SectionOwner) {
+        leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.SECTION, section = owner))
+    }
+
+    private fun performSelectSection(owner: SectionOwner) {
+        navigator.select(owner)
+        detail = navigator.detail
+        selected = navigator.selected
+        showSection(selected)
+    }
+
+    fun openSettingsCategory(category: String?, highlight: String? = null) {
+        if (category == null) {
+            performSelectSection(SectionOwner.SETTINGS)
+            return
+        }
+        navigator.openDetail(
+            SectionOwner.SETTINGS,
+            "settings:$category" + (highlight?.let { ":$it" } ?: ""))
+        selected = navigator.selected
+        detail = navigator.detail
+        showSection(selected)
+    }
+
+    internal fun openHelp(topic: String) {
+        navigator.openDetail(SectionOwner.HELP, "help:$topic")
+        selected = navigator.selected
+        detail = navigator.detail
+        showSection(selected)
+    }
+
+    internal fun openDiagnosticDetail(route: String, highlight: String? = null) {
+        navigator.openDetail(SectionOwner.DIAGNOSTICS, route + (highlight?.let { ":$it" } ?: ""))
+        selected = navigator.selected
+        detail = navigator.detail
+        showSection(selected)
+    }
+
+    private fun navigateUp() {
+        if (selected == SectionOwner.HELP && detail != null) performNavigateUp()
+        else leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.UP))
+    }
+
+    private fun leaveAlarmEditor(navigation: AlarmEditorNavigation) {
+        if (alarms.state.value.draft != null) {
+            if (alarms.state.value.busy) return
+            if (alarms.hasUnsavedChanges) {
+                pendingAlarmNavigation = navigation
+                return
+            }
+            alarms.discardDraft()
+        }
+        performAlarmNavigation(navigation)
+    }
+
+    private fun openAlarmEditor(id: Int?) {
+        leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.EDIT_ALARM, alarmId = id))
+    }
+
+    private fun performAlarmNavigation(navigation: AlarmEditorNavigation) {
+        when (navigation.destination) {
+            AlarmEditorDestination.DISMISS -> Unit
+            AlarmEditorDestination.SECTION -> performSelectSection(requireNotNull(navigation.section))
+            AlarmEditorDestination.UP -> performNavigateUp()
+            AlarmEditorDestination.BACK -> handleNavigationBack(navigationBackCallback)
+            AlarmEditorDestination.EDIT_ALARM -> {
+                performSelectSection(SectionOwner.ALARMS)
+                alarms.openLegacyAlarm(navigation.alarmId ?: -1)
+            }
+
+            AlarmEditorDestination.INTENT -> performRouteIntent(
+                Intent().putExtras(requireNotNull(navigation.intentExtras))
+            )
+        }
+    }
+
+    private fun performNavigateUp() {
+        navigator.back()
+        selected = navigator.selected
+        detail = navigator.detail
+        showSection(selected)
     }
 
     private fun routeIntent(intent: Intent) {
-        if (intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS)) viewPager!!.setCurrentItem(
-            pagerAdapter!!.alarmsPosition
-        )
-        else if (intent.hasExtra(BatteryInfoService.EXTRA_CURRENT_INFO)) viewPager!!.setCurrentItem(
-            1
-        )
+        leaveAlarmEditor(AlarmEditorNavigation.route(intent))
     }
 
-    public override fun onStart() {
-        super.onStart()
-
-        pagerAdapter!!.setContext(this)
-    }
-
-    public override fun onStop() {
-        super.onStop()
-
-        pagerAdapter!!.setContext(null)
-    }
-
-    private fun isAdvancedStatsEnabled(): Boolean {
-        val settings = getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
-        return settings.getBoolean(SettingsContract.KEY_ENABLE_ADVANCED_STATS, false)
-    }
-
-    private fun maybeRebuildPager() {
-        val newAdvancedStatsEnabled = isAdvancedStatsEnabled()
-        if (newAdvancedStatsEnabled == advancedStatsEnabled) return
-
-        val currentItem = viewPager!!.currentItem
-        val oldAdvancedStatsEnabled = advancedStatsEnabled
-
-        advancedStatsEnabled = newAdvancedStatsEnabled
-        pagerAdapter = BatteryInfoPagerAdapter(supportFragmentManager, advancedStatsEnabled)
-        pagerAdapter!!.setContext(this)
-        viewPager!!.setAdapter(pagerAdapter)
-
-        var newCurrentItem = currentItem
-        if (oldAdvancedStatsEnabled && !advancedStatsEnabled && currentItem == 2) newCurrentItem = 1
-        else if (currentItem == (if (oldAdvancedStatsEnabled) 3 else 2)) newCurrentItem =
-            pagerAdapter!!.alarmsPosition
-
-        viewPager!!.setCurrentItem(newCurrentItem, false)
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && viewPager!!.currentItem != 1) {
-            viewPager!!.setCurrentItem(1)
-            return true
-        }
-
-        return super.onKeyDown(keyCode, event)
-    }
-
-    @Suppress("DEPRECATION")
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String?>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PR_LVF_WRITE_STORAGE -> {
-                val lvf: LogViewFragment? = pagerAdapter!!.lVF
-
-                if (lvf != null) lvf.onRequestPermissionsResult(
-                    requestCode, permissions, grantResults
+    private fun performRouteIntent(intent: Intent) {
+        externalNavigationRequest++
+        val owner = when {
+            intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS) -> SectionOwner.ALARMS
+            intent.hasExtra(EXTRA_SECTION) -> SectionRegistry.owner(
+                intent.getStringExtra(
+                    EXTRA_SECTION
                 )
+            )
+
+            else -> SectionOwner.CURRENT
+        }
+        val requestedDetail = intent.getStringExtra(EXTRA_DETAIL)
+        currentMeasurement = requestedDetail?.takeIf {
+            owner == SectionOwner.CURRENT && it.startsWith("measurement:")
+        }?.removePrefix("measurement:")?.let(CurrentMeasurement::fromRoute)
+        if (owner == SectionOwner.HISTORY && intent.hasExtra(EXTRA_HISTORY_HOURS)) {
+            val metricName = intent.getStringExtra(EXTRA_HISTORY_METRIC)
+            val metric =
+                HistoryMetric.entries.firstOrNull { it.name == metricName } ?: HistoryMetric.LEVEL
+            history.openWidgetRange(intent.getIntExtra(EXTRA_HISTORY_HOURS, -1), metric)
+        }
+        if (owner == SectionOwner.HELP && requestedDetail?.startsWith("help:") == true) {
+            openHelp(requestedDetail.removePrefix("help:"))
+            return
+        }
+        if (owner == SectionOwner.SETTINGS && requestedDetail?.startsWith("settings:") == true) {
+            val route = requestedDetail.removePrefix("settings:")
+            openSettingsCategory(
+                route.substringBefore(':'), route.substringAfter(':', "").ifEmpty { null })
+            return
+        }
+        performSelectSection(owner)
+        if (owner == SectionOwner.DIAGNOSTICS) intent.getStringExtra(EXTRA_DETAIL)
+            ?.takeIf { it.substringBefore(':') in setOf("monitor", "charging-tools") }?.let {
+                openDiagnosticDetail(
+                    it.substringBefore(':'), it.substringAfter(':', "").ifEmpty { null })
             }
+        if (owner == SectionOwner.ALARMS && intent.getStringExtra(EXTRA_DETAIL) == "alarm-edit") {
+            openAlarmEditor(
+                intent.getIntExtra(AlarmEditActivity.EXTRA_ALARM_ID, -1).takeIf { it >= 0 })
         }
     }
 
-    @Suppress("DEPRECATION")
-    private class BatteryInfoPagerAdapter(
-        fm: FragmentManager, private val showAdvancedTab: Boolean
-    ) : androidx.fragment.app.FragmentPagerAdapter(fm) {
-        private var context: Context? = null
-        var lVF: LogViewFragment? = null
-            private set
+    private fun showSection(owner: SectionOwner) {
+        if (!containerReady || supportFragmentManager.isStateSaved || (shown == owner && shownDetail == detail)) return
+        val manager = supportFragmentManager
+        val actionsOnly = owner == SectionOwner.DIAGNOSTICS && detail == null
+        val targetTag = when (owner) {
+            SectionOwner.DIAGNOSTICS -> "section:diagnostics:${
+                detail?.substringBefore(
+                    ':'
+                ) ?: "actions"
+            }"
 
-        fun setContext(c: Context?) {
-            context = c
+            else -> "section:${owner.route}"
         }
-
-        override fun getCount(): Int {
-            return if (showAdvancedTab) 4 else 3
-        }
-
-        val alarmsPosition: Int
-            get() = if (showAdvancedTab) 3 else 2
-
-        override fun getItemId(position: Int): Long {
-            return when (position) {
-                0 -> 0
-                1 -> 1
-                2 -> (if (showAdvancedTab) 2 else 3).toLong()
-                3 -> 3
-                else -> position.toLong()
-            }
-        }
-
-        override fun getItem(position: Int): Fragment {
-            when (position) {
-                0 -> return LogViewFragment()
-                1 -> return CurrentInfoFragment()
-                2 -> {
-                    if (showAdvancedTab) return AdvancedInfoFragment()
-
-                    return AlarmsFragment()
+        val target = if (owner in setOf(
+                SectionOwner.CURRENT, SectionOwner.HISTORY, SectionOwner.ALARMS, SectionOwner.HELP
+            )
+        ) null
+        else manager.findFragmentByTag(targetTag)
+            ?: if (owner == SectionOwner.DIAGNOSTICS) DiagnosticsFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean("charging", detail?.substringBefore(':') == "charging-tools")
+                    putBoolean("actionsOnly", actionsOnly)
                 }
-
-                3 -> return AlarmsFragment()
-                else -> throw IllegalArgumentException("Unknown page position: $position")
-            }
-        }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val fragment = super.instantiateItem(container, position) as Fragment
-
-            if (position == 0) this.lVF = fragment as LogViewFragment
-
-            return fragment
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            if (context == null) return null
-
-            val res = context!!.resources
-
-            when (position) {
-                0 -> return res.getString(R.string.tab_history).uppercase(Locale.getDefault())
-                1 -> return res.getString(R.string.tab_current_info).uppercase(Locale.getDefault())
-                2 -> {
-                    if (showAdvancedTab) return res.getString(R.string.tab_advanced).uppercase(
-                        Locale.getDefault()
-                    )
-
-                    return res.getString(R.string.alarm_settings).uppercase(Locale.getDefault())
+            } else newFragment(owner)
+        manager.commitNow {
+            setReorderingAllowed(true)
+            for (fragment in manager.fragments) {
+                if (fragment.tag?.startsWith("section:") == true && fragment !== target) {
+                    hide(fragment)
+                    setMaxLifecycle(fragment, Lifecycle.State.CREATED)
                 }
-
-                3 -> return res.getString(R.string.alarm_settings).uppercase(Locale.getDefault())
-                else -> return null
             }
+            if (target != null) {
+                if (target.isAdded) {
+                    show(target)
+                    setMaxLifecycle(target, Lifecycle.State.RESUMED)
+                } else if (actionsOnly) add(target, targetTag)
+                else add(R.id.section_container, target, targetTag)
+            }
+        }
+        if (target is DiagnosticsFragment) target.highlightAction(
+            detail?.substringAfter(':', "")?.ifEmpty { null })
+        activeDiagnosticsFragment = target as? DiagnosticsFragment
+        if (actionsOnly) {
+            val actions = (target as DiagnosticsFragment).monitorActions
+            monitorActions =
+                DiagnosticsFragment.OVERVIEW_KEYS.associateWith { actions.getValue(it) }
+        }
+        if (target is SettingsFragment) {
+            val route = detail?.removePrefix("settings:")
+            target.showCategory(
+                route?.substringBefore(':'), route?.substringAfter(':', "")?.ifEmpty { null })
+        }
+        shown = owner
+        shownDetail = detail
+    }
+
+    private fun newFragment(owner: SectionOwner): Fragment = when (owner) {
+        SectionOwner.CURRENT -> error("Current State is rendered by Compose")
+        SectionOwner.HISTORY -> error("History is rendered by Compose")
+        SectionOwner.ALARMS -> error("Alarms is rendered by Compose")
+        SectionOwner.DIAGNOSTICS -> error("Diagnostics is rendered by Compose")
+        SectionOwner.SETTINGS -> SettingsFragment()
+        SectionOwner.HELP -> error("Help is rendered by Compose")
+    }
+
+    private fun openBatteryUsage() {
+        try {
+            startActivity(Intent(Intent.ACTION_POWER_USAGE_SUMMARY))
+        } catch (_: Exception) {
+            android.widget.Toast.makeText(
+                this, R.string.current_usage_unavailable, android.widget.Toast.LENGTH_SHORT
+            ).show()
         }
     }
+
 }

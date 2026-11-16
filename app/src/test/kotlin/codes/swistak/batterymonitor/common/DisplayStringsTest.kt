@@ -15,8 +15,11 @@ package codes.swistak.batterymonitor.common
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.time.Instant
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class DisplayStringsTest {
     @Before
@@ -56,10 +59,18 @@ class DisplayStringsTest {
     }
 
     @Test
-    fun `voltage uses locale decimal separator and preserves millivolt precision`() {
-        assertEquals("4.217V", DisplayStrings.formatVoltage(4217, Locale.US))
-        assertEquals("4,217V", DisplayStrings.formatVoltage(4217, Locale.forLanguageTag("pl")))
-        assertEquals("4,0V", DisplayStrings.formatVoltage(4000, Locale.forLanguageTag("pl")))
+    fun `voltage keeps its unit with the value and preserves locale and millivolt precision`() {
+        assertEquals("4.217\u00A0V", DisplayStrings.formatVoltage(4217, Locale.US))
+        assertEquals(
+            "4,217\u00A0V", DisplayStrings.formatVoltage(4217, Locale.forLanguageTag("pl"))
+        )
+        assertEquals("4,0\u00A0V", DisplayStrings.formatVoltage(4000, Locale.forLanguageTag("pl")))
+        try {
+            DisplayStrings.voltSymbol = "ف"
+            assertEquals("4.0\u00A0ف", DisplayStrings.formatVoltage(4000, Locale.US))
+        } finally {
+            DisplayStrings.voltSymbol = "V"
+        }
     }
 
     @Test
@@ -68,16 +79,6 @@ class DisplayStringsTest {
         assertEquals("1", DisplayStrings.formatChargeCompact(501L, Locale.US))
         assertEquals("0", DisplayStrings.formatChargeCompact(499L, Locale.US))
         assertEquals("0", DisplayStrings.formatChargeCompact(0L, Locale.US))
-    }
-
-    @Test
-    fun `detailed charge format uses one decimal place and locale separators`() {
-        assertEquals("2,847.3", DisplayStrings.formatChargeDetailed(2_847_300L, Locale.US))
-        assertEquals(
-            "2 847,3", DisplayStrings.formatChargeDetailed(
-                2_847_300L, Locale.forLanguageTag("pl-PL")
-            ).replace('\u00a0', ' ').replace('\u202f', ' ')
-        )
     }
 
     @Test
@@ -115,6 +116,32 @@ class DisplayStringsTest {
             expectedSkeleton = "Hms",
             expectedTime = "17:04:09"
         )
+    }
+
+    @Test
+    fun `explicit time zone overrides a stale process default without changing it`() {
+        val previousDefault = TimeZone.getDefault()
+        try {
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+            val date = Date.from(Instant.parse("2026-03-29T00:30:00Z"))
+            fun format(timeZone: TimeZone? = null) = DisplayStrings.formatTime(
+                date = date,
+                locale = Locale.US,
+                is24Hour = true,
+                includeSeconds = false,
+                timeZone = timeZone
+            ) { locale, skeleton ->
+                assertEquals(Locale.US, locale)
+                assertEquals("Hm", skeleton)
+                "HH:mm"
+            }
+
+            assertEquals("00:30", format())
+            assertEquals("17:30", format(TimeZone.getTimeZone("America/Los_Angeles")))
+            assertEquals("00:30", format())
+        } finally {
+            TimeZone.setDefault(previousDefault)
+        }
     }
 
     private fun assertTimeFormatting(

@@ -1,0 +1,1 @@
+{"version":2,"alarms":[{"enabled":true,"type":"charge_rises","threshold":"83"},{"enabled":false,"type":"charge_drops","threshold":"17"}]}

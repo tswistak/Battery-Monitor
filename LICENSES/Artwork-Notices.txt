@@ -1,0 +1,39 @@
+Battery Indicator Pro artwork and modified derivatives
+
+Copyright © 2009–2020 Darshan Computing, LLC.
+
+Attribution requested by the original author:
+"The Android application Battery Indicator Pro by Darshan Computing, LLC"
+
+Licensed under Creative Commons Attribution-ShareAlike 3.0 Unported
+(CC BY-SA 3.0): https://creativecommons.org/licenses/by-sa/3.0/
+The complete legal code is packaged as CC-BY-SA-3.0.txt.
+
+Original source and license:
+https://github.com/darshan-/Battery-Indicator-Pro
+https://github.com/darshan-/Battery-Indicator-Pro/blob/master/LICENSE
+
+Retained artwork includes stat_notify_alarm.png in the hdpi and xhdpi
+resource directories and the inherited charging overlay used by the
+charging*.png, charging_percentage*.png and charging_temp*.png status
+icons. This fork regenerated the status-icon families with changed
+typography and layout, and added percentage and temperature variants.
+The charging overlay is extracted from the existing status icons by
+tools/generate_numbers.rb and remains a modified derivative of the
+upstream artwork. Modified derivatives retain CC BY-SA 3.0.
+
+Modifications: Copyright © 2026 Tomasz Świstak.
+
+Historical resources excluded from the current application
+
+The original upstream LICENSE also identifies battery.png as based on the
+Oxygen icon theme, under CC BY-SA 3.0. Those battery.png resources were
+removed from this fork in commit 6df9b79cbf53af85ad68601b774b6e9b09035d34.
+
+The upstream LICENSE identifies several Icons8 images under the historical
+description "Free for open source". The identifiable clock, current,
+health, temperature and voltage measurement images were removed in
+commit 29d074fa9f26bca89089108044c0326158fd0bc5. No exact copies of the
+original twelve Icons8 imports remain among current application PNGs.
+This historical statement is not treated as a verified license grant for
+any currently unidentified asset. Icons8 source: https://icons8.com/

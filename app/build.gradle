@@ -1,8 +1,12 @@
-apply plugin: 'com.android.application'
+import groovy.json.JsonSlurper
 
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+
+def isProfilingBuild = project.hasProperty('profiling')
 def secureProperties = new Properties()
 def securePropertiesFile = project.file("../secure.properties")
-if (securePropertiesFile.exists()) {
+if (!isProfilingBuild && securePropertiesFile.exists()) {
     securePropertiesFile.withInputStream { secureProperties.load(it) }
 }
 
@@ -22,9 +26,7 @@ def computedVersionCode = defaultVersionCode
 if (ciVersionName) {
     def matcher = (ciVersionName =~ /^(\d+)\.(\d+)\.(\d+)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/)
     if (!matcher.matches()) {
-        throw new GradleException(
-                "ciVersionName must match SemVer (example: 1.0.0, 1.0.0-prerelease, 1.0.0+build.1)"
-        )
+        throw new GradleException("ciVersionName must match SemVer (example: 1.0.0, 1.0.0-prerelease, 1.0.0+build.1)")
     }
 
     int major = matcher.group(1).toInteger()
@@ -41,14 +43,16 @@ def releaseStorePasswordProp = project.findProperty("releaseStorePassword") ?: S
 def releaseKeyAliasProp = project.findProperty("releaseKeyAlias") ?: System.getenv("RELEASE_KEY_ALIAS") ?: "alias_name"
 def releaseKeyPasswordProp = project.findProperty("releaseKeyPassword") ?: System.getenv("RELEASE_KEY_PASSWORD") ?: secureProperties['key.alias.password']
 
-def hasReleaseSigning =
-        releaseStoreFileProp &&
-        releaseStorePasswordProp &&
-        releaseKeyAliasProp &&
-        releaseKeyPasswordProp
+def hasReleaseSigning = !isProfilingBuild && releaseStoreFileProp && releaseStorePasswordProp && releaseKeyAliasProp && releaseKeyPasswordProp
+
+def isE2eBuild = project.hasProperty('e2e')
 
 android {
     namespace = "codes.swistak.batterymonitor"
+
+    buildFeatures {
+        compose = true
+    }
 
     compileSdk 37
 
@@ -60,8 +64,10 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 37
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionName baseVersionName
-        versionCode computedVersionCode
+        // The current checkout may share the last release's code; APK replacement must be an upgrade.
+        versionCode isE2eBuild ? Math.addExact(computedVersionCode, 1) : computedVersionCode
 
         vectorDrawables.useSupportLibrary = false
         resourceConfigurations += ['ar', 'cs', 'de', 'el', 'en', 'en-rUS', 'es', 'es-rUS', 'fa', 'fr', 'hi', 'hu', 'it', 'iw', 'ja', 'lt', 'nl', 'pl', 'pt', 'pt-rBR', 'ro', 'ru', 'sk', 'sl', 'sr', 'tr', 'zh', 'zh-rCN']
@@ -73,11 +79,41 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     lint {
         disable 'MissingTranslation'
     }
 
+    testOptions {
+        animationsDisabled = true
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            jvmArgs '--add-exports=java.base/jdk.internal.access=ALL-UNNAMED'
+        }
+    }
+
     signingConfigs {
+        if (isProfilingBuild) {
+            profile {
+                storeFile rootProject.file('captures/profiling/local-test.keystore')
+                storePassword 'android'
+                keyAlias 'androiddebugkey'
+                keyPassword 'android'
+            }
+        }
+        if (isE2eBuild) {
+            e2e {
+                storeFile rootProject.file('e2e/build/test-signing.p12')
+                storePassword 'battery-monitor-e2e'
+                keyAlias 'e2e'
+                keyPassword 'battery-monitor-e2e'
+            }
+        }
         release {
             if (hasReleaseSigning) {
                 storeFile file(releaseStoreFileProp)
@@ -90,17 +126,35 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+            setDefault(true)
+            if (isE2eBuild) {
+                signingConfig = signingConfigs.e2e
+            } else {
+                applicationIdSuffix ".debug"
+            }
             versionNameSuffix "-debug"
         }
 
         release {
             if (hasReleaseSigning) {
-                signingConfig signingConfigs.release
+                signingConfig = signingConfigs.release
             }
 
-            minifyEnabled true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), rootProject.file('proguard-no-obfuscation')
+        }
+        if (isProfilingBuild) {
+            profile {
+                initWith release
+                applicationIdSuffix '.profile'
+                debuggable false
+                signingConfig = signingConfigs.profile
+                matchingFallbacks = ['release']
+                vcsInfo {
+                    include = false
+                }
+            }
         }
     }
 }
@@ -110,18 +164,158 @@ android.sourceSets.named("main") {
 }
 
 dependencies {
+    def composeBom = platform('androidx.compose:compose-bom:2026.09.00')
+    implementation composeBom
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.activity:activity-compose:1.13.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.11.0'
+    implementation 'androidx.compose.material3.adaptive:adaptive:1.3.0'
+    implementation 'com.github.PhilJay.MPAndroidChart:MPChartCompose:v4.0.1'
+
+    if (isProfilingBuild) {
+        profileImplementation 'androidx.compose.runtime:runtime-tracing'
+    }
+
     testImplementation "junit:junit:4.13.2"
+    testImplementation 'org.robolectric:robolectric:4.17'
+    androidTestImplementation "junit:junit:4.13.2"
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+    androidTestImplementation 'androidx.test:core:1.7.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.core:core:1.19.0"
-    implementation "androidx.fragment:fragment:1.8.9"
-    implementation "androidx.viewpager:viewpager:1.1.0"
+    implementation "androidx.core:core:1.19.1"
+    implementation "androidx.fragment:fragment:1.9.1"
 
-    implementation "androidx.appcompat:appcompat:1.7.1"
-    implementation "androidx.appcompat:appcompat-resources:1.7.1"
+    implementation "androidx.appcompat:appcompat:1.8.0"
+    implementation "androidx.appcompat:appcompat-resources:1.8.0"
 
-    implementation "androidx.preference:preference:1.2.1"
+    constraints {
+        add("implementation", "androidx.customview:customview:1.1.0")
+                .because("Keep the existing runtime version for DrawerLayout and ViewPager")
+    }
+
     implementation "dev.rikka.shizuku:api:13.1.5"
     implementation "dev.rikka.shizuku:provider:13.1.5"
+    implementation "com.github.topjohnwu.libsu:core:6.0.0"
+}
+
+def licenseDirectory = rootProject.file('LICENSES')
+def licenseInventoryFiles = [new File(licenseDirectory, 'application-components.json'),
+                             new File(licenseDirectory, 'runtime-components.json')]
+
+def verifyLicenseInventory = tasks.register('verifyLicenseInventory') {
+    group = 'verification'
+    description = 'Checks packaged legal texts and the complete release runtime artifact inventory.'
+    inputs.files(licenseInventoryFiles, rootProject.file('COPYING'))
+    inputs.dir(licenseDirectory)
+
+    doLast {
+        def components = licenseInventoryFiles.collectMany { inventoryFile ->
+            if (!inventoryFile.isFile()) {
+                throw new GradleException("Missing license inventory: ${inventoryFile}")
+            }
+            def inventory = new JsonSlurper().parse(inventoryFile, 'UTF-8')
+            if (!(inventory instanceof List)) {
+                throw new GradleException("License inventory must be a JSON array: ${inventoryFile}")
+            }
+            inventory
+        }
+        def ids = [] as Set
+        def auditedArtifacts = [] as Set
+        components.each { component ->
+            if (!(component instanceof Map)) {
+                throw new GradleException('Each license component must be a JSON object.')
+            }
+            ['id', 'name', 'version', 'group', 'license', 'attribution'].each { field ->
+                if (!(component[field] instanceof String) || (field != 'version' && component[field].isBlank())) {
+                    throw new GradleException("License component has an invalid ${field}: ${component.id}")
+                }
+            }
+            if (!(component.id ==~ /[A-Za-z0-9][A-Za-z0-9._-]*/) || !ids.add(component.id)) {
+                throw new GradleException("Invalid or duplicate license component id: ${component.id}")
+            }
+            ['sources', 'artifacts', 'files'].each { field ->
+                if (!(component[field] instanceof List) || component[field].any { !(it instanceof String) || it.isBlank() }) {
+                    throw new GradleException("License component has an invalid ${field}: ${component.id}")
+                }
+            }
+            if (component.sources.isEmpty() || component.files.isEmpty()) {
+                throw new GradleException("License component needs sources and legal texts: ${component.id}")
+            }
+            component.files.each { filename ->
+                if (!(filename ==~ /[A-Za-z0-9][A-Za-z0-9._-]*/)) {
+                    throw new GradleException("Invalid legal text filename: ${filename}")
+                }
+                def legalText = filename == 'GPL-3.0.txt' ? rootProject.file('COPYING') : new File(licenseDirectory, filename)
+                if (!legalText.isFile() || legalText.getText('UTF-8').isBlank()) {
+                    throw new GradleException("Missing or empty legal text: ${legalText}")
+                }
+            }
+            component.artifacts.each { coordinate ->
+                if (!(coordinate ==~ /[^:\s]+:[^:\s]+:[^:\s]+/) || !auditedArtifacts.add(coordinate)) {
+                    throw new GradleException("Invalid or duplicate audited runtime artifact: ${coordinate}")
+                }
+                if (component.version != coordinate.tokenize(':').last()) {
+                    throw new GradleException("License version '${component.version}' for ${component.id} " + "does not match its artifact coordinate: ${coordinate}")
+                }
+            }
+        }
+
+        def runtimeArtifacts = [] as Set
+        configurations.releaseRuntimeClasspath.incoming.artifacts.artifacts.each { artifact ->
+            if (artifact.file.name.endsWith('.jar') || artifact.file.name.endsWith('.aar')) {
+                def component = artifact.id.componentIdentifier
+                if (!(component instanceof ModuleComponentIdentifier)) {
+                    throw new GradleException("Audit the uncoordinated runtime artifact: ${artifact.file}")
+                }
+                runtimeArtifacts.add("${component.group}:${component.module}:${component.version}".toString())
+            }
+        }
+        def missing = runtimeArtifacts - auditedArtifacts
+        def stale = auditedArtifacts - runtimeArtifacts
+        if (!missing.isEmpty() || !stale.isEmpty()) {
+            throw new GradleException("Runtime license inventory differs from the release artifacts. " + "Missing: ${missing.sort()}; no longer packaged: ${stale.sort()}. " + 'Update LICENSES/runtime-components.json after auditing the change.')
+        }
+    }
+}
+
+def packageLicenseAssets = tasks.register('packageLicenseAssets', Sync) {
+    dependsOn verifyLicenseInventory
+    into layout.buildDirectory.dir('generated/licenseAssets/licenses')
+    from(licenseDirectory) {
+        include '*.txt', 'application-components.json', 'runtime-components.json'
+    }
+    from(rootProject.file('COPYING')) {
+        rename { 'GPL-3.0.txt' }
+    }
+}
+
+android.sourceSets.named('main') {
+    assets.srcDir(layout.buildDirectory.dir('generated/licenseAssets').get().asFile)
+}
+tasks.named('preBuild').configure {
+    dependsOn packageLicenseAssets
+}
+
+def localizationResDirectory = objects.directoryProperty()
+localizationResDirectory.set(layout.buildDirectory.dir('generated/localizationRes'))
+def prepareLocalizationResources = tasks.register('prepareLocalizationResources', Sync) {
+    from('src/main/res') {
+        include 'values*/strings.xml'
+    }
+    into localizationResDirectory
+    doLast {
+        fileTree(localizationResDirectory.get().asFile).matching {
+            include 'values*/strings.xml'
+        }.each { resource ->
+            resource.setText(resource.getText('UTF-8').replaceAll(/\\\\|\\n\r?\n {4}/) { token -> token.startsWith('\\n') ? '\\n' : token
+            }, 'UTF-8')
+        }
+    }
+}
+tasks.named('preBuild').configure {
+    dependsOn prepareLocalizationResources
+}
+androidComponents.onVariants(androidComponents.selector().all()) { variant -> variant.sources.res.addGeneratedSourceDirectory(prepareLocalizationResources) { localizationResDirectory }
 }

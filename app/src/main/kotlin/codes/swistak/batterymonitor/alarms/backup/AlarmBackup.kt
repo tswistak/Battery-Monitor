@@ -15,30 +15,30 @@ package codes.swistak.batterymonitor.alarms.backup
 import android.content.Context
 import android.net.Uri
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.AlarmRecord
+import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
+import codes.swistak.batterymonitor.devicebackup.readBackupJson
+import codes.swistak.batterymonitor.devicebackup.writeBackupJson
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
+
+internal data class AlarmBackupImportPreview(val version: Int, val alarms: List<AlarmRecord>)
 
 internal object AlarmBackup {
     const val SCHEMA_VERSION: Int = Version2AlarmImporter.VERSION
 
-    @Throws(JSONException::class)
-    fun getSchemaVersion(jsonString: String): Int = JSONObject(jsonString).optInt("version", 0)
+    const val MAX_IMPORT_BYTES = 2 * 1024 * 1024
 
     @Throws(JSONException::class)
     fun exportToJson(database: AlarmDatabase): JSONObject {
         val alarms = JSONArray()
-        for (record in database.getAllAlarmRecords()) {
+        for ((enabled, type, threshold) in database.getAllAlarmRecords()) {
             alarms.put(
-                JSONObject().put(Version1AlarmImporter.KEY_ENABLED, record.enabled)
-                    .put(Version1AlarmImporter.KEY_TYPE, record.type)
-                    .put(Version1AlarmImporter.KEY_THRESHOLD, record.threshold)
+                JSONObject().put(Version1AlarmImporter.KEY_ENABLED, enabled)
+                    .put(Version1AlarmImporter.KEY_TYPE, type)
+                    .put(Version1AlarmImporter.KEY_THRESHOLD, threshold)
             )
         }
         return JSONObject().put("version", SCHEMA_VERSION).put("alarms", alarms)
@@ -46,7 +46,17 @@ internal object AlarmBackup {
 
     @Throws(JSONException::class, IllegalArgumentException::class)
     fun importFromJson(database: AlarmDatabase, jsonString: String): Int {
-        val root = JSONObject(jsonString)
+        require(jsonString.length <= MAX_IMPORT_BYTES) { "Alarm backup is too large" }
+        val input = BackupImportInputStream(jsonString.byteInputStream(), MAX_IMPORT_BYTES)
+        return restore(database, validatedRecords(readBackupJson(input)))
+    }
+
+    fun restore(database: AlarmDatabase, restored: List<AlarmRecord>): Int {
+        check(database.replaceAllAlarms(restored)) { "Could not restore alarms" }
+        return restored.size
+    }
+
+    fun validatedRecords(root: JSONObject): List<AlarmRecord> {
         val importer = alarmImporterForVersion(root.optInt("version", 0))
         val alarms = root.getJSONArray("alarms")
         val restored = buildList {
@@ -63,29 +73,16 @@ internal object AlarmBackup {
         require(alarms.length() == 0 || restored.isNotEmpty()) {
             "The backup contains no supported alarms"
         }
-        check(database.replaceAllAlarms(restored)) { "Could not restore alarms" }
-        return restored.size
+        return restored
     }
 
     @Throws(IOException::class)
-    fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w") ?: return
-        pfd.use {
-            FileOutputStream(it.fileDescriptor).use { output ->
-                output.write(json.toString().toByteArray(StandardCharsets.UTF_8))
-            }
-        }
-    }
+    fun writeToUri(context: Context, uri: Uri, json: JSONObject) =
+        writeBackupJson(context, uri, json, MAX_IMPORT_BYTES)
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String? {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return null
-        pfd.use {
-            BufferedReader(
-                InputStreamReader(FileInputStream(it.fileDescriptor), StandardCharsets.UTF_8)
-            ).use { reader ->
-                return reader.readText()
-            }
-        }
+    fun readFromUri(context: Context, uri: Uri): AlarmBackupImportPreview {
+        val root = readBackupJson(context, uri, MAX_IMPORT_BYTES)
+        return AlarmBackupImportPreview(root.optInt("version", 0), validatedRecords(root))
     }
 }

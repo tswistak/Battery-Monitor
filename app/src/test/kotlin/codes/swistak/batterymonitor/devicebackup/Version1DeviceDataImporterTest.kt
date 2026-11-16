@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.devicebackup
 
+import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.monitoring.Predictor
 import org.junit.Assert.assertEquals
@@ -20,8 +21,108 @@ import org.junit.Test
 
 class Version1DeviceDataImporterTest {
     @Test
-    fun `device-specific data backup starts at schema version one`() {
-        assertEquals(1, DeviceDataBackup.SCHEMA_VERSION)
+    fun `version two preserves boot event and sample encodings without migration`() {
+        val codes = listOf(LogDatabase.STATUS_BOOT_COMPLETED) + (0..2).flatMap { age ->
+            (0..4).flatMap { plugged ->
+                (0..5).map { status -> LogDatabase.encodeStatus(status, plugged, age) }
+            }
+        }
+        for (code in codes) {
+            val values = mapOf(
+                "status" to code,
+                "charge" to 74,
+                "time" to 1_754_000_000_000L,
+                "temperature" to 315,
+                "voltage" to 4125,
+                "currentMicroAmps" to -240_125L,
+                "remainingChargeMicroampHours" to 2_500_000L
+            )
+            assertEquals(
+                LogRecord(code, 74, 1_754_000_000_000L, 315, 4125, -240_125L, 2_500_000L),
+                Version2DeviceDataImporter.restoreLog(values)
+            )
+            assertEquals(
+                LogRecord(code, null, 1_754_000_000_000L, null, null),
+                Version2DeviceDataImporter.restoreLog(
+                    mapOf("status" to code, "time" to 1_754_000_000_000L)
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `current predictor backups preserve discharge and record the state version`() {
+        val averages = Predictor.KEY_AVERAGE.zip(listOf(10f, 20f, 30f, 40f)).toMap()
+        val restored =
+            Version2DeviceDataImporter.restorePredictor(averages, 2, Predictor.STATE_VERSION)
+        assertEquals(averages, restored.averages)
+        assertEquals(Predictor.STATE_VERSION, restored.version)
+    }
+
+    @Test
+    fun `legacy predictor backups discard only discharge learned with the old formula`() {
+        val averages = Predictor.KEY_AVERAGE.zip(listOf(10f, 20f, 30f, 40f)).toMap()
+        for ((backupVersion, stateVersion) in listOf(1 to null, 2 to 1)) {
+            val restored =
+                Version2DeviceDataImporter.restorePredictor(averages, backupVersion, stateVersion)
+            assertEquals(averages - Predictor.KEY_AVERAGE[0], restored.averages)
+            assertEquals(Predictor.STATE_VERSION, restored.version)
+        }
+    }
+
+    @Test
+    fun `predictor imports reject invalid or unsupported state versions`() {
+        for (version in listOf(null, 0, -1, 3, 2.0, "2")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Version2DeviceDataImporter.restorePredictor(emptyMap(), 2, version)
+            }
+        }
+    }
+
+    @Test
+    fun `version two preserves raw remaining charge and treats missing charge as unavailable`() {
+        val old = mapOf("status" to 100, "charge" to 50, "time" to 123L)
+        assertEquals(null, Version2DeviceDataImporter.restoreLog(old).remainingChargeMicroampHours)
+        for (charge in listOf(null, 0L, 1_234_567L, Long.MAX_VALUE)) {
+            assertEquals(
+                charge, Version2DeviceDataImporter.restoreLog(
+                    old + ("remainingChargeMicroampHours" to charge)
+                ).remainingChargeMicroampHours
+            )
+        }
+        for (invalid in listOf(-1L, Double.NaN, Double.POSITIVE_INFINITY, 1.5, "1234")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Version2DeviceDataImporter.restoreLog(old + ("remainingChargeMicroampHours" to invalid))
+            }
+        }
+        assertEquals(2, DeviceDataBackup.SCHEMA_VERSION)
+    }
+
+    @Test
+    fun `version two preserves instantaneous current and accepts old records without current`() {
+        val old = mapOf("status" to 100, "charge" to 50, "time" to 123L)
+        assertEquals(
+            Version1DeviceDataImporter.restoreLog(old), Version2DeviceDataImporter.restoreLog(old)
+        )
+        for (current in listOf(null, -240125L, 1200250L, 0L, Long.MAX_VALUE, Long.MIN_VALUE)) {
+            assertEquals(
+                current,
+                Version2DeviceDataImporter.restoreLog(old + ("currentMicroAmps" to current)).currentMicroAmps
+            )
+        }
+        for (invalid in listOf(
+            Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, 1.5, "240"
+        )) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Version2DeviceDataImporter.restoreLog(old + ("currentMicroAmps" to invalid))
+            }
+        }
+    }
+
+    @Test
+    fun `version one remains supported while device data exports use version two`() {
+        assertEquals(1, Version1DeviceDataImporter.VERSION)
+        assertEquals(2, DeviceDataBackup.SCHEMA_VERSION)
         assertEquals(
             "lastLogExportTime", Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME
         )

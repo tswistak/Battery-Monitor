@@ -1,0 +1,15 @@
+Google Material Icons / Material Symbols
+
+Original icon design: Google LLC.
+Source: https://github.com/google/material-design-icons
+License: Apache License, Version 2.0
+https://www.apache.org/licenses/LICENSE-2.0
+
+ui_fullscreen.xml reproduces the Google Material fullscreen glyph in an
+Android vector drawable. Its path commands have been reformatted without
+changing the glyph geometry.
+
+The complete Apache 2.0 license is packaged as Apache-2.0.txt.
+
+Upstream glyph source:
+https://github.com/google/material-design-icons/blob/master/src/navigation/fullscreen/materialicons/24px.svg

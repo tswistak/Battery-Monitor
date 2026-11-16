@@ -15,18 +15,25 @@ package codes.swistak.batterymonitor.logs
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import androidx.core.database.sqlite.transaction
-import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
+import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
 
 
 internal data class LogRecord(
-    val status: Int, val charge: Int?, val time: Long, val temperature: Int?, val voltage: Int?
+    val status: Int,
+    val charge: Int?,
+    val time: Long,
+    val temperature: Int?,
+    val voltage: Int?,
+    val currentMicroAmps: Long? = null,
+    val remainingChargeMicroampHours: Long? = null
 )
 
 internal sealed interface LogResult {
@@ -40,7 +47,10 @@ internal class LogDatabase(context: Context?) {
         private const val LOG_TAG = "LogDatabase"
 
         private const val DATABASE_NAME = "logs.db"
-        private const val DATABASE_VERSION = 4
+        private const val DATABASE_VERSION = 7
+        internal const val HISTORY_CHANGE_LIMIT = 128
+        private const val HISTORY_CHANGES_TABLE = "history_changes"
+
         private const val LOG_TABLE_NAME = "logs"
 
         private const val KEY_ID = "_id"
@@ -49,12 +59,17 @@ internal class LogDatabase(context: Context?) {
         const val KEY_TIME: String = "time"
         const val KEY_TEMPERATURE: String = "temperature"
         const val KEY_VOLTAGE: String = "voltage"
+        const val KEY_CURRENT: String = "current"
+        const val KEY_REMAINING_CHARGE: String = "remaining_charge_uah"
+
+        const val ACTION_HISTORY_CHANGED = "codes.swistak.batterymonitor.HISTORY_CHANGED"
 
         const val STATUS_BOOT_COMPLETED: Int = -1
 
         // Values for status_age
         const val STATUS_NEW: Int = 0
         const val STATUS_OLD: Int = 1
+        const val STATUS_SAMPLE: Int = 2
 
         /* My cursor adapter was getting a bit complicated since it could only see one datum at a time, and
        how I want to present the data depends on several interrelated factors.  Storing all three of
@@ -77,6 +92,64 @@ internal class LogDatabase(context: Context?) {
             a[0] = statusCode
 
             return a
+        }
+    }
+
+    private val appContext = context?.applicationContext
+
+    fun historyChanges(since: Long?, range: HistoryRangeState?): HistoryChanges {
+        openDBs()
+        return checkNotNull(rdb).rawQuery(
+            "SELECT MIN(revision), MAX(revision), MAX(CASE WHEN revision > ? AND first_time <= ? AND last_time >= ? THEN 1 ELSE 0 END) FROM $HISTORY_CHANGES_TABLE",
+            arrayOf(
+                (since ?: -1).toString(),
+                (range?.exportThrough ?: Long.MAX_VALUE).toString(),
+                (range?.start ?: Long.MIN_VALUE).toString()
+            )
+        ).use { cursor ->
+            cursor.moveToFirst()
+            val first = if (cursor.isNull(0)) 0L else cursor.getLong(0)
+            val latest = if (cursor.isNull(1)) 0L else cursor.getLong(1)
+            // A cursor older than the bounded journal must refresh rather than miss a committed change.
+            HistoryChanges(
+                latest,
+                since == null || since > latest || since < first - 1 || cursor.getInt(2) != 0
+            )
+        }
+    }
+
+    private fun SQLiteDatabase.recordHistoryChange(first: Long, last: Long) {
+        val values = ContentValues().apply {
+            put("first_time", first)
+            put("last_time", last)
+        }
+        val revision = insertOrThrow(HISTORY_CHANGES_TABLE, null, values)
+        delete(
+            HISTORY_CHANGES_TABLE,
+            "revision <= ?",
+            arrayOf((revision - HISTORY_CHANGE_LIMIT).toString())
+        )
+    }
+
+    private fun SQLiteDatabase.affectedTimes(
+        where: String? = null, args: Array<String>? = null
+    ): LongRange? {
+        val predicate = " WHERE time IS NOT NULL" + where?.let { " AND ($it)" }.orEmpty()
+        return rawQuery(
+            "SELECT (SELECT time FROM logs$predicate ORDER BY time ASC, _id ASC LIMIT 1), (SELECT time FROM logs$predicate ORDER BY time DESC, _id DESC LIMIT 1)",
+            args?.let { it + it }).use { cursor ->
+            cursor.moveToFirst()
+            if (cursor.isNull(0)) null else cursor.getLong(0)..cursor.getLong(1)
+        }
+    }
+
+    private fun historyChanged(explicit: Boolean = false) {
+        val context = appContext ?: return
+        try {
+            context.sendBroadcast(Intent(ACTION_HISTORY_CHANGED).setPackage(context.packageName))
+            if (explicit) WidgetSettingsReceiver.historyChanged(context)
+        } catch (error: RuntimeException) {
+            Log.w(LOG_TAG, "Unable to notify history consumers", error)
         }
     }
 
@@ -171,90 +244,156 @@ internal class LogDatabase(context: Context?) {
         closeDatabaseHandles()
     }
 
-    fun getAllLogs(reversed: Boolean): Cursor? {
-        var order = "DESC"
-        if (reversed) order = "ASC"
-
+    fun <T> readHistory(query: HistoryQuery, block: (Sequence<HistoryRecord>) -> T): T {
         openDBs()
-
-        return try {
-            rdb!!.rawQuery(
-                "SELECT * FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME $order", null
-            )
-        } catch (e: Exception) {
-            null
+        val database = checkNotNull(rdb) { "Log database is unavailable" }
+        return database.rawQuery(query.sql, query.args).use { cursor ->
+            block(sequence {
+                while (cursor.moveToNext()) {
+                    yield(
+                        HistoryRecord(
+                            cursor.getLong(0), LogRecord(
+                                status = cursor.getInt(1),
+                                charge = cursor.getNullableInt(2),
+                                time = cursor.getLong(3),
+                                temperature = cursor.getNullableInt(4),
+                                voltage = cursor.getNullableInt(5)
+                                    ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts),
+                                currentMicroAmps = cursor.getNullableLong(6),
+                                remainingChargeMicroampHours = cursor.getNullableLong(7)
+                            )
+                        )
+                    )
+                }
+            })
         }
     }
 
-    fun getAllLogRecords(): List<LogRecord> {
-        return getLogRecordsInRange()
+    fun retainedHistoryRange(): HistoryRangeState? {
+        openDBs()
+        val database = checkNotNull(rdb) { "Log database is unavailable" }
+        return database.rawQuery(
+            "SELECT (SELECT time FROM logs WHERE time >= 0 ORDER BY time ASC, _id ASC LIMIT 1), " + "(SELECT time FROM logs WHERE time >= 0 ORDER BY time DESC, _id DESC LIMIT 1)",
+            null
+        ).use { cursor ->
+            if (!cursor.moveToFirst() || cursor.isNull(0)) null else {
+                val first = cursor.getLong(0).coerceAtMost(Long.MAX_VALUE - 1)
+                val last = cursor.getLong(1)
+                val end = historyExclusiveEnd(last)
+                HistoryRangeState(first, end)
+            }
+        }
     }
 
-    fun getLogRecordsInRange(
-        afterExclusive: Long? = null, throughInclusive: Long? = null
-    ): List<LogRecord> {
+    fun deleteHistory(range: HistoryRangeState?) {
         openDBs()
+        val database = checkNotNull(wdb) { "Log database is unavailable" }
+        val deleted = database.transaction {
+            val where = range?.let { "time >= ? AND time ${it.endOperator} ?" } ?: "1"
+            val args = range?.let { arrayOf(it.start.toString(), it.end.toString()) }
+            val times = affectedTimes(where, args)
+            delete(LOG_TABLE_NAME, where, args).also { deleted ->
+                if (deleted > 0) recordHistoryChange(
+                    times?.first ?: Long.MIN_VALUE, times?.last ?: Long.MAX_VALUE
+                )
+            }
+        }
+        if (deleted > 0) historyChanged(explicit = true)
+    }
 
+    fun historyDuration(entry: HistoryRecord): Long? {
+        val record = entry.record
+        val status = decodeStatus(record.status)
+        if (status[2] == STATUS_SAMPLE) return null
+        val previous = when {
+            status[0] == 5 || (status[0] == 0 && status[2] == 0) -> 2
+            status[0] == 2 && status[2] == 0 -> 0
+            else -> return null
+        }
+        openDBs()
+        return checkNotNull(rdb).rawQuery(
+            "SELECT time FROM logs WHERE (time < ? OR (time = ? AND _id < ?)) AND status >= 0 AND status < 100 AND status % 10 = ? ORDER BY time DESC, _id DESC LIMIT 1",
+            arrayOf(
+                record.time.toString(),
+                record.time.toString(),
+                entry.id.toString(),
+                previous.toString()
+            )
+        ).use { if (it.moveToFirst()) record.time - it.getLong(0) else null }
+    }
+
+
+    fun <T> readLogRecords(block: (Sequence<LogRecord>) -> T): T =
+        readExportRecords(null, null, null) { records ->
+            block(records.map { it.record })
+        }
+
+    fun <T> readExportRecords(
+        afterExclusive: Long?,
+        throughInclusive: Long?,
+        afterId: Long?,
+        block: (Sequence<HistoryRecord>) -> T
+    ): T {
         val whereParts = mutableListOf<String>()
         val whereArgs = mutableListOf<String>()
         afterExclusive?.let {
-            whereParts += "$KEY_TIME > ?"
+            whereParts += if (afterId == null) "$KEY_TIME > ?"
+            else "($KEY_TIME > ? OR ($KEY_TIME = ? AND $KEY_ID > ?))"
             whereArgs += it.toString()
+            if (afterId != null) whereArgs += listOf(it.toString(), afterId.toString())
         }
         throughInclusive?.let {
             whereParts += "$KEY_TIME <= ?"
             whereArgs += it.toString()
         }
         val where = if (whereParts.isEmpty()) "" else " WHERE ${whereParts.joinToString(" AND ")}"
-        val cursor = rdb?.rawQuery(
-            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC",
-            whereArgs.takeIf { it.isNotEmpty() }?.toTypedArray()
-        ) ?: return emptyList()
-        cursor.use {
-            val statusColumn = it.getColumnIndexOrThrow(KEY_STATUS_CODE)
-            val chargeColumn = it.getColumnIndexOrThrow(KEY_CHARGE)
-            val timeColumn = it.getColumnIndexOrThrow(KEY_TIME)
-            val temperatureColumn = it.getColumnIndexOrThrow(KEY_TEMPERATURE)
-            val voltageColumn = it.getColumnIndexOrThrow(KEY_VOLTAGE)
-            return buildList {
-                while (it.moveToNext()) {
-                    add(
-                        LogRecord(
-                            status = it.getInt(statusColumn),
-                            charge = it.getNullableInt(chargeColumn),
-                            time = it.getLong(timeColumn),
-                            temperature = it.getNullableInt(temperatureColumn),
-                            voltage = it.getNullableInt(voltageColumn)
-                                ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
-                        )
-                    )
-                }
-            }
-        }
+        return readHistory(
+            HistoryQuery(
+                "SELECT _id, $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE, $KEY_CURRENT, $KEY_REMAINING_CHARGE FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC, _id ASC",
+                whereArgs.toTypedArray()
+            ), block
+        )
     }
 
-    fun replaceAllLogs(records: List<LogRecord>) = writeLogs(records, replaceExisting = true)
+    // The platform-only E2E helper seeds the installed APK through this Java-callable overload.
+    fun replaceAllLogs(records: List<LogRecord>) = replaceAllLogs(records.asSequence())
+    fun replaceAllLogs(records: Sequence<LogRecord>) = writeLogs(records, replaceExisting = true)
+    fun addLogs(records: Sequence<LogRecord>) = writeLogs(records, replaceExisting = false)
 
-    fun addLogs(records: List<LogRecord>) = writeLogs(records, replaceExisting = false)
-
-    private fun writeLogs(records: List<LogRecord>, replaceExisting: Boolean) {
+    private fun writeLogs(records: Sequence<LogRecord>, replaceExisting: Boolean) {
         openDBs()
         val database = checkNotNull(wdb) { "Log database is unavailable" }
-        database.transaction {
-            if (replaceExisting) database.delete(LOG_TABLE_NAME, null, null)
-            for (record in records) {
+        val changed = database.transaction {
+            val previousTimes = if (replaceExisting) affectedTimes() else null
+            val deleted = if (replaceExisting) database.delete(LOG_TABLE_NAME, "1", null) else 0
+            var inserted = false
+            var first = previousTimes?.first ?: Long.MAX_VALUE
+            var last = previousTimes?.last ?: Long.MIN_VALUE
+            for ((status, charge, time, temperature, voltage, currentMicroAmps, remainingChargeMicroampHours) in records) {
                 val values = ContentValues().apply {
-                    put(KEY_STATUS_CODE, record.status)
-                    putNullable(KEY_CHARGE, record.charge)
-                    put(KEY_TIME, record.time)
-                    putNullable(KEY_TEMPERATURE, record.temperature)
-                    putNullable(KEY_VOLTAGE, record.voltage)
+                    put(KEY_STATUS_CODE, status)
+                    putNullable(KEY_CHARGE, charge)
+                    put(KEY_TIME, time)
+                    putNullable(KEY_TEMPERATURE, temperature)
+                    putNullable(KEY_VOLTAGE, voltage)
+                    putNullable(KEY_CURRENT, currentMicroAmps)
+                    putNullable(KEY_REMAINING_CHARGE, remainingChargeMicroampHours)
                 }
                 check(database.insertOrThrow(LOG_TABLE_NAME, null, values) >= 0) {
                     "Could not restore log entry"
                 }
+                inserted = true
+                first = minOf(first, time)
+                last = maxOf(last, time)
             }
+            val changed = deleted > 0 || inserted
+            if (changed) {
+                if (inserted || previousTimes != null) recordHistoryChange(first, last)
+                else recordHistoryChange(Long.MIN_VALUE, Long.MAX_VALUE)
+            }
+            changed
         }
+        if (changed) historyChanged(explicit = true)
     }
 
     private fun Cursor.getNullableInt(columnIndex: Int): Int? =
@@ -264,49 +403,78 @@ internal class LogDatabase(context: Context?) {
         if (value == null) putNull(key) else put(key, value)
     }
 
-    fun logStatus(info: BatteryInfo, time: Long, statusAge: Int): LogResult =
-        writeWithRetry("Logging battery status") { readableDatabase, writableDatabase ->
-            var duplicate = false
-            readableDatabase.rawQuery(
-                "SELECT * FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME DESC LIMIT 1", null
-            ).use { lastLog ->
-                if (lastLog.moveToFirst()) {
-                    val statusCode = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_STATUS_CODE))
-                    val lastCharge = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_CHARGE))
-                    val decodedStatus: IntArray = decodeStatus(statusCode)
-                    val lastStatus = decodedStatus[0]
-                    val lastPlugged = decodedStatus[1]
+    private fun Cursor.getNullableLong(columnIndex: Int): Long? =
+        if (isNull(columnIndex)) null else getLong(columnIndex)
 
-                    duplicate =
-                        info.percent == lastCharge && info.status == lastStatus && info.plugged == lastPlugged
+    private fun ContentValues.putNullable(key: String, value: Long?) {
+        if (value == null) putNull(key) else put(key, value)
+    }
+
+    fun logObservation(
+        observation: LogRecord,
+        elapsed: Long,
+        sampler: BatteryHistorySampler,
+        loggingEnabled: Boolean,
+        newStatus: Boolean = false
+    ): LogResult? {
+        if (!loggingEnabled) return null
+        var insertedPowerEvent = false
+        val result = writeWithRetry("Logging battery observation") { _, database ->
+            database.transaction {
+                val previous = rawQuery(
+                    "SELECT status, charge FROM logs ORDER BY _id DESC LIMIT 1", null
+                ).use { cursor ->
+                    if (!cursor.moveToFirst()) null else LogRecord(
+                        cursor.getInt(0), cursor.getNullableInt(1), 0, null, null
+                    )
+                }
+                val age = sampler.statusAge(previous, observation, elapsed, newStatus)
+                if (age == null) LogResult.Duplicate else {
+                    val decoded = decodeStatus(observation.status)
+                    val status = encodeStatus(decoded[0], decoded[1], age)
+                    insertedPowerEvent = age == STATUS_NEW && historyEventCode(status) != null
+                    val values = ContentValues().apply {
+                        put(KEY_STATUS_CODE, status)
+                        putNullable(KEY_CHARGE, observation.charge)
+                        put(KEY_TIME, observation.time)
+                        putNullable(KEY_TEMPERATURE, observation.temperature)
+                        putNullable(KEY_VOLTAGE, observation.voltage)
+                        putNullable(KEY_CURRENT, observation.currentMicroAmps)
+                        putNullable(KEY_REMAINING_CHARGE, observation.remainingChargeMicroampHours)
+                    }
+                    insertOrThrow(LOG_TABLE_NAME, null, values)
+                    recordHistoryChange(observation.time, observation.time)
+                    LogResult.Inserted
                 }
             }
+        }
+        if (result == LogResult.Inserted) {
+            sampler.inserted(elapsed)
+            historyChanged(explicit = insertedPowerEvent)
+        }
+        return result
+    }
 
-            if (duplicate) {
-                LogResult.Duplicate
-            } else {
-                val values = ContentValues().apply {
-                    put(KEY_STATUS_CODE, encodeStatus(info.status, info.plugged, statusAge))
-                    put(KEY_CHARGE, info.percent)
-                    put(KEY_TIME, time)
-                    put(KEY_TEMPERATURE, info.temperature)
-                    putNullable(KEY_VOLTAGE, info.voltage)
-                }
-                writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
-                LogResult.Inserted
+    fun logBoot(observedAt: Long = System.currentTimeMillis()): LogResult {
+        val result = writeWithRetry("Logging boot completion") { _, writableDatabase ->
+            val values = ContentValues().apply {
+                put(KEY_STATUS_CODE, STATUS_BOOT_COMPLETED)
+                putNull(KEY_CHARGE)
+                put(KEY_TIME, observedAt)
+                putNull(KEY_TEMPERATURE)
+                putNull(KEY_VOLTAGE)
+                putNull(KEY_CURRENT)
+                putNull(KEY_REMAINING_CHARGE)
             }
+            writableDatabase.transaction {
+                insertOrThrow(LOG_TABLE_NAME, null, values)
+                val time = values.getAsLong(KEY_TIME)
+                recordHistoryChange(time, time)
+            }
+            LogResult.Inserted
         }
-
-    fun logBoot(): LogResult = writeWithRetry("Logging boot completion") { _, writableDatabase ->
-        val values = ContentValues().apply {
-            put(KEY_STATUS_CODE, STATUS_BOOT_COMPLETED)
-            putNull(KEY_CHARGE)
-            put(KEY_TIME, System.currentTimeMillis())
-            putNull(KEY_TEMPERATURE)
-            putNull(KEY_VOLTAGE)
-        }
-        writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
-        LogResult.Inserted
+        if (result == LogResult.Inserted) historyChanged(explicit = true)
+        return result
     }
 
     fun checkHealth(): LogResult =
@@ -336,8 +504,18 @@ internal class LogDatabase(context: Context?) {
         openDBs()
 
         try {
-            wdb!!.execSQL("DELETE FROM $LOG_TABLE_NAME WHERE $KEY_TIME < $oldestLog")
-        } catch (e: Exception) {
+            val deleted = checkNotNull(wdb).transaction {
+                val where = "$KEY_TIME < ?"
+                val args = arrayOf(oldestLog.toString())
+                val times = affectedTimes(where, args)
+                delete(LOG_TABLE_NAME, where, args).also { deleted ->
+                    if (deleted > 0) recordHistoryChange(
+                        times?.first ?: Long.MIN_VALUE, times?.last ?: Long.MAX_VALUE
+                    )
+                }
+            }
+            if (deleted > 0) historyChanged()
+        } catch (_: Exception) {
         }
     }
 
@@ -349,37 +527,49 @@ internal class LogDatabase(context: Context?) {
                 "SELECT 1 FROM $LOG_TABLE_NAME WHERE $KEY_TIME < ? LIMIT 1",
                 arrayOf(oldestAllowedLog.toString())
             )?.use { it.moveToFirst() } ?: false
-        } catch (exception: Exception) {
+        } catch (_: Exception) {
             false
         }
     }
 
-    fun clearAllLogs() {
-        mSQLOpenHelper.reset()
-    }
-
     private class SQLOpenHelper(context: Context?) :
         SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+        override fun onOpen(db: SQLiteDatabase) {
+            super.onOpen(db)
+            if (!db.isReadOnly) db.execSQL("CREATE INDEX IF NOT EXISTS logs_time_id ON logs(time, _id)")
+        }
+
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(
-                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER);"
+                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER,\"$KEY_CURRENT\" INTEGER,$KEY_REMAINING_CHARGE INTEGER);"
             )
+            createHistoryChanges(db)
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-            if (oldVersion == 3 && newVersion == 4) {
-                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_TEMPERATURE INTEGER;")
-                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_VOLTAGE INTEGER;")
-            } else {
+            if (oldVersion < 3) {
                 db.execSQL("DROP TABLE IF EXISTS $LOG_TABLE_NAME")
                 onCreate(db)
+                return
             }
+            if (oldVersion < 4) {
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_TEMPERATURE INTEGER;")
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_VOLTAGE INTEGER;")
+            }
+            if (oldVersion < 5) {
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN \"$KEY_CURRENT\" INTEGER;")
+            }
+            if (oldVersion < 6) {
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_REMAINING_CHARGE INTEGER;")
+            }
+            if (oldVersion < 7) createHistoryChanges(db)
         }
 
-        fun reset() {
-            val db = writableDatabase
-            db.execSQL("DROP TABLE IF EXISTS $LOG_TABLE_NAME")
-            onCreate(db)
+        private fun createHistoryChanges(db: SQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE $HISTORY_CHANGES_TABLE (revision INTEGER PRIMARY KEY, first_time INTEGER NOT NULL, last_time INTEGER NOT NULL)"
+            )
         }
+
     }
 }

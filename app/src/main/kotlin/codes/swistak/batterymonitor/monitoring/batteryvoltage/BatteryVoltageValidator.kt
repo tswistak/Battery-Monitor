@@ -19,18 +19,4 @@ internal object BatteryVoltageValidator {
         return (value / MICROVOLTS_PER_MILLIVOLT).toInt()
             .takeIf { it in MIN_PLAUSIBLE_MILLIVOLTS..MAX_PLAUSIBLE_MILLIVOLTS }
     }
-
-    fun parseDumpsysVoltageMillivolts(dump: String?): Int? {
-        if (dump == null) return null
-
-        for (line in dump.lineSequence()) {
-            val trimmed = line.trim()
-            if (!trimmed.startsWith("voltage:", ignoreCase = true)) continue
-
-            val millivolts = trimmed.substringAfter(':').trim().toLongOrNull() ?: return null
-            if (millivolts < Int.MIN_VALUE || millivolts > Int.MAX_VALUE) return null
-            return millivolts.toInt().takeIf(::isValidBroadcastMillivolts)
-        }
-        return null
-    }
 }
