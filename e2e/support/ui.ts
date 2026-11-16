@@ -208,10 +208,6 @@ async function clickDocumentControl(selector: string) {
     await browser.execute('mobile: resetAccessibilityCache');
 }
 
-async function openDocumentRoots() {
-    await clickDocumentControl('android=new UiSelector().descriptionMatches("Show roots|Show navigation drawer")');
-}
-
 type Bounds = { left: number; top: number; right: number; bottom: number };
 
 async function boundsOf(element: WebdriverIO.Element): Promise<Bounds> {
@@ -256,8 +252,7 @@ async function documentDirectoryRow(name: string) {
         return false;
     }, { timeout, timeoutMsg: `DocumentsUI directory '${name}' was not accessible` });
     await clickDocumentControl(selector);
-    const toolbarTitle = `//android.widget.TextView[@text=${xpathLiteral(name)}][ancestor::*[@resource-id='${pickerPackage}:id/toolbar']]`;
-    await browser.$(toolbarTitle).waitForDisplayed({ timeout });
+    await browser.$(documentTitleSelector(pickerPackage, name)).waitForDisplayed({ timeout });
 }
 
 function xpathLiteral(value: string) {
@@ -266,21 +261,34 @@ function xpathLiteral(value: string) {
     throw new Error('Directory name contains unsupported XPath quoting');
 }
 
+const documentTitleSelector = (pickerPackage: string, title: string) =>
+    `//android.widget.TextView[@text=${xpathLiteral(title)}][ancestor::*[@resource-id='${pickerPackage}:id/toolbar']]`;
+
 async function documentDirectory() {
     await browser.waitUntil(async () => pickerPackages.includes(await browser.getCurrentPackage()), {
         timeout,
         timeoutMsg: 'Android Storage Access Framework picker did not appear',
     });
-    await openDocumentRoots();
+    await dismissDocumentKeyboard();
+    const pickerPackage = await browser.getCurrentPackage();
     const model = (await shell('getprop', ['ro.product.model'])).trim();
-    const internalStorage = documentRowSelector(model);
-    if (!await browser.$(internalStorage).isDisplayed()) {
-        await browser.back();
-        await clickDocumentControl('~More options');
-        await clickDocumentControl(textSelector('Show internal storage'));
-        await openDocumentRoots();
-    }
-    await clickDocumentControl(internalStorage);
+    const drawer = resourceSelector(`${pickerPackage}:id/roots_list`);
+    const storageTitle = documentTitleSelector(pickerPackage, model);
+
+    await browser.waitUntil(async () => {
+        await browser.execute('mobile: resetAccessibilityCache');
+        if (await browser.$(drawer).isDisplayed()) return true;
+        const openDrawer = await browser.$('android=new UiSelector().descriptionMatches("Show roots|Show navigation drawer")');
+        if (await openDrawer.isDisplayed()) await openDrawer.click();
+        return false;
+    }, { timeout, interval: 500, timeoutMsg: 'DocumentsUI storage drawer did not open' });
+    await browser.waitUntil(async () => {
+        await browser.execute('mobile: resetAccessibilityCache');
+        if (!await browser.$(drawer).isDisplayed()) return await browser.$(storageTitle).isDisplayed();
+        const internalStorage = await browser.$(documentRowSelector(model));
+        if (await internalStorage.isDisplayed()) await internalStorage.click();
+        return false;
+    }, { timeout, interval: 500, timeoutMsg: `DocumentsUI did not select internal storage '${model}'` });
     await documentDirectoryRow('Download');
     await documentDirectoryRow('battery-monitor-e2e');
 }
