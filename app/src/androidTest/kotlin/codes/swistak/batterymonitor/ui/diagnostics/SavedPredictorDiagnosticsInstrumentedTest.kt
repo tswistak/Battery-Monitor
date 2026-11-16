@@ -35,6 +35,7 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailabili
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.clickSemantics
 import codes.swistak.batterymonitor.testsupport.composeNodes
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -103,7 +104,7 @@ class SavedPredictorDiagnosticsInstrumentedTest {
                     PersistentFragment.FRAG_TAG
                 ) as PersistentFragment
             }
-            click(R.string.diag_raw)
+            selectTab(R.string.diag_raw)
             setQuery(key)
             copyRawValue(key, "123456.75", clipboard)
             assertFalse(MonitoringDesiredState.read(context))
@@ -111,9 +112,9 @@ class SavedPredictorDiagnosticsInstrumentedTest {
             assertNull(fragment.monitoring.state.value.snapshot?.recentPredictorData)
 
             assertTrue(predictor.edit().putFloat(key, 345678.5f).commit())
-            click(R.string.diag_overview)
+            selectTab(R.string.diag_overview)
             scrollToAndClick(R.string.diag_action_refresh)
-            click(R.string.diag_raw)
+            selectTab(R.string.diag_raw)
             copyRawValue(key, "345678.5", clipboard)
             assertFalse(
                 "Reading saved diagnostics restarted monitoring",
@@ -216,6 +217,25 @@ class SavedPredictorDiagnosticsInstrumentedTest {
     }
 
     private fun semanticsNodes(): List<SemanticsNode> = composeNodes(activity.window.decorView)
+
+    private fun selectTab(label: Int) {
+        val text = context.getString(label)
+        fun tab() = semanticsNodes().firstOrNull {
+            it.config.contains(SemanticsProperties.Selected) &&
+                    it.config.getOrNull(SemanticsProperties.Text)
+                        ?.any { value -> value.text == text } == true
+        }
+        await("Diagnostics tab was not composed: $text") {
+            main {
+                val node = tab() ?: return@main false
+                node.clickSemantics()
+                true
+            }
+        }
+        await("Diagnostics tab was not selected: $text") {
+            main { tab()?.config?.getOrNull(SemanticsProperties.Selected) == true }
+        }
+    }
 
     private fun click(label: Int) = clickText(context.getString(label))
 
