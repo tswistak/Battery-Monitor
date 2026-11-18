@@ -684,6 +684,111 @@ test('validated privacy facts reach the policy in both modes and optional notice
   }
 });
 
+test('hosting backup retention supports fixed days or criteria in either analytics mode', async () => {
+  const fixture = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
+  const policy =
+    'Temporary copies are deleted after the relevant recovery operation is completed and verified.';
+  for (const enabled of ['false', 'true']) {
+    for (const [backupRetentionDays, backupRetentionPolicy, expected] of [
+      [0, undefined, 'not retained'],
+      [fixture.hosting.backupRetentionDays, undefined, 'up to 14 days'],
+      [365, null, 'up to 365 days'],
+      [null, policy, policy],
+    ]) {
+      const privacy = structuredClone(fixture);
+      Object.assign(privacy.hosting, { backupRetentionDays, backupRetentionPolicy });
+      const config = validatePublication(
+        loadSiteConfig({
+          env: { MATOMO_ENABLED: enabled, MATOMO_SITE_ID: '7' },
+          privacy,
+        }),
+      );
+      assert.equal(config.publicationReady, true);
+      const sections = getPrivacySections(config);
+      const delivery = sections.find((section) => section.id === 'website-delivery').html;
+      const backup = delivery.match(/<dt>Backup retention<\/dt><dd>(.*?)<\/dd>/)?.[1];
+      assert.equal(backup, expected);
+      assert.equal(delivery.match(/<dt>Backup retention<\/dt>/g)?.length, 1);
+      if (backupRetentionPolicy) assert.doesNotMatch(backup, /\d+ days|not retained/);
+      if (enabled === 'true') {
+        const retention = sections.find((section) => section.id === 'retention').html;
+        assert.match(retention, /<dt>Analytics backups<\/dt><dd>up to 14 days<\/dd>/);
+      }
+    }
+  }
+});
+
+test('invalid hosting backup disclosures still block publication with analytics enabled or disabled', async () => {
+  const fixture = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
+  const policy = 'Temporary copies are deleted after recovery has completed and been verified.';
+  const missing = /privacy\.hosting\.backupRetention(?:Days|Policy)/;
+  const invalid = [
+    [{ backupRetentionDays: undefined, backupRetentionPolicy: undefined }, missing],
+    [{ backupRetentionDays: null, backupRetentionPolicy: null }, missing],
+    [{ backupRetentionDays: 14, backupRetentionPolicy: policy }, missing],
+    [{ backupRetentionDays: 0, backupRetentionPolicy: policy }, missing],
+    ...[
+      '',
+      '  \n\t ',
+      'TODO: confirm backup retention',
+      '[retention criteria]',
+      14,
+      {},
+      'x'.repeat(5001),
+    ].map((backupRetentionPolicy) => [
+      { backupRetentionDays: null, backupRetentionPolicy },
+      /privacy\.hosting\.backupRetentionPolicy/,
+    ]),
+    ...[-1, 366, 1.5, '14'].map((backupRetentionDays) => [
+      { backupRetentionDays, backupRetentionPolicy: null },
+      /privacy\.hosting\.backupRetentionDays/,
+    ]),
+    ...[-1, 366].map((backupRetentionDays) => [
+      { backupRetentionDays, backupRetentionPolicy: policy },
+      /privacy\.hosting\.backupRetentionDays/,
+    ]),
+  ];
+  for (const enabled of ['false', 'true']) {
+    for (const [changes, error] of invalid) {
+      const privacy = structuredClone(fixture);
+      Object.assign(privacy.hosting, changes);
+      assert.throws(
+        () =>
+          validatePublication(
+            loadSiteConfig({
+              env: { MATOMO_ENABLED: enabled, MATOMO_SITE_ID: '7' },
+              privacy,
+            }),
+          ),
+        error,
+      );
+    }
+  }
+});
+
+test('criteria-based backup retention escapes HTML instead of injecting provider markup', async () => {
+  const privacy = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
+  privacy.hosting.backupRetentionDays = null;
+  privacy.hosting.backupRetentionPolicy =
+    'Copies <script>alert("x")</script><img src=x onerror=\'bad()\'> & "temporary" \'only\'.';
+  const escaped =
+    'Copies &lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;&lt;img src=x onerror=&#39;bad()&#39;&gt; &amp; &quot;temporary&quot; &#39;only&#39;.';
+  for (const enabled of ['false', 'true']) {
+    const config = validatePublication(
+      loadSiteConfig({
+        env: { MATOMO_ENABLED: enabled, MATOMO_SITE_ID: '7' },
+        privacy,
+      }),
+    );
+    const delivery = getPrivacySections(config).find(
+      (section) => section.id === 'website-delivery',
+    ).html;
+    assert.equal(delivery.match(/<dt>Backup retention<\/dt><dd>(.*?)<\/dd>/)?.[1], escaped);
+    assert.equal(delivery.includes(privacy.hosting.backupRetentionPolicy), false);
+    assert.doesNotMatch(delivery, /<script\b|<img\b/);
+  }
+});
+
 test('workflow consent variables configure the site consistently and reject incompatible lifetimes', async () => {
   const privacy = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
   const variables = {

@@ -104,7 +104,15 @@ export function publicationIssues(privacy, analytics) {
   if (field(privacy, 'review.policyVersion') !== privacy.policyVersion)
     issues.push('privacy.review.policyVersion');
   requireDays('hosting.accessLogRetentionDays', 365);
-  requireDays('hosting.backupRetentionDays', 365);
+  if (field(privacy, 'hosting.backupRetentionPolicy') != null) {
+    requireText('hosting.backupRetentionPolicy');
+    if (field(privacy, 'hosting.backupRetentionDays') != null)
+      issues.push(
+        'privacy.hosting.backupRetentionDays (cannot be combined with privacy.hosting.backupRetentionPolicy)',
+      );
+  } else if (field(privacy, 'hosting.backupRetentionDays') == null)
+    issues.push('privacy.hosting.backupRetentionDays or privacy.hosting.backupRetentionPolicy');
+  else requireDays('hosting.backupRetentionDays', 365);
   if (analytics.enabled) {
     for (const path of [
       'analytics.hostingProvider',
@@ -188,6 +196,7 @@ export function loadSiteConfig({
     'hosting.deliveryInterests',
     'hosting.accessLogData',
     'hosting.accessLogAccessControls',
+    'hosting.backupRetentionPolicy',
     'contact.providerInformation',
     'contact.legalBasis',
     'contact.retentionCriteria',

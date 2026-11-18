@@ -27,6 +27,7 @@ export interface PrivacyConfig {
     accessLogRetentionDays: number | null;
     accessLogAccessControls: string | null;
     backupRetentionDays: number | null;
+    backupRetentionPolicy?: string | null;
   };
   contact: {
     providerInformation: string | null;
