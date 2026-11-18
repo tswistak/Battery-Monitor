@@ -6,7 +6,7 @@ import FeatureStory from '../components/FeatureStory.astro';
 import AppScreen from '../components/AppScreen.astro';
 import { content } from '../data/content';
 import { getFaq } from '../content/en/faq';
-import { pageMeta } from '../content/en/ui';
+import { pageMeta, ui } from '../content/en/ui';
 import { homeCopy as copy } from '../content/en/pages';
 const { capabilities: caps } = content;
 const faq = getFaq(caps, 'home');
@@ -29,7 +29,13 @@ const faq = getFaq(caps, 'home');
   </section>
   <section class="evidence" aria-label={copy.appPreviewLabel}>
     <article class="current" id="feature-current">
-      <AppScreen name="current" alt={copy.current.imageAlt} class="screen readings-screen" eager />
+      <AppScreen
+        name="current"
+        alt={copy.current.imageAlt}
+        class="screen readings-screen"
+        sizes="(max-width:600px) min(170px, calc((100vw - 70px) / 2)), (max-width:1199px) 280px, min(260px, calc(22.222vw - 54px))"
+        eager
+      />
       <div class="readings-copy feature-copy" id="readings">
         <h2>
           {copy.current.title[0]}
@@ -50,7 +56,8 @@ const faq = getFaq(caps, 'home');
       <AppScreen
         name="history"
         alt={caps.historyCharts ? copy.history.imageAlt : copy.history.legacyImageAlt}
-        class="screen"
+        class={caps.historyCharts ? 'screen history-chart-screen' : 'screen'}
+        sizes="(max-width:600px) min(160px, calc((100vw - 70px) / 2)), (max-width:1199px) min(260px, calc((100vw - 172px) / 2)), 190px"
         eager
       />
     </article>
@@ -64,7 +71,13 @@ const faq = getFaq(caps, 'home');
         <p>{copy.alarms.description}</p>
       </div>
       <div class="alarms-screen">
-        <AppScreen name="alarms" alt={copy.alarms.imageAlt} class="screen" eager />
+        <AppScreen
+          name="alarms"
+          alt={copy.alarms.imageAlt}
+          class="screen"
+          sizes="(max-width:600px) min(160px, calc((100vw - 70px) / 2)), (max-width:1199px) min(260px, calc((100vw - 172px) / 2)), 175px"
+          eager
+        />
       </div>
     </article>
   </section>
@@ -112,6 +125,9 @@ const faq = getFaq(caps, 'home');
         </details>
       ))}
     </div>
+    <p class="text-links">
+      <a href="/download/">{ui.getApp}</a>
+    </p>
   </section>
   <Sponsorship />
 </SiteLayout>

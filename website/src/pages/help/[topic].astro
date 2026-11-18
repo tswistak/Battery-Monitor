@@ -19,14 +19,8 @@ const { article } = Astro.props;
     </a>
     <h1>{article.title}</h1>
     <p class="page-lead">{guideIntro[article.id]}</p>
-    <p>Screen names and controls in these guides refer to the Android app.</p>
+    <p>This guide is for Battery Monitor {content.release.version} on Android.</p>
     <div class="prose imported-help" set:html={article.html} />
-    <aside class="source-note">
-      <p>
-        Application content: {content.release.version}.{' '}
-        <a href={content.app.sourceUrl}>View the corresponding application source</a>.
-      </p>
-    </aside>
     <div class="page-links">
       <a href="/help/#contact">Still need help?</a>
       <a href="/download/">Get the app</a>

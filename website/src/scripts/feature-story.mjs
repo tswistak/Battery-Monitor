@@ -115,6 +115,23 @@ function initFeatureStory() {
       frame = requestAnimationFrame(render);
   }
 
+  function scrollToFeature(index) {
+    if (!story.classList.contains('story-ready')) return;
+    const inset = parseFloat(getComputedStyle(pin).top) || 0;
+    const range = Math.max(1, story.offsetHeight - pin.offsetHeight);
+    const top = scrollY + story.getBoundingClientRect().top - inset;
+    window.scrollTo({ top: top + (range * (index + 0.5)) / steps.length, behavior: 'instant' });
+    render();
+  }
+
+  function restoreFeatureHash() {
+    const index = links.findIndex(
+      (link, index) => location.hash === link.hash || location.hash === '#' + steps[index].id,
+    );
+    if (index >= 0) scrollToFeature(index);
+    else schedule();
+  }
+
   function configure() {
     pauseClips();
     const enabled = !reduced.matches && space.matches;
@@ -139,7 +156,12 @@ function initFeatureStory() {
   space.addEventListener('change', configure);
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule, { passive: true });
-  window.addEventListener('pageshow', configure);
+  window.addEventListener('pageshow', () => {
+    configure();
+    requestAnimationFrame(restoreFeatureHash);
+  });
+  window.addEventListener('hashchange', restoreFeatureHash);
+  window.addEventListener('popstate', () => requestAnimationFrame(restoreFeatureHash));
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) pauseClips();
     else schedule();
@@ -156,14 +178,12 @@ function initFeatureStory() {
       )
         return;
       event.preventDefault();
-      const inset = parseFloat(getComputedStyle(pin).top) || 0;
-      const range = Math.max(1, story.offsetHeight - pin.offsetHeight);
-      const top = scrollY + story.getBoundingClientRect().top - inset;
-      window.scrollTo({ top: top + (range * (index + 0.5)) / steps.length, behavior: 'instant' });
-      schedule();
+      if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+      scrollToFeature(index);
     });
   });
   configure();
+  restoreFeatureHash();
 }
 
 if (typeof document !== 'undefined' && typeof window !== 'undefined') initFeatureStory();

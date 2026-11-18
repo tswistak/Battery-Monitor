@@ -51,6 +51,7 @@ test('static routes, download navigation and essential images work without JavaS
   await expect(page.locator('[data-clip-toggle]').first()).toBeHidden();
   await page.locator('#story-widgets a').click();
   await expect(page).toHaveURL(/#story-media-widgets$/);
+  await expect(page.locator('#story-media-widgets')).toBeInViewport();
   await page.locator('header a[href="/download/"]').click();
   await expect(page).toHaveURL(/\/download\/$/);
   expect(forbidden).toEqual([]);
@@ -306,10 +307,15 @@ test('feature navigation and scroll progress work with pointer and keyboard', as
         'aria-hidden',
         'false',
       );
+      expect(new URL(page.url()).hash).toBe(await links.nth(index).getAttribute('href'));
     }
     await links.first().focus();
     await page.keyboard.press('Enter');
     await expect(story).toHaveAttribute('data-step', '0');
+    await expect(page).toHaveURL(/#story-media-notifications$/);
+    const entries = await page.evaluate(() => history.length);
+    await page.keyboard.press('Enter');
+    expect(await page.evaluate(() => history.length)).toBe(entries);
     const runway = await story.evaluate((element) => {
       const section = element as HTMLElement;
       const pin = section.querySelector('.story-pin') as HTMLElement;
@@ -340,5 +346,28 @@ test('feature navigation and scroll progress work with pointer and keyboard', as
         )
         .toBeCloseTo(progress, 2);
     }
+    await expect(page).toHaveURL(/#story-media-notifications$/);
+    expect(await page.evaluate(() => history.length)).toBe(entries);
   }
+});
+
+test('feature deep links survive reload and browser history', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/#story-media-backups');
+  const story = page.locator('#feature-story');
+  async function expectFeature(feature: string, index: number) {
+    await expect(page).toHaveURL(new RegExp('#story-media-' + feature + '$'));
+    await expect(story).toHaveAttribute('data-step', String(index));
+    await expect(page.locator('#story-media-' + feature)).toHaveAttribute('aria-hidden', 'false');
+    await expect(page.locator('#story-media-' + feature)).toBeInViewport();
+  }
+  await expectFeature('backups', 2);
+  await page.reload();
+  await expectFeature('backups', 2);
+  await page.locator('#story-widgets a').click();
+  await expectFeature('widgets', 1);
+  await page.goBack();
+  await expectFeature('backups', 2);
+  await page.goForward();
+  await expectFeature('widgets', 1);
 });

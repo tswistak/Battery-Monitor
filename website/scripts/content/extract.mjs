@@ -249,7 +249,8 @@ export function buildArticles({ strings, readme, capabilities, commit, omitted }
           `${mapping.id}/${section.title}: source section not available in this application revision`,
         );
     }
-    const fallback = `<p>This application revision does not include a shared explanation for this topic. See the <a href="${REPOSITORY_URL}/tree/${commit}">corresponding application source</a> or <a href="/help/#contact">contact the project</a> for version-specific help.</p>`;
+    const fallback =
+      '<p>For help with this topic in this version of Battery Monitor, <a href="/help/#contact">contact the project</a>.</p>';
     const title =
       mapping.id === 'notifications' && !capabilities.liveUpdates
         ? 'Notifications'

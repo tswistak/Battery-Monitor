@@ -173,6 +173,13 @@ h2 {
 .history .screen {
   max-width: 190px;
 }
+@media (min-width: 1200px) {
+  .history .history-chart-screen {
+    height: 198px;
+    object-fit: cover;
+    object-position: center 76%;
+  }
+}
 .alarms {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1424,6 +1431,15 @@ h2 {
   gap: 12px 8px;
   flex-wrap: wrap;
 }
+.store-alternatives {
+  display: flex;
+  gap: 8px;
+  width: 422px;
+  max-width: 100%;
+}
+.store-alternatives .store-official {
+  flex: 1;
+}
 .store-choice {
   display: flex;
   flex-direction: column;
@@ -1455,7 +1471,7 @@ h2 {
   cursor: not-allowed;
 }
 .store-status {
-  font-size: 11px;
+  font-size: 0.75rem;
   line-height: 1.4;
   color: var(--muted);
   /* The official badge reserves 41/646 of its width as transparent bottom padding. */
@@ -1632,14 +1648,6 @@ h2 {
   text-decoration: underline;
   text-underline-offset: 5px;
 }
-.source-note {
-  border-top: 1px solid #c7d7e2;
-  margin-top: 40px;
-  padding-top: 16px;
-}
-.source-note p {
-  font-size: 14px;
-}
 .release-date {
   font-size: 14px !important;
 }
@@ -1763,13 +1771,11 @@ h2 {
 }
 @media (max-width: 600px) {
   .store-badges {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: 422px;
+    justify-content: center;
   }
-  .store-badges .store-official,
-  .store-choice {
-    width: 100%;
+  .store-badges .store-choice {
+    width: calc((100% - 8px) / 2);
   }
   .guide-index {
     grid-template-columns: 1fr;
