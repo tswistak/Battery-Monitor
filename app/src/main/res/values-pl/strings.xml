@@ -893,7 +893,9 @@
     <string name="help_licenses_loading">Ładowanie licencji…</string>
     <string name="help_licenses_unavailable">Nie udało się odczytać informacji o tej licencji. Wróć do listy licencji lub zainstaluj ponownie aplikację.</string>
     <string name="help_cat_privacy" formatted="false">Prywatność</string>
-    <string name="help_privacy" formatted="false">Monitor baterii przetwarza informacje o baterii i urządzeniu lokalnie, w tym wartości ujawnione przez urządzenie, takie jak numer seryjny baterii. Nie przekazuje tych informacji ani nie gromadzi ich na zewnętrznych serwerach.</string>
+    <string name="help_privacy" formatted="false">Monitor baterii przetwarza informacje o baterii i urządzeniu lokalnie, w tym wartości ujawnione przez urządzenie, takie jak numer seryjny baterii. Nie przekazuje tych informacji ani nie gromadzi ich na zewnętrznych serwerach.\n
+    \n
+    <a href="https://batterymonitor.swistak.codes/privacy/">Pełna polityka prywatności</a></string>
     <string name="help_cat_no_warranty" formatted="false">Brak gwarancji</string>
     <string name="help_no_warranty" formatted="false">Niniejsze oprogramowanie jest udostępniane w nadziei, że okaże się przydatne, jednak BEZ ŻADNEJ GWARANCJI, w tym bez dorozumianej gwarancji PRZYDATNOŚCI HANDLOWEJ lub PRZYDATNOŚCI DO OKREŚLONEGO CELU.\n
     \n
@@ -901,7 +903,7 @@
     <string name="help_cat_acknowledgments" formatted="false">Podziękowania</string>
     <string name="help_acknowledgments" formatted="false">Monitor baterii jest forkiem Battery Indicator Pro / BatteryBot Pro autorstwa Darshan Computing, LLC. Dziękuję autorom i współtwórcom za stworzenie i utrzymywanie projektu źródłowego.</string>
     <string name="help_cat_frequently_asked_questions" formatted="false">Najczęściej zadawane pytania</string>
-    <string name="help_frequently_asked_questions" formatted="false">Możesz znaleźć odpowiedzi na najpopularniejsze pytania na <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
+    <string name="help_frequently_asked_questions" formatted="false">Możesz znaleźć odpowiedzi na najpopularniejsze pytania na <a href="https://batterymonitor.swistak.codes/help/#faq">https://batterymonitor.swistak.codes/help/#faq</a>.</string>
     <string name="help_cat_contact" formatted="false">Kontakt i opinie</string>
     <string name="help_contact" formatted="false">Zapraszam do <a href="https://github.com/tswistak/Battery-Monitor/issues">zgłaszania błędów na GitHubie</a>. W razie pytań, pomysłów lub opinii dołącz do <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a>. Możesz też <a href="mailto:tomasz@swistak.codes">napisać do mnie e-maila</a>.</string>
     <string name="changelog_title">Co nowego w Monitorze baterii</string>

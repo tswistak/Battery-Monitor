@@ -878,13 +878,15 @@
     <string name="help_licenses_loading">正在加载许可证…</string>
     <string name="help_licenses_unavailable">无法读取此许可证信息。请返回许可证列表或重新安装应用。</string>
     <string name="help_cat_privacy" formatted="false">隐私</string>
-    <string name="help_privacy" formatted="false">Battery Monitor 会在本地处理电池和设备信息，包括设备提供的值，例如电池序列号。它不会传输这些信息，也不会在外部服务器上收集这些信息。</string>
+    <string name="help_privacy" formatted="false">Battery Monitor 会在本地处理电池和设备信息，包括设备提供的值，例如电池序列号。它不会传输这些信息，也不会在外部服务器上收集这些信息。\n
+    \n
+    <a href="https://batterymonitor.swistak.codes/privacy/">完整隐私政策</a></string>
     <string name="help_cat_no_warranty" formatted="false">免责声明</string>
     <string name="help_no_warranty" formatted="false">本软件按“原样”提供，不提供任何明示或暗示的担保。开发者会尽力保证软件正常运行，但不对使用过程中可能造成的不便、数据损失或设备问题承担责任。</string>
     <string name="help_cat_acknowledgments" formatted="false">致谢</string>
     <string name="help_acknowledgments" formatted="false">Battery Monitor 是 Battery Indicator Pro / BatteryBot Pro 的一个分支。感谢原作者和贡献者创建并维护上游项目。</string>
     <string name="help_cat_frequently_asked_questions" formatted="false">常见问题</string>
-    <string name="help_frequently_asked_questions" formatted="false">您可以在 <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> 找到最常见问题的解答。</string>
+    <string name="help_frequently_asked_questions" formatted="false">您可以在 <a href="https://batterymonitor.swistak.codes/help/#faq">https://batterymonitor.swistak.codes/help/#faq</a> 找到最常见问题的解答。</string>
     <string name="help_cat_contact" formatted="false">联系与反馈</string>
     <string name="help_contact" formatted="false">欢迎在 <a href="https://github.com/tswistak/Battery-Monitor/issues">GitHub 报告错误</a>。如有问题、想法或意见，请加入 <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a>。您也可以<a href="mailto:tomasz@swistak.codes">给我发电子邮件</a>。</string>
     <string name="changelog_title">Battery Monitor 更新内容</string>

@@ -903,7 +903,9 @@
     <string name="help_licenses_loading">جارٍ تحميل التراخيص…</string>
     <string name="help_licenses_unavailable">تعذرت قراءة معلومات الترخيص هذه. ارجع إلى قائمة التراخيص أو أعد تثبيت التطبيق.</string>
     <string name="help_cat_privacy" formatted="false">الخصوصية</string>
-    <string name="help_privacy" formatted="false">يعالج Battery Monitor معلومات البطارية والجهاز محليًا، بما في ذلك القيم التي يكشف عنها الجهاز مثل الرقم التسلسلي للبطارية. لا ينقل هذه المعلومات ولا يجمعها على خوادم خارجية.</string>
+    <string name="help_privacy" formatted="false">يعالج Battery Monitor معلومات البطارية والجهاز محليًا، بما في ذلك القيم التي يكشف عنها الجهاز مثل الرقم التسلسلي للبطارية. لا ينقل هذه المعلومات ولا يجمعها على خوادم خارجية.\n
+    \n
+    <a href="https://batterymonitor.swistak.codes/privacy/">سياسة الخصوصية الكاملة</a></string>
     <string name="help_cat_no_warranty" formatted="false">لا ضمان</string>
     <string name="help_no_warranty" formatted="false">يتم نشر هذا التطبيق على امل ان يكون مفيدا وعملي لكن من دون اي ضمان حتى دون صلاحية التسويق وللاستخدام لغرض معين\n
     \n
@@ -911,7 +913,7 @@
     <string name="help_cat_acknowledgments" formatted="false">شكر وتقدير</string>
     <string name="help_acknowledgments" formatted="false">مراقب البطارية عبارة عن شوكة لـ Battery Indicator Pro / BatteryBot Pro بواسطة دارشان للحوسبة، ذ.م.م. شكرا للمؤلفين والمساهمين الأصليين لإنشاء وصيانة المشروع المنبع.</string>
     <string name="help_cat_frequently_asked_questions" formatted="false">الأسئلة الشائعة</string>
-    <string name="help_frequently_asked_questions" formatted="false">يمكنك العثور على إجابات للأسئلة الأكثر شيوعًا على <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
+    <string name="help_frequently_asked_questions" formatted="false">يمكنك العثور على إجابات للأسئلة الأكثر شيوعًا على <a href="https://batterymonitor.swistak.codes/help/#faq">https://batterymonitor.swistak.codes/help/#faq</a>.</string>
     <string name="help_cat_contact" formatted="false">التواصل والملاحظات</string>
     <string name="help_contact" formatted="false">يمكنك <a href="https://github.com/tswistak/Battery-Monitor/issues">الإبلاغ عن الأخطاء على GitHub</a>. للأسئلة والأفكار والملاحظات، انضم إلى <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a>. يمكنك أيضًا <a href="mailto:tomasz@swistak.codes">مراسلتي بالبريد الإلكتروني</a>.</string>
     <string name="changelog_title">الجديد في Battery Monitor</string>

@@ -883,13 +883,15 @@
     <string name="help_licenses_loading">Lisanslar yükleniyor…</string>
     <string name="help_licenses_unavailable">Bu lisans bilgileri okunamadı. Lütfen lisans listesine dönün veya uygulamayı yeniden yükleyin.</string>
     <string name="help_cat_privacy" formatted="false">Gizlilik</string>
-    <string name="help_privacy" formatted="false">Battery Monitor, pil seri numarası gibi cihazın sunduğu değerler de dahil olmak üzere pil ve cihaz bilgilerini yerel olarak işler. Bu bilgileri iletmez veya harici sunucularda toplamaz.</string>
+    <string name="help_privacy" formatted="false">Battery Monitor, pil seri numarası gibi cihazın sunduğu değerler de dahil olmak üzere pil ve cihaz bilgilerini yerel olarak işler. Bu bilgileri iletmez veya harici sunucularda toplamaz.\n
+    \n
+    <a href="https://batterymonitor.swistak.codes/privacy/">Gizlilik politikasının tamamı</a></string>
     <string name="help_cat_no_warranty" formatted="false">Garanti Yok</string>
     <string name="help_no_warranty" formatted="false">Bu yazılım faydalı olması umuduyla sunulur, ancak HİÇBİR GARANTİ VERİLMEZ.</string>
     <string name="help_cat_acknowledgments" formatted="false">Onaylar</string>
     <string name="help_acknowledgments" formatted="false">Battery Monitor, Battery Indicator Pro ve BatteryBot Pro uygulamalarindan fork edilmiştir. Orijinal yazar ve katki saglayanlara projeyi olusturup surdurdukleri icin tesekkur ederiz.</string>
     <string name="help_cat_frequently_asked_questions" formatted="false">Sıkça Sorulan Sorular</string>
-    <string name="help_frequently_asked_questions" formatted="false">En sık sorulan soruların yanıtlarını <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> adresinde bulabilirsiniz.</string>
+    <string name="help_frequently_asked_questions" formatted="false">En sık sorulan soruların yanıtlarını <a href="https://batterymonitor.swistak.codes/help/#faq">https://batterymonitor.swistak.codes/help/#faq</a> adresinde bulabilirsiniz.</string>
     <string name="help_cat_contact" formatted="false">İletişim ve geri bildirim</string>
     <string name="help_contact" formatted="false"><a href="https://github.com/tswistak/Battery-Monitor/issues">GitHub üzerinden hata bildirebilirsiniz</a>. Sorular, fikirler ve geri bildirimler için <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a> bölümüne katılın. Ayrıca <a href="mailto:tomasz@swistak.codes">bana e-posta gönderebilirsiniz</a>.</string>
     <string name="changelog_title">Battery Monitor yenilikleri</string>

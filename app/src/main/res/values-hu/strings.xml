@@ -883,7 +883,9 @@
     <string name="help_licenses_loading">Licencek betöltése…</string>
     <string name="help_licenses_unavailable">A licencadatok nem olvashatók. Térjen vissza a licenclistához, vagy telepítse újra az alkalmazást.</string>
     <string name="help_cat_privacy" formatted="false">Adatvédelem</string>
-    <string name="help_privacy" formatted="false">A Battery Monitor helyileg dolgozza fel az akkumulátor- és eszközinformációkat, beleértve az eszköz által elérhetővé tett értékeket, például az akkumulátor sorozatszámát. Ezeket az információkat nem továbbítja és nem gyűjti külső szervereken.</string>
+    <string name="help_privacy" formatted="false">A Battery Monitor helyileg dolgozza fel az akkumulátor- és eszközinformációkat, beleértve az eszköz által elérhetővé tett értékeket, például az akkumulátor sorozatszámát. Ezeket az információkat nem továbbítja és nem gyűjti külső szervereken.\n
+    \n
+    <a href="https://batterymonitor.swistak.codes/privacy/">Teljes adatvédelmi tájékoztató</a></string>
     <string name="help_cat_no_warranty" formatted="false">Nincs garancia</string>
     <string name="help_no_warranty" formatted="false">Ezt a szoftvert annak reményében terjesztjük, hogy hasznosnak bizonyul, de MINDENNEMŰ GARANCIA NÉLKÜL, kizárva még az általában beleértett garanciákat is, mint a FORGALMAZHATÓSÁG, vagy A CÉLNAK VALÓ MEGFELELÉS.\n
     \n
@@ -891,7 +893,7 @@
     <string name="help_cat_acknowledgments" formatted="false">Köszönetnyilvánítás</string>
     <string name="help_acknowledgments" formatted="false">A Battery Monitor a Battery Indicator Pro / BatteryBot Pro villája Darshan Computing, LLC. Köszönet az eredeti szerzőknek és a közreműködőknek az upstream projekt létrehozásához és karbantartásához.</string>
     <string name="help_cat_frequently_asked_questions" formatted="false">Gyakran ismételt kérdések</string>
-    <string name="help_frequently_asked_questions" formatted="false">A leggyakoribb kérdésekre adott válaszokat itt találja: <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
+    <string name="help_frequently_asked_questions" formatted="false">A leggyakoribb kérdésekre adott válaszokat itt találja: <a href="https://batterymonitor.swistak.codes/help/#faq">https://batterymonitor.swistak.codes/help/#faq</a>.</string>
     <string name="help_cat_contact" formatted="false">Kapcsolat és visszajelzés</string>
     <string name="help_contact" formatted="false">Hibákat <a href="https://github.com/tswistak/Battery-Monitor/issues">a GitHubon jelenthet</a>. Kérdésekkel, ötletekkel és visszajelzésekkel keresse fel a <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a> oldalt. <a href="mailto:tomasz@swistak.codes">E-mailt is írhat nekem</a>.</string>
     <string name="changelog_title">A Battery Monitor újdonságai</string>

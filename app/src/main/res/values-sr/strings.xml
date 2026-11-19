@@ -888,7 +888,9 @@
     <string name="help_licenses_loading">Učitavanje licenci…</string>
     <string name="help_licenses_unavailable">Ove podatke o licenci nije moguće pročitati. Vratite se na listu licenci ili ponovo instalirajte aplikaciju.</string>
     <string name="help_cat_privacy" formatted="false">Privatnost</string>
-    <string name="help_privacy" formatted="false">Баттери Монитор локално обрађује информације о батерији и уређају, укључујући вредности које уређај излаже, као што је серијски број батерије. Не преноси ове информације нити их прикупља на спољним серверима.</string>
+    <string name="help_privacy" formatted="false">Баттери Монитор локално обрађује информације о батерији и уређају, укључујући вредности које уређај излаже, као што је серијски број батерије. Не преноси ове информације нити их прикупља на спољним серверима.\n
+    \n
+    <a href="https://batterymonitor.swistak.codes/privacy/">Комплетна политика приватности</a></string>
     <string name="help_cat_no_warranty" formatted="false">Bez garancije</string>
     <string name="help_no_warranty" formatted="false">Ovaj softver se distribuira u nadi da će biti koristan, ali BEZ IKAKVE GARANCIJE; čak i bez podrazumevane garancije O MOGUĆNOSTI PRODAJE ili PRIKLADNOSTI ZA ODREĐENU NAMENU.\n
     \n
@@ -896,7 +898,7 @@
     <string name="help_cat_acknowledgments" formatted="false">Želimo da se zahvalimo</string>
     <string name="help_acknowledgments" formatted="false">Баттери Монитор је виљушка Баттери Индицатор Про / БаттериБот Про од стране Дарсхан Цомпутинг, ЛЛЦ. Хвала оригиналним ауторима и сарадницима за креирање и одржавање узводног пројекта.</string>
     <string name="help_cat_frequently_asked_questions" formatted="false">Често постављана питања</string>
-    <string name="help_frequently_asked_questions" formatted="false">Одговоре на најчешћа питања можете пронаћи на <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
+    <string name="help_frequently_asked_questions" formatted="false">Одговоре на најчешћа питања можете пронаћи на <a href="https://batterymonitor.swistak.codes/help/#faq">https://batterymonitor.swistak.codes/help/#faq</a>.</string>
     <string name="help_cat_contact" formatted="false">Kontakt i povratne informacije</string>
     <string name="help_contact" formatted="false">Možete <a href="https://github.com/tswistak/Battery-Monitor/issues">prijaviti greške na GitHubu</a>. Za pitanja, ideje i povratne informacije pridružite se <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a>. Možete mi i <a href="mailto:tomasz@swistak.codes">poslati e-poštu</a>.</string>
     <string name="changelog_title">Šta je novo u aplikaciji Battery Monitor</string>

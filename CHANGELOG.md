@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Unreleased
+
+### Improved
+
+- Added full privacy policy as a link to the website.
+- Moved FAQ to the website.
+
 ## 2.0.0
 
 ### New
