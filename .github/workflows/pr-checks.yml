@@ -226,6 +226,22 @@ jobs:
               exit "$test_exit_code"
             }
             trap collect_diagnostics EXIT
+            launcher_activity=$(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME | tail -n 1 | tr -d '\r')
+            launcher_package=${launcher_activity%/*}
+            launcher_restarted=false
+            for attempt in {1..30}; do
+              focus=$(adb shell dumpsys window displays | grep -m 1 'mCurrentFocus=' || true)
+              if [[ "$focus" == *" u0 $launcher_package/"* ]]; then break; fi
+              if [[ $launcher_restarted == false && "$focus" == *"Application Not Responding: $launcher_package}"* ]]; then
+                adb shell am start -S -W -a android.intent.action.MAIN -c android.intent.category.HOME -n "$launcher_activity"
+                launcher_restarted=true
+              fi
+              if [[ $attempt == 30 ]]; then
+                echo "::error::Emulator home did not gain focus. Last window: $focus"
+                exit 1
+              fi
+              sleep 1
+            done
             ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:connectedDebugAndroidTest
         with:
           api-level: 35
@@ -365,7 +381,7 @@ jobs:
   result:
     name: Quality checks result
     if: always()
-    needs: [changes, build, lint, unit-tests, instrumented-tests, e2e]
+    needs: [ changes, build, lint, unit-tests, instrumented-tests, e2e ]
     runs-on: ubuntu-24.04
     steps:
       - name: Require successful applicable Android checks

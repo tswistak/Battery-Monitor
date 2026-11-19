@@ -23,6 +23,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.alarms.backup.Version2AlarmImporter
+import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.runOnMain
 import codes.swistak.batterymonitor.ui.alarms.AlarmDraft
 import codes.swistak.batterymonitor.ui.alarms.AlarmsState
 import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
@@ -387,12 +389,8 @@ class AlarmDatabaseInstrumentedTest {
 
     private fun idle(
         model: AlarmsViewModel, condition: (AlarmsState) -> Boolean = { !it.loading && !it.busy }
-    ) {
-        val deadline = System.nanoTime() + 10_000_000_000L
-        while (!condition(model.state.value) && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue(
-            "Timed out waiting for alarm state: ${model.state.value}", condition(model.state.value)
-        )
+    ) = awaitCondition({ "Timed out waiting for alarm state: ${model.state.value}" }) {
+        runOnMain { condition(model.state.value) }
     }
 
     @Test
