@@ -1,0 +1,60 @@
+Third-party artwork used by the Battery Monitor website
+
+Google Play
+Google Play and the Google Play logo are trademarks of Google LLC.
+The unmodified Google Play badge is subject to Google's brand terms, not
+the project's GPL license. It does not establish that Battery Monitor is
+available on Google Play. The website currently marks the channel as
+Coming soon and provides no invented listing or preregistration link.
+https://partnermarketinghub.withgoogle.com/brands/google-play/google-play/lockups-icons-badges/
+
+F-Droid
+The official Get it on F-Droid badge is by F-Droid Contributors, licensed
+under CC BY-SA 3.0. It is used unchanged and links to Battery Monitor in
+the main F-Droid repository.
+Source: https://f-droid.org/badge/get-it-on.svg
+Usage and license: https://f-droid.org/en/docs/Badges/
+License text: CC-BY-SA-3.0.txt
+
+GitHub
+The GitHub download badge is the unchanged docs/assets/badge_github.png
+artwork already used in this repository's README. It is not an official
+app-store badge. The sponsor heart is from Primer Octicons, under MIT.
+GitHub names and marks retain their applicable brand terms.
+License text: GitHub-Octicons-MIT.txt
+Source: https://github.com/primer/octicons
+
+Liberapay
+The official Donate widget is served from a local unchanged copy.
+Liberapay source/artwork is distributed under CC0; its trademark must
+identify Liberapay, not Battery Monitor.
+Source: https://liberapay.com/assets/widgets/donate.svg
+Additional licensing notes: Liberapay-CC0.txt
+
+Suppi
+The official violet/white support widget is copied unchanged from Suppi's
+published embeddable widget endpoint. No separate permissive artwork
+license was found. The badge remains provider artwork, not original GPL
+project artwork.
+Source: https://suppi.pl/api/widget/button.svg?fill=6457FD&textColor=ffffff
+Widget information: https://suppi.pl/promuj-sie
+
+Battery Monitor
+Original website code, text and the approved original Battery Monitor
+logo follow GPL-3.0-or-later unless otherwise noted. Inherited Android
+artwork and dependencies retain their applicable notices.
+GPL license: GPL-3.0.txt
+Inherited artwork notices: Android-artwork-notices.txt
+Asset origins and SHA-256 hashes: assets.json
+
+CSV viewer in the export recording
+The export video shows a real CSV opened in Fossify Documents 1.2.0.
+Fossify Documents is licensed under GPL-3.0-only; its application code
+and APK are not bundled with this website.
+Source: https://github.com/FossifyOrg/Documents/tree/1.2.0
+License text: GPL-3.0.txt
+
+Roboto
+The locally bundled Roboto font is from @fontsource-variable/roboto 5.3.0.
+Copyright 2011 The Roboto Project Authors. It retains SIL Open Font
+License 1.1; the exact upstream notice is included in Roboto-OFL.txt.

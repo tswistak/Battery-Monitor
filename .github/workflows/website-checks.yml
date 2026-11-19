@@ -1,0 +1,96 @@
+name: Website checks
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Website change detection
+    runs-on: ubuntu-24.04
+    outputs:
+      website: ${{ steps.changes.outputs.website }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - id: changes
+        run: node .github/scripts/website-ci.mjs
+
+  validate:
+    name: Validate website
+    needs: changes
+    if: needs.changes.outputs.website == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: website
+    env:
+      MATOMO_ENABLED: 'false'
+      WEBSITE_DEPLOY_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - name: Install website tooling
+        run: npm ci
+      - name: Lint website code
+        run: npm run lint
+      - name: Check website formatting
+        run: npm run format:check
+      - name: Check website and local content
+        run: npm run check
+      - name: Test content import and deployment
+        run: npm test
+      - name: Test publication guards
+        run: node --test ../.github/scripts/website-deploy-context.test.mjs
+      - name: Build static site from current checkout
+        run: npm run build
+      - name: Install Chromium for local browser tests
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Browser, network and storage checks
+        run: npm run test:browser
+      - name: Retain static build
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: website-check-${{ github.run_id }}-${{ github.run_attempt }}
+          path: website/dist/
+          if-no-files-found: error
+          retention-days: 14
+
+  result:
+    name: Website checks result
+    if: always()
+    needs: [changes, validate]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require successful applicable checks
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          WEBSITE_CHANGED: ${{ needs.changes.outputs.website }}
+          VALIDATE_RESULT: ${{ needs.validate.result }}
+        run: |
+          test "$CHANGES_RESULT" = success
+          if [ "$WEBSITE_CHANGED" = true ]; then
+            test "$VALIDATE_RESULT" = success
+            echo 'Website validation passed.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            test "$VALIDATE_RESULT" = skipped
+            echo 'No website or shared content changes; website checks were skipped.' >> "$GITHUB_STEP_SUMMARY"
+          fi

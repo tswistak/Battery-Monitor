@@ -15,7 +15,25 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    name: Quality check routing
+    runs-on: ubuntu-24.04
+    outputs:
+      android: ${{ steps.changes.outputs.android }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - id: changes
+        run: node .github/scripts/website-ci.mjs
+
   build:
+    needs: changes
+    if: always() && (needs.changes.result != 'success' || needs.changes.outputs.android == 'true')
     name: Build
     runs-on: ubuntu-24.04
 
@@ -50,6 +68,8 @@ jobs:
           if-no-files-found: warn
 
   lint:
+    needs: changes
+    if: always() && (needs.changes.result != 'success' || needs.changes.outputs.android == 'true')
     name: Lint
     runs-on: ubuntu-24.04
 
@@ -81,6 +101,8 @@ jobs:
           if-no-files-found: warn
 
   unit-tests:
+    needs: changes
+    if: always() && (needs.changes.result != 'success' || needs.changes.outputs.android == 'true')
     name: Unit tests
     runs-on: ubuntu-24.04
 
@@ -147,6 +169,8 @@ jobs:
           if-no-files-found: warn
 
   instrumented-tests:
+    needs: changes
+    if: always() && (needs.changes.result != 'success' || needs.changes.outputs.android == 'true')
     name: Android instrumented tests
     runs-on: ubuntu-24.04
     timeout-minutes: 60
@@ -242,6 +266,8 @@ jobs:
           if-no-files-found: warn
 
   e2e:
+    needs: changes
+    if: always() && (needs.changes.result != 'success' || needs.changes.outputs.android == 'true')
     name: Critical E2E regression tests
     runs-on: ubuntu-24.04
     timeout-minutes: 90
@@ -335,3 +361,33 @@ jobs:
             e2e/build/reports/
             app/build/reports/
           if-no-files-found: warn
+
+  result:
+    name: Quality checks result
+    if: always()
+    needs: [changes, build, lint, unit-tests, instrumented-tests, e2e]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require successful applicable Android checks
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          ANDROID_CHANGED: ${{ needs.changes.outputs.android }}
+          BUILD_RESULT: ${{ needs.build.result }}
+          LINT_RESULT: ${{ needs.lint.result }}
+          UNIT_RESULT: ${{ needs.unit-tests.result }}
+          INSTRUMENTED_RESULT: ${{ needs.instrumented-tests.result }}
+          E2E_RESULT: ${{ needs.e2e.result }}
+        run: |
+          test "$CHANGES_RESULT" = success
+          for result in "$BUILD_RESULT" "$LINT_RESULT" "$UNIT_RESULT" "$INSTRUMENTED_RESULT" "$E2E_RESULT"; do
+            if [ "$ANDROID_CHANGED" = true ]; then
+              test "$result" = success
+            else
+              test "$result" = skipped
+            fi
+          done
+          if [ "$ANDROID_CHANGED" = true ]; then
+            echo 'All Android quality checks passed.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Website-only change: Android builds, tests and emulators were skipped.' >> "$GITHUB_STEP_SUMMARY"
+          fi

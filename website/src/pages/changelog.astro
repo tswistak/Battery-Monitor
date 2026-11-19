@@ -1,0 +1,41 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { content, dateLabel } from '../data/content';
+import { pageMeta } from '../content/en/ui';
+const anchor = (version: string) => 'v' + version.replace(/[^a-zA-Z0-9.-]/g, '-');
+---
+
+<SiteLayout {...pageMeta.changelog} pageId="changelog">
+  <div class="document-page">
+    <h1>Changelog</h1>
+    <p class="page-lead">Application updates, improvements and fixes.</p>
+    {content.changelog.length ? (
+      <nav class="page-links" aria-label="Versions">
+        {content.changelog.map((entry) => (
+          <a href={'#' + anchor(entry.version)}>{entry.version}</a>
+        ))}
+      </nav>
+    ) : (
+      <p>No changelog entries are available.</p>
+    )}
+    {content.changelog.map((entry) => (
+      <section class="release-entry" id={anchor(entry.version)}>
+        <h2>
+          {entry.url ? (
+            <a href={entry.url}>Version {entry.version}</a>
+          ) : entry.version.toLowerCase() === 'unreleased' ? (
+            'Unreleased'
+          ) : (
+            `Version ${entry.version}`
+          )}
+        </h2>
+        {entry.date && (
+          <p class="release-date">
+            <time datetime={entry.date}>{dateLabel(entry.date)}</time>
+          </p>
+        )}
+        <div class="prose" set:html={entry.html} />
+      </section>
+    ))}
+  </div>
+</SiteLayout>

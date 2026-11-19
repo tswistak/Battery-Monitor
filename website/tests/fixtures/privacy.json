@@ -1,0 +1,57 @@
+{
+  "policyVersion": "synthetic-policy-v1",
+  "effectiveDate": "2026-11-01",
+  "controller": {
+    "name": "Synthetic privacy test controller",
+    "email": "privacy@fixture.invalid"
+  },
+  "hosting": {
+    "provider": "Synthetic website delivery provider",
+    "processingLocations": "Synthetic EEA hosting region",
+    "processorAgreement": "Synthetic hosting agreement for fixture review",
+    "subprocessorInformation": "Synthetic hosting subprocessor list",
+    "transferSafeguards": "Synthetic hosting transfer terms and a route to request a copy",
+    "deliveryLegalBasis": "Synthetic delivery basis for fixture review",
+    "deliveryInterests": "Synthetic necessity assessment for delivery and abuse prevention",
+    "accessLogData": "Synthetic request address, time and page records",
+    "accessLogRetentionDays": 7,
+    "accessLogAccessControls": "Synthetic restricted operator access",
+    "backupRetentionDays": 14
+  },
+  "contact": {
+    "providerInformation": "Synthetic correspondence provider and EEA processing region",
+    "legalBasis": "Synthetic correspondence basis for fixture review",
+    "retentionCriteria": "Synthetic correspondence retention until a request is resolved",
+    "transferSafeguards": "Synthetic contact transfer terms and a route to request a copy"
+  },
+  "analytics": {
+    "hostingProvider": "Synthetic analytics provider",
+    "processingLocations": "Synthetic analytics EEA hosting region",
+    "processorAgreement": "Synthetic analytics processing agreement",
+    "subprocessorInformation": "Synthetic analytics subprocessor list",
+    "transferSafeguards": "Synthetic analytics transfer terms and a route to request a copy",
+    "matomoVersion": "5.1.0",
+    "ipMaskingBytes": 2,
+    "maskedIpGeolocation": true,
+    "rawRetentionDays": 30,
+    "aggregatedRetentionDays": 180,
+    "proxyLogData": "Synthetic analytics server request records",
+    "proxyLogRetentionDays": 7,
+    "backupRetentionDays": 14,
+    "accessControls": "Synthetic restricted analytics operator access",
+    "dedicatedSiteIdConfirmed": true,
+    "intrusiveFeaturesDisabled": true,
+    "visitorCookieSeconds": 15552000,
+    "sessionCookieSeconds": 1800,
+    "serverSettingsEvidence": "Synthetic analytics settings evidence",
+    "trackerResponseCookiePolicy": "Synthetic receiver issues no additional cookies",
+    "retentionEvidence": "Synthetic retention evidence",
+    "consentEvidenceProcedure": "Synthetic local consent record and optional notice-version dimension procedure"
+  },
+  "review": {
+    "reviewedBy": "Synthetic fixture reviewer",
+    "reviewedAt": "2026-11-01",
+    "policyVersion": "synthetic-policy-v1",
+    "assessmentRecord": "Synthetic test fixture only; no production or legal review"
+  }
+}

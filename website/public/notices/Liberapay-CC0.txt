@@ -1,0 +1,11 @@
+Liberapay Donate widget
+
+Official asset: https://liberapay.com/assets/widgets/donate.svg
+Source template: https://github.com/liberapay/liberapay.com/blob/master/www/assets/widgets/donate.svg.spt
+The official repository README identifies its source license as CC0 Public Domain Dedication:
+https://github.com/liberapay/liberapay.com#license
+The official logos page also identifies the logo artwork as CC0 while retaining trademark restrictions:
+https://liberapay.com/about/logos
+The logo must represent Liberapay, not this project.
+
+This file records verified source licensing; it does not relicense other provider assets. Retrieved 2026-11-08.

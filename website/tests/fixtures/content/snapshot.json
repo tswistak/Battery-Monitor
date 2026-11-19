@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 3,
+  "appCommit": "790e0033c3508d163ea5ec5ddb7feb284f7b93d2",
+  "releaseId": 402878158,
+  "files": {
+    "README.md": "a1761958a06a9d2e5de6ff0c4d8166ecbe3e34973027e118b5276c68db05e31a",
+    "CHANGELOG.md": "5c7286d7c158d63976a0c6b6cd25569937e978ee55ca364d4e376040a6da509f",
+    "fdroid-version.properties": "e9a641554cc74473b84e18b6d22d004ac61c6e4fac3701cfdd18fdc1780e12b0",
+    "app/build.gradle": "bd4321897a4dc00107f47f209ffd554b4963cfed3a8ecec82cfbff0f8038be7a",
+    "app/src/main/res/values/strings.xml": "bbb2cde6c17472878ceaec6a1f3c4713070d04be10cf86fdc3860c2cc4b858b6",
+    "LICENSE": "9097c2365e780dff45f5e9ffe4bef2c551640b3b71be603a38922f0300bdc70f",
+    ".github/FUNDING.yml": "4439bf648bfcf82e172563c49bc53c8bc8bf69936c645965039d25e25181d380"
+  },
+  "releases": [
+    {
+      "id": 402878158,
+      "tag_name": "1.7.3",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.7.3",
+      "published_at": "2026-10-04T06:28:42Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Improved\n\n- Main notification is now expandable with vital signs details (#129, thanks @LiberiFatali).\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.7.3.apk",
+          "state": "uploaded",
+          "size": 4264097,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.3/battery-monitor-1.7.3.apk",
+          "digest": "sha256:eb5d370187c3699a9d4d74d1890e8226a165ed65f66a16e6a968aa5baf19aec7",
+          "id": 609283001,
+          "updated_at": "2026-10-04T06:28:41Z"
+        },
+        {
+          "name": "battery-monitor-1.7.3.apk.asc",
+          "state": "uploaded",
+          "size": 833,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.3/battery-monitor-1.7.3.apk.asc",
+          "digest": "sha256:3edab2b7fcbc8d5df673a2080b1fd3cd382c97dfba661d3a37fb33a77513b7bf",
+          "id": 609283002,
+          "updated_at": "2026-10-04T06:28:41Z"
+        }
+      ]
+    },
+    {
+      "id": 380673959,
+      "tag_name": "1.7.2",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.7.2",
+      "published_at": "2026-09-01T16:49:29Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Improved\n\n- More reliable voltage reading (#142).\n\n### Fixed\n\n- Notifications opening Alarms instead of Current State (#139, thanks @matiamb).\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.7.2.apk",
+          "state": "uploaded",
+          "size": 4236845,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.2/battery-monitor-1.7.2.apk",
+          "digest": "sha256:99b8bf7df0546963f09df6045d8c3a2bc3cade1755f9a21d182a30fef3aa4e2b"
+        },
+        {
+          "name": "battery-monitor-1.7.2.apk.asc",
+          "state": "uploaded",
+          "size": 833,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.2/battery-monitor-1.7.2.apk.asc",
+          "digest": "sha256:0a747035728873f3f843b3a1ac07c8bb33344fff2cce91c33e4753f719ad9e13"
+        }
+      ]
+    },
+    {
+      "id": 376290975,
+      "tag_name": "1.7.1",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.7.1",
+      "published_at": "2026-08-25T09:37:14Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n1.7.0 was the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.\n\n### Fixed\n\n- Fixed battery time estimates becoming incorrect after charging or discharging with custom prediction targets enabled.\n- Reset potentially corrupted cached long-term discharge estimates after updating.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.7.1.apk",
+          "state": "uploaded",
+          "size": 4232105,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.1/battery-monitor-1.7.1.apk",
+          "digest": "sha256:4195e80060bad3cc3a6c14605a03aa11d6f7e46ebd1d828bde076be20e0080e4"
+        },
+        {
+          "name": "battery-monitor-1.7.1.apk.asc",
+          "state": "uploaded",
+          "size": 833,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.1/battery-monitor-1.7.1.apk.asc",
+          "digest": "sha256:fda5b7bafb8e9fad21eb30aeb6058678f0b122321207fa9e8721c842181f395b"
+        }
+      ]
+    },
+    {
+      "id": 375903211,
+      "tag_name": "1.7.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.7.0",
+      "published_at": "2026-08-24T18:22:54Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\nThis is the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.  \n\n### New\n\n- Possibility to set charging and discharging targets for time estimations (#72).\n- Automated detection of charging limits on supported devices.\n- Alarms for charging and discharging limits (#144).\n\n### Improved\n\n- Reorganized settings.\n- Show day count for time higher than 24 hours (#71).\n\n### Development\n\n- Release PGP signing.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.7.0.apk",
+          "state": "uploaded",
+          "size": 4231945,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.0/battery-monitor-1.7.0.apk",
+          "digest": "sha256:db0c3dfee5fd7c1de9470735787f155777a1be501207e74b820d8f48cfcb8759"
+        },
+        {
+          "name": "battery-monitor-1.7.0.apk.asc",
+          "state": "uploaded",
+          "size": 833,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.0/battery-monitor-1.7.0.apk.asc",
+          "digest": "sha256:425755ec397505c84a07623f7ccedf3eb0ddd8faae86764480e10b222f9d87fe"
+        }
+      ]
+    },
+    {
+      "id": 371814945,
+      "tag_name": "1.6.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.6.0",
+      "published_at": "2026-08-17T16:27:49Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### New\n\n- App backup and restore\n- Alarms backup (#69)\n- Existing logs import (#80)\n- Scheduled automatic logs export (#34)\n- App diagnostics screen (#128) \n\n### Improved\n\n- Ability to append new logs to the existing ones (#83)\n- Possibility to only export logs that haven't been exported yet (#79)\n- Better handling of DB errors and service restart (#117) \n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.6.0.apk",
+          "state": "uploaded",
+          "size": 3978557,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.6.0/battery-monitor-1.6.0.apk",
+          "digest": "sha256:20985e2d99ac320a68a952cea7793b44dbb280b51b718c1cf266addded35d49e"
+        }
+      ]
+    },
+    {
+      "id": 367277420,
+      "tag_name": "1.5.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.5.0",
+      "published_at": "2026-08-08T18:53:55Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### New\n\n- Battery remaining charge display in the main screen, notification and chip (#87).\n- Notification's \"Vital Signs\" content customization.\n- Status bar chip content customization with new options (#104).\n- Added a FAQ section to the help.\n\n### Improved\n\n- Shizuku permission handling (#105).\n- Removed hiding status bar icon settings on modern Androids (#89).\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.5.0.apk",
+          "state": "uploaded",
+          "size": 3672097,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.5.0/battery-monitor-1.5.0.apk",
+          "digest": "sha256:57394754b41e1ecf7f984f69f36c4742fdb68a8b77459efeb419b77d1c73a0b0"
+        }
+      ]
+    },
+    {
+      "id": 363588941,
+      "tag_name": "1.4.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.4.0",
+      "published_at": "2026-08-01T17:53:22Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "### New\r\n\r\n- Modernized and simplified battery current measurement (#52).\r\n- Battery current multiplier auto detector.\r\n\r\n### Improved\r\n\r\n- Reorganized settings.\r\n\r\n### Fixed\r\n\r\n- Use localized decimal separator in notifications.\r\n- Wrong time formatting on Samsung phones (#95).\r\n\r\n### Development\r\n\r\n- Refactored project structure.\r\n\r\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.4.0.apk",
+          "state": "uploaded",
+          "size": 3596061,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.4.0/battery-monitor-1.4.0.apk",
+          "digest": "sha256:8c9cd5e4c417212ae4ad637e6b8536569c3fc3a4ba26e73908b0ac8754ec5e64"
+        }
+      ]
+    },
+    {
+      "id": 360563586,
+      "tag_name": "1.3.2",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.3.2",
+      "published_at": "2026-07-27T16:31:48Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Development\n\n- Refactored the whole app from Java to Kotlin (#7).\n- Refactored unit tests to JUnit and moved them to Gradle.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.3.2.apk",
+          "state": "uploaded",
+          "size": 3640457,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.3.2/battery-monitor-1.3.2.apk",
+          "digest": "sha256:87a7f4aaae0a8c83d3f3f17b406e50f410ba1e30169820f4dd084a4ad1ce78c4"
+        }
+      ]
+    },
+    {
+      "id": 359436183,
+      "tag_name": "1.3.1",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.3.1",
+      "published_at": "2026-07-24T17:05:40Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Improved\n\n- Added timestamp to settings backup export file name.\n- More reliable way for running background service to better prevent aggressive optimization (#59).\n- Added manufacturer and model to log file name (#81).\n\n### Fixed\n\n- \"1 min until drained\" prediction while the plugged device stopped charging (#58). \n- Low-severity security issues.\n- Clearing \"Advanced\" tab contents on refresh (#57).\n\n### Development\n\n- Updated Gradle and dependencies to the latest versions.\n- Replaced deprecated APIs with current ones.\n- Refactored live updates to rely only on NotificationCompat.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.3.1.apk",
+          "state": "uploaded",
+          "size": 3624372,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.3.1/battery-monitor-1.3.1.apk",
+          "digest": "sha256:cd36113ec26964d13e17b0c627f04a5c610a133e12ce3a9840580898e0160e58"
+        }
+      ]
+    },
+    {
+      "id": 356059434,
+      "tag_name": "1.3.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.3.0",
+      "published_at": "2026-07-18T08:48:15Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### New\n\n- Added system (Android 13+) language chooser in settings (#56, thanks @Aga-C).\n- Added importing and exporting app settings (#51, thanks @Hirdaya-Shrestha).\n\n### Fixed\n\n- Using localized unit strings instead of hardcoded English ones (#63, thanks @Hirdaya-Shrestha).\n- Rewritten live updates to use NotificationCompat, to ensure it works well with API 36.\n- Turned off force refresh of battery data in OS in the Advanced tab, which could cause issues with some battery drivers.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.3.0.apk",
+          "state": "uploaded",
+          "size": 3620144,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.3.0/battery-monitor-1.3.0.apk",
+          "digest": "sha256:6add7e81266fa18e3c5d31e72c84d25c2b68570eecaa84dfeb6b245950a46cf2"
+        }
+      ]
+    },
+    {
+      "id": 352743936,
+      "tag_name": "1.2.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.2.0",
+      "published_at": "2026-07-12T12:13:02Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### New\n\n- Added the \"Advanced\" tab showing battery data accessible by root/Shizuku (#27).\n\n### Improved\n\n- Changed font in icons to narrower, so digits are bigger now (#18). \n\n### Fixed\n\n- The default file name for export now contains the current app name (thanks @Aga-C).\n- Long names in setting are now wrapped to the new line (#40, thanks @Aga-C).\n\n### Development\n\n- Removed unused black icon variant.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.2.0.apk",
+          "state": "uploaded",
+          "size": 3609597,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.2.0/battery-monitor-1.2.0.apk",
+          "digest": "sha256:02a7cf3b7c719820993bdcf853d4c2e0ca7793a025d1666e5ee20801a93926f6"
+        }
+      ]
+    },
+    {
+      "id": 348881259,
+      "tag_name": "1.1.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.1.0",
+      "published_at": "2026-07-04T06:37:35Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### New\n\n- Added an option to keep logs until they are manually removed (#25, thanks @lrcstars).\n- Notification bar icons redesign with new settings (#18).\n\n### Improved\n\n- Chinese translations (thanks @lrcstars).\n- Dutch translations (thanks @ltguillaume).\n- CSV now exports time with seconds (#19, thanks @lrcstars).\n\n### Fixed\n\n- Fixed the untranslated app name on the launcher (#31, thanks @Aga-C).\n\n### Development\n\n- Rebuilt an icon generation script for new icon types.\n- Removed legacy image assets.\n- Reordered all localized strings to match order in English (#23).\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.1.0.apk",
+          "state": "uploaded",
+          "size": 3695825,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.1.0/battery-monitor-1.1.0.apk",
+          "digest": "sha256:1d0b90927bc566178b75443d33fda0c7e59252b70657f2f40dbc7c74fefc2c49"
+        }
+      ]
+    },
+    {
+      "id": 345885147,
+      "tag_name": "1.0.4",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.0.4",
+      "published_at": "2026-06-28T10:26:49Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Improved\n\n- Changed \"Good Health\" to \"Healthy\" in notification (#11, thanks @ltguillaume)\n\n### Fixed\n\n- Separated live updates channel from the main notification channel (#10)\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.0.4.apk",
+          "state": "uploaded",
+          "size": 3386624,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.0.4/battery-monitor-1.0.4.apk",
+          "digest": "sha256:ca1e470b53e9326d5d78a09c49b4592e9c782adf22aadfe5e356db988cfb904f"
+        }
+      ]
+    },
+    {
+      "id": 342297671,
+      "tag_name": "1.0.3",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.0.3",
+      "published_at": "2026-06-20T10:51:05Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Fixed\n\n- Disabled Android dependency metadata in release.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.0.3.apk",
+          "state": "uploaded",
+          "size": 3385432,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.0.3/battery-monitor-1.0.3.apk",
+          "digest": "sha256:8bc74f16f05238188b476fb408e4adc33b1a610b1158a89a81f5ed30587215d7"
+        }
+      ]
+    },
+    {
+      "id": 342082852,
+      "tag_name": "1.0.2",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.0.2",
+      "published_at": "2026-06-19T18:44:35Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Fixed\n\n- Added missing metadata required for F-Droid release.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.0.2.apk",
+          "state": "uploaded",
+          "size": 3389528,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.0.2/battery-monitor-1.0.2.apk",
+          "digest": "sha256:bf9b7c4d1f828d3d47a592a89aa45e26487aa334d4d3924b3425d5a4383cddc0"
+        }
+      ]
+    },
+    {
+      "id": 332148335,
+      "tag_name": "1.0.1",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.0.1",
+      "published_at": "2026-05-31T14:49:35Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### Fixed\n\n- Replaced old icon in live updates with the current one.\n\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.0.1.apk",
+          "state": "uploaded",
+          "size": 3389528,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.0.1/battery-monitor-1.0.1.apk",
+          "digest": "sha256:ac7b29ff6cbc9975fe4a8ab6f665741430717dfe24b7a09ae3f08b85a51674d7"
+        }
+      ]
+    },
+    {
+      "id": 331951862,
+      "tag_name": "1.0.0",
+      "html_url": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.0.0",
+      "published_at": "2026-05-30T14:41:26Z",
+      "draft": false,
+      "prerelease": false,
+      "body": "\n### New\n\n- Added live updates (Android 16+) with a dedicated settings screen.\n- Added showing temperature on a notification icon.\n- Added support for Android's per-app language chooser.\n\n### Improved\n\n- Rebranded the app from BatteryBot Pro to Battery Monitor.\n- Added automated translations for missing strings.\n- Human-made Polish translations (thanks @Aga-C).\n- Possibility to set custom values for battery alarms (charge levels, temperature).\n- Removed unnecessary text from notifications.\n\n### Fixed\n\n- Fixed Android 16 compatibility issues (UI, crash during DND).\n- Fixed notification reliability on older Android versions.\n- Fixed random timeout crashes.\n- Fixed hardcoded strings to use string resources for better localization.\n\n### Development\n\n- Updated target SDK to 37 and upgraded SDK/Gradle toolchain.\n- Added release GitHub Action.\n- Cleaned up unused resources.\n",
+      "assets": [
+        {
+          "name": "battery-monitor-1.0.0.apk",
+          "state": "uploaded",
+          "size": 3421522,
+          "browser_download_url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.0.0/battery-monitor-1.0.0.apk",
+          "digest": "sha256:31e4ca906357625afdfd77e17d9f0bb5d96a0bd1bb5f6198b64592f6d3c887b3"
+        }
+      ]
+    }
+  ]
+}
