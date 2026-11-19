@@ -47,6 +47,19 @@ def hasReleaseSigning = !isProfilingBuild && releaseStoreFileProp && releaseStor
 
 def isE2eBuild = project.hasProperty('e2e')
 
+def robolectricSdkJars = files(['8.0.0_r4-robolectric-r1-i7', // API 26
+                                '9-robolectric-4913185-2-i7', // API 28
+                                '11-robolectric-6757853-i7', // API 30
+                                '15-robolectric-13954326-i7', // API 35
+                                '16-robolectric-13921718-i7' // API 36; also Robolectric 4.17's compile SDK
+].collect { version -> configurations.detachedConfiguration(dependencies.create("org.robolectric:android-all-instrumented:${version}@jar"))
+})
+def robolectricSdkDirectory = layout.buildDirectory.dir('robolectric-sdks')
+def prepareRobolectricSdks = tasks.register('prepareRobolectricSdks', Sync) {
+    from robolectricSdkJars
+    into robolectricSdkDirectory
+}
+
 android {
     namespace = "codes.swistak.batterymonitor"
 
@@ -94,6 +107,9 @@ android {
         unitTests.includeAndroidResources = true
         unitTests.all {
             jvmArgs '--add-exports=java.base/jdk.internal.access=ALL-UNNAMED'
+            dependsOn prepareRobolectricSdks
+            inputs.files(robolectricSdkJars)
+            systemProperty 'robolectric.dependency.dir', robolectricSdkDirectory.get().asFile.absolutePath
         }
     }
 
