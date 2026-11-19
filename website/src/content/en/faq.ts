@@ -17,7 +17,7 @@ export const homeFaq: readonly FAQItem[] = [
   {
     id: 'faq-privacy',
     question: 'Does it collect or upload my battery data?',
-    html: '<p>The Android app processes and stores monitoring data on your device, without uploading it to external servers. Files you choose to export or share may contain device information. <a href="/privacy/#android-app">Read about app privacy</a>.</p>',
+    html: '<p>The Android app processes and stores monitoring data on your device, without uploading it to external servers. Files you choose to export or share may contain device information. <a href="/privacy/#android-app">Read the app’s privacy policy</a>.</p>',
   },
   {
     id: 'faq-charging-stop',

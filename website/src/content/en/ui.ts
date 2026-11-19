@@ -20,14 +20,14 @@ export const ui = {
 };
 export const pageMeta = {
   home: {
-    title: 'Battery Monitor — your battery, with context',
+    title: 'Battery Monitor for Android',
     description:
-      'Open-source Android battery monitoring with clear readings, recorded history and alarms you choose.',
+      'An open-source Android battery monitor. Check battery level, temperature and voltage, explore charging history, and set your own battery alarms.',
   },
   download: {
-    title: 'Get Battery Monitor',
+    title: 'Download Battery Monitor for Android',
     description:
-      'Choose a distribution channel, find the latest published APK and understand installation and updates.',
+      'Get Battery Monitor from F-Droid or download the latest APK from GitHub. Check Android requirements and learn how to install or update the app.',
   },
   help: {
     title: 'Help & FAQ',

@@ -11,8 +11,8 @@ import { aboutCopy as copy } from '../content/en/pages';
     <p class="page-lead">{copy.introduction}</p>
     <section>
       <h2>{copy.historyTitle}</h2>
-      <p>{copy.history}</p>
       <div class="prose" set:html={content.app.attributionHtml} />
+      <p>{copy.maintainer}</p>
       <p>
         {copy.contribution}{' '}
         <a href="https://github.com/tswistak/Battery-Monitor/blob/master/CONTRIBUTING.MD">

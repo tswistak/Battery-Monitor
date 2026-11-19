@@ -9,5 +9,6 @@ export const guideIntro: Record<string, string> = {
     'Understand measurements, device limits and optional access to extra readings.',
   'charging-targets':
     'Understand time estimates and targets without confusing them with hardware charging control.',
-  'history-and-backups': 'Understand stored records, gaps, exports, imports and backup limits.',
+  'history-and-backups':
+    'Manage battery history retention, export or import logs, and understand what restoring a backup can replace.',
 };

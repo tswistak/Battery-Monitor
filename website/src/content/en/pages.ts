@@ -1,8 +1,8 @@
 export const homeCopy = {
   title: ['Your battery,', 'with context.'],
-  productLine: 'Open-source battery monitoring for Android',
+  productLine: 'Open-source battery monitoring for Android.',
   introduction:
-    'Understand your Android battery with clear readings, a useful history, and alarms you choose.',
+    'Understand your Android battery with clear readings, useful history, and alarms you choose.',
   appPreviewLabel: 'Inside Battery Monitor',
   current: {
     title: ["See what's", 'happening now.'],
@@ -42,8 +42,7 @@ export const aboutCopy = {
   introduction:
     'A clearer view of your Android battery, with open code you can inspect and improve.',
   historyTitle: 'Built on an open-source history',
-  history:
-    'Battery Monitor is maintained by Tomasz Świstak. It continues the Battery Indicator Pro / BatteryBot Pro project originally developed by Darshan Computing, LLC.',
+  maintainer: 'Tomasz Świstak maintains the project today.',
   contribution: 'Contributions, useful bug reports and translations help the project improve.',
   contributionLink: 'Read the contribution guide',
   contributionAlternative: 'or',
