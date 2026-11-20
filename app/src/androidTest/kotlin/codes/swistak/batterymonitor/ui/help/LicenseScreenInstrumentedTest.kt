@@ -14,6 +14,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.compose.ui.semantics.SemanticsActions
@@ -122,16 +123,17 @@ class LicenseScreenInstrumentedTest {
         withActivity(detail = "help:licenses") { launched ->
             val google =
                 loadLicenseInventory(context.assets).single { it.id == "google-material-icons" }
-            await { visibleText("Battery Monitor") }
             assertNavigation(launched, SectionOwner.HELP, "help:licenses")
-            main {
-                val list = scrollNode(launched, "Copyright")
-                val index = list.config[SemanticsProperties.IndexForKey](google.id)
-                assertTrue(index >= 0)
-                assertTrue(list.config[SemanticsActions.ScrollToIndex].action?.invoke(index) == true)
+            await {
+                main {
+                    val list =
+                        scrollNode(launched, google.name, itemKey = google.id) ?: return@main false
+                    val index = list.config[SemanticsProperties.IndexForKey](google.id)
+                    list.config[SemanticsActions.ScrollToIndex].action?.invoke(index) == true
+                }
             }
             await { visibleText(google.name) }
-            val listScroll = scrollValue(launched, google.name)
+            val listScroll = scrollValue(launched, google.name, itemKey = google.id)
             assertTrue("The list must have moved", listScroll > 0f)
             assertTrue(tapText(google.name))
             await { visibleText("Apache License", contains = true) }
@@ -141,7 +143,10 @@ class LicenseScreenInstrumentedTest {
             navigateBack(launched)
             await { visibleText(google.name) && !visibleText("Apache License", contains = true) }
             assertEquals(
-                "License list scroll", listScroll, scrollValue(launched, google.name), 0.0001f
+                "License list scroll",
+                listScroll,
+                scrollValue(launched, google.name, itemKey = google.id),
+                0.0001f
             )
 
             main { launched.openHelp("licenses:battery-monitor") }
@@ -156,7 +161,10 @@ class LicenseScreenInstrumentedTest {
                 )
             }
             assertEquals(
-                "License list scroll", listScroll, scrollValue(launched, google.name), 0.0001f
+                "License list scroll",
+                listScroll,
+                scrollValue(launched, google.name, itemKey = google.id),
+                0.0001f
             )
             main { launched.openHelp("licenses:battery-monitor") }
             await { visibleText("GNU GENERAL PUBLIC LICENSE", contains = true) }
@@ -183,7 +191,10 @@ class LicenseScreenInstrumentedTest {
                 )
             }
             assertEquals(
-                "Recreated list scroll", listScroll, scrollValue(restored, google.name), 0.0001f
+                "Recreated list scroll",
+                listScroll,
+                scrollValue(restored, google.name, itemKey = google.id),
+                0.0001f
             )
             assertTrue(tapText(google.name))
             await { visibleText("Apache License", contains = true) }
@@ -310,46 +321,41 @@ class LicenseScreenInstrumentedTest {
         }
     }
 
-    private fun scrollNode(activity: BatteryInfoActivity, marker: String): SemanticsNode {
+    private fun scrollNode(
+        activity: BatteryInfoActivity, marker: String, itemKey: String? = null
+    ): SemanticsNode? {
         fun containsText(node: SemanticsNode): Boolean =
             node.config.getOrNull(SemanticsProperties.Text)
                 ?.any { it.text.contains(marker) } == true || node.children.any(::containsText)
 
-        return requireNotNull(
-            composeNodes(
-                activity.window.decorView, shownOnly = true
-            ).firstOrNull { node ->
-                node.config.contains(SemanticsProperties.VerticalScrollAxisRange) && containsText(
-                    node
-                )
-            }) { "No active Compose scroll range contains $marker" }
+        return composeNodes(activity.window.decorView, shownOnly = true).firstOrNull { node ->
+            node.config.contains(SemanticsProperties.VerticalScrollAxisRange) && if (itemKey == null) containsText(
+                node
+            )
+            else (node.config.getOrNull(SemanticsProperties.IndexForKey)?.invoke(itemKey)
+                ?: -1) >= 0
+        }
     }
 
-    private fun scrollValue(activity: BatteryInfoActivity, marker: String): Float {
-        var value = readScrollValue(activity, marker)
-        var stableSince = System.nanoTime()
-        val deadline = stableSince + 5_000_000_000L
-        while (System.nanoTime() < deadline && System.nanoTime() - stableSince < 150_000_000L) {
-            Thread.sleep(20)
-            val next = readScrollValue(activity, marker)
-            if (next != value) stableSince = System.nanoTime()
-            value = next
+    private fun scrollValue(
+        activity: BatteryInfoActivity, marker: String, itemKey: String? = null
+    ): Float {
+        var value: Float? = null
+        var stableSince = 0L
+        awaitCondition({ "License scroll for $marker did not settle" }) {
+            val next = main {
+                scrollNode(activity, marker, itemKey)?.let {
+                    it.config[SemanticsProperties.VerticalScrollAxisRange].value()
+                }
+            }
+            val now = SystemClock.uptimeMillis()
+            if (next == null || next != value) {
+                value = next
+                stableSince = now
+            }
+            next != null && now - stableSince >= 150L
         }
-        assertTrue(
-            "License scroll must settle before saving or comparing it",
-            System.nanoTime() - stableSince >= 150_000_000L
-        )
-        return value
-    }
-
-    private fun readScrollValue(activity: BatteryInfoActivity, marker: String): Float {
-        var value = 0f
-        main {
-            value = scrollNode(
-                activity, marker
-            ).config[SemanticsProperties.VerticalScrollAxisRange].value()
-        }
-        return value
+        return checkNotNull(value)
     }
 
     private fun dismissStartupDialogs(activity: BatteryInfoActivity) {
