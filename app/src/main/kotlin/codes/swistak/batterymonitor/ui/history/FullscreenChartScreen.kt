@@ -157,7 +157,7 @@ internal fun FullscreenChartScreen(
     onScale: (ChartScaleMode) -> Unit,
     onStyle: (ChartDrawingStyle) -> Unit,
     onValueScale: (ChartValueScale) -> Unit,
-    onSelect: (HistoryKey?) -> Unit,
+    onSelect: (HistoryKey?, HistoryMetric?) -> Unit,
     onRetry: () -> Unit,
     onBack: () -> Unit,
     onViewportObserved: (HistoryRangeState, Int, Long) -> Unit
@@ -439,7 +439,7 @@ internal fun FullscreenChartScreen(
             if (previous) points.lastIndex else 0
         } else selectedIndex + if (previous) -1 else 1
         val point = points.getOrNull(index) ?: return panWindow(previous)
-        onSelect(point.key)
+        onSelect(point.key, null)
         if (point.key.time < state.viewport.start || point.key.time >= state.viewport.end) {
             moveViewport(fullscreenViewportAround(state.range, state.viewport, point.key.time))
         }
@@ -844,11 +844,16 @@ internal fun FullscreenChartScreen(
                         isAutoScaleMinMaxEnabled = false
                         onChartValueSelectedListener = object : OnChartValueSelectedListener {
                             override fun onValueSelected(e: Entry<*>, h: Highlight) {
-                                if (viewportReady) (e.data as? HistoryKey)?.let(selectPoint)
+                                if (!viewportReady) return
+                                val key = e.data as? HistoryKey ?: return
+                                val set = data?.dataSets?.getOrNull(h.dataSetIndex) ?: return
+                                if (!set.isVisible) return
+                                val metric = metrics.firstOrNull { it.name == set.label } ?: return
+                                selectPoint(key, metric)
                             }
 
                             override fun onNothingSelected() {
-                                if (viewportReady) selectPoint(null)
+                                if (viewportReady) selectPoint(null, null)
                             }
                         }
                         xAxis.axisMinimum = 0f
@@ -936,33 +941,16 @@ internal fun FullscreenChartScreen(
                             }
                             if (initial) addViewportJob { post { restore() } } else restore()
                         }
-                        val index = lineData?.dataSets?.indexOfFirst { set ->
-                            (set as? LineDataSet<*>)?.entries?.any { it.data == state.selectedKey } == true
-                        } ?: -1
-                        val highlightedMetric =
-                            lineData?.dataSets?.getOrNull(index)?.label?.let { label ->
-                                HistoryMetric.entries.firstOrNull { it.name == label }
-                            }
-                        val highlightedValue = state.selectedKey?.let { key ->
-                            highlightedMetric?.let {
-                                reading(
-                                    it, key
-                                )
+                        val selectedMetric = state.selectedMetric
+                        val highlight = state.selectedKey?.let { key ->
+                            lineData?.dataSets?.withIndex()?.firstNotNullOfOrNull { (index, set) ->
+                                (set as? LineDataSet<*>)?.takeIf {
+                                    it.isVisible && (selectedMetric == null || it.label == selectedMetric.name)
+                                }?.entries?.firstOrNull { it.data == key }
+                                    ?.let { Highlight(it.x, it.y, index) }
                             }
                         }
-                        if (index >= 0 && state.selectedKey != null && highlightedMetric != null && highlightedValue != null) {
-                            highlightValue(
-                                Highlight(
-                                    timeAxis.x(state.selectedKey.time), fullscreenChartValue(
-                                        highlightedValue,
-                                        highlightedMetric,
-                                        fahrenheit,
-                                        currentMultiplier,
-                                        valueScale
-                                    ).toFloat(), index
-                                ), callListener = false
-                            )
-                        } else highlightValue(null, callListener = false)
+                        highlightValue(highlight, callListener = false)
                     })
                 if (state.error) Column(
                     Modifier

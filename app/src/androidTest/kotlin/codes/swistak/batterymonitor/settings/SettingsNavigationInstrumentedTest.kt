@@ -53,6 +53,8 @@ import codes.swistak.batterymonitor.testsupport.clickSemantics
 import codes.swistak.batterymonitor.testsupport.composeNodes
 import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.testsupport.dispatchComposeDialogBack
+import codes.swistak.batterymonitor.ui.alarms.AlarmsScreen
+import codes.swistak.batterymonitor.ui.alarms.AlarmsState
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsFormat
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsProjectionCache
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsScreen
@@ -648,6 +650,50 @@ class SettingsNavigationInstrumentedTest {
         }
 
     @Test
+    fun alarm_target_links_select_the_corresponding_time_estimate_setting() = withHost {
+        val chargingTarget = 80
+        val dischargingTarget = 20
+        val destinations = mutableListOf<String>()
+        main {
+            activity.setContent {
+                AppBatteryTheme {
+                    AlarmsScreen(
+                        state = AlarmsState(
+                            hasSnapshot = true, loading = false, revealType = "charging_limit_met"
+                        ),
+                        convertFahrenheit = false,
+                        chargingTarget = chargingTarget,
+                        dischargingTarget = dischargingTarget,
+                        monitoringAvailable = true,
+                        dismissLowBatteryOnRecovery = false,
+                        onDismissLowBatteryOnRecovery = {},
+                        onEdit = {},
+                        onAdd = {},
+                        onEnabled = { _, _, _ -> },
+                        onChannelSettings = {},
+                        onNotificationSettings = {},
+                        onTargetSettings = { destinations += it },
+                        onRetry = {},
+                        onDisableInvalid = {},
+                        onDeleteInvalid = {},
+                        onNoticeHandled = {},
+                        onRevealHandled = {})
+                }
+            }
+        }
+        for (target in listOf(chargingTarget, dischargingTarget)) {
+            val label = activity.getString(R.string.current_prediction_target, target)
+            await { button(label) != null }
+            main { requireNotNull(button(label)).clickSemantics() }
+        }
+        assertEquals(
+            listOf(
+                SettingsContract.KEY_CHARGING_TARGET_MODE, SettingsContract.KEY_DISCHARGING_TARGET
+            ), destinations
+        )
+    }
+
+    @Test
     fun notification_route_scrolls_to_the_setting_selected_in_search() = withHost {
         val target = SettingsContract.KEY_ICON_CONTENT
         main {
@@ -813,9 +859,11 @@ class SettingsNavigationInstrumentedTest {
         instrumentation.waitForIdleSync()
     }
 
-    private fun button(label: Int): SemanticsNode? = nodes().firstOrNull {
+    private fun button(label: Int): SemanticsNode? = button(context.getString(label))
+
+    private fun button(label: String): SemanticsNode? = nodes().firstOrNull {
         it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(SemanticsProperties.Text)
-            ?.any { text -> text.text == context.getString(label) } == true
+            ?.any { text -> text.text == label } == true
     }
 
     private fun nodes(includeDialogs: Boolean = false): List<SemanticsNode> =

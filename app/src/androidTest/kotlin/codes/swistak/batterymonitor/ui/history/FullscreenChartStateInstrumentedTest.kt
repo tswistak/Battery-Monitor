@@ -66,7 +66,9 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
 import codes.swistak.batterymonitor.testsupport.addLogs
 import codes.swistak.batterymonitor.testsupport.awaitCondition
+import codes.swistak.batterymonitor.testsupport.composeNodes
 import codes.swistak.batterymonitor.testsupport.composeWindowNodes
+import codes.swistak.batterymonitor.ui.components.historyValue
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.YAxis
@@ -587,13 +589,12 @@ class FullscreenChartStateInstrumentedTest {
 
     private fun dispatchTouch(chart: LineChart, down: Long, action: Int, fraction: Float) {
         val rect = chart.viewPortHandler.contentRect
+        dispatchTouchAt(chart, down, action, rect.left + rect.width() * fraction, rect.centerY())
+    }
+
+    private fun dispatchTouchAt(chart: LineChart, down: Long, action: Int, x: Float, y: Float) {
         val event = MotionEvent.obtain(
-            down,
-            android.os.SystemClock.uptimeMillis(),
-            action,
-            rect.left + rect.width() * fraction,
-            rect.centerY(),
-            0
+            down, android.os.SystemClock.uptimeMillis(), action, x, y, 0
         )
         event.source = InputDevice.SOURCE_TOUCHSCREEN
         try {
@@ -783,7 +784,8 @@ class FullscreenChartStateInstrumentedTest {
             model.viewport(HistoryRangeState(1_000, 2_000), 600)
             model.metric(HistoryMetric.CURRENT)
             model.scale(ChartScaleMode.FIXED)
-            model.select(second)
+            model.comparison(HistoryMetric.VOLTAGE)
+            model.select(second, HistoryMetric.VOLTAGE)
         }
         loaded(model)
         val saved = model.save()
@@ -796,6 +798,8 @@ class FullscreenChartStateInstrumentedTest {
         assertEquals(HistoryMetric.CURRENT, state.metric)
         assertEquals(ChartScaleMode.FIXED, state.scaleMode)
         assertEquals(second, state.selectedKey)
+        assertEquals(HistoryMetric.VOLTAGE, state.comparison)
+        assertEquals(HistoryMetric.VOLTAGE, state.selectedMetric)
         assertEquals(-200.0, state.chart!!.points.single { it.key == second }.value!!, 0.0)
         main {
             restored.initialize(HistoryMetric.POWER, HistoryRangeState(50_000, 60_000), "6h", null)
@@ -808,6 +812,7 @@ class FullscreenChartStateInstrumentedTest {
         main { restored.range(HistoryRangeState(20_000, 30_000), "1h") }
         loaded(restored)
         assertNull(restored.state.value!!.selectedKey)
+        assertNull(restored.state.value!!.selectedMetric)
         assertEquals(restored.state.value!!.range, restored.state.value!!.viewport)
     }
 
@@ -1410,6 +1415,95 @@ class FullscreenChartStateInstrumentedTest {
         } finally {
             reportFixtureViewportCallbacks("Voltage refresh fixture")
             scenario.close()
+        }
+    }
+
+    @Test
+    fun native_taps_select_the_touched_dataset_in_comparison_and_single_chart_modes() {
+        val highVoltage = observation.copy(time = 2_500, charge = 20, voltage = 4200)
+        val highLevel = observation.copy(time = 7_500, charge = 80, voltage = 3800)
+        database.addLogs(listOf(highVoltage, highLevel))
+        val model = model(HistoryMetric.LEVEL)
+        main { model.comparison(HistoryMetric.VOLTAGE) }
+        ActivityScenario.launch(ComposeTestActivity::class.java).use { scenario ->
+            lateinit var activity: ComposeTestActivity
+            scenario.onActivity { host ->
+                activity = host
+                activity.setContent {
+                    CompositionLocalProvider(LocalContext provides context) {
+                        AppBatteryTheme {
+                            val state by model.state.collectAsState()
+                            state?.let {
+                                FullscreenChartScreen(
+                                    it,
+                                    model::metric,
+                                    model::comparison,
+                                    model::range,
+                                    model::viewport,
+                                    model::scale,
+                                    model::style,
+                                    model::valueScale,
+                                    model::select,
+                                    model::refresh,
+                                    activity::finish,
+                                    onViewportObserved = model::observeViewport
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            fun tapAndVerify(metric: HistoryMetric, sample: LogRecord) {
+                assertFixtureRendered(activity, model)
+                val key = model.state.value!!.charts.getValue(metric).points.single {
+                    it.key.time == sample.time
+                }.key
+                main {
+                    val chart = requireNotNull(nativeChart(activity.window.decorView))
+                    val set =
+                        chart.data!!.dataSets.single { it.label == metric.name } as LineDataSet<*>
+                    val entry = set.entries.single { it.data == key }
+                    val position = floatArrayOf(entry.x, entry.y)
+                    chart.getTransformer(set.axisDependency).pointValuesToPixel(position)
+                    val down = android.os.SystemClock.uptimeMillis()
+                    dispatchTouchAt(chart, down, MotionEvent.ACTION_DOWN, position[0], position[1])
+                    dispatchTouchAt(chart, down, MotionEvent.ACTION_UP, position[0], position[1])
+                }
+                await({ "Touch on $metric did not select $key" }) {
+                    model.state.value?.selectedRecord?.key == key
+                }
+                assertFixtureRendered(activity, model)
+                main {
+                    val chart = requireNotNull(nativeChart(activity.window.decorView))
+                    val highlight = requireNotNull(chart.highlighted.singleOrNull())
+                    val set = chart.data!!.dataSets[highlight.dataSetIndex] as LineDataSet<*>
+                    assertEquals(metric.name, set.label)
+                    val highlighted =
+                        set.entries.single { it.x == highlight.x && it.y == highlight.y }
+                    assertEquals(key, highlighted.data)
+                    val locale = activity.resources.configuration.locales[0]
+                    val readouts = composeNodes(activity.window.decorView).flatMap { node ->
+                        node.config.getOrNull(SemanticsProperties.Text).orEmpty().map { it.text }
+                    }
+                    for (visible in model.state.value!!.metrics) {
+                        val label = activity.getString(
+                            if (visible == HistoryMetric.LEVEL) R.string.history_level else R.string.current_voltage
+                        )
+                        val value = historyValue(
+                            historyObservationValue(visible, sample), visible, false, locale
+                        )
+                        assertTrue(
+                            "Missing selected reading: $label: $value", "$label: $value" in readouts
+                        )
+                    }
+                }
+            }
+
+            tapAndVerify(HistoryMetric.VOLTAGE, highVoltage)
+            tapAndVerify(HistoryMetric.LEVEL, highLevel)
+            main { model.comparison(null) }
+            tapAndVerify(HistoryMetric.LEVEL, highVoltage)
         }
     }
 
