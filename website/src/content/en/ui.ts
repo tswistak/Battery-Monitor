@@ -10,6 +10,7 @@ export const ui = {
   about: 'About',
   privacy: 'Privacy Policy',
   license: 'License',
+  legalNotice: 'Legal notice',
   contact: 'Contact',
   github: 'GitHub',
   preferences: 'Privacy settings',

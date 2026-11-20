@@ -646,9 +646,18 @@ test('publication requires operational disclosures even when local policy omits 
   }
 });
 
-test('validated privacy facts reach the policy in both modes and optional notice dimensions are bounded', async () => {
+test('public privacy disclosures keep working anchors and exclude internal verification details', async () => {
   const privacy = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
   privacy.hosting.provider = 'Synthetic host <unsafe> & partners';
+  const internal = 'Internal verification: Traefik NGINX PHP-FPM MariaDB Docker journald';
+  for (const key of [
+    'serverSettingsEvidence',
+    'retentionEvidence',
+    'trackerResponseCookiePolicy',
+    'consentEvidenceProcedure',
+  ])
+    privacy.analytics[key] = `${internal}: ${key}`;
+  privacy.review.assessmentRecord = `${internal}: assessmentRecord`;
   for (const enabled of ['false', 'true']) {
     const config = loadSiteConfig({
       env: { MATOMO_ENABLED: enabled, MATOMO_SITE_ID: '7', MATOMO_CONSENT_DIMENSION_ID: '3' },
@@ -656,22 +665,42 @@ test('validated privacy facts reach the policy in both modes and optional notice
     });
     const sections = getPrivacySections(config);
     const delivery = sections.find((section) => section.id === 'website-delivery').html;
-    assert(delivery.includes('<dl class="privacy-facts">'));
     assert(delivery.includes('Synthetic host &lt;unsafe&gt; &amp; partners'));
-    for (const section of [
-      privacy.hosting,
-      privacy.contact,
-      ...(enabled === 'true' ? [privacy.analytics] : []),
-    ]) {
-      const html = sections.map((section) => section.html).join('');
-      for (const key of [
-        'processingLocations',
-        'processorAgreement',
-        'subprocessorInformation',
-        'transferSafeguards',
-      ]) {
-        if (typeof section[key] === 'string') assert(html.includes(section[key]));
-      }
+    assert.deepEqual(
+      sections.map((section) => section.id),
+      [
+        'controller',
+        'android-app',
+        'website-delivery',
+        'preferences',
+        'analytics',
+        'storage',
+        'retention',
+        'contact-and-external-services',
+        'rights',
+        'changes',
+      ],
+    );
+    const html = sections.map((section) => section.html).join('');
+    assert.doesNotMatch(
+      html,
+      /Traefik|NGINX|PHP-FPM|MariaDB|Docker|journald|Internal verification/,
+    );
+    assert.doesNotMatch(
+      html,
+      /serverSettingsEvidence|retentionEvidence|trackerResponseCookiePolicy|consentEvidenceProcedure|assessmentRecord/,
+    );
+    assert.doesNotMatch(
+      html,
+      /bm\.analytics-consent|bm_pk_(?:id|ses|ref)\.|site hash|app-release|website-launch|project-update|utm_campaign/,
+    );
+    const analytics = sections.find((section) => section.id === 'analytics').html;
+    if (enabled === 'true') {
+      assert.match(analytics, /Matomo/);
+      assert.match(analytics, /consent/i);
+    } else {
+      assert.match(analytics, /disabled|does not collect optional analytics/i);
+      assert.doesNotMatch(analytics, /uses.*Matomo/i);
     }
     assert.equal(config.analytics.consentDimensionId, 3);
   }
@@ -681,6 +710,97 @@ test('validated privacy facts reach the policy in both modes and optional notice
       () => loadSiteConfig({ env: { MATOMO_CONSENT_DIMENSION_ID: value }, privacy }),
       /MATOMO_CONSENT_DIMENSION_ID/,
     );
+  }
+});
+
+test('the concise public policy preserves substantive disclosures for the configured providers', async () => {
+  const privacy = JSON.parse(await readFile('config/privacy.json', 'utf8'));
+  for (const enabled of ['false', 'true']) {
+    const config = validatePublication(
+      loadSiteConfig({
+        env: { MATOMO_ENABLED: enabled, MATOMO_SITE_ID: '7' },
+        privacy,
+      }),
+    );
+    const sections = Object.fromEntries(
+      getPrivacySections(config).map(({ id, html }) => [id, html]),
+    );
+    const html = Object.values(sections).join('');
+    assert(sections.controller.includes(privacy.controller.name));
+    assert(sections.controller.includes(privacy.controller.email));
+    for (const essential of [
+      /locally|on your device/i,
+      /28 days/,
+      /root/i,
+      /Shizuku/,
+      /identifier/i,
+      /not encrypt|unencrypted/i,
+      /device-to-device/i,
+      /uninstall/i,
+      /learned/i,
+    ])
+      assert.match(sections['android-app'], essential);
+    assert.match(sections['website-delivery'], /bunny\.net/i);
+    assert.match(sections['website-delivery'], /IP address/i);
+    assert.match(sections['website-delivery'], /legitimate interests?/i);
+    assert.match(html, /outside the EEA|outside.*European Economic Area/i);
+    assert.match(sections['contact-and-external-services'], /Google Workspace/);
+    for (const essential of [
+      /email address/i,
+      /attachment/i,
+      /legitimate interests?/i,
+      /legal obligation|law requires/i,
+    ])
+      assert.match(sections['contact-and-external-services'], essential);
+    for (const destination of [
+      'policies.google.com/privacy',
+      'github-general-privacy-statement',
+      'f-droid.org',
+      'liberapay.com/about/privacy',
+      'suppi.pl/polityka_prywatnosci',
+    ])
+      assert(html.includes(destination));
+    assert.match(sections.retention, /up to 3 days/);
+    assert.match(sections.retention, /12 months/);
+    assert(sections.retention.includes(privacy.hosting.backupRetentionPolicy));
+    assert.match(sections.storage, /180 days/);
+    for (const essential of [
+      /access/i,
+      /correct|rectif/i,
+      /eras|delet/i,
+      /restrict/i,
+      /object/i,
+      /portab/i,
+      /withdraw/i,
+      /UODO/,
+      /automated.*legal/i,
+    ])
+      assert.match(sections.rights, essential);
+    assert.doesNotMatch(
+      html,
+      /Traefik|NGINX|PHP-FPM|MariaDB|Docker|journald|bm\.analytics-consent|bm_pk_(?:id|ses|ref)\.|site hash/,
+    );
+    if (enabled === 'true') {
+      assert.match(sections.analytics, /Matomo/);
+      assert.match(sections.analytics, /OVHcloud/);
+      assert.match(sections.analytics, /consent/i);
+      assert.match(sections.analytics, /Poland/);
+      assert.match(sections.analytics, /mask/i);
+      assert.match(sections.analytics, /not.*anonymous|not.*anonymity|still be personal data/i);
+      assert.match(sections.retention, /90 days/);
+      assert.match(sections.retention, /Approximately 24 months/i);
+      assert.match(sections.retention, /<dt>Analytics technical logs<\/dt><dd>up to 30 days<\/dd>/);
+      assert.match(sections.retention, /<dt>Analytics backups<\/dt><dd>up to 30 days<\/dd>/);
+      assert.match(sections.storage, /30 minutes/);
+      assert.match(sections.preferences, /withdraw/i);
+      assert.match(sections.preferences, /does not.*erase|does not.*delete|server records remain/i);
+    } else {
+      assert.match(sections.analytics, /analytics is disabled/i);
+      assert.doesNotMatch(
+        sections.retention,
+        /Individual analytics records|Aggregated analytics reports|Analytics technical logs|Analytics backups/,
+      );
+    }
   }
 });
 
@@ -705,13 +825,12 @@ test('hosting backup retention supports fixed days or criteria in either analyti
       );
       assert.equal(config.publicationReady, true);
       const sections = getPrivacySections(config);
-      const delivery = sections.find((section) => section.id === 'website-delivery').html;
-      const backup = delivery.match(/<dt>Backup retention<\/dt><dd>(.*?)<\/dd>/)?.[1];
+      const retention = sections.find((section) => section.id === 'retention').html;
+      const backup = retention.match(/<dt>Bunny operational backups<\/dt><dd>(.*?)<\/dd>/)?.[1];
       assert.equal(backup, expected);
-      assert.equal(delivery.match(/<dt>Backup retention<\/dt>/g)?.length, 1);
+      assert.equal(retention.match(/<dt>Bunny operational backups<\/dt>/g)?.length, 1);
       if (backupRetentionPolicy) assert.doesNotMatch(backup, /\d+ days|not retained/);
       if (enabled === 'true') {
-        const retention = sections.find((section) => section.id === 'retention').html;
         assert.match(retention, /<dt>Analytics backups<\/dt><dd>up to 14 days<\/dd>/);
       }
     }
@@ -780,12 +899,13 @@ test('criteria-based backup retention escapes HTML instead of injecting provider
         privacy,
       }),
     );
-    const delivery = getPrivacySections(config).find(
-      (section) => section.id === 'website-delivery',
-    ).html;
-    assert.equal(delivery.match(/<dt>Backup retention<\/dt><dd>(.*?)<\/dd>/)?.[1], escaped);
-    assert.equal(delivery.includes(privacy.hosting.backupRetentionPolicy), false);
-    assert.doesNotMatch(delivery, /<script\b|<img\b/);
+    const retention = getPrivacySections(config).find((section) => section.id === 'retention').html;
+    assert.equal(
+      retention.match(/<dt>Bunny operational backups<\/dt><dd>(.*?)<\/dd>/)?.[1],
+      escaped,
+    );
+    assert.equal(retention.includes(privacy.hosting.backupRetentionPolicy), false);
+    assert.doesNotMatch(retention, /<script\b|<img\b/);
   }
 });
 
@@ -821,8 +941,7 @@ test('workflow consent variables configure the site consistently and reject inco
     cookieSessionSeconds: 900,
   });
   const storage = getPrivacySections(config).find((section) => section.id === 'storage').html;
-  for (const value of ['30 days of decision validity', 'Up to 14 days', 'Up to 15 minutes'])
-    assert(storage.includes(value));
+  for (const value of ['30 days', '14 days', '15 minutes']) assert(storage.includes(value));
 
   const defaults = loadSiteConfig({ env: {}, privacy }).analytics;
   assert.equal(defaults.enabled, false);

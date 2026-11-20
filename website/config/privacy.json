@@ -1,5 +1,5 @@
 {
-  "policyVersion": "2026-11-18-v1",
+  "policyVersion": "2026-11-20-v1",
   "effectiveDate": "2026-11-18",
   "controller": {
     "name": "MARMOTA SOFTWARE TOMASZ ŚWISTAK",
@@ -7,52 +7,52 @@
   },
   "hosting": {
     "provider": "BunnyWay d.o.o. (bunny.net)",
-    "processingLocations": "Website files are stored in bunny.net Storage in Frankfurt (Germany) and replicated to Stockholm (Sweden). All CDN pricing zones are enabled, so edge requests may be handled by Bunny infrastructure worldwide, including outside the EEA. According to Bunny, CDN request logs are processed and stored centrally in the EU.",
-    "processorAgreement": "The operator accepted the BunnyWay, informacijske storitve d.o.o. Data Processing Agreement (DPA v2, effective 2026-07-14) under GDPR Article 28. It covers the delivery and storage services and provides for processor confidentiality, security measures, subprocessor conditions and documented instructions.",
-    "subprocessorInformation": "Bunny publishes its current list of subprocessors at https://bunny.net/gdpr/sub-processors/. The accepted DPA also describes infrastructure/network partners that are not individually named. According to written Bunny support clarification dated 2026-11-14, these partners have no logical access to customer data processed at Bunny CDN edges. No optional long-term CDN log storage or external log forwarding has been configured by the website operator.",
-    "transferSafeguards": "Bunny operates CDN edge infrastructure worldwide, including outside the EEA. According to written clarification from Bunny support dated 2026-11-14, processing at its non-EEA edge locations is performed by the same processor, while infrastructure partners have no logical access to customer data. On that basis, Bunny does not regard these internal edge operations as separate Chapter V GDPR transfers requiring Standard Contractual Clauses with a separate data importer. The accepted Bunny DPA and its technical and organisational security measures apply. Other processor and subprocessor arrangements are governed by the applicable DPA terms.",
-    "deliveryLegalBasis": "GDPR Article 6(1)(f): legitimate interests in delivering and securing the website and preventing abuse.",
-    "deliveryInterests": "Serving requested pages and assets reliably, responding to technical failures and protecting the website from attacks and misuse, with limited diagnostic logging.",
-    "accessLogData": "The CDN processes technical request data for website delivery and security, potentially including an IP address, request time, requested URL, HTTP status, browser and referrer information. Bunny enables log anonymisation by default. When that setting is enabled, Bunny masks IP addresses when its logging API returns log entries. Bunny may still process or store full IP addresses. Standard CDN logs are retained for 3 days; the operator has not enabled optional long-term log storage or forwarding to an external destination.",
+    "processingLocations": "Website files are stored in Germany and Sweden. Bunny.net delivers the site worldwide, including from locations outside the European Economic Area (EEA). Bunny says it processes and stores its request logs in the EU.",
+    "processorAgreement": "Bunny.net acts as a processor under an accepted Data Processing Agreement covering confidentiality, security and subprocessors.",
+    "subprocessorInformation": "Bunny.net publishes its current subprocessors at https://bunny.net/gdpr/sub-processors/.",
+    "transferSafeguards": "Bunny says it handles requests at its global locations itself and that its network partners cannot read the customer data processed there. Bunny’s data processing agreement and safeguards for its service providers apply.",
+    "deliveryLegalBasis": "We have a legitimate interest in delivering and securing the website and preventing abuse (GDPR Article 6(1)(f)).",
+    "deliveryInterests": "Reliably serving requested pages and protecting the website against technical failures, attacks and misuse.",
+    "accessLogData": "Request data can include your IP address, the requested page, browser details and the site you came from. Bunny can process full IP addresses even when it masks them in logs available to us.",
     "accessLogRetentionDays": 3,
-    "accessLogAccessControls": "The website operator can access the CDN logs available to the Bunny account. Authorized Bunny.net personnel may access operational records as necessary to provide the service.",
+    "accessLogAccessControls": "The website operator and authorized Bunny.net personnel may access relevant logs to operate and protect the service.",
     "backupRetentionDays": null,
-    "backupRetentionPolicy": "Bunny.net does not routinely back up customer content or CDN logs. Temporary copies may be created exceptionally during infrastructure migrations or recovery procedures. Such copies are retained only for the time necessary to complete and verify the relevant operation and are deleted afterwards. The provider does not specify a fixed maximum retention period for these exceptional temporary copies."
+    "backupRetentionPolicy": "Bunny.net does not routinely back up website content or CDN logs. Exceptional temporary copies are deleted when the relevant recovery or migration operation and its verification are complete. No fixed maximum period is specified."
   },
   "contact": {
-    "providerInformation": "The contact mailbox tomasz@swistak.codes is provided through Google Workspace Business Starter (Gmail). Google processes email addresses, message contents, attachments and delivery metadata to deliver, store and support correspondence. Google Workspace is a globally operated service; the operator has no configurable Data Regions option on the subscribed plan and does not claim that correspondence is stored exclusively in the EEA.",
-    "legalBasis": "GDPR Article 6(1)(f), legitimate interests in answering enquiries and maintaining correspondence; Article 6(1)(c) where processing is required to comply with a legal obligation, such as responding to a data-protection request.",
-    "retentionCriteria": "Ordinary support and contact correspondence is reviewed and deleted manually no later than 12 months after the matter is resolved, unless longer retention is necessary for a legal obligation or to establish, exercise or defend legal claims.",
-    "transferSafeguards": "The operator confirmed on 2026-11-17 that the Google Workspace Cloud Data Processing Addendum (CDPA) has been accepted. Google may process customer personal data in countries where Google and authorized subprocessors maintain facilities. Where the GDPR Chapter V rules apply to restricted international transfers, the CDPA provides for applicable adequacy decisions, Standard Contractual Clauses or another recognized transfer mechanism, together with security measures. Current Google Workspace subprocessors and their processing locations are disclosed at https://workspace.google.com/terms/subprocessors/. Google CDPA terms are available at https://cloud.google.com/terms/data-processing-addendum."
+    "providerInformation": "Google Workspace handles our email, including information needed to deliver messages.",
+    "legalBasis": "Our legitimate interest is to answer enquiries and manage correspondence (GDPR Article 6(1)(f)). We also process requests when the law requires it, for example to exercise your data protection rights (Article 6(1)(c)).",
+    "retentionCriteria": "Support correspondence is deleted manually within 12 months after the matter is resolved, unless a legal obligation or the establishment, exercise or defence of legal claims requires longer retention.",
+    "transferSafeguards": "Google and its service providers may process correspondence outside the EEA. Google’s data processing addendum provides for applicable adequacy decisions, EU Standard Contractual Clauses or other recognised safeguards."
   },
   "analytics": {
-    "hostingProvider": "Self-hosted Matomo on an OVHcloud VPS, using Traefik, NGINX, PHP-FPM and MariaDB. OVHcloud supplies the server infrastructure; no external analytics SaaS is used for this site.",
-    "processingLocations": "Self-hosted Matomo and MariaDB operate on the OVHcloud VPS in Warsaw (WAW), Poland, as confirmed in the OVHcloud dashboard. OVHcloud automated VPS backup and snapshot options are disabled. The operator reports separate backups retained for up to 30 days; any provider support access is governed by the relevant OVHcloud agreement.",
-    "processorAgreement": "The operator accepted the OVHcloud Data Processing Agreement in the customer panel; the VPS is governed by OVHcloud service terms. OVHcloud is the infrastructure processor, while the Matomo instance is self-hosted and maintained by the operator.",
-    "subprocessorInformation": "The website operator has configured no additional analytics recipients or forwarding destinations. OVHcloud may use service-related subprocessors under its applicable contractual terms.",
-    "transferSafeguards": "Matomo database and application storage are on an OVHcloud VPS in Warsaw, Poland (EEA). The operator does not intentionally disclose or forward the analytics dataset to external analytics providers. For any legally permitted access or processing outside the EEA by the OVHcloud group or processors, OVHcloud states that it uses GDPR Chapter V safeguards, including Standard Contractual Clauses where applicable; see the accepted OVHcloud DPA and published legal privacy-security terms.",
+    "hostingProvider": "The website uses a self-hosted Matomo analytics service on infrastructure provided by OVHcloud.",
+    "processingLocations": "Matomo’s main database is hosted in Warsaw, Poland.",
+    "processorAgreement": "OVHcloud provides the infrastructure under an accepted Data Processing Agreement. The website operator runs the Matomo service.",
+    "subprocessorInformation": "No analytics data is forwarded to other analytics services. OVHcloud may use service-related subprocessors under its contractual terms.",
+    "transferSafeguards": "Where OVHcloud or its service providers process data outside the EEA, OVHcloud applies the safeguards in its data processing agreement, including EU Standard Contractual Clauses where applicable.",
     "matomoVersion": "5.14.2",
     "ipMaskingBytes": 2,
     "maskedIpGeolocation": true,
     "rawRetentionDays": 90,
     "aggregatedRetentionDays": 732,
-    "proxyLogData": "Traefik access logging is restricted to HTTP 4xx/5xx responses and records timestamp, router name, response status and request duration, without IP addresses, URLs, query strings or request headers in those access-log records. NGINX access logging for Matomo is disabled. Application and error logs may still contain diagnostic details.",
+    "proxyLogData": "Limited technical and error logs may be retained to maintain the security and reliability of the analytics service and investigate problems. Depending on the error, these logs may contain diagnostic request information.",
     "proxyLogRetentionDays": 30,
     "backupRetentionDays": 30,
-    "accessControls": "Only the website operator has access to the Matomo analytics interface, database and application administration. OVHcloud provides the underlying infrastructure under its service arrangements.",
+    "accessControls": "Only the website operator has access to the analytics interface and its data. OVHcloud provides the underlying infrastructure.",
     "dedicatedSiteIdConfirmed": true,
     "intrusiveFeaturesDisabled": true,
     "visitorCookieSeconds": 15552000,
     "sessionCookieSeconds": 1800,
-    "serverSettingsEvidence": "2026-11-14: The operator verified Matomo 5.14.2, 2-byte IP masking and geolocation based on masked IP, 90-day raw analytics retention, 24-month report retention, scheduled deletion, and disabled intrusive analytics features. The OVHcloud dashboard identifies the VPS region as Warsaw (WAW), Poland; optional OVH VPS snapshots and automated backup are disabled. Docker Compose, Traefik and NGINX logging configuration was inspected; the operator confirmed deploying restricted logs and 30-day journald retention. Production consent/tracking behavior still needs testing after publication.",
-    "trackerResponseCookiePolicy": "2026-11-14: The operator reports that Matomo tracking responses on other websites did not set additional cookies. The production Battery Monitor integration should also be tested after deployment.",
-    "retentionEvidence": "2026-11-14: The operator confirmed in Matomo Administration > Privacy > Anonymize Data that automatic deletion of raw visitor logs after 90 days and aggregated reports after 24 months is enabled, Keep basic metrics is disabled, and scheduled deletion is operational. Technical proxy logs are subject to a separate 30-day journald retention policy. The operator reports separate analytics backups with a 30-day retention policy; OVHcloud automated VPS backup and snapshot options are disabled.",
-    "consentEvidenceProcedure": "The browser stores the decision (accept or reject), notice version, decision timestamp and expiry in first-party localStorage under bm.analytics-consent. When a dedicated action-scoped Matomo custom dimension is configured, the first page view after a new acceptance includes the notice version. Refusals are not tracked. This does not constitute a complete server-side consent audit trail."
+    "serverSettingsEvidence": "2026-11-14: The operator confirmed Matomo 5.14.2, two-byte IP masking, masked-IP geolocation, 90-day visit retention, 24-month report retention, scheduled deletion and disabled intrusive features. Poland hosting, restricted technical logging and 30-day log and backup retention were confirmed. Additional provider backups were disabled. These settings confirmations are separate from live-site behavior checks.",
+    "trackerResponseCookiePolicy": "2026-11-14: The operator reported no additional tracking-response cookies on other websites. Battery Monitor response-cookie behavior remains unverified; the 2026-11-19 tracking observations did not verify response cookies.",
+    "retentionEvidence": "2026-11-14: The operator confirmed automatic deletion of visit records after 90 days and reports after 24 months, with scheduled deletion operational and no basic metrics kept beyond that period. Technical logs and separate analytics backups have 30-day retention. Additional provider backups were disabled.",
+    "consentEvidenceProcedure": "The browser stores the decision, notice version, decision time and expiry locally. If configured, the first page view after new consent records the notice version. Refusals are not tracked. This is not a complete server-side history of consent choices."
   },
   "review": {
     "reviewedBy": "Tomasz Świstak",
     "reviewedAt": "2026-11-18",
-    "policyVersion": "2026-11-18-v1",
-    "assessmentRecord": "2026-11-18: Internal operational and privacy-policy review incorporating the earlier 2026-11-14 infrastructure assessment. The operator confirmed that email for tomasz@swistak.codes is now handled by Google Workspace Business Starter, that the Google Cloud Data Processing Addendum is accepted, and that region selection is unavailable on this plan. Correspondence will be reviewed and deleted manually after 12 months, subject to legal exceptions. The operator confirmed that the former OVHcloud mailbox has been removed. The accepted Bunny DPA v2 dated 2026-07-14 and Bunny support clarification dated 2026-11-14 document three-day CDN logs, exceptional rather than routine backups with criteria-based deletion, and the provider's statement about processing on global CDN edges. Public website files are stored in Frankfurt and replicated to Stockholm. Matomo runs on the operator's OVHcloud VPS in Warsaw, Poland; the operator previously confirmed 2-byte IP masking, anonymized geolocation, 90-day raw-data retention, 24-month aggregate-report retention, disabled intrusive analytics, restricted proxy logging and 30-day backup/log retention arrangements. After publication, verify that consent and tracking work as described on the live site when analytics is enabled. This record is not a formal legal certification."
+    "policyVersion": "2026-11-20-v1",
+    "assessmentRecord": "2026-11-18: Last factual owner review by Tomasz Świstak, incorporating the 2026-11-14 provider and analytics assessment and the 2026-11-17 Google agreement confirmation. The review covered Bunny global CDN processing and EU storage, self-hosted Matomo in Warsaw, Google Workspace email, and the access and retention arrangements recorded above. 2026-11-20: Editorial simplification of the policy and configuration; no new owner review or operational verification is claimed. The 2026-11-19 tracking observations did not establish Battery Monitor response-cookie behavior, which remains unverified. This record is not a formal legal certification."
   }
 }

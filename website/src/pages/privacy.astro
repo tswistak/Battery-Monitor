@@ -26,13 +26,10 @@ const sections = getPrivacySections(config);
         {section.id === 'preferences' && (
           <>
             <button class="text-button" type="button" data-privacy-settings hidden>
-              Change analytics preferences
+              Privacy settings
             </button>
             <noscript>
-              <p>
-                JavaScript is disabled, so this website cannot load its optional browser analytics.
-                Enable JavaScript only if you want to change its stored preference.
-              </p>
+              <p>Analytics stays off while JavaScript is disabled.</p>
             </noscript>
           </>
         )}

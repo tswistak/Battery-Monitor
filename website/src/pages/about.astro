@@ -1,8 +1,10 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { content } from '../data/content';
-import { pageMeta } from '../content/en/ui';
+import { pageMeta, ui } from '../content/en/ui';
 import { aboutCopy as copy } from '../content/en/pages';
+import { getSiteConfig } from '../lib/site-config';
+const provider = getSiteConfig().privacy.controller;
 ---
 
 <SiteLayout {...pageMeta.about} pageId="about">
@@ -37,5 +39,24 @@ import { aboutCopy as copy } from '../content/en/pages';
       </p>
       <p>{copy.providerNotices}</p>
     </section>
+    <section id="legal-notice">
+      <h2>{ui.legalNotice}</h2>
+      <address>
+        <strong>{provider.name}</strong>
+        <br />
+        Górnicza 14/5
+        <br />
+        54-136 Wrocław, Poland
+        <br />
+        <a href={`mailto:${encodeURIComponent(provider.email)}`}>{provider.email}</a>
+      </address>
+      <p>Polish tax ID (NIP) 8943114431</p>
+    </section>
   </div>
 </SiteLayout>
+
+<style>
+  address {
+    font-style: normal;
+  }
+</style>
