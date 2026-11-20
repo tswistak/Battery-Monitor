@@ -412,11 +412,8 @@ class BatteryInfoActivity : AppCompatActivity() {
                                             alarms.reportSettingsFailure()
                                         }
                                     },
-                                    onTargets = {
-                                        openSettingsCategory(
-                                            SettingsCategory.Time.route,
-                                            SettingsContract.KEY_CHARGING_TARGET_MODE
-                                        )
+                                    onTargetSettings = { key ->
+                                        openSettingsCategory(SettingsCategory.Time.route, key)
                                     },
                                     onRetry = alarms::refresh,
                                     onDisableInvalid = {

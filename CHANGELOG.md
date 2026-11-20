@@ -7,6 +7,12 @@
 - Added full privacy policy as a link to the website.
 - Moved FAQ to the website.
 
+### Fixed
+
+- Settings highlights for target alarms (#179).
+- Point selection on comparison full-screen charts.
+- Default target screen for the history widget is now History.
+
 ## 2.0.0
 
 ### New

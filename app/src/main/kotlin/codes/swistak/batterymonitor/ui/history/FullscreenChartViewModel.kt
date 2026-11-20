@@ -51,18 +51,25 @@ internal data class FullscreenChartUiState(
     val selectedRecord: HistoryRecord? = null,
     val loading: Boolean = false,
     val error: Boolean = false,
-    val viewportCommand: Long = 0
+    val viewportCommand: Long = 0,
+    val selectedMetric: HistoryMetric? = null
 ) {
     val metrics: List<HistoryMetric> get() = listOfNotNull(metric, comparison)
     val chart: DetailedHistoryChartModel? get() = charts[metric]
     val bounds: DetailedHistoryBounds? get() = boundsByMetric[metric]
 
-    fun withMetric(next: HistoryMetric): FullscreenChartUiState = copy(
-        metric = next, comparison = if (next == comparison) metric else comparison
-    )
+    fun withMetric(next: HistoryMetric): FullscreenChartUiState {
+        val nextComparison = if (next == comparison) metric else comparison
+        return copy(
+            metric = next,
+            comparison = nextComparison,
+            selectedMetric = selectedMetric?.takeIf { it == next || it == nextComparison })
+    }
 
     fun withComparison(next: HistoryMetric?): FullscreenChartUiState =
-        if (next == metric) this else copy(comparison = next)
+        if (next == metric) this else copy(
+            comparison = next,
+            selectedMetric = selectedMetric?.takeIf { it == metric || it == next })
 }
 
 internal fun boundedChartViewport(
@@ -123,13 +130,17 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
         val restoredMetric = saved?.getString("metric")?.let { name ->
             HistoryMetric.entries.firstOrNull { it.name == name }
         } ?: metric
+        val restoredComparison = HistoryMetric.entries.firstOrNull {
+            it.name == saved?.getString("comparison") && it != restoredMetric
+        }
+        val restoredKey = saved?.takeIf { it.containsKey("selectedId") }?.let {
+            HistoryKey(it.getLong("selectedTime"), it.getLong("selectedId"))
+        }
         mutable.value = FullscreenChartUiState(
             range = restoredRange,
             rangeLabel = saved?.getString("label") ?: label,
             metric = restoredMetric,
-            comparison = HistoryMetric.entries.firstOrNull {
-                it.name == saved?.getString("comparison") && it != restoredMetric
-            },
+            comparison = restoredComparison,
             viewport = boundedChartViewport(
                 restoredRange, saved?.validRange("visibleStart", "visibleEnd") ?: restoredRange
             ),
@@ -139,8 +150,10 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
                 ?: ChartDrawingStyle.CONNECTED,
             valueScale = ChartValueScale.entries.firstOrNull { it.name == saved?.getString("valueScale") }
                 ?: ChartValueScale.LINEAR,
-            selectedKey = saved?.takeIf { it.containsKey("selectedId") }?.let {
-                HistoryKey(it.getLong("selectedTime"), it.getLong("selectedId"))
+            selectedKey = restoredKey,
+            selectedMetric = restoredKey?.let {
+                val name = saved.getString("selectedMetric")
+                listOfNotNull(restoredMetric, restoredComparison).firstOrNull { it.name == name }
             })
         refresh()
     }
@@ -169,6 +182,7 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
             viewportCommand = before.viewportCommand + 1,
             selectedKey = null,
             selectedRecord = null,
+            selectedMetric = null,
             charts = emptyMap(),
             boundsByMetric = emptyMap()
         )
@@ -208,8 +222,13 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
         mutable.value = mutable.value?.copy(valueScale = scale)
     }
 
-    fun select(key: HistoryKey?) {
-        mutable.value = mutable.value?.copy(selectedKey = key, selectedRecord = null)
+    fun select(key: HistoryKey?, metric: HistoryMetric? = null) {
+        val current = mutable.value ?: return
+        if (metric != null && metric !in current.metrics) return
+        mutable.value = current.copy(
+            selectedKey = key,
+            selectedRecord = null,
+            selectedMetric = metric.takeIf { key != null })
         loadSelection(key)
     }
 
@@ -290,10 +309,12 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
         selectionQuery = viewModelScope.launch {
             try {
                 val record = repository.detailedSelection(key)
-                if (mutable.value?.selectedKey == key) {
-                    mutable.value = mutable.value?.copy(
-                        selectedKey = key.takeIf { record != null }, selectedRecord = record
-                    )
+                val current = mutable.value ?: return@launch
+                if (current.selectedKey == key) {
+                    mutable.value = current.copy(
+                        selectedKey = key.takeIf { record != null },
+                        selectedRecord = record,
+                        selectedMetric = current.selectedMetric.takeIf { record != null })
                 }
             } catch (cancelled: CancellationException) {
                 throw cancelled
@@ -318,6 +339,7 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
         current.selectedKey?.let {
             putLong("selectedId", it.id)
             putLong("selectedTime", it.time)
+            putString("selectedMetric", current.selectedMetric?.name)
         }
     }
 

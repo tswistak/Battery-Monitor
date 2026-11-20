@@ -61,7 +61,9 @@ class WidgetActionsTest {
                 context,
                 41,
                 WidgetFamily.TREND,
-                WidgetConfiguration.defaults(WidgetFamily.TREND).copy(trendMetric = metric)
+                WidgetConfiguration.defaults(WidgetFamily.TREND).copy(
+                    tapAction = WidgetTapAction.MEASUREMENT, trendMetric = metric
+                )
             )
             val intent = shadowOf(action).savedIntent
             assertEquals(
@@ -79,7 +81,6 @@ class WidgetActionsTest {
     fun `trend widgets open history with their configured rolling range and metric`() {
         val context = RuntimeEnvironment.getApplication()
         val defaults = WidgetConfiguration.defaults(WidgetFamily.TREND)
-            .copy(tapAction = WidgetTapAction.HISTORY)
         for ((hours, metric) in listOf(
             24 to HistoryMetric.LEVEL, 72 to HistoryMetric.VOLTAGE, 168 to HistoryMetric.CURRENT
         )) {
@@ -92,6 +93,7 @@ class WidgetActionsTest {
             assertEquals(
                 SectionOwner.HISTORY.route, intent.getStringExtra(BatteryInfoActivity.EXTRA_SECTION)
             )
+            assertNull(intent.getStringExtra(BatteryInfoActivity.EXTRA_DETAIL))
             assertEquals(hours, intent.getIntExtra(BatteryInfoActivity.EXTRA_HISTORY_HOURS, -1))
             assertEquals(
                 metric.name, intent.getStringExtra(BatteryInfoActivity.EXTRA_HISTORY_METRIC)

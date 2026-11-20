@@ -105,7 +105,8 @@ internal data class WidgetConfiguration(
         fun defaults(family: WidgetFamily): WidgetConfiguration = WidgetConfiguration(
             tapAction = when (family) {
                 WidgetFamily.STATUS -> WidgetTapAction.CURRENT_STATE
-                WidgetFamily.MEASUREMENTS, WidgetFamily.TREND -> WidgetTapAction.MEASUREMENT
+                WidgetFamily.MEASUREMENTS -> WidgetTapAction.MEASUREMENT
+                WidgetFamily.TREND -> WidgetTapAction.HISTORY
             }
         )
 

@@ -27,7 +27,7 @@ class WidgetConfigurationTest {
         val actions = mapOf(
             WidgetFamily.STATUS to WidgetTapAction.CURRENT_STATE,
             WidgetFamily.MEASUREMENTS to WidgetTapAction.MEASUREMENT,
-            WidgetFamily.TREND to WidgetTapAction.MEASUREMENT
+            WidgetFamily.TREND to WidgetTapAction.HISTORY
         )
         for ((family, action) in actions) {
             val configuration = WidgetConfiguration.defaults(family)

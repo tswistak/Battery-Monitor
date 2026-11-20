@@ -77,6 +77,7 @@ import codes.swistak.batterymonitor.alarms.AlarmRule
 import codes.swistak.batterymonitor.alarms.AlarmTypeDefinition
 import codes.swistak.batterymonitor.alarms.LogicalAlarm
 import codes.swistak.batterymonitor.common.showToast
+import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.components.ActionLabel
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
@@ -109,7 +110,7 @@ internal fun AlarmsScreen(
     onEnabled: (String, LogicalAlarm?, Boolean) -> Unit,
     onChannelSettings: (String) -> Unit,
     onNotificationSettings: () -> Unit,
-    onTargets: () -> Unit,
+    onTargetSettings: (String) -> Unit,
     onRetry: () -> Unit,
     onDisableInvalid: (AlarmRule) -> Unit,
     onDeleteInvalid: (AlarmRule) -> Unit,
@@ -264,17 +265,22 @@ internal fun AlarmsScreen(
                     val definition = rows.definition
                     val type = definition.type
                     item(key = type, contentType = "type") {
+                        val isChargingTarget = type == "charging_limit_met"
                         AlarmTypeHeader(
                             definition,
                             rows.alarms.firstOrNull(),
                             state,
-                            if (type == "charging_limit_met") chargingTarget else dischargingTarget,
+                            if (isChargingTarget) chargingTarget else dischargingTarget,
                             first = index == 0,
                             last = index == types.lastIndex && definition.bounds == null,
                             onEnabled = { onEnabled(type, rows.alarms.firstOrNull(), it) },
                             onChannelSettings = { onChannelSettings(type) },
-                            onTargets = onTargets
-                        )
+                            onTargets = {
+                                onTargetSettings(
+                                    if (isChargingTarget) SettingsContract.KEY_CHARGING_TARGET_MODE
+                                    else SettingsContract.KEY_DISCHARGING_TARGET
+                                )
+                            })
                     }
                     if (definition.bounds != null) {
                         items(
@@ -565,16 +571,16 @@ private fun ThresholdRow(
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     buildAnnotatedString {
-                        append(value)
-                        withStyle(
-                            SpanStyle(
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                                fontWeight = FontWeight.Medium
-                            )
-                        ) {
-                            append(" $unit")
-                        }
-                    },
+                    append(value)
+                    withStyle(
+                        SpanStyle(
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            fontWeight = FontWeight.Medium
+                        )
+                    ) {
+                        append(" $unit")
+                    }
+                },
                     Modifier
                         .weight(1f, fill = false)
                         .clearAndSetSemantics {},
