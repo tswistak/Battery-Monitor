@@ -121,4 +121,13 @@ Use English (United States), Europe/Warsaw time, Celsius, and font scale 1.0 for
 | [7.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | History Events with Plugged in, Unplugged and Measurements selected: 3 of 9 event types | 1080 × 2400 | Light |
 | [8.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/8.png) | Current battery readings and manually configured 80% charging target | 1080 × 2400 | Dark |
 
-The [tablet History image](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/1.png) shows the last 24 hours at 1920 × 1200 in landscape, with light appearance, dynamic colors, English application text and Polish SystemUI. Do not seed, wipe or modify the owner's tablet to prepare screenshots.
+The English tablet sets use disposable 7-inch and 10-inch emulator profiles, the charging fixture, the light theme, and Battery Blue. Each screenshot is a native 1920 × 1080 landscape capture exported as an RGB PNG without transparency. Do not seed, wipe or modify the owner's tablet to prepare screenshots.
+
+| File | Subject |
+| --- | --- |
+| [7-inch 1](../../fastlane/metadata/android/en-US/images/sevenInchScreenshots/1.png) · [10-inch 1](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/1.png) | Current battery readings and charging estimate to the manual 80% target |
+| [7-inch 2](../../fastlane/metadata/android/en-US/images/sevenInchScreenshots/2.png) · [10-inch 2](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/2.png) | Battery-level chart and events side by side |
+| [7-inch 3](../../fastlane/metadata/android/en-US/images/sevenInchScreenshots/3.png) · [10-inch 3](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/3.png) | Battery alarms and charge thresholds |
+| [7-inch 4](../../fastlane/metadata/android/en-US/images/sevenInchScreenshots/4.png) · [10-inch 4](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/4.png) | Fullscreen comparison of battery level and temperature over 24 hours |
+
+The [Google Play feature graphic](../../fastlane/metadata/android/en-US/images/featureGraphic.png) is a 1024 × 500 RGB PNG. It uses the website's typography and palette with excerpts from phone screenshots 1 and 2.
