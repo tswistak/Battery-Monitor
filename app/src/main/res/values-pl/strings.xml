@@ -272,8 +272,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Ustawienia alarmów</string>
     <string name="alarm_settings" formatted="false">Alarmy</string>
     <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom naładowania baterii spada poniżej 20% i wiele innych).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Wszystkie osiem typów alarmów jest zawsze dostępne. Włączaj zdarzenia bezpośrednio albo używaj „Dodaj próg” dla poziomu naładowania baterii lub temperatury. Wyłączone wartości pozostają na liście. Progi domyślnie korzystają z ustawień powiadomień swojego typu alarmu. W menu z trzema kropkami obok progu możesz utworzyć własne ustawienia i zarządzać osobnym kanałem powiadomień Androida. Istniejące zduplikowane wpisy pojawiają się jako jeden logiczny alarm; przełączanie wpływa na wszystkie kopie. Alarmy ładowania i rozładowania korzystają z przybliżonych celów i nie sterują ładowaniem. Zablokowany kanał lub zatrzymany monitor nie zmienia zapisanych przełączników.\n
-    Otwórz ustawienia powiadomień Androida, aby zezwolić na powiadomienia lub je zablokować oraz skonfigurować dźwięk, wibracje i sposób dostarczania głównego powiadomienia oraz każdego kanału alarmów. Włączenie reguły alarmu nie odblokowuje kanału powiadomień.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Wszystkie osiem typów alarmów jest zawsze dostępne. Włączaj zdarzenia bezpośrednio albo używaj „Dodaj próg” dla poziomu naładowania baterii lub temperatury. Wyłączone wartości pozostają na liście. Progi domyślnie współdzielą ustawienia powiadomień swoich typów alarmów. Użyj menu z trzema kropkami, aby utworzyć własne ustawienia i zarządzać osobnym kanałem powiadomień Androida. Istniejące zduplikowane wpisy pojawiają się jako jeden logiczny alarm; przełączanie wpływa na wszystkie kopie. Alarmy ładowania i rozładowania korzystają z przybliżonych celów i nie sterują ładowaniem. Zablokowany kanał lub zatrzymany monitor nie zmienia zapisanych przełączników.\n
+    Otwórz ustawienia powiadomień Androida, aby zezwolić na powiadomienia lub je zablokować oraz skonfigurować dźwięk, wibracje i sposób dostarczania dla każdego kanału. Włączenie reguły alarmu nie odblokowuje kanału powiadomień.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d włączony alarm</item>
         <item quantity="few">%1$d włączone alarmy</item>
@@ -324,7 +324,7 @@
     <string name="alarms_notifications_disabled">Powiadomienia są wyłączone. Włącz je w ustawieniach Androida, aby otrzymywać powiadomienia alarmów.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) grupę powiadomień alarmów dla tej aplikacji. Włącz ją w ustawieniach Androida, aby otrzymywać powiadomienia alarmów</string>
     <string name="alarms_open_notification_settings">Otwórz ustawienia powiadomień Androida</string>
-    <string name="alarm_chan_disabled" formatted="false">Powiadomienia dla wspólnego kanału tego typu alarmu są wyłączone.</string>
+    <string name="alarm_chan_disabled" formatted="false">Powiadomienia są wyłączone dla współdzielonego kanału tego typu alarmu.</string>
     <string name="alarms_android_channel_settings">Ustawienia powiadomień Androida</string>
     <string name="alarms_custom_create">Utwórz własne ustawienia</string>
     <string name="alarms_custom_edit">Edytuj własne ustawienia</string>
@@ -332,14 +332,14 @@
     <string name="alarms_playback">Odtwarzanie dźwięku</string>
     <string name="alarms_playback_once">Odtwórz raz</string>
     <string name="alarms_playback_repeat">Powtarzaj</string>
-    <string name="alarms_playback_help">Powtarzanie dźwięku zakończy się po otwarciu panelu powiadomień lub zamknięciu powiadomienia.</string>
-    <string name="alarms_volume_category">Kategoria głośności</string>
+    <string name="alarms_playback_help">Powtarzanie zatrzymuje się, gdy otwierasz panel powiadomień lub odrzucasz powiadomienie.</string>
+    <string name="alarms_volume_category">Kategoria głośności dźwięku</string>
     <string name="alarms_volume_notifications" formatted="false">Powiadomienia</string>
     <string name="alarms_volume_alarms" formatted="false">Alarmy</string>
     <string name="alarms_volume_media">Multimedia</string>
     <string name="alarms_volume_help">Android użyje wybranej kategorii głośności, jeśli urządzenie ją obsługuje.</string>
     <string name="alarms_replace_channel_title">Zmienić kategorię głośności?</string>
-    <string name="alarms_replace_channel_message">Android wymaga nowego kanału powiadomień. Aplikacja przeniesie ustawienia dźwięku, wibracji i ważności w zakresie dostępnym w systemie. Inne ustawienia powiadomień mogą wrócić do wartości domyślnych.</string>
+    <string name="alarms_replace_channel_message">Android wymaga nowego kanału powiadomień. Aplikacja kopiuje Twoje ustawienia dźwięku, wibracji i ważności tam, gdzie zezwala na to Android. Inne opcje powiadomień mogą zostać zresetowane.</string>
     <string name="alarm_custom_channel_name">%1$s %2$s</string>
     <string name="alarm_inactive_channel_name">%1$s (stary)</string>
     <string name="alarm_stop_action">Zatrzymaj alarm</string>
@@ -359,7 +359,7 @@
     <string name="alarms_database_error">Nie udało się uzyskać dostępu do bazy danych alarmów. Spróbuj ponownie.</string>
     <string name="alarms_saved">Zapisano ustawienia alarmów</string>
     <string name="alarms_saved_reload_failed">Zapisano, ale nie udało się powiadomić monitora. Przejrzyj stan monitorowania.</string>
-    <string name="alarms_saved_channels_failed">Zapisano ustawienia, ale nie udało się zaktualizować kanałów. Sprawdź ustawienia powiadomień Androida.</string>
+    <string name="alarms_saved_channels_failed">Zapisano, ale kanałów powiadomień nie udało się zaktualizować. Przejrzyj ustawienia powiadomień Androida.</string>
 
     <string name="history_range">Zakres historii</string>
     <string name="history_last_24h">Ostatnie 24\u00A0godziny</string>
@@ -842,7 +842,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Wybierz istniejący plik ZIP ogólnej kopii zapasowej i które dostępne kategorie przywrócić. Kopie zapasowe z nowszych wersji aplikacji mogą być niekompatybilne, a przywrócenie logów lub danych predykcyjnych z innego urządzenia może powodować nieprawidłowe szacunki. Jeśli przywrócenie zostało ukończone tylko częściowo, przejrzyj zgłoszone kategorie, zanim spróbujesz ponownie. Wybrane kategorie zostają przywrócone; niewybrane kategorie pozostają niezmienione. Przywrócenie alarmów zastępuje bieżące alarmy. Dla logów wybierz, czy je dodać, czy zastąpić bieżącą historię.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Przywróć wybrane dane z pliku ZIP ogólnej kopii zapasowej</string>
     <string name="general_backup_restore_message" formatted="false">Wybierz, co chcesz przywrócić.</string>
-    <string name="alarm_restore_channel_changes_warning">Przywrócenie alarmów może zastąpić lub usunąć ich kanały powiadomień w Androidzie. Niektóre ustawienia powiadomień mogą wymagać ponownej konfiguracji.</string>
+    <string name="alarm_restore_channel_changes_warning">Przywrócenie alarmów może zastąpić lub usunąć ich kanały powiadomień Androida. Możesz potrzebować ponownego zastosowania niektórych ustawień powiadomień Androida.</string>
     <string name="general_backup_device_data_warning">Logi i dane predykcyjne należą do urządzenia, na którym zostały zebrane. Zaimportowanie ich na innym urządzeniu może spowodować błędne predykcje lub inne nieoczekiwane zachowanie aplikacji.</string>
     <string name="general_backup_imported" formatted="false">Ogólna kopia zapasowa została zaimportowana.</string>
     <string name="invalid_general_backup_file" formatted="false">Nieprawidłowy lub niekompatybilny plik ogólnej kopii zapasowej.</string>
