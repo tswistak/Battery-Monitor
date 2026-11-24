@@ -3,6 +3,7 @@ description: Suggest a single feature or improvement
 labels:
   - feature request
   - needs decision
+type: Feature
 body:
   - type: checkboxes
     id: checks
