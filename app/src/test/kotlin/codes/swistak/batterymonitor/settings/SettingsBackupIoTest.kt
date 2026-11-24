@@ -17,7 +17,11 @@ package codes.swistak.batterymonitor.settings
 
 import android.app.Application
 import android.net.Uri
+import codes.swistak.batterymonitor.alarms.AlarmPlayback
 import codes.swistak.batterymonitor.alarms.AlarmRecord
+import codes.swistak.batterymonitor.alarms.AlarmSoundSettings
+import codes.swistak.batterymonitor.alarms.AlarmThresholdKey
+import codes.swistak.batterymonitor.alarms.AlarmVolumeCategory
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
@@ -43,6 +47,42 @@ class SettingsBackupIoTest {
     val temporaryFolder = TemporaryFolder()
     private val context
         get() = RuntimeEnvironment.getApplication()
+
+    @Test
+    fun alarm_backup_ignores_unknown_settings_and_defaults_missing_fields() {
+        val source = JSONObject(
+            """{
+            "version": 3,
+            "alarms": [{"type":"charge_drops","threshold":"017"},{"type":"fully_charged"}],
+            "sharedSettings": {
+                "charge_drops": {"playback":"REPEAT","volumeCategory":"a future category"},
+                "unsupported": {"playback":"REPEAT"}
+            },
+            "customSettings": [
+                {"type":"charge_drops","threshold":17,"volumeCategory":"ALARMS"},
+                {"type":"charge_drops","threshold":20,"playback":"REPEAT"},
+                {"type":"fully_charged","threshold":0,"playback":"REPEAT"}
+            ]
+        }"""
+        )
+        val preview = AlarmBackup.parseImport(source)
+        assertEquals(
+            mapOf("charge_drops" to AlarmSoundSettings(playback = AlarmPlayback.REPEAT)),
+            preview.shared
+        )
+        assertEquals(
+            mapOf(
+                AlarmThresholdKey(
+                    "charge_drops",
+                    17
+                ) to AlarmSoundSettings(volumeCategory = AlarmVolumeCategory.ALARMS)
+            ), preview.custom
+        )
+        val older = AlarmBackup.parseImport(source.put("version", 2))
+        assertEquals(preview.alarms, older.alarms)
+        assertTrue(older.shared.isEmpty())
+        assertTrue(older.custom.isEmpty())
+    }
 
     @Test
     fun general_backup_cache_copy_preserves_its_boundary_and_rejects_oversized_sources() {

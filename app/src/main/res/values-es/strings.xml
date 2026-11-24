@@ -269,8 +269,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Ajustes de alarma</string>
     <string name="alarm_settings" formatted="false">Alarmas</string>
     <string name="alarm_settings_help" formatted="false">Puede hacer que Battery Monitor le notifique cuando su nivel de batería alcanza una determinada condición (por ejemplo, la batería se carga completamente, el nivel de la batería cae por debajo del 20%, y muchos otros).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Los ocho tipos de alarma están siempre disponibles. Activa los eventos directamente o usa «Añadir umbral» bajo un tipo de carga o temperatura. Los valores desactivados siguen en la lista. El sonido y la vibración se comparten por tipo en los ajustes de notificaciones de Android. Los registros duplicados existentes aparecen como una sola alarma lógica; activarla o desactivarla afecta a todas las copias. Las alarmas de carga y descarga siguen los objetivos de estimación y no controlan la carga. Un canal bloqueado o un monitor detenido no cambia los interruptores guardados.\n
-    Abre los ajustes de notificaciones de Android para permitir o bloquear notificaciones y configurar el sonido, la vibración y la entrega de la notificación principal y cada tipo de alarma. Activar una regla de alarma no anula el bloqueo de un canal de notificación.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Los ocho tipos de alarma están siempre disponibles. Activa los eventos directamente o usa «Añadir umbral» bajo un tipo de carga o temperatura. Los valores desactivados siguen en la lista. Por defecto, los umbrales usan los ajustes de notificaciones de su tipo de alarma. Abre el menú de tres puntos junto a un umbral para crear ajustes personalizados y administrar un canal de notificaciones de Android independiente. Los registros duplicados existentes aparecen como una sola alarma lógica; activarla o desactivarla afecta a todas las copias. Las alarmas de carga y descarga siguen los objetivos de estimación y no controlan la carga. Un canal bloqueado o un monitor detenido no cambia los interruptores guardados.\n
+    Abre los ajustes de notificaciones de Android para permitir o bloquear notificaciones y configurar el sonido, la vibración y la entrega de la notificación principal y cada canal de alarma. Activar una regla de alarma no anula el bloqueo de un canal de notificación.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarma activada</item>
         <item quantity="many">%1$d alarmas activadas</item>
@@ -303,7 +303,7 @@
     <string name="alarms_add_threshold">Añadir umbral</string>
     <string name="alarms_edit_threshold">Editar umbral</string>
     <string name="alarms_edit_existing">Editar umbral existente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Toca el icono del lápiz junto al valor de un umbral para editarlo. La edición conserva su estado activado o desactivado. Para borrar una alarma, abre su editor, selecciona «Borrar alarma» y confirma el borrado. Se eliminarán todas las copias de este umbral.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Abre el menú de tres puntos junto al umbral y elige «Editar umbral». La edición conserva su estado activado o desactivado. Para borrar una alarma, abre su editor, selecciona «Borrar alarma» y confirma el borrado. Se eliminarán todas las copias de este umbral.</string>
     <string name="alarms_new_enabled">La alarma se activará al añadirla.</string>
     <string name="alarms_edit_keeps_enabled">La edición mantiene el estado activado o desactivado actual.</string>
     <string name="alarms_enabled">Activada</string>
@@ -320,8 +320,25 @@
     <string name="alarms_notifications_disabled">Las notificaciones están desactivadas. Actívelas en los ajustes de Android para recibir notificaciones de alarmas.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Ha desactivado el grupo de notificación de alarma para esta aplicación.  Actívelo en los ajustes de Android para recibir notificaciones de alarmas.</string>
     <string name="alarms_open_notification_settings">Abrir los ajustes de notificaciones de Android</string>
-    <string name="alarm_chan_disabled" formatted="false">Ha desactivado las notificaciones para este tipo de alarma.  Por favor, permítales utilizar este tipo de alarma.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Administrar este tipo de alarma</string>
+    <string name="alarm_chan_disabled" formatted="false">Las notificaciones del canal compartido de este tipo de alarma están desactivadas.</string>
+    <string name="alarms_android_channel_settings">Ajustes de notificaciones de Android</string>
+    <string name="alarms_custom_create">Crear ajustes personalizados</string>
+    <string name="alarms_custom_edit">Editar ajustes personalizados</string>
+    <string name="alarms_custom_remove">Quitar ajustes personalizados</string>
+    <string name="alarms_playback">Reproducción del sonido</string>
+    <string name="alarms_playback_once">Reproducir una vez</string>
+    <string name="alarms_playback_repeat">Repetir</string>
+    <string name="alarms_playback_help">La repetición se detiene al abrir el panel de notificaciones o descartar la notificación.</string>
+    <string name="alarms_volume_category">Categoría de volumen</string>
+    <string name="alarms_volume_notifications" formatted="false">Notificaciones</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarmas</string>
+    <string name="alarms_volume_media">Contenido multimedia</string>
+    <string name="alarms_volume_help">Android usa la categoría de volumen elegida si tu dispositivo la admite.</string>
+    <string name="alarms_replace_channel_title">¿Cambiar la categoría de volumen?</string>
+    <string name="alarms_replace_channel_message">Android requiere un canal de notificaciones nuevo. La aplicación copia los ajustes de sonido, vibración e importancia en la medida en que Android lo permita. Es posible que se restablezcan otras opciones de notificaciones.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (anterior)</string>
+    <string name="alarm_stop_action">Detener alarma</string>
     <string name="alarms_options_title" formatted="false">Opciones de alarmas</string>
     <string name="pref_dismiss_low_battery_on_recovery">Descartar alarma de batería baja al recuperarse</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Elimina la notificación de batería baja cuando la carga supera su umbral. Las demás notificaciones de alarma permanecen</string>
@@ -338,6 +355,7 @@
     <string name="alarms_database_error">No se ha podido acceder a la base de datos de alarmas. Inténtalo de nuevo.</string>
     <string name="alarms_saved">Ajustes de alarma guardados</string>
     <string name="alarms_saved_reload_failed">Guardado, pero no se ha podido avisar al monitor. Revisa el estado de monitorización.</string>
+    <string name="alarms_saved_channels_failed">Se guardaron los ajustes, pero no se pudieron actualizar los canales de notificaciones. Revisa los ajustes de notificaciones de Android.</string>
 
     <string name="history_range">Intervalo del historial</string>
     <string name="history_last_24h">Últimas 24\u00A0horas</string>
@@ -819,6 +837,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Selecciona una copia de seguridad general ZIP existente y elige qué categorías disponibles restaurar. Las copias de seguridad creadas con versiones más recientes de la aplicación pueden ser incompatibles, y restaurar registros o datos del predictor de otro dispositivo puede causar estimaciones incorrectas. Si la restauración solo se completa parcialmente, revisa las categorías indicadas antes de volver a intentarlo. Se restauran las categorías seleccionadas; las no seleccionadas se conservan. Restaurar las alarmas sustituye las alarmas actuales. Para los registros, elige si añadirlos o sustituir el historial actual.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restaurar los datos seleccionados desde un archivo ZIP de copia de seguridad general</string>
     <string name="general_backup_restore_message" formatted="false">Elige lo que quieres restaurar.</string>
+    <string name="alarm_restore_channel_changes_warning">Al restaurar alarmas, puede que se sustituyan o eliminen sus canales de notificación de Android. Es posible que tengas que volver a configurar algunas opciones de notificación.</string>
     <string name="general_backup_device_data_warning">Los registros y los datos de predicción son específicos del dispositivo en el que se recopilaron. Importarlos en otro dispositivo puede provocar predicciones incorrectas u otro comportamiento inesperado de la aplicación.</string>
     <string name="general_backup_imported" formatted="false">Copia de seguridad general importada correctamente.</string>
     <string name="invalid_general_backup_file" formatted="false">Archivo de copia de seguridad general no válido o incompatible.</string>

@@ -110,6 +110,11 @@
         </service>
 
         <receiver
+            android:name=".monitoring.notifications.AlarmStopReceiver"
+            android:exported="false"
+            android:process="codes.swistak.batterymonitor.BIS" />
+
+        <receiver
             android:name=".monitoring.BackgroundServiceWatchdog"
             android:enabled="true"
             android:exported="false"

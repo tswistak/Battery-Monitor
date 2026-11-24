@@ -12,52 +12,68 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-import codes.swistak.batterymonitor.alarms.AlarmRule
+import codes.swistak.batterymonitor.alarms.LogicalAlarm
 
 internal class ThresholdAlarmEvaluator {
+    private data class Threshold(val id: Int, val type: String, val value: Int)
+
     private var previousPercent: Int? = null
     private var previousTemperature: Int? = null
-    private var previousRules: Set<AlarmRule> = emptySet()
+    private var previousThresholds: Set<Threshold> = emptySet()
 
     fun reset() {
         previousPercent = null
         previousTemperature = null
-        previousRules = emptySet()
+        previousThresholds = emptySet()
     }
 
-    fun evaluate(percent: Int, temperature: Int, rules: List<AlarmRule>): List<AlarmRule> {
-        val active = rules.filter(AlarmRule::enabled)
-        val reached = active.filter { rule ->
-            if (rule !in previousRules) return@filter false
-            val threshold = rule.threshold.toIntOrNull() ?: return@filter false
-            when (rule.type) {
-                "charge_rises" -> threshold in 0..100 && previousPercent?.let {
-                    threshold in (it + 1)..percent
-                } == true
-
-                "charge_drops" -> threshold in 0..100 && previousPercent?.let {
-                    threshold in percent..<it
-                } == true
-
-                "temp_rises" -> threshold in -500..1000 && previousTemperature?.let {
-                    threshold in (it + 1)..temperature
-                } == true
-
-                "temp_drops" -> threshold in -500..1000 && previousTemperature?.let {
-                    threshold in temperature..<it
-                } == true
-
+    fun evaluate(percent: Int, temperature: Int, alarms: List<LogicalAlarm>): List<LogicalAlarm> {
+        val active = alarms.filter(LogicalAlarm::enabled).mapNotNull { alarm ->
+            alarm.threshold?.let { Threshold(alarm.id, alarm.type, it) to alarm }
+        }
+        val reached = active.mapNotNull { (threshold, alarm) ->
+            if (threshold !in previousThresholds) return@mapNotNull null
+            val crossed = when (threshold.type) {
+                "charge_rises" -> previousPercent?.let { it < threshold.value && percent >= threshold.value }
+                "charge_drops" -> previousPercent?.let { it > threshold.value && percent <= threshold.value }
+                "temp_rises" -> previousTemperature?.let { it < threshold.value && temperature >= threshold.value }
+                "temp_drops" -> previousTemperature?.let { it > threshold.value && temperature <= threshold.value }
                 else -> false
             }
+            alarm.takeIf { crossed == true }
         }
         previousPercent = percent
         previousTemperature = temperature
-        previousRules = active.toSet()
-        return reached.distinctBy(AlarmRule::type)
+        previousThresholds = active.mapTo(mutableSetOf()) { it.first }
+        return reached
     }
 }
 
-internal fun shouldDismissRecoveredLowBatteryAlarm(
-    enabled: Boolean, percent: Int, channelId: String?, threshold: Int?
-): Boolean =
-    enabled && channelId == "charge_drops" && threshold != null && threshold in 0..100 && percent > threshold
+internal fun shouldDismissAlarmAfterBatteryUpdate(
+    type: String,
+    value: Int?,
+    repeating: Boolean,
+    battery: BatteryInfo,
+    chargingTarget: Int,
+    dischargingTarget: Int,
+    dismissLowBatteryOnRecovery: Boolean
+): Boolean {
+    val plugged = battery.plugged != BatteryInfo.PLUGGED_UNPLUGGED
+    return when (type) {
+        "fully_charged" -> !plugged || (repeating && battery.status != BatteryInfo.STATUS_FULLY_CHARGED)
+        "charge_rises" -> !plugged || (repeating && value != null && battery.percent < value)
+        "charge_drops" -> dismissLowBatteryOnRecovery && value != null &&
+                value in 0..100 && battery.percent > value
+
+        "charging_limit_met" -> !plugged || value != chargingTarget ||
+                (repeating && battery.percent < chargingTarget)
+
+        "discharging_limit_met" -> plugged || value != dischargingTarget ||
+                (repeating && battery.percent > dischargingTarget)
+
+        "temp_rises" -> repeating && value != null && battery.temperature < value
+        "temp_drops" -> repeating && value != null && battery.temperature > value
+        "health_failure" -> repeating && battery.health == BatteryInfo.HEALTH_GOOD
+        else -> false
+    }
+}

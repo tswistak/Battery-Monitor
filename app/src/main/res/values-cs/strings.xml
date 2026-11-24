@@ -273,8 +273,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Nastavení alarmů</string>
     <string name="alarm_settings" formatted="false">Alarmy</string>
     <string name="alarm_settings_help" formatted="false">Můžete nastavit upozornění aplikace Battery Monitor jakmile stav baterie dosáhne určité hodnoty(např., Baterie je plně nabitá, Stav baterie klesl 20% atd.).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Všech osm typů alarmů je vždy dostupných. Události zapněte přímo nebo použijte „Přidat práh“ u typu nabití či teploty. Vypnuté hodnoty zůstávají v seznamu. Zvuk a vibrace se sdílejí podle typu v nastavení oznámení Androidu. Existující duplicitní záznamy se zobrazují jako jeden logický alarm; přepnutí ovlivní všechny kopie. Alarmy nabíjení a vybíjení se řídí cíli odhadů a neřídí nabíjení. Blokovaný kanál či zastavené sledování nemění uložené přepínače.\n
-    Otevřete nastavení oznámení Androidu pro povolení či blokování oznámení a nastavení zvuku, vibrací a doručování hlavního oznámení a jednotlivých typů alarmů. Povolení pravidla alarmu nepřebije blokovaný kanál oznámení.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Všech osm typů alarmů je vždy dostupných. Události zapněte přímo nebo použijte „Přidat práh“ u typu nabití či teploty. Vypnuté hodnoty zůstávají v seznamu. Prahy standardně používají nastavení oznámení svého typu alarmu. V nabídce se třemi tečkami u prahu můžete vytvořit vlastní nastavení a spravovat samostatný kanál oznámení Androidu. Existující duplicitní záznamy se zobrazují jako jeden logický alarm; přepnutí ovlivní všechny kopie. Alarmy nabíjení a vybíjení se řídí cíli odhadů a neřídí nabíjení. Blokovaný kanál či zastavené sledování nemění uložené přepínače.\n
+    Otevřete nastavení oznámení Androidu pro povolení či blokování oznámení a nastavení zvuku, vibrací a doručování hlavního oznámení a jednotlivých kanálů alarmů. Povolení pravidla alarmu nepřebije blokovaný kanál oznámení.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm zapnut</item>
         <item quantity="few">%1$d alarmy zapnuty</item>
@@ -308,7 +308,7 @@
     <string name="alarms_add_threshold">Přidat práh</string>
     <string name="alarms_edit_threshold">Upravit práh</string>
     <string name="alarms_edit_existing">Upravit existující práh</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Klepnutím na ikonu tužky vedle hodnoty prahu ji upravíte. Úprava zachová stav zapnuto/vypnuto. Chcete-li alarm odstranit, otevřete jeho editor, zvolte „Smazat alarm“ a smazání potvrďte. Budou odstraněny všechny kopie tohoto prahu.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Otevřete nabídku se třemi tečkami u prahu a vyberte „Upravit práh“. Úprava zachová stav zapnuto/vypnuto. Chcete-li alarm odstranit, otevřete jeho editor, zvolte „Smazat alarm“ a smazání potvrďte. Budou odstraněny všechny kopie tohoto prahu.</string>
     <string name="alarms_new_enabled">Alarm se po přidání zapne.</string>
     <string name="alarms_edit_keeps_enabled">Úprava zachová aktuální stav zapnuto/vypnuto.</string>
     <string name="alarms_enabled">Zapnuto</string>
@@ -325,8 +325,25 @@
     <string name="alarms_notifications_disabled">Oznámení jsou vypnutá. Chcete-li dostávat oznámení o alarmech, povolte je v nastavení Androidu.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Pro tuto aplikaci jste zakázali skupinu upozornění na alarm.  Povolte ji v nastavení Androidu, abyste dostávali oznámení o alarmech.</string>
     <string name="alarms_open_notification_settings">Otevřít nastavení oznámení Androidu</string>
-    <string name="alarm_chan_disabled" formatted="false">Pro tento typ alarmu jste zakázali upozornění.  Umožněte jim používat tento typ alarmu.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Spravovat tento typ alarmu</string>
+    <string name="alarm_chan_disabled" formatted="false">Oznámení ve sdíleném kanálu tohoto typu alarmu jsou vypnutá.</string>
+    <string name="alarms_android_channel_settings">Nastavení oznámení Androidu</string>
+    <string name="alarms_custom_create">Vytvořit vlastní nastavení</string>
+    <string name="alarms_custom_edit">Upravit vlastní nastavení</string>
+    <string name="alarms_custom_remove">Odebrat vlastní nastavení</string>
+    <string name="alarms_playback">Přehrávání zvuku</string>
+    <string name="alarms_playback_once">Přehrát jednou</string>
+    <string name="alarms_playback_repeat">Opakovat</string>
+    <string name="alarms_playback_help">Opakování skončí, když otevřete panel oznámení nebo oznámení zavřete.</string>
+    <string name="alarms_volume_category">Kategorie hlasitosti</string>
+    <string name="alarms_volume_notifications" formatted="false">Oznámení</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarmy</string>
+    <string name="alarms_volume_media">Média</string>
+    <string name="alarms_volume_help">Android použije vybranou kategorii hlasitosti, pokud ji zařízení podporuje.</string>
+    <string name="alarms_replace_channel_title">Změnit kategorii hlasitosti?</string>
+    <string name="alarms_replace_channel_message">Android vyžaduje nový kanál oznámení. Aplikace zkopíruje nastavení zvuku, vibrací a důležitosti v rozsahu, který systém umožňuje. Ostatní nastavení oznámení se mohou obnovit na výchozí hodnoty.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (původní)</string>
+    <string name="alarm_stop_action">Zastavit alarm</string>
     <string name="alarms_options_title" formatted="false">Možnosti alarmů</string>
     <string name="pref_dismiss_low_battery_on_recovery">Zrušit alarm nízké baterie po zotavení</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Odstranit oznámení nízké baterie, když nabití překročí jeho práh. Ostatní oznámení alarmů zůstanou</string>
@@ -343,6 +360,7 @@
     <string name="alarms_database_error">Nelze přistoupit k databázi alarmů. Zkuste to znovu.</string>
     <string name="alarms_saved">Nastavení alarmů uloženo</string>
     <string name="alarms_saved_reload_failed">Uloženo, ale sledování se nepodařilo upozornit. Zkontrolujte stav sledování.</string>
+    <string name="alarms_saved_channels_failed">Uloženo, ale kanály oznámení se nepodařilo aktualizovat. Zkontrolujte nastavení oznámení Androidu.</string>
 
     <string name="history_range">Rozsah historie</string>
     <string name="history_last_24h">Posledních 24\u00A0hodin</string>
@@ -825,6 +843,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Vyberte existující obecnou zálohu ZIP a zvolte, které dostupné kategorie obnovit. Zálohy vytvořené novějšími verzemi aplikace nemusí být kompatibilní a obnova protokolů nebo dat prediktoru z jiného zařízení může způsobit nesprávné odhady. Pokud se obnova dokončí jen částečně, před dalším pokusem zkontrolujte uvedené kategorie. Vybrané kategorie se obnoví; nevybrané zůstanou zachovány. Obnovení alarmů nahradí aktuální alarmy. U protokolů zvolte, zda je přidat, nebo nahradit aktuální historii.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Obnovit vybraná data ze souboru ZIP obecné zálohy</string>
     <string name="general_backup_restore_message" formatted="false">Vyberte, co chcete obnovit.</string>
+    <string name="alarm_restore_channel_changes_warning">Obnovením budíků se mohou nahradit nebo odebrat jejich kanály oznámení v Androidu. Některá nastavení oznámení může být nutné nastavit znovu.</string>
     <string name="general_backup_device_data_warning">Protokoly a data predikce jsou specifické pro zařízení, na kterém byly shromážděny. Import do jiného zařízení může způsobit nesprávné predikce nebo jiné neočekávané chování aplikace.</string>
     <string name="general_backup_imported" formatted="false">Obecná záloha byla úspěšně importována.</string>
     <string name="invalid_general_backup_file" formatted="false">Neplatný nebo nekompatibilní soubor obecné zálohy.</string>

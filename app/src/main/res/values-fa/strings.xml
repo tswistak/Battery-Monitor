@@ -266,8 +266,8 @@
     <string name="alarm_settings_subtitle" formatted="false">تنظیمات آلارم</string>
     <string name="alarm_settings" formatted="false">آلارم‌ها</string>
     <string name="alarm_settings_help" formatted="false">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود، سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
-    <string name="alarms_overview_channels_help" formatted="false">هر هشت نوع آلارم همیشه در دسترس‌اند. رویدادها را مستقیم روشن کنید یا زیر نوع شارژ یا دما از «افزودن آستانه» استفاده کنید. مقادیر غیرفعال در فهرست می‌مانند. صدا و لرزش در تنظیمات اعلان Android برای هر نوع مشترک‌اند. رکوردهای تکراری موجود به صورت یک آلارم منطقی ظاهر می‌شوند؛ تغییر وضعیت بر همه نسخه‌ها اثر دارد. آلارمهای شارژ و تخلیه از هدف‌های تخمین پیروی می‌کنند و شارژ را کنترل نمی‌کنند. کانال مسدود یا پایشگر متوقف، کلیدهای ذخیره‌شده را تغییر نمی‌دهد.\n
-    تنظیمات اعلان Android را باز کنید تا اعلان‌ها را مجاز یا مسدود کنید و صدا، لرزش و نحوه ارائه اعلان اصلی و هر نوع آلارم را تنظیم کنید. فعال کردن قانون آلارم، کانال اعلان مسدودشده را دور نمی‌زند.</string>
+    <string name="alarms_overview_channels_help" formatted="false">هر هشت نوع آلارم همیشه در دسترس‌اند. رویدادها را مستقیم روشن کنید یا زیر نوع شارژ یا دما از «افزودن آستانه» استفاده کنید. مقادیر غیرفعال در فهرست می‌مانند. آستانه‌ها به‌طور پیش‌فرض از تنظیمات اعلان نوع آلارم خود استفاده می‌کنند. در منوی سه‌نقطه کنار آستانه می‌توانید تنظیمات سفارشی ایجاد کنید و یک کانال اعلان Android جداگانه را مدیریت کنید. رکوردهای تکراری موجود به صورت یک آلارم منطقی ظاهر می‌شوند؛ تغییر وضعیت بر همه نسخه‌ها اثر دارد. آلارمهای شارژ و تخلیه از هدف‌های تخمین پیروی می‌کنند و شارژ را کنترل نمی‌کنند. کانال مسدود یا پایشگر متوقف، کلیدهای ذخیره‌شده را تغییر نمی‌دهد.\n
+    تنظیمات اعلان Android را باز کنید تا اعلان‌ها را مجاز یا مسدود کنید و صدا، لرزش و نحوه ارائه اعلان اصلی و هر کانال آلارم را تنظیم کنید. فعال کردن قانون آلارم، کانال اعلان مسدودشده را دور نمی‌زند.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d آلارم فعال است</item>
         <item quantity="other">%1$d آلارم فعال هستند</item>
@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">افزودن آستانه</string>
     <string name="alarms_edit_threshold">ویرایش آستانه</string>
     <string name="alarms_edit_existing">ویرایش آستانه موجود</string>
-    <string name="alarms_threshold_edit_help" formatted="false">برای ویرایش آستانه، روی نماد مداد کنار مقدار آن بزنید. ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. برای حذف آلارم، ویرایشگر آن را باز کنید، «حذف آلارم» را انتخاب کنید و حذف را تأیید کنید. همه نسخه‌های این آستانه حذف می‌شوند.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">منوی سه‌نقطه کنار آستانه را باز کنید و «ویرایش آستانه» را انتخاب کنید. ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. برای حذف آلارم، ویرایشگر آن را باز کنید، «حذف آلارم» را انتخاب کنید و حذف را تأیید کنید. همه نسخه‌های این آستانه حذف می‌شوند.</string>
     <string name="alarms_new_enabled">آلارم هنگام افزودن فعال می‌شود.</string>
     <string name="alarms_edit_keeps_enabled">ویرایش، وضعیت روشن یا خاموش فعلی را حفظ می‌کند.</string>
     <string name="alarms_enabled">فعال</string>
@@ -316,8 +316,25 @@
     <string name="alarms_notifications_disabled">اعلان‌ها غیرفعال هستند. برای دریافت اعلان‌های آلارم، آن‌ها را در تنظیمات اندروید فعال کنید.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">شما گروه اعلان آلارم را برای این برنامه غیرفعال کرده اید.  برای دریافت اعلان‌های آلارم، آن را در تنظیمات اندروید فعال کنید.</string>
     <string name="alarms_open_notification_settings">باز کردن تنظیمات اعلان‌های اندروید</string>
-    <string name="alarm_chan_disabled" formatted="false">شما اعلان‌ها را برای این نوع زنگ آلارم غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا از این نوع زنگ آلارم استفاده کنند.</string>
-    <string name="alarm_chan_settings_b" formatted="false">این نوع زنگ آلارم را مدیریت کنید</string>
+    <string name="alarm_chan_disabled" formatted="false">اعلان‌ها در کانال مشترک این نوع آلارم خاموش‌اند.</string>
+    <string name="alarms_android_channel_settings">تنظیمات اعلان‌های Android</string>
+    <string name="alarms_custom_create">ایجاد تنظیمات سفارشی</string>
+    <string name="alarms_custom_edit">ویرایش تنظیمات سفارشی</string>
+    <string name="alarms_custom_remove">حذف تنظیمات سفارشی</string>
+    <string name="alarms_playback">پخش صدا</string>
+    <string name="alarms_playback_once">یک‌بار پخش شود</string>
+    <string name="alarms_playback_repeat">تکرار</string>
+    <string name="alarms_playback_help">تکرار صدا با باز کردن پنل اعلان‌ها یا رد کردن اعلان متوقف می‌شود.</string>
+    <string name="alarms_volume_category">دستهٔ میزان صدا</string>
+    <string name="alarms_volume_notifications" formatted="false">اعلان‌ها</string>
+    <string name="alarms_volume_alarms" formatted="false">آلارم‌ها</string>
+    <string name="alarms_volume_media">رسانه</string>
+    <string name="alarms_volume_help">اگر دستگاهتان پشتیبانی کند، Android از دستهٔ انتخاب‌شده برای میزان صدا استفاده می‌کند.</string>
+    <string name="alarms_replace_channel_title">دستهٔ میزان صدا تغییر کند؟</string>
+    <string name="alarms_replace_channel_message">Android به کانال اعلان جدیدی نیاز دارد. برنامه تنظیمات صدا، لرزش و اهمیت را تا جایی که Android اجازه دهد کپی می‌کند. ممکن است سایر گزینه‌های اعلان بازنشانی شوند.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (قدیمی)</string>
+    <string name="alarm_stop_action">توقف آلارم</string>
     <string name="alarms_options_title" formatted="false">گزینه‌های آلارم</string>
     <string name="pref_dismiss_low_battery_on_recovery">بستن آلارم باتری کم پس از افزایش شارژ</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">وقتی شارژ از آستانه بالاتر رفت، اعلان باتری کم حذف شود. سایر اعلان‌های آلارم باقی می‌مانند</string>
@@ -334,6 +351,7 @@
     <string name="alarms_database_error">دسترسی به پایگاه داده آلارمها ممکن نشد. دوباره تلاش کنید.</string>
     <string name="alarms_saved">تنظیمات آلارم ذخیره شدند</string>
     <string name="alarms_saved_reload_failed">ذخیره شد، اما آگاه کردن پایشگر ممکن نشد. وضعیت پایش را بررسی کنید.</string>
+    <string name="alarms_saved_channels_failed">تنظیمات ذخیره شد، اما کانال‌های اعلان به‌روز نشدند. تنظیمات اعلان‌های Android را بررسی کنید.</string>
 
     <string name="history_range">بازه تاریخچه</string>
     <string name="history_last_24h">۲۴\u00A0ساعت گذشته</string>
@@ -814,6 +832,7 @@
     <string name="pref_import_general_backup_help" formatted="false">یک فایل ZIP پشتیبان عمومی موجود را انتخاب کنید و تعیین کنید کدام دسته‌های موجود بازیابی شوند. پشتیبان‌های تهیه‌شده با نسخه‌های جدیدتر برنامه ممکن است سازگار نباشند و بازیابی گزارش‌ها یا داده‌های پیش‌بینی از دستگاهی دیگر ممکن است برآوردهای نادرست ایجاد کند. اگر بازیابی فقط تا حدی انجام شد، پیش از تلاش دوباره دسته‌های گزارش‌شده را بررسی کنید. دسته‌های انتخاب‌شده بازیابی می‌شوند؛ دسته‌های انتخاب‌نشده حفظ می‌شوند. بازیابی آلارم‌ها، آلارم‌های فعلی را جایگزین می‌کند. برای گزارش‌ها، انتخاب کنید آن‌ها اضافه شوند یا جایگزین تاریخچه فعلی شوند.</string>
     <string name="pref_import_general_backup_summary" formatted="false">بازیابی داده‌های انتخاب‌شده از فایل ZIP پشتیبان عمومی</string>
     <string name="general_backup_restore_message" formatted="false">مواردی را که می‌خواهید بازیابی شوند انتخاب کنید.</string>
+    <string name="alarm_restore_channel_changes_warning">بازیابی هشدارها ممکن است کانال‌های اعلان آن‌ها را در Android جایگزین یا حذف کند. شاید لازم باشد برخی تنظیمات اعلان را دوباره اعمال کنید.</string>
     <string name="general_backup_device_data_warning">گزارش‌ها و داده‌های پیش‌بینی ویژه دستگاهی هستند که در آن جمع‌آوری شده‌اند. وارد کردن آن‌ها در دستگاهی دیگر ممکن است باعث پیش‌بینی‌های نادرست یا رفتار غیرمنتظره دیگری در برنامه شود.</string>
     <string name="general_backup_imported" formatted="false">پشتیبان عمومی با موفقیت وارد شد.</string>
     <string name="invalid_general_backup_file" formatted="false">فایل پشتیبان عمومی نامعتبر یا ناسازگار است.</string>

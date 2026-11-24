@@ -263,8 +263,8 @@
     <string name="alarm_settings_subtitle" formatted="false">アラーム設定</string>
     <string name="alarm_settings" formatted="false">アラーム</string>
     <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
-    <string name="alarms_overview_channels_help" formatted="false">8種類すべてのアラームを常に利用できます。イベントを直接オンにするか、残量・温度の種別で「しきい値を追加」を使います。無効な値も一覧に残ります。音と振動は、Android の通知設定で種別ごとに共有します。既存の重複記録は1つのアラームとして表示し、オン・オフの切り替えはすべてのコピーに適用します。充放電アラームは推定の目標に従い、充電を制御しません。チャンネルのブロックや監視の停止は、保存済みスイッチを変更しません。\n
-    Android の通知設定で通知を許可またはブロックし、メイン通知と各アラーム種別の音、振動、通知方法を設定できます。アラームのルールを有効にしても、ブロックされた通知チャンネルは有効になりません。</string>
+    <string name="alarms_overview_channels_help" formatted="false">8種類すべてのアラームを常に利用できます。イベントを直接オンにするか、残量・温度の種別で「しきい値を追加」を使います。無効な値も一覧に残ります。しきい値は既定で、同じ種類のアラームの通知設定を共有します。しきい値の横にある三点メニューから個別設定を作成し、専用の Android 通知チャンネルを管理できます。既存の重複記録は1つのアラームとして表示し、オン・オフの切り替えはすべてのコピーに適用します。充放電アラームは推定の目標に従い、充電を制御しません。チャンネルのブロックや監視の停止は、保存済みスイッチを変更しません。\n
+    Android の通知設定で通知を許可またはブロックし、メイン通知と各アラームチャンネルの音、振動、通知方法を設定できます。アラームのルールを有効にしても、ブロックされた通知チャンネルは有効になりません。</string>
     <plurals name="alarms_active_count">
         <item quantity="other">%1$d 件のアラームが有効</item>
     </plurals>
@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">しきい値を追加</string>
     <string name="alarms_edit_threshold">しきい値を編集</string>
     <string name="alarms_edit_existing">既存のしきい値を編集</string>
-    <string name="alarms_threshold_edit_help" formatted="false">しきい値を編集するには、値の横にある鉛筆アイコンをタップします。編集しても、オン・オフ状態は維持します。アラームを削除するには、編集画面を開いて「アラームを削除」を選び、削除を確定します。このしきい値のすべてのコピーが削除されます。</string>
+    <string name="alarms_threshold_edit_help" formatted="false">しきい値の横にある三点メニューを開き、「しきい値を編集」を選択します。編集しても、オン・オフ状態は維持します。アラームを削除するには、編集画面を開いて「アラームを削除」を選び、削除を確定します。このしきい値のすべてのコピーが削除されます。</string>
     <string name="alarms_new_enabled">追加するとアラームが有効になります。</string>
     <string name="alarms_edit_keeps_enabled">編集しても、現在のオン・オフ状態は維持されます。</string>
     <string name="alarms_enabled">有効</string>
@@ -312,8 +312,25 @@
     <string name="alarms_notifications_disabled">通知が無効になっています。アラーム通知を受け取るには、Android の設定で通知を有効にしてください。</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">このアプリのアラーム通知グループが無効になっています。アラーム通知を受け取るには、Android の設定でこのグループを有効にしてください。</string>
     <string name="alarms_open_notification_settings">Android の通知設定を開く</string>
-    <string name="alarm_chan_disabled" formatted="false">この種類のアラーム通知が無効です。このアラーム種類を使用するには有効にしてください。</string>
-    <string name="alarm_chan_settings_b" formatted="false">このアラーム種類を管理</string>
+    <string name="alarm_chan_disabled" formatted="false">この種類のアラームの共通チャンネルでは、通知がオフになっています。</string>
+    <string name="alarms_android_channel_settings">Android の通知設定</string>
+    <string name="alarms_custom_create">個別設定を作成</string>
+    <string name="alarms_custom_edit">個別設定を編集</string>
+    <string name="alarms_custom_remove">個別設定を削除</string>
+    <string name="alarms_playback">サウンドの再生</string>
+    <string name="alarms_playback_once">一度だけ再生</string>
+    <string name="alarms_playback_repeat">繰り返し</string>
+    <string name="alarms_playback_help">通知パネルを開くか通知を消すと、繰り返し再生が停止します。</string>
+    <string name="alarms_volume_category">音量の種類</string>
+    <string name="alarms_volume_notifications" formatted="false">通知</string>
+    <string name="alarms_volume_alarms" formatted="false">アラーム</string>
+    <string name="alarms_volume_media">メディア</string>
+    <string name="alarms_volume_help">端末が対応している場合、Android は選択した種類の音量を使用します。</string>
+    <string name="alarms_replace_channel_title">音量の種類を変更しますか？</string>
+    <string name="alarms_replace_channel_message">Android では新しい通知チャンネルが必要です。音、バイブレーション、重要度の設定は、Android が許可する範囲で引き継がれます。その他の通知設定はリセットされる場合があります。</string>
+    <string name="alarm_custom_channel_name">%1$s%2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s（旧）</string>
+    <string name="alarm_stop_action">アラームを停止</string>
     <string name="alarms_options_title" formatted="false">アラームの設定</string>
     <string name="pref_dismiss_low_battery_on_recovery">残量回復時に低残量アラームを消す</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">残量がしきい値を超えたら、低残量の通知を削除します。他のアラーム通知は残ります</string>
@@ -330,6 +347,7 @@
     <string name="alarms_database_error">アラームのデータベースにアクセスできませんでした。再試行してください。</string>
     <string name="alarms_saved">アラーム設定を保存しました</string>
     <string name="alarms_saved_reload_failed">保存しましたが、監視サービスに通知できませんでした。監視の状態を確認してください。</string>
+    <string name="alarms_saved_channels_failed">設定を保存しましたが、通知チャンネルを更新できませんでした。Android の通知設定を確認してください。</string>
 
     <string name="history_range">履歴の期間</string>
     <string name="history_last_24h">過去24時間</string>
@@ -809,6 +827,7 @@
     <string name="pref_import_general_backup_help" formatted="false">既存の全体バックアップ ZIP を選択し、利用可能な項目から復元するものを選びます。新しいバージョンのアプリで作成したバックアップは互換性がない場合があり、別の端末のログや予測データを復元すると、推定値が不正確になる可能性があります。一部だけ復元された場合は、再試行する前に報告された項目を確認してください。 選択したカテゴリは復元され、選択していないカテゴリは保持されます。アラームを復元すると、現在のアラームは置き換えられます。ログは追加するか、現在の履歴を置き換えるかを選択します。</string>
     <string name="pref_import_general_backup_summary" formatted="false">全体バックアップのZIPファイルから選択したデータを復元します</string>
     <string name="general_backup_restore_message" formatted="false">復元する項目を選択してください。</string>
+    <string name="alarm_restore_channel_changes_warning">アラームを復元すると、対応する Android の通知チャンネルが置き換えられたり削除されたりすることがあります。一部の通知設定をやり直す必要がある場合があります。</string>
     <string name="general_backup_device_data_warning">ログと予測データは収集元のデバイスに属します。別のデバイスにインポートすると、予測が不正確になったり、アプリが予期しない動作をしたりする可能性があります。</string>
     <string name="general_backup_imported" formatted="false">全体バックアップを正常にインポートしました。</string>
     <string name="invalid_general_backup_file" formatted="false">全体バックアップファイルが無効か、互換性がありません。</string>

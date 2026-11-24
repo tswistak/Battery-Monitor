@@ -30,6 +30,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.alarms.AlarmConfiguration
+import codes.swistak.batterymonitor.alarms.AlarmPlayback
+import codes.swistak.batterymonitor.alarms.AlarmSoundSettings
+import codes.swistak.batterymonitor.alarms.AlarmVolumeCategory
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.testsupport.ComposeTestActivity
 import codes.swistak.batterymonitor.testsupport.awaitCondition
@@ -37,6 +41,7 @@ import codes.swistak.batterymonitor.testsupport.clickSemantics
 import codes.swistak.batterymonitor.testsupport.composeWindowNodes
 import codes.swistak.batterymonitor.testsupport.dispatchComposeDialogBack
 import codes.swistak.batterymonitor.ui.alarms.AlarmDraft
+import codes.swistak.batterymonitor.ui.alarms.AlarmSettingsDialog
 import codes.swistak.batterymonitor.ui.alarms.AlarmsState
 import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
 import codes.swistak.batterymonitor.ui.alarms.editThresholdInput
@@ -249,6 +254,115 @@ class DialogEditingInstrumentedTest {
             }
             assertEquals(4, cancellations)
             assertEquals(0, guardedDismissals)
+        }
+
+    @Test
+    fun custom_settings_draft_can_be_cancelled_without_saving_and_reopens_with_inherited_settings() =
+        withHost {
+            val visible = mutableStateOf(true)
+            val inherited = AlarmSoundSettings(AlarmPlayback.REPEAT, AlarmVolumeCategory.ALARMS)
+            val saved = mutableListOf<AlarmSoundSettings>()
+            show {
+                if (visible.value) AlarmSettingsDialog(
+                    subject = "Synthetic threshold",
+                    initialSound = inherited,
+                    stored = null,
+                    creating = true,
+                    enabled = true,
+                    busy = false,
+                    readError = null,
+                    error = null,
+                    onRetry = {},
+                    onDismiss = { visible.value = false },
+                    onChannelSettings = { error("A new override has no channel") },
+                    onSave = { expected, sound, confirmed ->
+                        assertNull(expected)
+                        assertFalse(confirmed)
+                        saved += sound
+                        visible.value = false
+                    })
+            }
+            val media = target.getString(R.string.alarms_volume_media)
+            click(target.getString(R.string.alarms_playback_once))
+            click(media)
+            awaitSelected(media)
+            click(target.getString(R.string.cancel))
+            await { dialogs() == 0 }
+            assertTrue(saved.isEmpty())
+
+            main { visible.value = true }
+            await { dialogs() == 1 }
+            click(target.getString(R.string.charging_diagnostics_save))
+            await { dialogs() == 0 }
+            assertEquals(listOf(inherited), saved)
+        }
+
+    @Test
+    fun replacing_a_channel_requires_confirmation_and_keeps_playback_draft() = withHost {
+        val visible = mutableStateOf(true)
+        val original = AlarmConfiguration(channelId = "synthetic-channel")
+        val saved = mutableListOf<Pair<AlarmSoundSettings, Boolean>>()
+        show {
+            if (visible.value) AlarmSettingsDialog(
+                subject = "Synthetic alarm type",
+                initialSound = original.sound,
+                stored = original,
+                creating = false,
+                enabled = true,
+                busy = false,
+                readError = null,
+                error = null,
+                onRetry = {},
+                onDismiss = { visible.value = false },
+                onChannelSettings = {},
+                onSave = { expected, sound, confirmed ->
+                    assertEquals(expected, original)
+                    saved += sound to confirmed
+                    visible.value = false
+                })
+        }
+        val save = target.getString(R.string.charging_diagnostics_save)
+        val media = target.getString(R.string.alarms_volume_media)
+        val repeat = target.getString(R.string.alarms_playback_repeat)
+        click(repeat)
+        awaitSelected(repeat)
+        click(media)
+        awaitSelected(media)
+        click(save)
+        awaitReplacementConfirmation()
+        assertTrue(saved.isEmpty())
+        restoreComposition()
+        awaitReplacementConfirmation()
+        click(target.getString(R.string.cancel))
+        awaitSelected(media)
+        click(save)
+        awaitReplacementConfirmation()
+        assertTrue(saved.isEmpty())
+        click(save)
+        await { dialogs() == 0 }
+        assertEquals(
+            listOf(
+                AlarmSoundSettings(
+                    AlarmPlayback.REPEAT, AlarmVolumeCategory.MEDIA
+                ) to true
+            ), saved
+        )
+    }
+
+    private fun awaitSelected(label: String) = await("The selected alarm setting did not update") {
+        nodes().any { node ->
+            node.config.getOrNull(SemanticsProperties.Selected) == true && node.config.getOrNull(
+                SemanticsProperties.Text
+            )?.any { it.text == label } == true
+        }
+    }
+
+    private fun awaitReplacementConfirmation() =
+        await("Channel replacement must require confirmation") {
+            val title = target.getString(R.string.alarms_replace_channel_title)
+            nodes().any { node ->
+                node.config.getOrNull(SemanticsProperties.Text)?.any { it.text == title } == true
+            }
         }
 
     @Composable

@@ -72,8 +72,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.ALARM_TYPES
+import codes.swistak.batterymonitor.alarms.AlarmConfiguration
 import codes.swistak.batterymonitor.alarms.AlarmGroup
 import codes.swistak.batterymonitor.alarms.AlarmRule
+import codes.swistak.batterymonitor.alarms.AlarmSoundSettings
 import codes.swistak.batterymonitor.alarms.AlarmTypeDefinition
 import codes.swistak.batterymonitor.alarms.LogicalAlarm
 import codes.swistak.batterymonitor.common.showToast
@@ -108,7 +110,9 @@ internal fun AlarmsScreen(
     onEdit: (Int) -> Unit,
     onAdd: (String) -> Unit,
     onEnabled: (String, LogicalAlarm?, Boolean) -> Unit,
-    onChannelSettings: (String) -> Unit,
+    onChannelSettings: (String, Int?) -> Unit,
+    onSaveSettings: (String, LogicalAlarm?, AlarmConfiguration?, AlarmSoundSettings, Boolean, () -> Unit) -> Unit,
+    onRemoveCustomSettings: (LogicalAlarm, AlarmConfiguration) -> Unit,
     onNotificationSettings: () -> Unit,
     onTargetSettings: (String) -> Unit,
     onRetry: () -> Unit,
@@ -125,6 +129,13 @@ internal fun AlarmsScreen(
     val context = LocalContext.current
     val resources = LocalResources.current
     var recoveryAction by remember { mutableStateOf<Pair<AlarmRule, Boolean>?>(null) }
+    var settingsType by rememberSaveable { mutableStateOf<String?>(null) }
+    var settingsAlarmId by rememberSaveable { mutableStateOf<Int?>(null) }
+    fun showSettings(type: String, alarmId: Int? = null) {
+        settingsAlarmId = alarmId
+        settingsType = type
+    }
+
     val keys = remember(state.projection) {
         buildList {
             add("summary")
@@ -274,7 +285,8 @@ internal fun AlarmsScreen(
                             first = index == 0,
                             last = index == types.lastIndex && definition.bounds == null,
                             onEnabled = { onEnabled(type, rows.alarms.firstOrNull(), it) },
-                            onChannelSettings = { onChannelSettings(type) },
+                            onAlarmSettings = { showSettings(type) },
+                            onChannelSettings = { onChannelSettings(type, null) },
                             onTargets = {
                                 onTargetSettings(
                                     if (isChargingTarget) SettingsContract.KEY_CHARGING_TARGET_MODE
@@ -287,11 +299,18 @@ internal fun AlarmsScreen(
                             rows.alarms,
                             key = { "rule_${it.id}" },
                             contentType = { "threshold" }) { alarm ->
+                            val custom = state.alarmSnapshot.custom[alarm.id]
                             ThresholdRow(
                                 alarm,
                                 convertFahrenheit,
                                 state.canMutate,
+                                hasCustomSettings = custom != null,
                                 onEdit = { onEdit(alarm.id) },
+                                onCustomSettings = { showSettings(type, alarm.id) },
+                                onChannelSettings = { onChannelSettings(type, alarm.id) },
+                                onRemoveCustomSettings = {
+                                    custom?.let { onRemoveCustomSettings(alarm, it) }
+                                },
                                 onEnabled = { onEnabled(type, alarm, it) })
                         }
                         item(key = "add_$type", contentType = "add") {
@@ -389,6 +408,42 @@ internal fun AlarmsScreen(
         }
         SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter))
     }
+    settingsType?.takeIf { state.hasSnapshot }?.let { type ->
+        val alarmId = settingsAlarmId
+        val alarm =
+            state.projection.types.firstOrNull { it.definition.type == type }?.alarms?.firstOrNull { it.id == alarmId }
+        if (alarmId != null && alarm == null) {
+            LaunchedEffect(type, alarmId) { settingsType = null }
+        } else {
+            val stored = if (alarmId == null) state.alarmSnapshot.shared[type]
+            else state.alarmSnapshot.custom[alarmId]
+            val alarmTitle = stringResource(alarmTypeLabel(type))
+            val subject = if (alarm == null) alarmTitle else stringResource(
+                R.string.alarm_custom_channel_name,
+                alarmTitle,
+                alarmThresholdLabel(alarm, convertFahrenheit)
+            )
+            AlarmSettingsDialog(
+                subject = subject,
+                initialSound = state.alarmSnapshot.effective(type, alarmId).sound,
+                stored = stored,
+                creating = alarmId != null && stored == null,
+                enabled = state.canMutate,
+                busy = state.busy,
+                readError = state.readError,
+                error = if (state.notice == R.string.alarms_settings_unavailable) {
+                    stringResource(R.string.alarms_settings_unavailable)
+                } else state.error,
+                onRetry = onRetry,
+                onDismiss = { settingsType = null },
+                onChannelSettings = { onChannelSettings(type, alarmId) },
+                onSave = { expected, sound, replacementConfirmed ->
+                    onSaveSettings(type, alarm, expected, sound, replacementConfirmed) {
+                        settingsType = null
+                    }
+                })
+        }
+    }
     recoveryAction?.let { (rule, delete) ->
         if (applicationDialogsAllowed()) AlertDialog(
             onDismissRequest = { recoveryAction = null },
@@ -443,6 +498,7 @@ private fun AlarmTypeHeader(
     first: Boolean,
     last: Boolean,
     onEnabled: (Boolean) -> Unit,
+    onAlarmSettings: () -> Unit,
     onChannelSettings: () -> Unit,
     onTargets: () -> Unit
 ) {
@@ -491,7 +547,14 @@ private fun AlarmTypeHeader(
                 }
                 DropdownMenu(expanded = options, onDismissRequest = { options = false }) {
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.alarm_chan_settings_b)) },
+                        text = { Text(stringResource(R.string.alarm_settings_subtitle)) },
+                        enabled = state.canMutate,
+                        onClick = {
+                            options = false
+                            onAlarmSettings()
+                        })
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.alarms_android_channel_settings)) },
                         onClick = {
                             options = false
                             onChannelSettings()
@@ -532,19 +595,19 @@ private fun ThresholdRow(
     alarm: LogicalAlarm,
     fahrenheit: Boolean,
     enabled: Boolean,
+    hasCustomSettings: Boolean,
     onEdit: () -> Unit,
+    onCustomSettings: () -> Unit,
+    onChannelSettings: () -> Unit,
+    onRemoveCustomSettings: () -> Unit,
     onEnabled: (Boolean) -> Unit
 ) {
-    val locale = LocalConfiguration.current.locales[0]
-    val temperature = alarm.type.startsWith("temp_")
-    val value = alarmThresholdInput(
-        AlarmDraft(
-            type = alarm.type, threshold = alarm.members.first().threshold
-        ), fahrenheit, locale
-    )
-    val unit = if (temperature) if (fahrenheit) "°F" else "°C" else "%"
-    val description = "${stringResource(alarmTypeLabel(alarm.type))} $value $unit"
+    val (value, unit) = alarmThresholdParts(alarm, fahrenheit)
+    val typeLabel = stringResource(alarmTypeLabel(alarm.type))
+    val thresholdName =
+        stringResource(R.string.alarm_custom_channel_name, typeLabel, "$value $unit")
     val editLabel = stringResource(R.string.alarms_edit_threshold)
+    var options by rememberSaveable { mutableStateOf(false) }
     AlarmSurface {
         HorizontalDivider(
             Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outlineVariant
@@ -552,55 +615,93 @@ private fun ThresholdRow(
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp),
+                .heightIn(min = 64.dp)
+                .padding(start = 16.dp, end = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            Text(
+                buildAnnotatedString {
+                append(value)
+                withStyle(
+                    SpanStyle(
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        fontWeight = FontWeight.Medium
+                    )
+                ) { append(" $unit") }
+            },
                 Modifier
                     .weight(1f)
-                    .heightIn(min = 64.dp)
-                    .clickable(
-                        enabled = enabled,
-                        role = Role.Button,
-                        onClickLabel = editLabel,
-                        onClick = onEdit
-                    )
-                    .semantics { contentDescription = description }
-                    .padding(horizontal = 4.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    buildAnnotatedString {
-                    append(value)
-                    withStyle(
-                        SpanStyle(
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                            fontWeight = FontWeight.Medium
-                        )
-                    ) {
-                        append(" $unit")
-                    }
-                },
-                    Modifier
-                        .weight(1f, fill = false)
-                        .clearAndSetSemantics {},
-                    style = MaterialTheme.typography.titleLarge,
-                    color = if (alarm.enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Icon(
-                    painterResource(settingIcon("alarms_edit_threshold")),
-                    null,
-                    Modifier.size(16.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+                    .padding(end = 8.dp)
+                    .clearAndSetSemantics {},
+                style = MaterialTheme.typography.titleLarge,
+                color = if (alarm.enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
+            )
             Switch(
                 checked = alarm.enabled,
                 onCheckedChange = onEnabled,
                 enabled = enabled,
                 modifier = Modifier
                     .sizeIn(minWidth = 48.dp, minHeight = 48.dp)
-                    .semantics { contentDescription = description })
+                    .semantics { contentDescription = "$typeLabel $value $unit" })
+            Box {
+                TooltipIconButton(
+                    label = stringResource(R.string.alarms_options_tooltip),
+                    onClick = { options = true },
+                    enabled = enabled
+                ) {
+                    Icon(
+                        painterResource(R.drawable.ui_more),
+                        stringResource(R.string.alarms_options, thresholdName)
+                    )
+                }
+                DropdownMenu(expanded = options, onDismissRequest = { options = false }) {
+                    DropdownMenuItem(text = { Text(editLabel) }, enabled = enabled, onClick = {
+                        options = false
+                        onEdit()
+                    })
+                    DropdownMenuItem(text = {
+                        Text(stringResource(if (hasCustomSettings) R.string.alarms_custom_edit else R.string.alarms_custom_create))
+                    }, enabled = enabled, onClick = {
+                        options = false
+                        onCustomSettings()
+                    })
+                    if (hasCustomSettings) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.alarms_android_channel_settings)) },
+                            onClick = {
+                                options = false
+                                onChannelSettings()
+                            })
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.alarms_custom_remove)) },
+                            enabled = enabled,
+                            onClick = {
+                                options = false
+                                onRemoveCustomSettings()
+                            })
+                    }
+                }
+            }
         }
     }
+}
+
+@Composable
+private fun alarmThresholdLabel(alarm: LogicalAlarm, fahrenheit: Boolean): String {
+    val (value, unit) = alarmThresholdParts(alarm, fahrenheit)
+    return "$value $unit"
+}
+
+@Composable
+private fun alarmThresholdParts(alarm: LogicalAlarm, fahrenheit: Boolean): Pair<String, String> {
+    val locale = LocalConfiguration.current.locales[0]
+    val value = alarmThresholdInput(
+        AlarmDraft(type = alarm.type, threshold = alarm.members.first().threshold),
+        fahrenheit,
+        locale
+    )
+    val unit = if (alarm.type.startsWith("temp_")) {
+        if (fahrenheit) "°F" else "°C"
+    } else "%"
+    return value to unit
 }

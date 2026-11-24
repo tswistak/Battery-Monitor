@@ -278,8 +278,8 @@
     <string name="alarm_settings_subtitle" formatted="false">اعدادات المنبه</string>
     <string name="alarm_settings" formatted="false">المنبهات</string>
     <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
-    <string name="alarms_overview_channels_help" formatted="false">تتوفر أنواع المنبه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تبقى القيم المعطلة في القائمة. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كمنبه منطقي واحد؛ ويؤثر التبديل على كل النسخ. تتبع منبهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.\n
-    افتح إعدادات إشعارات Android للسماح بالإشعارات أو حظرها وضبط الصوت والاهتزاز وطريقة التسليم للإشعار الرئيسي وكل نوع منبه. تفعيل قاعدة منبه لا يتجاوز حظر قناة الإشعارات.</string>
+    <string name="alarms_overview_channels_help" formatted="false">تتوفر أنواع المنبه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تبقى القيم المعطلة في القائمة. تستخدم العتبات إعدادات إشعارات نوع المنبه افتراضيًا. استخدم قائمة النقاط الثلاث بجانب العتبة لإنشاء إعدادات مخصصة وإدارة قناة إشعارات منفصلة في Android. تظهر السجلات المكررة الموجودة كمنبه منطقي واحد؛ ويؤثر التبديل على كل النسخ. تتبع منبهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.\n
+    افتح إعدادات إشعارات Android للسماح بالإشعارات أو حظرها وضبط الصوت والاهتزاز وطريقة التسليم للإشعار الرئيسي وكل قناة منبه. تفعيل قاعدة منبه لا يتجاوز حظر قناة الإشعارات.</string>
     <plurals name="alarms_active_count">
         <item quantity="zero">المنبهات المفعّلة: %1$d</item>
         <item quantity="one">%1$d منبه مفعّل</item>
@@ -315,7 +315,7 @@
     <string name="alarms_add_threshold">إضافة عتبة</string>
     <string name="alarms_edit_threshold">تعديل العتبة</string>
     <string name="alarms_edit_existing">تعديل العتبة الموجودة</string>
-    <string name="alarms_threshold_edit_help" formatted="false">اضغط على أيقونة القلم بجوار قيمة العتبة لتعديلها. يحتفظ التعديل بحالة التشغيل أو الإيقاف. لحذف منبه، افتح محرره واختر «حذف المنبه» ثم أكّد الحذف. ستُزال كل نسخ هذه العتبة.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">افتح قائمة النقاط الثلاث بجانب العتبة واختر «تعديل العتبة». يحتفظ التعديل بحالة التشغيل أو الإيقاف. لحذف منبه، افتح محرره واختر «حذف المنبه» ثم أكّد الحذف. ستُزال كل نسخ هذه العتبة.</string>
     <string name="alarms_new_enabled">سيُفعّل المنبه عند إضافته.</string>
     <string name="alarms_edit_keeps_enabled">يحافظ التعديل على حالة التشغيل أو الإيقاف الحالية.</string>
     <string name="alarms_enabled">مفعل</string>
@@ -332,8 +332,25 @@
     <string name="alarms_notifications_disabled">الإشعارات معطّلة. فعّلها في إعدادات Android لتلقي إشعارات المنبهات.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">لقد عطلت مجموعة إشعارات المنبهات لهذا التطبيق. فعّلها في إعدادات Android لتلقي إشعارات المنبهات.</string>
     <string name="alarms_open_notification_settings">فتح إعدادات إشعارات Android</string>
-    <string name="alarm_chan_disabled" formatted="false">لقد عطلت إشعارات هذا النوع من المنبهات. يرجى تمكينها لاستخدام هذا النوع.</string>
-    <string name="alarm_chan_settings_b" formatted="false">إدارة هذا النوع من المنبهات</string>
+    <string name="alarm_chan_disabled" formatted="false">الإشعارات معطلة في القناة المشتركة لهذا النوع من المنبهات.</string>
+    <string name="alarms_android_channel_settings">إعدادات إشعارات Android</string>
+    <string name="alarms_custom_create">إنشاء إعدادات مخصصة</string>
+    <string name="alarms_custom_edit">تعديل الإعدادات المخصصة</string>
+    <string name="alarms_custom_remove">إزالة الإعدادات المخصصة</string>
+    <string name="alarms_playback">تشغيل الصوت</string>
+    <string name="alarms_playback_once">التشغيل مرة واحدة</string>
+    <string name="alarms_playback_repeat">التكرار</string>
+    <string name="alarms_playback_help">يتوقف التكرار عند فتح لوحة الإشعارات أو إغلاق الإشعار.</string>
+    <string name="alarms_volume_category">فئة مستوى الصوت</string>
+    <string name="alarms_volume_notifications" formatted="false">الإشعارات</string>
+    <string name="alarms_volume_alarms" formatted="false">المنبهات</string>
+    <string name="alarms_volume_media">الوسائط</string>
+    <string name="alarms_volume_help">يستخدم Android فئة مستوى الصوت المطلوبة إذا كان جهازك يدعمها.</string>
+    <string name="alarms_replace_channel_title">هل تريد تغيير فئة مستوى الصوت؟</string>
+    <string name="alarms_replace_channel_message">يتطلب Android قناة إشعارات جديدة. ينسخ التطبيق إعدادات الصوت والاهتزاز والأهمية حيثما يسمح النظام بذلك. قد تعود خيارات الإشعارات الأخرى إلى إعداداتها الافتراضية.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (قديمة)</string>
+    <string name="alarm_stop_action">إيقاف المنبه</string>
     <string name="alarms_options_title" formatted="false">خيارات المنبهات</string>
     <string name="pref_dismiss_low_battery_on_recovery">إزالة منبه انخفاض البطارية بعد التعافي</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">إزالة إشعار انخفاض البطارية عندما ترتفع الشحنة فوق عتبته. تبقى إشعارات المنبهات الأخرى</string>
@@ -350,6 +367,7 @@
     <string name="alarms_database_error">تعذر الوصول إلى قاعدة بيانات المنبهات. أعد المحاولة.</string>
     <string name="alarms_saved">تم حفظ إعدادات المنبهات</string>
     <string name="alarms_saved_reload_failed">تم الحفظ، لكن تعذر إخطار المراقبة. راجع حالة المراقبة.</string>
+    <string name="alarms_saved_channels_failed">تم الحفظ، لكن تعذر تحديث قنوات الإشعارات. راجع إعدادات إشعارات Android.</string>
 
     <string name="history_range">نطاق السجل</string>
     <string name="history_last_24h">آخر 24\u00A0ساعة</string>
@@ -834,6 +852,7 @@
     <string name="pref_import_general_backup_help" formatted="false">اختر ملف ZIP موجودًا لنسخة احتياطية عامة، ثم اختر فئات البيانات المتاحة التي تريد استعادتها. قد لا تتوافق النسخ الاحتياطية المنشأة بإصدارات أحدث من التطبيق، وقد تؤدي استعادة السجلات أو بيانات التنبؤ من جهاز آخر إلى تقديرات غير صحيحة. إذا اكتملت الاستعادة جزئيًا فقط، فراجع الفئات المعروضة قبل المحاولة مرة أخرى. تُستعاد الفئات المحددة؛ وتبقى الفئات غير المحددة كما هي. تؤدي استعادة المنبّهات إلى استبدال المنبّهات الحالية. بالنسبة للسجلات، اختر إضافتها أو استبدال السجل الحالي.</string>
     <string name="pref_import_general_backup_summary" formatted="false">استعادة البيانات المحددة من ملف ZIP لنسخة احتياطية عامة</string>
     <string name="general_backup_restore_message" formatted="false">اختر ما تريد استعادته.</string>
+    <string name="alarm_restore_channel_changes_warning">قد تؤدي استعادة المنبّهات إلى استبدال قنوات الإشعارات الخاصة بها في Android أو إزالتها. قد تحتاج إلى ضبط بعض إعدادات الإشعارات مجددًا.</string>
     <string name="general_backup_device_data_warning">السجلات وبيانات التنبؤ خاصة بالجهاز الذي جُمعت عليه. قد يؤدي استيرادها على جهاز آخر إلى تنبؤات غير صحيحة أو سلوك آخر غير متوقع للتطبيق.</string>
     <string name="general_backup_imported" formatted="false">تم استيراد النسخة الاحتياطية العامة بنجاح.</string>
     <string name="invalid_general_backup_file" formatted="false">ملف النسخة الاحتياطية العامة غير صالح أو غير متوافق.</string>

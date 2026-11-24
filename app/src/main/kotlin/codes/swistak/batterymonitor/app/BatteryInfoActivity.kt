@@ -305,7 +305,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
                                     LicenseScreen(
                                         componentId = topic.substringAfter(':', "")
-                                        .ifEmpty { null },
+                                            .ifEmpty { null },
                                         onOpenComponent = { openHelp("licenses:$it") })
                                 } else {
                                     HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })
@@ -399,13 +399,25 @@ class BatteryInfoActivity : AppCompatActivity() {
                                             type, rule, enabled, persistent::reloadSettings
                                         )
                                     },
-                                    onChannelSettings = { type ->
-                                        if (!NotificationSettingsNavigator.openNotificationChannel(
-                                                this@BatteryInfoActivity, type
+                                    onChannelSettings = { type, alarmId ->
+                                        alarms.openAlarmChannel(type, alarmId) { channelId ->
+                                            NotificationSettingsNavigator.openNotificationChannel(
+                                                this@BatteryInfoActivity, channelId
                                             )
-                                        ) {
-                                            alarms.reportSettingsFailure()
                                         }
+                                    },
+                                    onSaveSettings = { type, alarm, expected, sound, confirmed, onSaved ->
+                                        alarms.saveAlarmSettings(
+                                            type, alarm, expected, sound, confirmed
+                                        ) {
+                                            onSaved()
+                                            persistent.reloadSettings()
+                                        }
+                                    },
+                                    onRemoveCustomSettings = { alarm, expected ->
+                                        alarms.removeCustomSettings(
+                                            alarm, expected, persistent::reloadSettings
+                                        )
                                     },
                                     onNotificationSettings = {
                                         if (!NotificationSettingsNavigator.openNotifications(this@BatteryInfoActivity)) {

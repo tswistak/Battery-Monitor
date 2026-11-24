@@ -25,8 +25,14 @@ import android.provider.Settings
 internal class AlarmDatabase(context: Context?) {
     companion object {
         private const val DATABASE_NAME = "alarms.db"
-        private const val DATABASE_VERSION = 5
+        private const val DATABASE_VERSION = 6
         private const val ALARM_TABLE_NAME = "alarms"
+        private const val SETTINGS_TABLE_NAME = "alarm_sound_settings"
+        private const val KEY_ALARM_ID = "alarm_id"
+        private const val KEY_PLAYBACK = "playback"
+        private const val KEY_VOLUME_CATEGORY = "volume_category"
+        private const val KEY_CHANNEL_ID = "channel_id"
+        private const val SHARED_ALARM_ID = 0
 
         const val KEY_ID: String = "_id"
         const val KEY_ENABLED: String = "enabled"
@@ -107,6 +113,105 @@ internal class AlarmDatabase(context: Context?) {
         return readAlarmRules(checkNotNull(rdb) { "Could not read alarms" })
     }
 
+    fun getSnapshot(): AlarmSnapshot = withTransaction { database ->
+        readSnapshot(database, readAlarmRules(database))
+    }
+
+    private fun readSnapshot(database: SQLiteDatabase, rules: List<AlarmRule>): AlarmSnapshot {
+        val shared = mutableMapOf<String, AlarmConfiguration>()
+        val custom = mutableMapOf<Int, AlarmConfiguration>()
+        database.query(
+            SETTINGS_TABLE_NAME,
+            arrayOf(KEY_TYPE, KEY_ALARM_ID, KEY_PLAYBACK, KEY_VOLUME_CATEGORY, KEY_CHANNEL_ID),
+            null,
+            null,
+            null,
+            null,
+            null
+        ).use { cursor ->
+            while (cursor.moveToNext()) {
+                val alarmId = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ALARM_ID))
+                val configuration = readConfiguration(cursor)
+                if (alarmId == SHARED_ALARM_ID) {
+                    shared[cursor.getString(cursor.getColumnIndexOrThrow(KEY_TYPE))] = configuration
+                } else {
+                    custom[alarmId] = configuration
+                }
+            }
+        }
+        return AlarmSnapshot(rules, shared, custom)
+    }
+
+    fun saveSharedSettings(
+        type: String, expected: AlarmConfiguration?, configuration: AlarmConfiguration
+    ) = withTransaction { database ->
+        require(type in SUPPORTED_TYPES)
+        if (readSettings(
+                database, type, SHARED_ALARM_ID
+            ) != expected
+        ) throw AlarmConflictException()
+        writeSettings(
+            database,
+            type,
+            SHARED_ALARM_ID,
+            configuration.takeUnless { it == AlarmConfiguration() })
+    }
+
+    fun saveCustomSettings(
+        alarm: LogicalAlarm, expected: AlarmConfiguration?, configuration: AlarmConfiguration?
+    ) = transaction { database, current ->
+        require(alarm.thresholdKey != null)
+        requireAlarmMembers(current, alarm.members)
+        if (readSettings(database, alarm.type, alarm.id) != expected) throw AlarmConflictException()
+        writeSettings(database, alarm.type, alarm.id, configuration)
+    }
+
+    private fun readSettings(
+        database: SQLiteDatabase, type: String, alarmId: Int
+    ): AlarmConfiguration? = database.query(
+        SETTINGS_TABLE_NAME,
+        arrayOf(KEY_PLAYBACK, KEY_VOLUME_CATEGORY, KEY_CHANNEL_ID),
+        "$KEY_TYPE = ? AND $KEY_ALARM_ID = ?",
+        arrayOf(type, alarmId.toString()),
+        null,
+        null,
+        null
+    ).use { cursor ->
+        if (cursor.moveToFirst()) readConfiguration(cursor) else null
+    }
+
+    private fun readConfiguration(cursor: Cursor): AlarmConfiguration {
+        val playback = cursor.getString(cursor.getColumnIndexOrThrow(KEY_PLAYBACK))
+        val volumeCategory = cursor.getString(cursor.getColumnIndexOrThrow(KEY_VOLUME_CATEGORY))
+        return AlarmConfiguration(
+            AlarmSoundSettings(AlarmPlayback.entries.firstOrNull { it.name == playback }
+                ?: AlarmPlayback.ONCE,
+                AlarmVolumeCategory.entries.firstOrNull { it.name == volumeCategory }
+                    ?: AlarmVolumeCategory.NOTIFICATIONS),
+            cursor.getString(cursor.getColumnIndexOrThrow(KEY_CHANNEL_ID)))
+    }
+
+    private fun writeSettings(
+        database: SQLiteDatabase, type: String, alarmId: Int, configuration: AlarmConfiguration?
+    ) {
+        if (configuration == null) {
+            database.delete(
+                SETTINGS_TABLE_NAME,
+                "$KEY_TYPE = ? AND $KEY_ALARM_ID = ?",
+                arrayOf(type, alarmId.toString())
+            )
+            return
+        }
+        val values = ContentValues().apply {
+            put(KEY_TYPE, type)
+            put(KEY_ALARM_ID, alarmId)
+            put(KEY_PLAYBACK, configuration.sound.playback.name)
+            put(KEY_VOLUME_CATEGORY, configuration.sound.volumeCategory.name)
+            put(KEY_CHANNEL_ID, configuration.channelId)
+        }
+        database.replaceOrThrow(SETTINGS_TABLE_NAME, null, values)
+    }
+
     private fun readAlarmRules(database: SQLiteDatabase): List<AlarmRule> =
         database.rawQuery("SELECT * FROM $ALARM_TABLE_NAME ORDER BY $KEY_ID ASC", null).use {
             buildList {
@@ -166,6 +271,8 @@ internal class AlarmDatabase(context: Context?) {
                     ALARM_TABLE_NAME, memberSelection(expected), null
                 ) == expected.size
             )
+            val alarm = LogicalAlarm(expected)
+            if (alarm.thresholdKey != null) writeSettings(database, alarm.type, alarm.id, null)
         }
     }
 
@@ -182,12 +289,15 @@ internal class AlarmDatabase(context: Context?) {
         )
     }
 
-    private fun <T> transaction(operation: (SQLiteDatabase, List<AlarmRule>) -> T): T {
+    private fun <T> transaction(operation: (SQLiteDatabase, List<AlarmRule>) -> T): T =
+        withTransaction { database -> operation(database, readAlarmRules(database)) }
+
+    private fun <T> withTransaction(operation: (SQLiteDatabase) -> T): T {
         openDBs()
         val database = checkNotNull(wdb) { "Could not write alarms" }
-        database.beginTransaction()
+        database.beginTransactionNonExclusive()
         try {
-            val result = operation(database, readAlarmRules(database))
+            val result = operation(database)
             database.setTransactionSuccessful()
             return result
         } finally {
@@ -195,12 +305,21 @@ internal class AlarmDatabase(context: Context?) {
         }
     }
 
-    fun replaceAllAlarms(records: List<AlarmRecord>): Boolean {
-        openDBs()
-        val database = wdb ?: return false
+    fun replaceAllAlarms(records: List<AlarmRecord>): Boolean =
+        replaceAllAlarms(records, emptyMap(), emptyMap())
 
-        return try {
-            database.beginTransaction()
+    fun replaceAllAlarms(
+        records: List<AlarmRecord>,
+        shared: Map<String, AlarmSoundSettings> = emptyMap(),
+        custom: Map<AlarmThresholdKey, AlarmSoundSettings> = emptyMap(),
+        channelIds: AlarmRestoreChannelIds = AlarmRestoreChannelIds(),
+        expected: AlarmSnapshot? = null
+    ): Boolean = try {
+        transaction { database, rules ->
+            val previous = readSnapshot(database, rules)
+            if (expected != null && previous != expected) throw AlarmConflictException()
+            require(shared.keys.all { it in SUPPORTED_TYPES })
+            database.delete(SETTINGS_TABLE_NAME, null, null)
             database.delete(ALARM_TABLE_NAME, null, null)
             for ((enabled, type, threshold) in records) {
                 val values = ContentValues().apply {
@@ -211,18 +330,47 @@ internal class AlarmDatabase(context: Context?) {
                     put(KEY_VIBRATE, 0)
                     put(KEY_LIGHTS, 1)
                 }
-                check(database.insert(ALARM_TABLE_NAME, null, values) >= 0) {
-                    "Could not restore alarm"
+                database.insertOrThrow(ALARM_TABLE_NAME, null, values)
+            }
+
+            for (type in SUPPORTED_TYPES) {
+                val settings = shared[type] ?: AlarmSoundSettings()
+                val retained = previous.shared[type]?.takeIf {
+                    it.sound.volumeCategory == settings.volumeCategory
+                }?.channelId
+                val configuration =
+                    AlarmConfiguration(settings, channelIds.shared[type] ?: retained)
+                if (configuration != AlarmConfiguration()) {
+                    writeSettings(database, type, SHARED_ALARM_ID, configuration)
                 }
             }
-            database.setTransactionSuccessful()
-            true
-        } catch (_: Exception) {
-            false
-        } finally {
-            if (database.inTransaction()) database.endTransaction()
+
+            if (custom.isNotEmpty()) {
+                val previousIds = logicalThresholdIds(rules)
+                val currentIds = logicalThresholdIds(readAlarmRules(database))
+                for ((key, settings) in custom) {
+                    val id = requireNotNull(currentIds[key])
+                    val retained = previousIds[key]?.let(previous.custom::get)?.takeIf {
+                        it.sound.volumeCategory == settings.volumeCategory
+                    }?.channelId
+                    writeSettings(
+                        database,
+                        key.type,
+                        id,
+                        AlarmConfiguration(settings, channelIds.custom[key] ?: retained)
+                    )
+                }
+            }
         }
+        true
+    } catch (_: Exception) {
+        false
     }
+
+    private fun logicalThresholdIds(rules: List<AlarmRule>): Map<AlarmThresholdKey, Int> =
+        projectAlarms(rules).types.flatMap(AlarmTypeRows::alarms).mapNotNull { alarm ->
+            alarm.thresholdKey?.let { it to alarm.id }
+        }.toMap()
 
     @JvmOverloads
     fun addAlarm(
@@ -251,17 +399,54 @@ internal class AlarmDatabase(context: Context?) {
 
     private class SQLOpenHelper(context: Context?) :
         SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-        // shortcut: v5 STRING columns retain numeric affinity, change only with a preserving migration.
-        @SuppressLint("SQLiteString")
         override fun onCreate(db: SQLiteDatabase) {
+            createAlarmTable(db)
             db.execSQL(
-                "CREATE TABLE $ALARM_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_ENABLED INTEGER,$KEY_TYPE STRING,$KEY_THRESHOLD STRING,$KEY_RINGTONE STRING,$KEY_VIBRATE INTEGER,$KEY_LIGHTS INTEGER);"
+                """CREATE TABLE $SETTINGS_TABLE_NAME (
+                    $KEY_TYPE TEXT NOT NULL,
+                    $KEY_ALARM_ID INTEGER NOT NULL,
+                    $KEY_PLAYBACK TEXT NOT NULL,
+                    $KEY_VOLUME_CATEGORY TEXT NOT NULL,
+                    $KEY_CHANNEL_ID TEXT,
+                    PRIMARY KEY ($KEY_TYPE, $KEY_ALARM_ID)
+                )""".trimIndent()
+            )
+        }
+
+        // Preserve numeric affinity for legacy thresholds and never reuse an alarm ID.
+        @SuppressLint("SQLiteString")
+        private fun createAlarmTable(db: SQLiteDatabase) {
+            db.execSQL(
+                """CREATE TABLE $ALARM_TABLE_NAME (
+                    $KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    $KEY_ENABLED INTEGER,
+                    $KEY_TYPE STRING,
+                    $KEY_THRESHOLD STRING,
+                    $KEY_RINGTONE STRING,
+                    $KEY_VIBRATE INTEGER,
+                    $KEY_LIGHTS INTEGER
+                )""".trimIndent()
             )
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-            db.execSQL("DROP TABLE IF EXISTS $ALARM_TABLE_NAME")
+            val legacyTable = "legacy_alarms"
+            db.execSQL("ALTER TABLE $ALARM_TABLE_NAME RENAME TO $legacyTable")
             onCreate(db)
+            val columns = listOf(
+                KEY_ID, KEY_ENABLED, KEY_TYPE, KEY_THRESHOLD, KEY_RINGTONE, KEY_VIBRATE, KEY_LIGHTS
+            )
+            val legacyColumns = db.rawQuery("SELECT * FROM $legacyTable LIMIT 0", null).use {
+                it.columnNames.toSet()
+            }
+            val legacyDefaults =
+                mapOf(KEY_RINGTONE to "NULL", KEY_VIBRATE to "0", KEY_LIGHTS to "1")
+            val source =
+                columns.joinToString { if (it in legacyColumns) it else legacyDefaults.getValue(it) }
+            db.execSQL(
+                "INSERT INTO $ALARM_TABLE_NAME (${columns.joinToString()}) SELECT $source FROM $legacyTable"
+            )
+            db.execSQL("DROP TABLE $legacyTable")
         }
     }
 }

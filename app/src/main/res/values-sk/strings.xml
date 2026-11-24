@@ -272,8 +272,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Nastavenie alarmov</string>
     <string name="alarm_settings" formatted="false">Alarmy</string>
     <string name="alarm_settings_help" formatted="false">Monitor batérie vás môže upozorniť na úroveň nabitia batérie dosiahne určitý stav (napr. batéria sa úplne nabije, úroveň batérie klesne pod 20 % a mnoho ďalších).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Všetkých osem typov alarmov je vždy dostupných. Udalosti zapnite priamo alebo použite „Pridať prah“ pri type nabitia či teploty. Vypnuté hodnoty zostávajú v zozname. Zvuk a vibrácie sa zdieľajú podľa typu v nastaveniach oznámení Androidu. Existujúce duplicitné záznamy sa zobrazujú ako jeden logický alarm; prepnutie ovplyvní všetky kópie. Alarmy nabíjania a vybíjania sa riadia cieľmi odhadov a neriadia nabíjanie. Blokovaný kanál či zastavené monitorovanie nemení uložené prepínače.\n
-    Otvorte nastavenia oznámení Androidu na povolenie či blokovanie oznámení a nastavenie zvuku, vibrácií a doručovania hlavného oznámenia a jednotlivých typov alarmov. Povolenie pravidla alarmu neprekoná blokovaný kanál oznámení.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Všetkých osem typov alarmov je vždy dostupných. Udalosti zapnite priamo alebo použite „Pridať prah“ pri type nabitia či teploty. Vypnuté hodnoty zostávajú v zozname. Prahy predvolene používajú nastavenia upozornení svojho typu alarmu. V ponuke s tromi bodkami pri prahu môžete vytvoriť vlastné nastavenia a spravovať samostatný kanál upozornení Androidu. Existujúce duplicitné záznamy sa zobrazujú ako jeden logický alarm; prepnutie ovplyvní všetky kópie. Alarmy nabíjania a vybíjania sa riadia cieľmi odhadov a neriadia nabíjanie. Blokovaný kanál či zastavené monitorovanie nemení uložené prepínače.\n
+    Otvorte nastavenia oznámení Androidu na povolenie či blokovanie oznámení a nastavenie zvuku, vibrácií a doručovania hlavného oznámenia a jednotlivých kanálov alarmov. Povolenie pravidla alarmu neprekoná blokovaný kanál oznámení.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm zapnutý</item>
         <item quantity="few">%1$d alarmy zapnuté</item>
@@ -307,7 +307,7 @@
     <string name="alarms_add_threshold">Pridať prah</string>
     <string name="alarms_edit_threshold">Upraviť prah</string>
     <string name="alarms_edit_existing">Upraviť existujúci prah</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Klepnutím na ikonu ceruzky vedľa hodnoty prahu ju upravíte. Úprava zachová stav zapnuté/vypnuté. Ak chcete alarm vymazať, otvorte jeho editor, vyberte „Vymazať alarm“ a vymazanie potvrďte. Budú odstránené všetky kópie tohto prahu.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Otvorte ponuku s tromi bodkami pri prahu a vyberte „Upraviť prah“. Úprava zachová stav zapnuté/vypnuté. Ak chcete alarm vymazať, otvorte jeho editor, vyberte „Vymazať alarm“ a vymazanie potvrďte. Budú odstránené všetky kópie tohto prahu.</string>
     <string name="alarms_new_enabled">Alarm sa po pridaní zapne.</string>
     <string name="alarms_edit_keeps_enabled">Úprava zachová aktuálny stav zapnuté/vypnuté.</string>
     <string name="alarms_enabled">Zapnuté</string>
@@ -324,8 +324,25 @@
     <string name="alarms_notifications_disabled">Upozornenia sú vypnuté. Povoľte ich v nastaveniach Androidu, aby ste dostávali upozornenia na alarmy.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Deaktivovali ste skupinu upozornení na alarm pre túto aplikáciu.  Povoľte ju v nastaveniach Androidu, aby ste dostávali upozornenia na alarmy.</string>
     <string name="alarms_open_notification_settings">Otvoriť nastavenia upozornení Androidu</string>
-    <string name="alarm_chan_disabled" formatted="false">Pre tento typ alarmu ste zakázali upozornenia.  Povoľte im používať tento typ alarmu.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Spravovať tento typ alarmu</string>
+    <string name="alarm_chan_disabled" formatted="false">Upozornenia pre zdieľaný kanál tohto typu alarmu sú vypnuté.</string>
+    <string name="alarms_android_channel_settings">Nastavenia upozornení Androidu</string>
+    <string name="alarms_custom_create">Vytvoriť vlastné nastavenia</string>
+    <string name="alarms_custom_edit">Upraviť vlastné nastavenia</string>
+    <string name="alarms_custom_remove">Odstrániť vlastné nastavenia</string>
+    <string name="alarms_playback">Prehrávanie zvuku</string>
+    <string name="alarms_playback_once">Prehrať raz</string>
+    <string name="alarms_playback_repeat">Opakovať</string>
+    <string name="alarms_playback_help">Opakovanie sa zastaví po otvorení panela upozornení alebo zrušení upozornenia.</string>
+    <string name="alarms_volume_category">Kategória hlasitosti</string>
+    <string name="alarms_volume_notifications" formatted="false">Oznámenia</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarmy</string>
+    <string name="alarms_volume_media">Médiá</string>
+    <string name="alarms_volume_help">Android použije vybranú kategóriu hlasitosti, ak ju zariadenie podporuje.</string>
+    <string name="alarms_replace_channel_title">Zmeniť kategóriu hlasitosti?</string>
+    <string name="alarms_replace_channel_message">Android vyžaduje nový kanál upozornení. Aplikácia skopíruje nastavenia zvuku, vibrácií a dôležitosti v rozsahu, ktorý Android umožňuje. Ostatné možnosti upozornení sa môžu obnoviť na predvolené hodnoty.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (pôvodný)</string>
+    <string name="alarm_stop_action">Zastaviť alarm</string>
     <string name="alarms_options_title" formatted="false">Možnosti alarmov</string>
     <string name="pref_dismiss_low_battery_on_recovery">Zrušiť alarm nízkej batérie po zotavení</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Odstrániť oznámenie nízkej batérie, keď nabitie prekročí jeho prah. Ostatné oznámenia alarmov zostanú</string>
@@ -342,6 +359,7 @@
     <string name="alarms_database_error">Nemožno pristúpiť k databáze alarmov. Skúste to znova.</string>
     <string name="alarms_saved">Nastavenia alarmov uložené</string>
     <string name="alarms_saved_reload_failed">Uložené, ale monitorovanie sa nepodarilo upozorniť. Skontrolujte stav monitorovania.</string>
+    <string name="alarms_saved_channels_failed">Uložené, ale kanály upozornení sa nepodarilo aktualizovať. Skontrolujte nastavenia upozornení Androidu.</string>
 
     <string name="history_range">Rozsah histórie</string>
     <string name="history_last_24h">Posledných 24\u00A0hodín</string>
@@ -824,6 +842,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Vyberte existujúcu všeobecnú zálohu ZIP a dostupné kategórie, ktoré chcete obnoviť. Zálohy z novších verzií aplikácie môžu byť nekompatibilné a obnova protokolov alebo údajov prediktora z iného zariadenia môže spôsobiť nesprávne predikcie. Ak sa obnova dokončí iba čiastočne, pred ďalším pokusom skontrolujte oznámené kategórie. Vybrané kategórie sa obnovia; nevybrané zostanú zachované. Obnovenie alarmov nahradí aktuálne alarmy. Pri záznamoch zvoľte, či ich pridať, alebo nahradiť aktuálnu históriu.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Obnoviť vybrané údaje zo súboru ZIP všeobecnej zálohy</string>
     <string name="general_backup_restore_message" formatted="false">Vyberte, čo chcete obnoviť.</string>
+    <string name="alarm_restore_channel_changes_warning">Obnovením budíkov sa môžu nahradiť alebo odstrániť ich kanály upozornení v Androide. Niektoré nastavenia upozornení možno bude potrebné nastaviť znova.</string>
     <string name="general_backup_device_data_warning">Denníky a údaje predikcie sú špecifické pre zariadenie, na ktorom boli zhromaždené. Import do iného zariadenia môže spôsobiť nesprávne predikcie alebo iné neočakávané správanie aplikácie.</string>
     <string name="general_backup_imported" formatted="false">Všeobecná záloha bola úspešne importovaná.</string>
     <string name="invalid_general_backup_file" formatted="false">Neplatný alebo nekompatibilný súbor všeobecnej zálohy.</string>

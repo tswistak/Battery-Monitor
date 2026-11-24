@@ -26,10 +26,15 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.migration.SettingsMigrationManager
 import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
 import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class BatteryMonitorApplication : Application() {
     private var notificationChannelLocales = LocaleList.getEmptyLocaleList()
     private var ownsWidgets = false
+    private val channelRefreshScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onCreate() {
         super.onCreate()
@@ -37,7 +42,7 @@ class BatteryMonitorApplication : Application() {
         SettingsMigrationManager.migrate(
             getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
         )
-        NotificationChannels.refreshExistingChannelNames(this)
+        refreshChannelNames()
         notificationChannelLocales = resources.configuration.locales
         AutoLogExportScheduler.ensureScheduled(this)
         val processName = currentProcessName()
@@ -59,8 +64,14 @@ class BatteryMonitorApplication : Application() {
         if (ownsWidgets) WidgetUpdateDispatcher.refresh(this)
         val locales = resources.configuration.locales
         if (locales != notificationChannelLocales) {
-            NotificationChannels.refreshExistingChannelNames(this)
+            refreshChannelNames()
             notificationChannelLocales = locales
+        }
+    }
+
+    private fun refreshChannelNames() {
+        NotificationChannels.refreshExistingChannelNames(this) { refresh ->
+            channelRefreshScope.launch { refresh() }
         }
     }
 

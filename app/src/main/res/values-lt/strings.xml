@@ -272,8 +272,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Aliarmo Nustatymai</string>
     <string name="alarm_settings" formatted="false">Aliarmai</string>
     <string name="alarm_settings_help" formatted="false">Jūs galite nusistatyti Baterijos Indikatoriaus perspėjimą, kai baterijos lygis pasiekia tam tikrą tašką (pvz.: baterija pilnai įkraunama, baterijos lygtis nukrenta žemiau 20% ir pan.).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Visi aštuoni aliarmų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Išjungtos vertės lieka sąraše. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas aliarmas; perjungimas veikia visas kopijas. Įkrovimo ir iškrovimo aliarmai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.\n
-    Atverkite „Android“ pranešimų nustatymus, kad leistumėte ar blokuotumėte pranešimus ir nustatytumėte pagrindinio pranešimo bei kiekvieno aliarmo tipo garsą, vibraciją ir pateikimą. Įjungta aliarmo taisyklė nepanaikina pranešimų kanalo blokavimo.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Visi aštuoni aliarmų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Išjungtos vertės lieka sąraše. Pagal numatytuosius nustatymus ribos naudoja savo aliarmo tipo pranešimų nustatymus. Trijų taškų meniu šalia ribos galite sukurti pasirinktinius nustatymus ir valdyti atskirą „Android“ pranešimų kanalą. Esami įrašų dublikatai rodomi kaip vienas aliarmas; perjungimas veikia visas kopijas. Įkrovimo ir iškrovimo aliarmai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.\n
+    Atverkite „Android“ pranešimų nustatymus, kad leistumėte ar blokuotumėte pranešimus ir nustatytumėte pagrindinio pranešimo bei kiekvieno aliarmo kanalo garsą, vibraciją ir pateikimą. Įjungta aliarmo taisyklė nepanaikina pranešimų kanalo blokavimo.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">Įjungtas %1$d aliarmas</item>
         <item quantity="few">Įjungti %1$d aliarmai</item>
@@ -307,7 +307,7 @@
     <string name="alarms_add_threshold">Pridėti ribą</string>
     <string name="alarms_edit_threshold">Keisti ribą</string>
     <string name="alarms_edit_existing">Keisti esamą ribą</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Norėdami keisti ribą, palieskite pieštuko piktogramą šalia jos vertės. Įjungimo ar išjungimo būsena išlieka. Norėdami ištrinti aliarmą, atverkite jo redagavimo langą, pasirinkite „Ištrinti Aliarmą“ ir patvirtinkite ištrynimą. Visos šios ribos kopijos bus pašalintos.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Atverkite trijų taškų meniu šalia ribos ir pasirinkite „Keisti ribą“. Įjungimo ar išjungimo būsena išlieka. Norėdami ištrinti aliarmą, atverkite jo redagavimo langą, pasirinkite „Ištrinti Aliarmą“ ir patvirtinkite ištrynimą. Visos šios ribos kopijos bus pašalintos.</string>
     <string name="alarms_new_enabled">Aliarmas bus įjungtas jį pridėjus.</string>
     <string name="alarms_edit_keeps_enabled">Keičiant išlaikoma dabartinė įjungimo ar išjungimo būsena.</string>
     <string name="alarms_enabled">Įjungta</string>
@@ -324,8 +324,25 @@
     <string name="alarms_notifications_disabled">Pranešimai išjungti. Įjunkite juos „Android“ nustatymuose, kad gautumėte aliarmo pranešimus.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Išjungėte šios programos aliarmo pranešimų grupę.  Įjunkite ją „Android“ nustatymuose, kad gautumėte aliarmo pranešimus.</string>
     <string name="alarms_open_notification_settings">Atidaryti „Android“ pranešimų nustatymus</string>
-    <string name="alarm_chan_disabled" formatted="false">Išjungėte šio tipo aliarmus.  Leiskite jiems naudoti šio tipo aliarmizaciją.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Tvarkyti šį aliarmo tipą</string>
+    <string name="alarm_chan_disabled" formatted="false">Šio tipo aliarmo bendro kanalo pranešimai išjungti.</string>
+    <string name="alarms_android_channel_settings">„Android“ pranešimų nustatymai</string>
+    <string name="alarms_custom_create">Sukurti pasirinktinius nustatymus</string>
+    <string name="alarms_custom_edit">Keisti pasirinktinius nustatymus</string>
+    <string name="alarms_custom_remove">Pašalinti pasirinktinius nustatymus</string>
+    <string name="alarms_playback">Garso leidimas</string>
+    <string name="alarms_playback_once">Leisti vieną kartą</string>
+    <string name="alarms_playback_repeat">Kartoti</string>
+    <string name="alarms_playback_help">Kartojimas sustoja atidarius pranešimų skydelį arba atmetus pranešimą.</string>
+    <string name="alarms_volume_category">Garsumo kategorija</string>
+    <string name="alarms_volume_notifications" formatted="false">Pranešimai</string>
+    <string name="alarms_volume_alarms" formatted="false">Aliarmai</string>
+    <string name="alarms_volume_media">Medija</string>
+    <string name="alarms_volume_help">Jei įrenginys palaiko pasirinktą garsumo kategoriją, „Android“ ją naudoja.</string>
+    <string name="alarms_replace_channel_title">Keisti garsumo kategoriją?</string>
+    <string name="alarms_replace_channel_message">„Android“ reikia naujo pranešimų kanalo. Programa nukopijuos garso, vibracijos ir svarbos nustatymus, kiek tai leidžia sistema. Kitos pranešimų parinktys gali būti nustatytos iš naujo.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (senas)</string>
+    <string name="alarm_stop_action">Sustabdyti aliarmą</string>
     <string name="alarms_options_title" formatted="false">Aliarmų parinktys</string>
     <string name="pref_dismiss_low_battery_on_recovery">Pašalinti mažos įkrovos aliarmą jai atsistačius</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Pašalinti mažos įkrovos pranešimą, kai įkrova pakyla virš ribos. Kiti aliarmų pranešimai lieka</string>
@@ -342,6 +359,7 @@
     <string name="alarms_database_error">Nepavyko pasiekti aliarmų duomenų bazės. Bandykite dar kartą.</string>
     <string name="alarms_saved">Aliarmų nustatymai išsaugoti</string>
     <string name="alarms_saved_reload_failed">Išsaugota, bet nepavyko pranešti stebėjimo tarnybai. Patikrinkite stebėjimo būseną.</string>
+    <string name="alarms_saved_channels_failed">Nustatymai išsaugoti, tačiau pranešimų kanalų atnaujinti nepavyko. Patikrinkite „Android“ pranešimų nustatymus.</string>
 
     <string name="history_range">Istorijos laikotarpis</string>
     <string name="history_last_24h">Paskutinės 24\u00A0valandos</string>
@@ -824,6 +842,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Pasirinkite esamą bendrąją ZIP atsarginę kopiją ir prieinamas kategorijas, kurias norite atkurti. Naujesnėmis programos versijomis sukurtos atsarginės kopijos gali būti nesuderinamos, o atkūrus žurnalus ar prognozuoklio duomenis iš kito įrenginio gali būti pateikti neteisingi įverčiai. Jei atkuriama tik dalis duomenų, prieš bandydami dar kartą patikrinkite nurodytas kategorijas. Pasirinktos kategorijos atkuriamos; nepasirinktos išsaugomos. Atkuriant įspėjimus pakeičiami dabartiniai įspėjimai. Žurnalams pasirinkite, ar juos pridėti, ar pakeisti dabartinę istoriją.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Atkurti pasirinktus duomenis iš bendrosios atsarginės kopijos ZIP failo</string>
     <string name="general_backup_restore_message" formatted="false">Pasirinkite, ką norite atkurti.</string>
+    <string name="alarm_restore_channel_changes_warning">Atkuriant įspėjimus jų „Android“ pranešimų kanalai gali būti pakeisti arba pašalinti. Kai kuriuos pranešimų nustatymus gali tekti pritaikyti iš naujo.</string>
     <string name="general_backup_device_data_warning">Žurnalai ir prognozavimo duomenys priklauso įrenginiui, kuriame jie buvo surinkti. Importavus juos į kitą įrenginį gali būti pateiktos neteisingos prognozės arba programa gali veikti kitaip nei tikėtasi.</string>
     <string name="general_backup_imported" formatted="false">Bendroji atsarginė kopija sėkmingai importuota.</string>
     <string name="invalid_general_backup_file" formatted="false">Netinkamas arba nesuderinamas bendrosios atsarginės kopijos failas.</string>

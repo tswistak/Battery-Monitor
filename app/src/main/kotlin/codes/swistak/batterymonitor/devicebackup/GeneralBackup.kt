@@ -253,6 +253,12 @@ internal object GeneralBackup {
             ?.optInt(KEY_VERSION, 0) ?: 0) > AlarmBackup.SCHEMA_VERSION || (archive.device?.version
             ?: 0) > DeviceDataBackup.SCHEMA_VERSION
 
+    fun alarmRestoreMayReplaceChannels(context: Context, archive: GeneralBackupArchive): Boolean {
+        val alarmsJson = archive.alarms?.getOrNull() ?: return false
+        val alarms = runCatching { AlarmBackup.parseImport(alarmsJson) }.getOrNull() ?: return false
+        return AlarmBackup.mayReplaceChannels(context, alarms)
+    }
+
     // KTX edit discards the commit result required before marking settings restored.
     @SuppressLint("UseKtx")
     fun restore(
@@ -260,7 +266,8 @@ internal object GeneralBackup {
         settingsPreferences: SharedPreferences,
         archive: GeneralBackupArchive,
         selectedData: Set<GeneralBackupDataType>,
-        logImportMode: LogImportMode
+        logImportMode: LogImportMode,
+        allowAlarmChannelChanges: Boolean = false
     ) {
         require(selectedData.isNotEmpty() && getAvailableData(archive).containsAll(selectedData)) {
             "Selected data is not available in the general backup"
@@ -269,7 +276,11 @@ internal object GeneralBackup {
             SettingsBackup.parsedSettings(requireNotNull(archive.settings).getOrThrow())
         } else null
         val alarms = if (GeneralBackupDataType.ALARMS in selectedData) {
-            AlarmBackup.validatedRecords(requireNotNull(archive.alarms).getOrThrow())
+            AlarmBackup.parseImport(requireNotNull(archive.alarms).getOrThrow()).also {
+                check(allowAlarmChannelChanges || !AlarmBackup.mayReplaceChannels(context, it)) {
+                    "Alarm notification channel changes require confirmation"
+                }
+            }
         } else null
         val deviceSelection = deviceSelection(selectedData)
         val device = if (deviceSelection.isNotEmpty()) {
@@ -289,7 +300,7 @@ internal object GeneralBackup {
                 attempted = setOf(GeneralBackupDataType.ALARMS)
                 val database = AlarmDatabase(context)
                 try {
-                    AlarmBackup.restore(database, alarms)
+                    AlarmBackup.restore(context, database, alarms, allowAlarmChannelChanges)
                 } finally {
                     database.close()
                 }

@@ -25,7 +25,7 @@ import org.junit.Test
 class AlarmBackupSchemaTest {
     @Test
     fun `alarm backups use the latest schema version`() {
-        assertEquals(2, AlarmBackup.SCHEMA_VERSION)
+        assertEquals(3, AlarmBackup.SCHEMA_VERSION)
         assertEquals(
             setOf("enabled", "type", "threshold"), Version1AlarmImporter.schema.keys
         )
@@ -131,7 +131,8 @@ class AlarmBackupSchemaTest {
     fun `each version resolves its own importer and future versions use the latest`() {
         assertSame(Version1AlarmImporter, alarmImporterForVersion(1))
         assertSame(Version2AlarmImporter, alarmImporterForVersion(2))
-        assertSame(Version2AlarmImporter, alarmImporterForVersion(3))
+        assertSame(Version3AlarmImporter, alarmImporterForVersion(3))
+        assertSame(Version3AlarmImporter, alarmImporterForVersion(4))
         assertThrows(IllegalArgumentException::class.java) {
             alarmImporterForVersion(0)
         }

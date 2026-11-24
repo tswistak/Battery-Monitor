@@ -229,7 +229,7 @@ private val settingIcons = listOf(
         R.drawable.ui_refresh
     ),
     SettingIcon("alarms_add_threshold", R.string.alarms_add_threshold, R.drawable.ui_plus),
-    SettingIcon("alarms_edit_threshold", R.string.alarms_edit_threshold, R.drawable.ui_edit),
+    SettingIcon("alarms_edit_threshold", R.string.alarms_edit_threshold, R.drawable.ui_more),
     SettingIcon("background_monitoring", R.string.diag_monitor_operation, R.drawable.ui_current),
     SettingIcon(
         SettingsContract.KEY_DEBUG_LOGGING, R.string.diagnostics_debug_logs, R.drawable.ui_code
