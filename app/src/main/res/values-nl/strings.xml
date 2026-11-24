@@ -266,8 +266,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarminstellingen</string>
     <string name="alarm_settings" formatted="false">Alarmen</string>
     <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Uitgeschakelde waarden blijven in de lijst staan. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.\n
-    Open de Android-meldingsinstellingen om meldingen toe te staan of te blokkeren en geluid, trillen en bezorging in te stellen voor de hoofdmelding en elk alarmtype. Een alarmregel inschakelen heft een geblokkeerd meldingskanaal niet op.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Uitgeschakelde waarden blijven in de lijst staan. Drempels gebruiken standaard de meldingsinstellingen van hun alarmtype. In het menu met drie puntjes naast een drempel kun je aangepaste instellingen maken en een apart Android-meldingskanaal beheren. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.\n
+    Open de Android-meldingsinstellingen om meldingen toe te staan of te blokkeren en geluid, trillen en bezorging in te stellen voor de hoofdmelding en elk alarmkanaal. Een alarmregel inschakelen heft een geblokkeerd meldingskanaal niet op.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm ingeschakeld</item>
         <item quantity="other">%1$d alarmen ingeschakeld</item>
@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Drempel toevoegen</string>
     <string name="alarms_edit_threshold">Drempel bewerken</string>
     <string name="alarms_edit_existing">Bestaande drempel bewerken</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tik op het potloodpictogram naast de drempelwaarde om deze te bewerken. Bewerken behoudt de aan-uitstatus. Open de editor van het alarm, kies “Alarm verwijderen” en bevestig de verwijdering. Alle kopieën van deze drempel worden verwijderd.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Open het menu met drie puntjes naast de drempel en kies ‘Drempel bewerken’. Bewerken behoudt de aan-uitstatus. Open de editor van het alarm, kies “Alarm verwijderen” en bevestig de verwijdering. Alle kopieën van deze drempel worden verwijderd.</string>
     <string name="alarms_new_enabled">Het alarm wordt ingeschakeld wanneer het wordt toegevoegd.</string>
     <string name="alarms_edit_keeps_enabled">Bewerken behoudt de huidige aan-uitinstelling.</string>
     <string name="alarms_enabled">Ingeschakeld</string>
@@ -316,8 +316,25 @@
     <string name="alarms_notifications_disabled">Meldingen zijn uitgeschakeld. Schakel ze in bij de Android-instellingen om alarmmeldingen te ontvangen.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Je hebt de meldingsgroep voor alarmen van deze app uitgeschakeld. Schakel die in bij de Android-instellingen om alarmmeldingen te ontvangen.</string>
     <string name="alarms_open_notification_settings">Android-meldingsinstellingen openen</string>
-    <string name="alarm_chan_disabled" formatted="false">Je hebt meldingen voor dit alarmtype uitgeschakeld. Schakel ze in om dit type alarm te gebruiken.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Dit alarmtype beheren</string>
+    <string name="alarm_chan_disabled" formatted="false">Meldingen voor het gedeelde kanaal van dit alarmtype staan uit.</string>
+    <string name="alarms_android_channel_settings">Android-meldingsinstellingen</string>
+    <string name="alarms_custom_create">Aangepaste instellingen maken</string>
+    <string name="alarms_custom_edit">Aangepaste instellingen wijzigen</string>
+    <string name="alarms_custom_remove">Aangepaste instellingen verwijderen</string>
+    <string name="alarms_playback">Geluid afspelen</string>
+    <string name="alarms_playback_once">Eén keer afspelen</string>
+    <string name="alarms_playback_repeat">Herhalen</string>
+    <string name="alarms_playback_help">Het herhalen stopt wanneer je het meldingenpaneel opent of de melding wegveegt.</string>
+    <string name="alarms_volume_category">Volumecategorie</string>
+    <string name="alarms_volume_notifications" formatted="false">Meldingen</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarmen</string>
+    <string name="alarms_volume_media">Media</string>
+    <string name="alarms_volume_help">Android gebruikt de gekozen volumecategorie als je apparaat deze ondersteunt.</string>
+    <string name="alarms_replace_channel_title">Volumecategorie wijzigen?</string>
+    <string name="alarms_replace_channel_message">Android heeft een nieuw meldingskanaal nodig. De app neemt je instellingen voor geluid, trillen en prioriteit over voor zover Android dit toestaat. Andere meldingsopties kunnen worden teruggezet.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (oud)</string>
+    <string name="alarm_stop_action">Alarm stoppen</string>
     <string name="alarms_options_title" formatted="false">Alarmopties</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alarm voor bijna lege batterij sluiten na herstel</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Verwijder de melding voor een bijna lege batterij wanneer de lading boven de drempel stijgt. Andere alarmmeldingen blijven staan</string>
@@ -334,6 +351,7 @@
     <string name="alarms_database_error">De alarmdatabase kon niet worden geopend. Probeer het opnieuw.</string>
     <string name="alarms_saved">Alarminstellingen opgeslagen</string>
     <string name="alarms_saved_reload_failed">Opgeslagen, maar de bewaking kon niet worden geïnformeerd. Controleer de bewakingsstatus.</string>
+    <string name="alarms_saved_channels_failed">Instellingen opgeslagen, maar de meldingskanalen konden niet worden bijgewerkt. Controleer de Android-meldingsinstellingen.</string>
 
     <string name="history_range">Geschiedenisperiode</string>
     <string name="history_last_24h">Laatste 24\u00A0uur</string>
@@ -814,6 +832,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Selecteer een bestaande algemene ZIP-back-up en kies welke beschikbare categorieën je wilt herstellen. Back-ups die met nieuwere appversies zijn gemaakt, kunnen incompatibel zijn, en het herstellen van logboeken of voorspellingsgegevens van een ander apparaat kan tot onjuiste schattingen leiden. Controleer bij een slechts gedeeltelijk voltooide herstelactie de gemelde categorieën voordat je het opnieuw probeert. Geselecteerde categorieën worden hersteld; niet-geselecteerde categorieën blijven behouden. Het herstellen van alarmen vervangt de huidige alarmen. Kies bij logboeken of je ze wilt toevoegen of de huidige geschiedenis wilt vervangen.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Geselecteerde gegevens herstellen uit een ZIP-bestand met een algemene back-up</string>
     <string name="general_backup_restore_message" formatted="false">Kies wat u wilt herstellen.</string>
+    <string name="alarm_restore_channel_changes_warning">Bij het herstellen van alarmen kunnen de bijbehorende Android-meldingskanalen worden vervangen of verwijderd. Mogelijk moet u sommige meldingsinstellingen opnieuw toepassen.</string>
     <string name="general_backup_device_data_warning">Logboeken en voorspellingsgegevens horen bij het apparaat waarop ze zijn verzameld. Importeren op een ander apparaat kan leiden tot onjuiste voorspellingen of ander onverwacht gedrag van de app.</string>
     <string name="general_backup_imported" formatted="false">Algemene back-up is geïmporteerd.</string>
     <string name="invalid_general_backup_file" formatted="false">Ongeldig of incompatibel algemeen back-upbestand.</string>

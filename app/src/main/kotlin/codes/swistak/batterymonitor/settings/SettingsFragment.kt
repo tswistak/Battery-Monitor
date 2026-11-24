@@ -53,7 +53,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
-import codes.swistak.batterymonitor.alarms.AlarmRecord
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackupImportPreview
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
@@ -419,16 +418,16 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                         options = choice.labels(resources).map(CharSequence::toString),
                         selected = setOf(
                             when (key) {
-                            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> chipSwitchingIntervalChoiceIndex(
-                                row.value as? String, values
-                            )
+                                SettingsContract.KEY_CHIP_SWITCHING_INTERVAL -> chipSwitchingIntervalChoiceIndex(
+                                    row.value as? String, values
+                                )
 
-                            SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES -> values.indexOf(
-                                row.value as? String
-                            ).takeIf { it >= 0 } ?: values.indexOf("custom")
+                                SettingsContract.KEY_CHART_GAP_THRESHOLD_MINUTES -> values.indexOf(
+                                    row.value as? String
+                                ).takeIf { it >= 0 } ?: values.indexOf("custom")
 
-                            else -> values.indexOf(row.value as? String)
-                        }),
+                                else -> values.indexOf(row.value as? String)
+                            }),
                         multiple = false,
                         onConfirm = { selected -> changeSetting(key, values[selected.single()]) })
                 rememberPreferenceDialog(key)
@@ -636,7 +635,10 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
             val preparedLogs = DeviceDataBackup.preparedLogsFile(cache.baseFile)
             when (requestCode) {
                 IMPORT_REQUEST -> SettingsBackup.readFromUri(context, cachedUri)
-                IMPORT_ALARMS_REQUEST -> AlarmBackup.readFromUri(context, cachedUri)
+                IMPORT_ALARMS_REQUEST -> {
+                    val backup = AlarmBackup.readFromUri(context, cachedUri)
+                    AlarmRestorePreview(backup, AlarmBackup.mayReplaceChannels(context, backup))
+                }
 
                 IMPORT_DEVICE_DATA_REQUEST -> DeviceDataBackup.readFromUri(
                     context, cachedUri, preparedLogs
@@ -652,7 +654,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                     GeneralBackupImportPreview(
                         archive,
                         GeneralBackup.getAvailableData(archive),
-                        GeneralBackup.containsNewerSchema(archive)
+                        GeneralBackup.containsNewerSchema(archive),
+                        GeneralBackup.alarmRestoreMayReplaceChannels(context, archive)
                     )
                 }
             }
@@ -1247,14 +1250,21 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                     }
 
                     SettingsOperationAction.ReadAlarms -> {
-                        val preview = value as AlarmBackupImportPreview
-                        if (preview.version > AlarmBackup.SCHEMA_VERSION) {
-                            dialog =
-                                SettingsDialog.Confirm(getString(R.string.settings_file_version_warning)) {
-                                    doAlarmImport(preview.alarms)
-                                }
+                        val preview = value as AlarmRestorePreview
+                        val warnings = buildList {
+                            if (preview.backup.version > AlarmBackup.SCHEMA_VERSION) {
+                                add(getString(R.string.settings_file_version_warning))
+                            }
+                            if (preview.alarmChannelsMayChange) {
+                                add(getString(R.string.alarm_restore_channel_changes_warning))
+                            }
+                        }
+                        if (warnings.isNotEmpty()) {
+                            dialog = SettingsDialog.Confirm(warnings.joinToString("\n\n")) {
+                                doAlarmImport(preview.backup, preview.alarmChannelsMayChange)
+                            }
                             rememberBackupDialog(backupRequest)
-                        } else doAlarmImport(preview.alarms)
+                        } else doAlarmImport(preview.backup, allowChannelChanges = false)
                     }
 
                     SettingsOperationAction.ReadDeviceData -> showDeviceDataImportDialog(value as PreparedDeviceDataBackup)
@@ -1692,8 +1702,19 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                 val selected = request.getStringArrayList("selected").orEmpty()
                     .mapTo(linkedSetOf()) { GeneralBackupDataType.valueOf(it) }
                 require(selected.isNotEmpty() && available.containsAll(selected))
-                showLogImportModeDialog(getString(R.string.log_import_mode_message)) { mode ->
-                    doGeneralBackupImport(archive, selected, mode)
+                val confirmedChannelChanges = request.getBoolean("allow_alarm_channel_changes")
+                val showChannelWarning =
+                    !confirmedChannelChanges && preview.alarmChannelsMayChange && GeneralBackupDataType.ALARMS in selected
+                val message = buildString {
+                    append(getString(R.string.log_import_mode_message))
+                    if (showChannelWarning) {
+                        append("\n\n").append(getString(R.string.alarm_restore_channel_changes_warning))
+                    }
+                }
+                showLogImportModeDialog(message) { mode ->
+                    doGeneralBackupImport(
+                        archive, selected, mode, confirmedChannelChanges || showChannelWarning
+                    )
                 }
                 rememberBackupDialog(request, "log_mode", selected.map { it.name })
                 return
@@ -1703,6 +1724,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                 append(getString(R.string.general_backup_restore_message))
                 if (preview.newerSchema) {
                     append("\n\n").append(getString(R.string.settings_file_version_warning))
+                }
+                if (preview.alarmChannelsMayChange) {
+                    append("\n\n").append(getString(R.string.alarm_restore_channel_changes_warning))
                 }
             }
             dialog = SettingsDialog.Choices(
@@ -1715,12 +1739,24 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
                     }) getString(R.string.general_backup_device_data_warning) else null,
                 onConfirm = { selected ->
                     val selectedData = selected.mapTo(linkedSetOf()) { types[it] }
+                    val allowAlarmChannelChanges =
+                        preview.alarmChannelsMayChange && GeneralBackupDataType.ALARMS in selectedData
                     if (GeneralBackupDataType.LOGS in selectedData) {
                         showLogImportModeDialog(getString(R.string.log_import_mode_message)) { mode ->
-                            doGeneralBackupImport(archive, selectedData, mode)
+                            doGeneralBackupImport(
+                                archive, selectedData, mode, allowAlarmChannelChanges
+                            )
                         }
-                        rememberBackupDialog(request, "log_mode", selectedData.map { it.name })
-                    } else doGeneralBackupImport(archive, selectedData, LogImportMode.REPLACE)
+                        val logModeRequest = request?.let {
+                            Bundle(it).apply {
+                                putBoolean("allow_alarm_channel_changes", allowAlarmChannelChanges)
+                            }
+                        }
+                        rememberBackupDialog(
+                            logModeRequest, "log_mode", selectedData.map { it.name })
+                    } else doGeneralBackupImport(
+                        archive, selectedData, LogImportMode.REPLACE, allowAlarmChannelChanges
+                    )
                 })
             rememberBackupDialog(request)
         }.onFailure {
@@ -1744,7 +1780,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
     private fun doGeneralBackupImport(
         archive: GeneralBackupArchive,
         selectedData: Set<GeneralBackupDataType>,
-        logImportMode: LogImportMode
+        logImportMode: LogImportMode,
+        allowAlarmChannelChanges: Boolean
     ) {
         val request = pendingBackupDialog
         clearBackupDialog(deleteCache = false)
@@ -1755,7 +1792,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
             SettingsOperationAction.ImportGeneralBackup, R.string.invalid_general_backup_file
         ) { context ->
             try {
-                GeneralBackup.restore(context, settings, archive, selectedData, logImportMode)
+                GeneralBackup.restore(
+                    context,
+                    settings,
+                    archive,
+                    selectedData,
+                    logImportMode,
+                    allowAlarmChannelChanges
+                )
                 reloadRestoredData(context, settings, messenger, selectedData)
             } catch (failure: GeneralBackupRestoreException) {
                 reloadRestoredData(
@@ -1963,7 +2007,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
         }
     }
 
-    private fun doAlarmImport(alarms: List<AlarmRecord>) {
+    private fun doAlarmImport(backup: AlarmBackupImportPreview, allowChannelChanges: Boolean) {
         clearBackupDialog()
         val settings = mSharedPreferences
         val messenger = serviceMessenger
@@ -1972,7 +2016,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener {
         ) { context ->
             val database = AlarmDatabase(context)
             try {
-                AlarmBackup.restore(database, alarms)
+                AlarmBackup.restore(context, database, backup, allowChannelChanges)
             } finally {
                 database.close()
             }

@@ -269,8 +269,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Podešavanja alarma</string>
     <string name="alarm_settings" formatted="false">Alarmi</string>
     <string name="alarm_settings_help" formatted="false">Možete da podesite da vas Battery Monitor obavesti kada procenat baterije dosegne određeni nivo (npr. baterija je u potpunosti napunjena, procenat baterije padne ispod 20%).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Isključene vrednosti ostaju na listi. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; uključivanje ili isključivanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.\n
-    Otvorite Android podešavanja obaveštenja da dozvolite ili blokirate obaveštenja i podesite zvuk, vibraciju i isporuku za glavno obaveštenje i svaki tip alarma. Omogućavanje pravila alarma ne zaobilazi blokirani kanal obaveštenja.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Isključene vrednosti ostaju na listi. Pragovi podrazumevano koriste podešavanja obaveštenja svog tipa alarma. U meniju sa tri tačke pored praga možete napraviti prilagođena podešavanja i upravljati zasebnim Android kanalom za obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; uključivanje ili isključivanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.\n
+    Otvorite Android podešavanja obaveštenja da dozvolite ili blokirate obaveštenja i podesite zvuk, vibraciju i isporuku za glavno obaveštenje i svaki kanal alarma. Omogućavanje pravila alarma ne zaobilazi blokirani kanal obaveštenja.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm uključen</item>
         <item quantity="few">%1$d alarma uključena</item>
@@ -303,7 +303,7 @@
     <string name="alarms_add_threshold">Dodaj prag</string>
     <string name="alarms_edit_threshold">Izmeni prag</string>
     <string name="alarms_edit_existing">Izmeni postojeći prag</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Dodirnite ikonu olovke pored vrednosti praga da biste je izmenili. Izmena zadržava uključeno/isključeno stanje. Da biste izbrisali alarm, otvorite ga za izmenu, izaberite „Izbriši alarm“ i potvrdite brisanje. Sve kopije ovog praga će biti uklonjene.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Otvorite meni sa tri tačke pored praga i izaberite „Izmeni prag“. Izmena zadržava uključeno/isključeno stanje. Da biste izbrisali alarm, otvorite ga za izmenu, izaberite „Izbriši alarm“ i potvrdite brisanje. Sve kopije ovog praga će biti uklonjene.</string>
     <string name="alarms_new_enabled">Alarm će biti uključen kada se doda.</string>
     <string name="alarms_edit_keeps_enabled">Izmena zadržava trenutno uključeno/isključeno stanje.</string>
     <string name="alarms_enabled">Uključeno</string>
@@ -320,8 +320,25 @@
     <string name="alarms_notifications_disabled">Obaveštenja su isključena. Uključite ih u podešavanjima Androida da biste primali obaveštenja o alarmima.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Isključili ste grupu obaveštenja za alarme ove aplikacije. Uključite je u podešavanjima Androida da biste primali obaveštenja o alarmima.</string>
     <string name="alarms_open_notification_settings">Otvori podešavanja obaveštenja za Android</string>
-    <string name="alarm_chan_disabled" formatted="false">Isključili ste obaveštenja za ovaj tip alarma. Omogućite ih da biste koristili ovaj tip alarma.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Upravljaj ovim tipom alarma</string>
+    <string name="alarm_chan_disabled" formatted="false">Obaveštenja za zajednički kanal ovog tipa alarma su isključena.</string>
+    <string name="alarms_android_channel_settings">Android podešavanja obaveštenja</string>
+    <string name="alarms_custom_create">Napravi prilagođena podešavanja</string>
+    <string name="alarms_custom_edit">Izmeni prilagođena podešavanja</string>
+    <string name="alarms_custom_remove">Ukloni prilagođena podešavanja</string>
+    <string name="alarms_playback">Reprodukcija zvuka</string>
+    <string name="alarms_playback_once">Reprodukuj jednom</string>
+    <string name="alarms_playback_repeat">Ponavljaj</string>
+    <string name="alarms_playback_help">Ponavljanje se zaustavlja kada otvorite tablu sa obaveštenjima ili odbacite obaveštenje.</string>
+    <string name="alarms_volume_category">Kategorija jačine zvuka</string>
+    <string name="alarms_volume_notifications" formatted="false">Обавештења</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarmi</string>
+    <string name="alarms_volume_media">Mediji</string>
+    <string name="alarms_volume_help">Android koristi izabranu kategoriju jačine zvuka ako je uređaj podržava.</string>
+    <string name="alarms_replace_channel_title">Promeniti kategoriju jačine zvuka?</string>
+    <string name="alarms_replace_channel_message">Android zahteva novi kanal za obaveštenja. Aplikacija kopira podešavanja zvuka, vibracije i važnosti u meri u kojoj Android to dozvoljava. Ostale opcije obaveštenja mogu se vratiti na podrazumevane vrednosti.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (stari)</string>
+    <string name="alarm_stop_action">Zaustavi alarm</string>
     <string name="alarms_options_title" formatted="false">Опције аларма</string>
     <string name="pref_dismiss_low_battery_on_recovery">Ukloni alarm za nizak nivo baterije posle oporavka</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Ukloni obaveštenje o niskom nivou baterije kada napunjenost pređe njegov prag. Ostala obaveštenja alarma ostaju</string>
@@ -338,6 +355,7 @@
     <string name="alarms_database_error">Pristup bazi alarma nije moguć. Pokušajte ponovo.</string>
     <string name="alarms_saved">Podešavanja alarma sačuvana</string>
     <string name="alarms_saved_reload_failed">Sačuvano, ali praćenje nije moglo biti obavešteno. Proverite stanje praćenja.</string>
+    <string name="alarms_saved_channels_failed">Podešavanja su sačuvana, ali nije bilo moguće ažurirati kanale za obaveštenja. Proverite Android podešavanja obaveštenja.</string>
 
     <string name="history_range">Opseg istorije</string>
     <string name="history_last_24h">Poslednja 24\u00A0sata</string>
@@ -819,6 +837,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Изаберите постојећу ZIP датотеку опште резервне копије и доступне категорије које желите да вратите. Резервне копије из новијих верзија апликације могу бити некомпатибилне, а враћање евиденција или података предвиђања са другог уређаја може довести до погрешних предвиђања. Ако је враћање само делимично завршено, проверите пријављене категорије пре поновног покушаја. Izabrane kategorije se vraćaju; neizabrane ostaju sačuvane. Vraćanje alarma zamenjuje trenutne alarme. Za dnevnike izaberite da li ćete ih dodati ili zameniti trenutnu istoriju.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Врати изабране податке из ZIP датотеке опште резервне копије</string>
     <string name="general_backup_restore_message" formatted="false">Изаберите шта желите да вратите.</string>
+    <string name="alarm_restore_channel_changes_warning">Враћање аларма може да замени или уклони њихове канале обавештења у Android-у. Можда ћете морати поново да подесите нека обавештења.</string>
     <string name="general_backup_device_data_warning">Евиденције и подаци предвиђања су специфични за уређај на којем су прикупљени. Увоз на други уређај може довести до погрешних предвиђања или другог неочекиваног понашања апликације.</string>
     <string name="general_backup_imported" formatted="false">Општа резервна копија је успешно увезена.</string>
     <string name="invalid_general_backup_file" formatted="false">Неважећа или некомпатибилна датотека опште резервне копије.</string>

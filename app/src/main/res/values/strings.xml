@@ -266,8 +266,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarm settings</string>
     <string name="alarm_settings" formatted="false">Alarms</string>
     <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
-    <string name="alarms_overview_channels_help" formatted="false">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. Disabled values remain listed. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.\n
-    Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
+    <string name="alarms_overview_channels_help" formatted="false">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. Disabled values remain listed. Thresholds share their alarm type’s notification settings by default. Use the threshold’s three-dot menu to create custom settings and manage a separate Android notification channel. Existing duplicate records appear as one logical alarm; switching affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.\n
+    Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for each channel. Enabling an alarm rule does not override a blocked notification channel.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm enabled</item>
         <item quantity="other">%1$d alarms enabled</item>
@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Add threshold</string>
     <string name="alarms_edit_threshold">Edit threshold</string>
     <string name="alarms_edit_existing">Edit existing threshold</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tap the pencil icon next to a threshold value to edit it. Editing keeps its on/off state. To delete an alarm, open its editor, choose “Delete alarm”, and confirm the deletion. All copies of this threshold will be removed.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Open the three-dot menu next to the threshold and choose “Edit threshold”. Editing keeps its on/off state. To delete an alarm, open its editor, choose “Delete alarm”, and confirm the deletion. All copies of this threshold will be removed.</string>
     <string name="alarms_new_enabled">The alarm will be enabled when added.</string>
     <string name="alarms_edit_keeps_enabled">Editing keeps the current on/off setting.</string>
     <string name="alarms_enabled">Enabled</string>
@@ -316,8 +316,25 @@
     <string name="alarms_notifications_disabled">Notifications are disabled. Enable them in Android settings to receive alarm notifications.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">You have disabled the alarm notification group for this app. Enable it in Android settings to receive alarm notifications.</string>
     <string name="alarms_open_notification_settings">Open Android notification settings</string>
-    <string name="alarm_chan_disabled" formatted="false">You have disabled notifications for this alarm type.  Please enable them to use this type of alarm.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Manage this alarm type</string>
+    <string name="alarm_chan_disabled" formatted="false">Notifications are off for this alarm type’s shared channel.</string>
+    <string name="alarms_android_channel_settings">Android notification settings</string>
+    <string name="alarms_custom_create">Create custom settings</string>
+    <string name="alarms_custom_edit">Edit custom settings</string>
+    <string name="alarms_custom_remove">Remove custom settings</string>
+    <string name="alarms_playback">Sound playback</string>
+    <string name="alarms_playback_once">Play once</string>
+    <string name="alarms_playback_repeat">Repeat</string>
+    <string name="alarms_playback_help">Repeating stops when you open the notification panel or dismiss the notification.</string>
+    <string name="alarms_volume_category">Audio volume category</string>
+    <string name="alarms_volume_notifications" formatted="false">Notifications</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarms</string>
+    <string name="alarms_volume_media">Media</string>
+    <string name="alarms_volume_help">Android uses the requested volume category when supported by your device.</string>
+    <string name="alarms_replace_channel_title">Change audio volume category?</string>
+    <string name="alarms_replace_channel_message">Android requires a new notification channel. The app copies your sound, vibration, and importance settings where Android allows. Other notification options may reset.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (old)</string>
+    <string name="alarm_stop_action">Stop alarm</string>
     <string name="alarms_options_title" formatted="false">Alarm options</string>
     <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain</string>
@@ -334,6 +351,7 @@
     <string name="alarms_database_error">Could not access the alarm database. Try again.</string>
     <string name="alarms_saved">Alarm settings saved</string>
     <string name="alarms_saved_reload_failed">Saved, but the monitor could not be notified. Review monitoring status.</string>
+    <string name="alarms_saved_channels_failed">Saved, but notification channels could not be updated. Review Android notification settings.</string>
 
     <string name="history_range">History range</string>
     <string name="history_last_24h">Last 24\u00A0hours</string>
@@ -814,6 +832,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Select an existing general-backup ZIP and choose which available categories to restore. Backups from newer app versions may be incompatible, and restoring logs or predictor data from another device can cause incorrect estimates. If a restore is only partly completed, review the reported categories before trying again. Selected categories are restored; unselected categories are kept. Restoring alarms replaces the current alarms. For logs, choose whether to add them or replace current history.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restore selected data from a general backup ZIP file</string>
     <string name="general_backup_restore_message" formatted="false">Choose what you want to restore.</string>
+    <string name="alarm_restore_channel_changes_warning">Restoring alarms may replace or remove their Android notification channels. You may need to reapply some Android notification settings.</string>
     <string name="general_backup_device_data_warning">Logs and predictor data belong to the device where they were collected. Importing them on another device can cause incorrect predictions or other unexpected app behavior.</string>
     <string name="general_backup_imported" formatted="false">General backup imported successfully.</string>
     <string name="invalid_general_backup_file" formatted="false">Invalid or incompatible general backup file.</string>

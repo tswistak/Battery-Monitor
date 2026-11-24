@@ -272,8 +272,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Настройки сигналов</string>
     <string name="alarm_settings" formatted="false">Сигналы</string>
     <string name="alarm_settings_help" formatted="false">Вы можете настроить Battery Monitor так, чтобы получать уведомление о том, что заряд аккумулятора достигает определенного уровня (например, аккумулятор становится полностью заряженным, заряд опустился ниже 20%).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Все восемь типов сигналов доступны всегда. Включайте события напрямую или используйте «Добавить порог» у типа заряда или температуры. Отключённые значения остаются в списке. Звук и вибрация общие для типа в настройках уведомлений Android. Существующие дубликаты показаны как один сигнал; переключение затрагивает все копии. Сигналы о зарядке и разрядке следуют целям оценки и не управляют зарядкой. Заблокированный канал или остановленный мониторинг не меняют сохранённые переключатели.\n
-    Откройте настройки уведомлений Android, чтобы разрешить или заблокировать уведомления, настроить звук, вибрацию и доставку для основного уведомления и каждого типа сигналы. Включение правила сигналы не отменяет блокировку канала уведомлений.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Все восемь типов сигналов доступны всегда. Включайте события напрямую или используйте «Добавить порог» у типа заряда или температуры. Отключённые значения остаются в списке. По умолчанию пороги используют настройки уведомлений своего типа сигнала. В меню с тремя точками рядом с порогом можно создать отдельные настройки и управлять отдельным каналом уведомлений Android. Существующие дубликаты показаны как один сигнал; переключение затрагивает все копии. Сигналы о зарядке и разрядке следуют целям оценки и не управляют зарядкой. Заблокированный канал или остановленный мониторинг не меняют сохранённые переключатели.\n
+    Откройте настройки уведомлений Android, чтобы разрешить или заблокировать уведомления, настроить звук, вибрацию и доставку для основного уведомления и каждого канала сигналов. Включение правила сигнала не отменяет блокировку канала уведомлений.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d сигнал включено</item>
         <item quantity="few">%1$d сигналы включены</item>
@@ -307,7 +307,7 @@
     <string name="alarms_add_threshold">Добавить порог</string>
     <string name="alarms_edit_threshold">Изменить порог</string>
     <string name="alarms_edit_existing">Изменить существующий порог</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Нажмите значок карандаша рядом со значением порога, чтобы изменить его. Его состояние вкл./выкл. сохраняется. Чтобы удалить сигнал, откройте его для редактирования, выберите «Удалить сигнал» и подтвердите удаление. Все копии этого порога будут удалены.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Откройте меню с тремя точками рядом с порогом и выберите «Изменить порог». Его состояние вкл./выкл. сохраняется. Чтобы удалить сигнал, откройте его для редактирования, выберите «Удалить сигнал» и подтвердите удаление. Все копии этого порога будут удалены.</string>
     <string name="alarms_new_enabled">Сигнал будет включён при добавлении.</string>
     <string name="alarms_edit_keeps_enabled">При изменении сохраняется текущее состояние вкл./выкл.</string>
     <string name="alarms_enabled">Включено</string>
@@ -324,8 +324,25 @@
     <string name="alarms_notifications_disabled">Уведомления отключены. Включите их в настройках Android, чтобы получать уведомления о сигналах.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Вы отключили группу уведомлений сигналов для этого приложения. Включите её в настройках Android, чтобы получать уведомления о сигналах.</string>
     <string name="alarms_open_notification_settings">Открыть настройки уведомлений Android</string>
-    <string name="alarm_chan_disabled" formatted="false">Вы отключили уведомления для этого типа сигналов. Включите их, чтобы использовать этот тип сигналы.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Настроить этот тип сигналы</string>
+    <string name="alarm_chan_disabled" formatted="false">Уведомления для общего канала этого типа сигналов отключены.</string>
+    <string name="alarms_android_channel_settings">Настройки уведомлений Android</string>
+    <string name="alarms_custom_create">Создать отдельные настройки</string>
+    <string name="alarms_custom_edit">Изменить отдельные настройки</string>
+    <string name="alarms_custom_remove">Удалить отдельные настройки</string>
+    <string name="alarms_playback">Воспроизведение звука</string>
+    <string name="alarms_playback_once">Один раз</string>
+    <string name="alarms_playback_repeat">Повторять</string>
+    <string name="alarms_playback_help">Звук перестанет повторяться, когда вы откроете панель уведомлений или уберёте уведомление.</string>
+    <string name="alarms_volume_category">Категория громкости</string>
+    <string name="alarms_volume_notifications" formatted="false">Уведомления</string>
+    <string name="alarms_volume_alarms" formatted="false">Сигналы</string>
+    <string name="alarms_volume_media">Мультимедиа</string>
+    <string name="alarms_volume_help">Android использует выбранную категорию громкости, если устройство её поддерживает.</string>
+    <string name="alarms_replace_channel_title">Изменить категорию громкости?</string>
+    <string name="alarms_replace_channel_message">Android требуется новый канал уведомлений. Приложение перенесёт настройки звука, вибрации и важности, если это разрешает Android. Другие настройки уведомлений могут быть сброшены.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (старый)</string>
+    <string name="alarm_stop_action">Остановить сигнал</string>
     <string name="alarms_options_title" formatted="false">Параметры сигналов</string>
     <string name="pref_dismiss_low_battery_on_recovery">Убирать сигнал о низком заряде после восстановления</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Убирать уведомление о низком заряде, когда заряд превышает порог. Другие уведомления сигналов остаются</string>
@@ -342,6 +359,7 @@
     <string name="alarms_database_error">Не удалось открыть базу сигналов. Повторите попытку.</string>
     <string name="alarms_saved">Настройки сигналов сохранены</string>
     <string name="alarms_saved_reload_failed">Сохранено, но не удалось уведомить мониторинг. Проверьте состояние мониторинга.</string>
+    <string name="alarms_saved_channels_failed">Настройки сохранены, но обновить каналы уведомлений не удалось. Проверьте настройки уведомлений Android.</string>
 
     <string name="history_range">Диапазон истории</string>
     <string name="history_last_24h">Последние 24\u00A0часа</string>
@@ -824,6 +842,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Выберите существующий ZIP-файл общей резервной копии и доступные категории для восстановления. Резервные копии из более новых версий приложения могут быть несовместимы, а восстановление журналов или данных прогнозирования с другого устройства может привести к неверным прогнозам. Если восстановление завершено лишь частично, проверьте указанные в сообщении категории перед повторной попыткой. Выбранные категории восстанавливаются; невыбранные сохраняются. Восстановление сигналов заменяет текущие сигналы. Для журналов выберите добавление или замену текущей истории.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Восстановить выбранные данные из ZIP-файла общей резервной копии</string>
     <string name="general_backup_restore_message" formatted="false">Выберите, что нужно восстановить.</string>
+    <string name="alarm_restore_channel_changes_warning">При восстановлении сигналов их каналы уведомлений в Android могут быть заменены или удалены. Возможно, некоторые настройки уведомлений придётся задать заново.</string>
     <string name="general_backup_device_data_warning">Журналы и данные прогнозирования относятся к устройству, на котором они были собраны. Их импорт на другое устройство может привести к неверным прогнозам или другому неожиданному поведению приложения.</string>
     <string name="general_backup_imported" formatted="false">Общая резервная копия успешно импортирована.</string>
     <string name="invalid_general_backup_file" formatted="false">Недопустимый или несовместимый файл общей резервной копии.</string>

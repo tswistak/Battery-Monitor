@@ -223,32 +223,105 @@ class AlarmDatabaseInstrumentedTest {
     }
 
     @Test
-    fun reopening_a_version_five_database_preserves_all_rows_ids_flags_and_legacy_columns() {
-        for (type in AlarmDatabase.SUPPORTED_TYPES) database.addAlarm(
-            type != "fully_charged", type, when (type) {
-                "charge_rises", "charge_drops" -> "023"
-                "temp_rises", "temp_drops" -> "451"
-                else -> ""
-            }, "content://saved/tone", vibrate = true, lights = false
-        )
-        database.addAlarm(false, "temp_rises", "451")
-        val before = rows()
+    fun migrating_a_version_five_database_preserves_all_rows_ids_flags_and_legacy_columns() {
         database.close()
+        val databaseFile = context.getDatabasePath("alarms.db")
+        assertTrue(databaseFile.delete())
+        val before = AlarmDatabase.SUPPORTED_TYPES.mapIndexed { index, type ->
+            AlarmRule(
+                id = index * 3 + 2,
+                enabled = type != "fully_charged",
+                type = type,
+                threshold = when (type) {
+                    "charge_rises", "charge_drops" -> "23"
+                    "temp_rises", "temp_drops" -> "451"
+                    else -> ""
+                }
+            )
+        } + listOf(
+            AlarmRule(31, false, "temp_rises", "451"),
+            AlarmRule(32, true, "unknown_type", "invalid")
+        )
+        SQLiteDatabase.openOrCreateDatabase(databaseFile, null).use { legacy ->
+            legacy.execSQL(
+                """CREATE TABLE alarms (_id INTEGER PRIMARY KEY, enabled INTEGER, type STRING,
+                    threshold STRING, ringtone STRING, vibrate INTEGER, lights INTEGER)"""
+            )
+            for (row in before) {
+                legacy.execSQL(
+                    "INSERT INTO alarms VALUES (?,?,?,?,?,1,0)", arrayOf<Any>(
+                        row.id,
+                        if (row.enabled) 1 else 0,
+                        row.type,
+                        row.threshold,
+                        "content://saved/tone"
+                    )
+                )
+            }
+            legacy.version = 5
+        }
         database = AlarmDatabase(context)
-        assertEquals(before, rows())
+        assertEquals(AlarmSnapshot(before), database.getSnapshot())
         SQLiteDatabase.openDatabase(
             context.getDatabasePath("alarms.db").path, null, SQLiteDatabase.OPEN_READONLY
         ).use {
-            assertEquals(5, it.version)
+            assertEquals(6, it.version)
             it.rawQuery(
-                "SELECT ringtone,vibrate,lights FROM alarms WHERE _id=?",
-                arrayOf(before.first().id.toString())
+                "SELECT ringtone,vibrate,lights FROM alarms", null
             ).use { cursor ->
-                assertTrue(cursor.moveToFirst())
-                assertEquals("content://saved/tone", cursor.getString(0))
-                assertEquals(1, cursor.getInt(1))
-                assertEquals(0, cursor.getInt(2))
+                assertEquals(before.size, cursor.count)
+                while (cursor.moveToNext()) {
+                    assertEquals("content://saved/tone", cursor.getString(0))
+                    assertEquals(1, cursor.getInt(1))
+                    assertEquals(0, cursor.getInt(2))
+                }
             }
+        }
+        database.deleteLogicalAlarm(listOf(before.last()))
+        assertTrue(database.saveThreshold("charge_drops", "22", emptyList()) > before.last().id)
+    }
+
+    @Test
+    fun grouped_threshold_settings_inherit_override_survive_edits_and_return_to_inheritance() {
+        database.addAlarm(false, "charge_drops", "017")
+        database.addAlarm(true, "charge_drops", "17")
+        val inheritedId = database.saveThreshold("charge_drops", "15", emptyList())
+        val threshold = group("charge_drops", 17)
+        val type = threshold.type
+        assertEquals(AlarmConfiguration(), database.getSnapshot().effective(type, threshold.id))
+
+        val shared = AlarmConfiguration(AlarmSoundSettings(playback = AlarmPlayback.REPEAT))
+        database.saveSharedSettings(type, null, shared)
+        val custom = shared.copy(channelId = "local-threshold")
+        database.saveCustomSettings(threshold, null, custom)
+        val editedCustom = custom.copy(sound = AlarmSoundSettings())
+        database.saveCustomSettings(threshold, custom, editedCustom)
+        val updatedShared = AlarmConfiguration(
+            shared.sound.copy(volumeCategory = AlarmVolumeCategory.ALARMS), "local-type"
+        )
+        database.saveSharedSettings(type, shared, updatedShared)
+
+        database.saveThreshold(type, "19", threshold.members)
+        database.setLogicalEnabled(type, group(type, 19).members, false)
+        database.close()
+        database = AlarmDatabase(context)
+        val reopened = database.getSnapshot()
+        val edited = group(type, 19)
+        assertEquals(threshold.memberIds, edited.memberIds)
+        assertFalse(edited.enabled)
+        assertEquals(mapOf(threshold.id to editedCustom), reopened.custom)
+        assertEquals(editedCustom, reopened.effective(type, threshold.id))
+        assertEquals(updatedShared, reopened.effective(type, inheritedId))
+
+        database.saveCustomSettings(edited, editedCustom, null)
+        assertEquals(updatedShared, database.getSnapshot().effective(type, threshold.id))
+        assertTrue(database.getSnapshot().custom.isEmpty())
+        database.saveCustomSettings(edited, null, editedCustom)
+        database.deleteLogicalAlarm(edited.members)
+        assertTrue(database.getSnapshot().custom.isEmpty())
+        assertTrue(database.saveThreshold(type, "19", emptyList()) > threshold.id)
+        assertThrows(AlarmConflictException::class.java) {
+            database.saveCustomSettings(edited, null, editedCustom)
         }
     }
 
@@ -299,7 +372,9 @@ class AlarmDatabaseInstrumentedTest {
     fun actual_1_7_3_backup_imports_all_eight_types_and_exports_the_same_portable_records() {
         val file = File(directory, "standalone-alarms.json").apply { writeText(legacyBackup) }
         val uri = Uri.fromFile(file)
-        assertEquals(9, AlarmBackup.restore(database, AlarmBackup.readFromUri(context, uri).alarms))
+        assertEquals(
+            9, AlarmBackup.restore(context, database, AlarmBackup.readFromUri(context, uri))
+        )
         val imported = database.getAllAlarmRecords()
         assertEquals(8, imported.map { it.type }.distinct().size)
         assertEquals(
@@ -308,7 +383,7 @@ class AlarmDatabaseInstrumentedTest {
         assertEquals(
             listOf("", "", "", "17", "83", "94", "378", "", "61"), imported.map { it.threshold })
         val exported = AlarmBackup.exportToJson(database)
-        assertEquals(2, exported.getInt("version"))
+        assertEquals(AlarmBackup.SCHEMA_VERSION, exported.getInt("version"))
         val portable = exported.getJSONArray("alarms")
         val oldReader = (0 until portable.length()).map { index ->
             val record = portable.getJSONObject(index)
@@ -325,11 +400,11 @@ class AlarmDatabaseInstrumentedTest {
         AlarmBackup.writeToUri(context, uri, exported)
         val currentBackup = AlarmBackup.readFromUri(context, uri)
         assertEquals(AlarmBackup.SCHEMA_VERSION, currentBackup.version)
-        assertEquals(9, AlarmBackup.restore(database, currentBackup.alarms))
+        assertEquals(9, AlarmBackup.restore(context, database, currentBackup))
         assertEquals(imported, database.getAllAlarmRecords())
         assertEquals(
             9, AlarmBackup.importFromJson(
-                database, JSONObject(legacyBackup).put("version", 1).toString()
+                context, database, JSONObject(legacyBackup).put("version", 1).toString()
             )
         )
         assertEquals(imported, database.getAllAlarmRecords())
@@ -344,7 +419,7 @@ class AlarmDatabaseInstrumentedTest {
         backup.getJSONArray("alarms").put(
             JSONObject().put("enabled", false).put("type", "fully_charged").put("threshold", "")
         )
-        assertEquals(11, AlarmBackup.importFromJson(database, backup.toString()))
+        assertEquals(11, AlarmBackup.importFromJson(context, database, backup.toString()))
         assertEquals(5, projectAlarms(rows()).enabledCount)
         assertEquals(2, group("charge_drops", 17).members.size)
         val ids = rows().map { it.id }
@@ -352,7 +427,7 @@ class AlarmDatabaseInstrumentedTest {
         assertTrue(rows().filter { it.type == "charge_drops" }.none { it.enabled })
         assertEquals(ids, rows().map { it.id })
         val exported = AlarmBackup.exportToJson(database).toString()
-        assertEquals(11, AlarmBackup.importFromJson(database, exported))
+        assertEquals(11, AlarmBackup.importFromJson(context, database, exported))
         assertTrue(rows().filter { it.type == "charge_drops" }.none { it.enabled })
         assertEquals(2, group("fully_charged").members.size)
         assertEquals(4, projectAlarms(rows()).enabledCount)
@@ -360,19 +435,29 @@ class AlarmDatabaseInstrumentedTest {
 
     @Test
     fun bad_backup_and_failed_replacement_leave_the_existing_database_intact() {
-        AlarmBackup.importFromJson(database, legacyBackup)
+        AlarmBackup.importFromJson(context, database, legacyBackup)
         val original = rows()
         for (bad in listOf(
             "not json", "{}", "{\"version\":2,\"alarms\":[{\"type\":\"unknown\"}]}"
         )) {
-            assertThrows(Exception::class.java) { AlarmBackup.importFromJson(database, bad) }
+            assertThrows(Exception::class.java) {
+                AlarmBackup.importFromJson(
+                    context, database, bad
+                )
+            }
             assertEquals(original, rows())
         }
         sql("CREATE TRIGGER fail_import BEFORE INSERT ON alarms WHEN NEW.type='temp_rises' BEGIN SELECT RAISE(ABORT, 'injected import failure'); END")
-        assertThrows(Exception::class.java) { AlarmBackup.importFromJson(database, legacyBackup) }
+        assertThrows(Exception::class.java) {
+            AlarmBackup.importFromJson(
+                context, database, legacyBackup
+            )
+        }
         assertEquals(original, rows())
         sql("DROP TRIGGER fail_import")
-        assertEquals(0, AlarmBackup.importFromJson(database, "{\"version\":2,\"alarms\":[]}"))
+        assertEquals(
+            0, AlarmBackup.importFromJson(context, database, "{\"version\":2,\"alarms\":[]}")
+        )
         assertTrue(rows().isEmpty())
     }
 

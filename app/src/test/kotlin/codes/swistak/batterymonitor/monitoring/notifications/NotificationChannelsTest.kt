@@ -28,12 +28,18 @@ import android.net.Uri
 import android.os.LocaleList
 import android.os.Parcel
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.AlarmPlayback
+import codes.swistak.batterymonitor.alarms.AlarmSoundSettings
+import codes.swistak.batterymonitor.alarms.AlarmVolumeCategory
+import codes.swistak.batterymonitor.alarms.projectAlarms
 import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -71,7 +77,8 @@ class NotificationChannelsTest {
 
     @After
     fun removeTestChannels() {
-        expectedNames.keys.forEach(manager::deleteNotificationChannel)
+        manager.notificationChannels.map { it.id }.forEach(manager::deleteNotificationChannel)
+        context.deleteDatabase("alarms.db")
         manager.deleteNotificationChannel("unowned")
         manager.deleteNotificationChannelGroup("alarms")
     }
@@ -102,7 +109,7 @@ class NotificationChannelsTest {
                     RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), channel.sound
                 )
                 assertEquals(
-                    AudioAttributes.USAGE_NOTIFICATION_EVENT, channel.audioAttributes.usage
+                    AudioAttributes.USAGE_NOTIFICATION, channel.audioAttributes.usage
                 )
                 assertTrue(channel.shouldShowLights())
                 assertEquals(-0xcc4a1b, channel.lightColor)
@@ -233,6 +240,156 @@ class NotificationChannelsTest {
         assertNull(manager.notificationChannelGroups.firstOrNull { it.id == "alarms" })
         assertEquals(before, manager.getNotificationChannel("unowned"))
         assertEquals(registrations, shadow.channelUpdates to shadow.groupUpdates)
+    }
+
+    @Test
+    @Config(sdk = [26, 36])
+    fun `dedicated channels follow a logical threshold through rename localization and removal`() =
+        withDatabase { database ->
+            val type = NotificationChannels.CHAN_ID_A_CDROP
+            val id = database.saveThreshold(type, "23", emptyList())
+            val original = requireNotNull(NotificationChannels.ensureAlarmChannel(context, type))
+            val alarm =
+                projectAlarms(database.getAlarmRules()).types.single { it.definition.type == type }.alarms.single()
+            val lastRegistration = shadow.channelUpdates
+            assertNull(NotificationChannels.ensureAlarmChannel(context, type, id))
+            assertEquals(lastRegistration, shadow.channelUpdates)
+            val settings = AlarmSoundSettings(AlarmPlayback.REPEAT)
+            NotificationChannels.saveAlarmSettings(
+                context, database, type, alarm, null, settings, false
+            )
+            val configuration = database.getSnapshot().effective(type, id)
+            val dedicated = requireNotNull(configuration.channelId)
+            assertNotEquals(original, dedicated)
+            assertEquals(dedicated, NotificationChannels.ensureAlarmChannel(context, type, id))
+
+            database.saveThreshold(type, "37", alarm.members)
+            val renamed =
+                projectAlarms(database.getAlarmRules()).types.single { it.definition.type == type }.alarms.single()
+            assertEquals(id, renamed.id)
+            val polish =
+                context.createConfigurationContext(Configuration(context.resources.configuration).apply {
+                    setLocales(LocaleList.forLanguageTags("pl"))
+                })
+            val localizedValue =
+                java.text.NumberFormat.getPercentInstance(java.util.Locale.forLanguageTag("pl"))
+                    .format(0.37)
+            NotificationChannels.refreshExistingChannelNames(polish)
+            assertEquals(dedicated, database.getSnapshot().effective(type, id).channelId)
+            assertEquals(
+                polish.getString(
+                    R.string.alarm_custom_channel_name,
+                    polish.getString(R.string.alarm_type_charge_drops),
+                    localizedValue
+                ), manager.getNotificationChannel(dedicated).name.toString()
+            )
+            assertEquals(
+                manager.getNotificationChannel(original).sound,
+                manager.getNotificationChannel(dedicated).sound
+            )
+
+            database.saveCustomSettings(renamed, configuration, null)
+            NotificationChannels.syncAlarmChannels(context)
+            NotificationChannels.refreshExistingChannelNames(context)
+            assertNull(manager.getNotificationChannel(dedicated))
+            assertEquals(
+                original, NotificationChannels.alarmChannelId(
+                    type, database.getSnapshot().effective(type, id)
+                )
+            )
+            assertNull(NotificationChannels.ensureAlarmChannel(context, type, id))
+
+            NotificationChannels.saveAlarmSettings(
+                context, database, type, renamed, null, settings, false
+            )
+            val replacement = requireNotNull(database.getSnapshot().effective(type, id).channelId)
+            assertNotEquals(dedicated, replacement)
+            database.deleteLogicalAlarm(renamed.members)
+            NotificationChannels.syncAlarmChannels(context)
+            assertNull(manager.getNotificationChannel(replacement))
+        }
+
+    @Test
+    @Config(sdk = [26, 36])
+    fun `playback keeps an existing channel and category changes clone its readable native settings`() =
+        withDatabase { database ->
+            val type = NotificationChannels.CHAN_ID_A_CDROP
+            manager.createNotificationChannelGroup(
+                NotificationChannelGroup(
+                    NotificationChannels.CHAN_GROUP_ID_ALARMS, "Alarms"
+                )
+            )
+            val baseline =
+                NotificationChannel(type, "Legacy", NotificationManager.IMPORTANCE_NONE).apply {
+                    group = NotificationChannels.CHAN_GROUP_ID_ALARMS
+                    setSound(
+                        Uri.parse("content://test/alarm-tone"),
+                        AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                            .build()
+                    )
+                    vibrationPattern = longArrayOf(0, 240, 480)
+                    setShowBadge(false)
+                }
+            manager.createNotificationChannel(baseline)
+            NotificationChannels.ensureChannelsCreated(context)
+            val original = copyChannel(manager.getNotificationChannel(type))
+            assertEquals(NotificationManager.IMPORTANCE_NONE, original.importance)
+
+            NotificationChannels.saveAlarmSettings(
+                context, database, type, null, null, AlarmSoundSettings(AlarmPlayback.REPEAT), false
+            )
+            val current = database.getSnapshot().shared.getValue(type)
+            assertEquals(type, NotificationChannels.alarmChannelId(type, current))
+            original.name = manager.getNotificationChannel(type).name
+            assertEquals(original, manager.getNotificationChannel(type))
+
+            val media = current.sound.copy(volumeCategory = AlarmVolumeCategory.MEDIA)
+            assertThrows(IllegalStateException::class.java) {
+                NotificationChannels.saveAlarmSettings(
+                    context, database, type, null, current, media, false
+                )
+            }
+            assertEquals(current, database.getSnapshot().shared[type])
+            assertEquals(expectedNames.keys, manager.notificationChannels.map { it.id }.toSet())
+
+            NotificationChannels.saveAlarmSettings(
+                context, database, type, null, current, media, true
+            )
+            val replaced = database.getSnapshot().shared.getValue(type)
+            val mediaId = requireNotNull(replaced.channelId)
+            val mediaChannel = manager.getNotificationChannel(mediaId)
+            assertEquals(AudioAttributes.USAGE_MEDIA, mediaChannel.audioAttributes.usage)
+            assertEquals(original.importance, mediaChannel.importance)
+            assertEquals(original.sound, mediaChannel.sound)
+            assertEquals(original.shouldVibrate(), mediaChannel.shouldVibrate())
+            assertEquals(original.vibrationPattern.toList(), mediaChannel.vibrationPattern.toList())
+            assertEquals(original.canShowBadge(), mediaChannel.canShowBadge())
+            assertEquals(
+                original.audioAttributes, manager.getNotificationChannel(type).audioAttributes
+            )
+
+            val alarm = media.copy(
+                playback = AlarmPlayback.ONCE, volumeCategory = AlarmVolumeCategory.ALARMS
+            )
+            NotificationChannels.saveAlarmSettings(
+                context, database, type, null, replaced, alarm, true
+            )
+            val alarmId = requireNotNull(database.getSnapshot().shared[type]?.channelId)
+            assertEquals(
+                AudioAttributes.USAGE_ALARM,
+                manager.getNotificationChannel(alarmId).audioAttributes.usage
+            )
+            assertNull(manager.getNotificationChannel(mediaId))
+            assertTrue(manager.notificationChannels.any { it.id == type })
+        }
+
+    private fun withDatabase(test: (AlarmDatabase) -> Unit) {
+        val database = AlarmDatabase(context)
+        try {
+            test(database)
+        } finally {
+            database.close()
+        }
     }
 
     private fun assertLocalizedNamesAndPreservedSettings(

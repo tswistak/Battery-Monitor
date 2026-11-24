@@ -266,8 +266,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarm Ayarları</string>
     <string name="alarm_settings" formatted="false">Alarmlar</string>
     <string name="alarm_settings_help" formatted="false">Pil seviyesi belirli bir duruma geldiğinde Battery Monitor sizi bilgilendirebilir.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Sekiz alarm türünün tümü her zaman kullanılabilir. Olayları doğrudan açın veya şarj ya da sıcaklık türü altında “Eşik ekle” kullanın. Devre dışı değerler listede kalır. Ses ve titreşim, Android bildirim ayarlarında tür bazında ortaktır. Mevcut yinelenen kayıtlar tek bir mantıksal alarm olarak görünür; açma/kapatma tüm kopyaları etkiler. Şarj ve boşalma alarmları tahmin hedeflerini izler ve şarjı denetlemez. Engellenen kanal veya durdurulan izleme, kaydedilen anahtarları değiştirmez.\n
-    Bildirimlere izin vermek veya engellemek, ana bildirim ve her alarm türü için ses, titreşim ve iletim ayarlarını yapmak üzere Android bildirim ayarlarını açın. Bir alarm kuralını etkinleştirmek, engellenmiş bildirim kanalını geçersiz kılmaz.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Sekiz alarm türünün tümü her zaman kullanılabilir. Olayları doğrudan açın veya şarj ya da sıcaklık türü altında “Eşik ekle” kullanın. Devre dışı değerler listede kalır. Eşikler varsayılan olarak kendi alarm türlerinin bildirim ayarlarını kullanır. Eşiğin yanındaki üç noktalı menüden özel ayarlar oluşturabilir ve ayrı bir Android bildirim kanalını yönetebilirsiniz. Mevcut yinelenen kayıtlar tek bir mantıksal alarm olarak görünür; açma/kapatma tüm kopyaları etkiler. Şarj ve boşalma alarmları tahmin hedeflerini izler ve şarjı denetlemez. Engellenen kanal veya durdurulan izleme, kaydedilen anahtarları değiştirmez.\n
+    Bildirimlere izin vermek veya engellemek, ana bildirim ve her alarm kanalı için ses, titreşim ve iletim ayarlarını yapmak üzere Android bildirim ayarlarını açın. Bir alarm kuralını etkinleştirmek, engellenmiş bildirim kanalını geçersiz kılmaz.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm etkin</item>
         <item quantity="other">%1$d alarm etkin</item>
@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Eşik ekle</string>
     <string name="alarms_edit_threshold">Eşiği düzenle</string>
     <string name="alarms_edit_existing">Mevcut eşiği düzenle</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Düzenlemek için eşik değerinin yanındaki kalem simgesine dokunun. Düzenleme açık/kapalı durumunu korur. Bir alarmı silmek için düzenleyicisini açın, “Alarm Sil” seçeneğini seçin ve silmeyi onaylayın. Bu eşiğin tüm kopyaları kaldırılacak.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Eşiğin yanındaki üç noktalı menüyü açın ve “Eşiği düzenle” seçeneğini seçin. Düzenleme açık/kapalı durumunu korur. Bir alarmı silmek için düzenleyicisini açın, “Alarm Sil” seçeneğini seçin ve silmeyi onaylayın. Bu eşiğin tüm kopyaları kaldırılacak.</string>
     <string name="alarms_new_enabled">Alarm eklendiğinde etkinleştirilecek.</string>
     <string name="alarms_edit_keeps_enabled">Düzenleme, geçerli açık/kapalı ayarını korur.</string>
     <string name="alarms_enabled">Etkin</string>
@@ -316,8 +316,25 @@
     <string name="alarms_notifications_disabled">Bildirimler kapalı. Alarm bildirimlerini almak için Android ayarlarından bildirimleri açın.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Bu uygulama için alarm bildirim grubunu kapattınız. Alarm bildirimlerini almak için bu grubu Android ayarlarından açın.</string>
     <string name="alarms_open_notification_settings">Android bildirim ayarlarını aç</string>
-    <string name="alarm_chan_disabled" formatted="false">Bu alarm türü için bildirimleri kapattınız. Bu alarm türünü kullanmak için etkinleştirin.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Bu Alarm Türünü Yönet</string>
+    <string name="alarm_chan_disabled" formatted="false">Bu alarm türünün ortak kanalı için bildirimler kapalı.</string>
+    <string name="alarms_android_channel_settings">Android bildirim ayarları</string>
+    <string name="alarms_custom_create">Özel ayarlar oluştur</string>
+    <string name="alarms_custom_edit">Özel ayarları düzenle</string>
+    <string name="alarms_custom_remove">Özel ayarları kaldır</string>
+    <string name="alarms_playback">Ses çalma</string>
+    <string name="alarms_playback_once">Bir kez çal</string>
+    <string name="alarms_playback_repeat">Tekrarla</string>
+    <string name="alarms_playback_help">Bildirim panelini açtığınızda veya bildirimi kapattığınızda sesin tekrarı durur.</string>
+    <string name="alarms_volume_category">Ses düzeyi kategorisi</string>
+    <string name="alarms_volume_notifications" formatted="false">Bildirimler</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarmlar</string>
+    <string name="alarms_volume_media">Medya</string>
+    <string name="alarms_volume_help">Cihazınız destekliyorsa Android seçilen ses düzeyi kategorisini kullanır.</string>
+    <string name="alarms_replace_channel_title">Ses düzeyi kategorisi değiştirilsin mi?</string>
+    <string name="alarms_replace_channel_message">Android yeni bir bildirim kanalı gerektirir. Uygulama, Android’in izin verdiği ölçüde ses, titreşim ve önem ayarlarını kopyalar. Diğer bildirim seçenekleri sıfırlanabilir.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (eski)</string>
+    <string name="alarm_stop_action">Alarmı durdur</string>
     <string name="alarms_options_title" formatted="false">Alarm seçenekleri</string>
     <string name="pref_dismiss_low_battery_on_recovery">Şarj yükseldiğinde düşük pil alarmını kaldır</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Şarj eşik değerinin üzerine çıktığında düşük pil bildirimini kaldırır. Diğer alarm bildirimleri kalır</string>
@@ -334,6 +351,7 @@
     <string name="alarms_database_error">Alarm veritabanına erişilemedi. Yeniden deneyin.</string>
     <string name="alarms_saved">Alarm ayarları kaydedildi</string>
     <string name="alarms_saved_reload_failed">Kaydedildi ancak izleme hizmetine bildirilemedi. İzleme durumunu gözden geçirin.</string>
+    <string name="alarms_saved_channels_failed">Ayarlar kaydedildi ancak bildirim kanalları güncellenemedi. Android bildirim ayarlarını kontrol edin.</string>
 
     <string name="history_range">Geçmiş aralığı</string>
     <string name="history_last_24h">Son 24\u00A0saat</string>
@@ -814,6 +832,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Mevcut bir genel ZIP yedeğini seçin ve kullanılabilir kategorilerden hangilerini geri yüklemek istediğinizi belirleyin. Uygulamanın daha yeni sürümlerinden alınan yedekler uyumsuz olabilir ve başka bir cihazdan günlüklerin veya tahmin verilerinin geri yüklenmesi yanlış tahminlere neden olabilir. Geri yükleme yalnızca kısmen tamamlanırsa yeniden denemeden önce bildirilen kategorileri kontrol edin. Seçilen kategoriler geri yüklenir; seçilmeyen kategoriler korunur. Alarmları geri yüklemek mevcut alarmları değiştirir. Günlükler için bunları eklemeyi veya mevcut geçmişi değiştirmeyi seçin.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Seçilen verileri genel yedek ZIP dosyasından geri yükle</string>
     <string name="general_backup_restore_message" formatted="false">Geri yüklemek istediklerinizi seçin.</string>
+    <string name="alarm_restore_channel_changes_warning">Alarmlar geri yüklenirken Android bildirim kanalları değiştirilebilir veya kaldırılabilir. Bazı bildirim ayarlarını yeniden yapmanız gerekebilir.</string>
     <string name="general_backup_device_data_warning">Günlükler ve tahmin verileri toplandıkları cihaza özgüdür. Verilerin başka bir cihaza aktarılması yanlış tahminlere veya uygulamanın beklenmedik şekilde davranmasına neden olabilir.</string>
     <string name="general_backup_imported" formatted="false">Genel yedek başarıyla içe aktarıldı.</string>
     <string name="invalid_general_backup_file" formatted="false">Geçersiz veya uyumsuz genel yedek dosyası.</string>

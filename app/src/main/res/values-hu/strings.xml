@@ -266,8 +266,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Riasztás beállítások</string>
     <string name="alarm_settings" formatted="false">Riasztások</string>
     <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
-    <string name="alarms_overview_channels_help" formatted="false">Mind a nyolc riasztástípus mindig elérhető. Az eseményeket közvetlenül kapcsolhatja be, vagy töltöttségi és hőmérsékleti típusnál használja a „Küszöb hozzáadása” műveletet. A letiltott értékek a listában maradnak. A hang és rezgés típusonként közös az Android értesítési beállításaiban. A meglévő ismétlődő bejegyzések egy logikai riasztásként jelennek meg; a kapcsolás minden példányra hat. A töltési és merülési riasztások a becslési célokat követik, és nem vezérlik a töltést. A letiltott csatorna vagy leállított figyelés nem módosítja a mentett kapcsolókat.\n
-    Az Android értesítési beállításaiban engedélyezheti vagy tilthatja az értesítéseket, és beállíthatja a fő értesítés, valamint az egyes riasztástípusok hangját, rezgését és kézbesítését. Egy riasztási szabály engedélyezése nem írja felül a letiltott értesítési csatornát.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Mind a nyolc riasztástípus mindig elérhető. Az eseményeket közvetlenül kapcsolhatja be, vagy töltöttségi és hőmérsékleti típusnál használja a „Küszöb hozzáadása” műveletet. A letiltott értékek a listában maradnak. A küszöbértékek alapértelmezés szerint a riasztástípusuk értesítési beállításait használják. A küszöbérték melletti hárompontos menüben egyéni beállításokat hozhat létre, és külön Android-értesítési csatornát kezelhet. A meglévő ismétlődő bejegyzések egy logikai riasztásként jelennek meg; a kapcsolás minden példányra hat. A töltési és merülési riasztások a becslési célokat követik, és nem vezérlik a töltést. A letiltott csatorna vagy leállított figyelés nem módosítja a mentett kapcsolókat.\n
+    Az Android értesítési beállításaiban engedélyezheti vagy tilthatja az értesítéseket, és beállíthatja a fő értesítés, valamint az egyes riasztási csatornák hangját, rezgését és kézbesítését. Egy riasztási szabály engedélyezése nem írja felül a letiltott értesítési csatornát.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d riasztás engedélyezve</item>
         <item quantity="other">%1$d riasztás engedélyezve</item>
@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Küszöb hozzáadása</string>
     <string name="alarms_edit_threshold">Küszöb szerkesztése</string>
     <string name="alarms_edit_existing">Meglévő küszöb szerkesztése</string>
-    <string name="alarms_threshold_edit_help" formatted="false">A szerkesztéshez koppintson a küszöbérték melletti ceruzaikonra. A be- vagy kikapcsolt állapota megmarad. A riasztás törléséhez nyissa meg a szerkesztőjét, válassza a „Risztás törlése” lehetőséget, majd erősítse meg a törlést. A küszöb összes példánya törlődik.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Nyissa meg a küszöbérték melletti hárompontos menüt, és válassza a „Küszöb szerkesztése” lehetőséget. A be- vagy kikapcsolt állapota megmarad. A riasztás törléséhez nyissa meg a szerkesztőjét, válassza a „Risztás törlése” lehetőséget, majd erősítse meg a törlést. A küszöb összes példánya törlődik.</string>
     <string name="alarms_new_enabled">A riasztás hozzáadáskor engedélyezve lesz.</string>
     <string name="alarms_edit_keeps_enabled">A szerkesztés megőrzi a jelenlegi be- vagy kikapcsolt állapotot.</string>
     <string name="alarms_enabled">Engedélyezve</string>
@@ -316,8 +316,25 @@
     <string name="alarms_notifications_disabled">Az értesítések ki vannak kapcsolva. Engedélyezd őket az Android beállításaiban, hogy megkapd a riasztási értesítéseket.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Letiltottad az alkalmazás riasztási értesítési csoportját. Engedélyezd az Android beállításaiban, hogy megkapd a riasztási értesítéseket.</string>
     <string name="alarms_open_notification_settings">Az Android értesítési beállításainak megnyitása</string>
-    <string name="alarm_chan_disabled" formatted="false">Letiltottad az értesítéseket ehhez a riasztástípushoz. Engedélyezd a használatához.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Riasztástípus kezelése</string>
+    <string name="alarm_chan_disabled" formatted="false">A riasztástípus közös csatornájának értesítései ki vannak kapcsolva.</string>
+    <string name="alarms_android_channel_settings">Android-értesítési beállítások</string>
+    <string name="alarms_custom_create">Egyéni beállítások létrehozása</string>
+    <string name="alarms_custom_edit">Egyéni beállítások szerkesztése</string>
+    <string name="alarms_custom_remove">Egyéni beállítások eltávolítása</string>
+    <string name="alarms_playback">Hanglejátszás</string>
+    <string name="alarms_playback_once">Lejátszás egyszer</string>
+    <string name="alarms_playback_repeat">Ismétlés</string>
+    <string name="alarms_playback_help">Az ismétlés leáll az értesítési panel megnyitásakor vagy az értesítés elvetésekor.</string>
+    <string name="alarms_volume_category">Hangerőkategória</string>
+    <string name="alarms_volume_notifications" formatted="false">Értesítések</string>
+    <string name="alarms_volume_alarms" formatted="false">Riasztások</string>
+    <string name="alarms_volume_media">Média</string>
+    <string name="alarms_volume_help">Az Android a kiválasztott hangerőkategóriát használja, ha az eszköz támogatja.</string>
+    <string name="alarms_replace_channel_title">Módosítja a hangerőkategóriát?</string>
+    <string name="alarms_replace_channel_message">Az Android új értesítési csatornát igényel. Az alkalmazás átmásolja a hang, a rezgés és a fontosság beállításait, amennyiben ezt az Android engedi. A többi értesítési beállítás visszaállhat az alapértékére.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (régi)</string>
+    <string name="alarm_stop_action">Riasztás leállítása</string>
     <string name="alarms_options_title" formatted="false">Riasztási beállítások</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alacsony töltöttségi riasztás eltüntetése helyreállás után</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Eltávolítja az alacsony töltöttségi értesítést, ha a töltöttség a küszöb fölé emelkedik. A többi riasztási értesítés megmarad</string>
@@ -334,6 +351,7 @@
     <string name="alarms_database_error">A riasztási adatbázis nem érhető el. Próbálja újra.</string>
     <string name="alarms_saved">Riasztási beállítások mentve</string>
     <string name="alarms_saved_reload_failed">Mentve, de a figyelés nem értesíthető. Ellenőrizze a figyelés állapotát.</string>
+    <string name="alarms_saved_channels_failed">A beállítások mentve, de nem sikerült frissíteni az értesítési csatornákat. Ellenőrizze az Android értesítési beállításait.</string>
 
     <string name="history_range">Előzmények időtartománya</string>
     <string name="history_last_24h">Utolsó 24\u00A0óra</string>
@@ -814,6 +832,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Válassz egy meglévő általános ZIP-mentést, majd válaszd ki a visszaállítandó elérhető kategóriákat. Az alkalmazás újabb verzióival készült biztonsági mentések inkompatibilisek lehetnek, és másik eszközről származó naplók vagy előrejelző adatok visszaállítása hibás előrejelzéseket okozhat. Ha a visszaállítás csak részben fejeződik be, újabb próbálkozás előtt ellenőrizd a jelzett kategóriákat. A kijelölt kategóriák visszaállnak; a ki nem jelölt kategóriák megmaradnak. A riasztások visszaállítása lecseréli a jelenlegi riasztásokat. A naplóknál válassza ki, hogy hozzáadja őket, vagy lecseréli a jelenlegi előzményeket.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Kiválasztott adatok visszaállítása egy általános biztonsági mentés ZIP-fájljából</string>
     <string name="general_backup_restore_message" formatted="false">Válassza ki, mit szeretne visszaállítani.</string>
+    <string name="alarm_restore_channel_changes_warning">A riasztások visszaállítása lecserélheti vagy eltávolíthatja az Android-értesítési csatornáikat. Előfordulhat, hogy egyes értesítési beállításokat újból meg kell adnia.</string>
     <string name="general_backup_device_data_warning">A naplók és az előrejelzési adatok ahhoz az eszközhöz tartoznak, amelyen gyűjtötték őket. Másik eszközre importálva hibás előrejelzéseket vagy az alkalmazás egyéb váratlan működését okozhatják.</string>
     <string name="general_backup_imported" formatted="false">Az általános biztonsági mentés importálása sikeres.</string>
     <string name="invalid_general_backup_file" formatted="false">Érvénytelen vagy nem kompatibilis általános biztonsági mentési fájl.</string>

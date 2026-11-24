@@ -12,13 +12,17 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
+import android.Manifest
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
@@ -27,6 +31,9 @@ import android.os.Messenger
 import android.os.SystemClock
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.test.platform.app.InstrumentationRegistry
+import codes.swistak.batterymonitor.alarms.AlarmConfiguration
+import codes.swistak.batterymonitor.alarms.AlarmRule
+import codes.swistak.batterymonitor.alarms.AlarmSnapshot
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.StartupDialogViewModel
 import codes.swistak.batterymonitor.common.DisplayStrings
@@ -35,6 +42,8 @@ import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.logs.historyQuery
+import codes.swistak.batterymonitor.monitoring.charginglimit.ResolvedTarget
+import codes.swistak.batterymonitor.monitoring.charginglimit.TargetSource
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
@@ -285,9 +294,21 @@ class MonitoringRegressionInstrumentedTest {
         )
         set("currentInfoPendingIntent", current)
         set("alarmsPendingIntent", alarms)
+        val notificationManager = target.getSystemService(NotificationManager::class.java)
+        val channel = "alarm-navigation-${directory.name}"
         var activity: BatteryInfoActivity? = null
         try {
             assertTrue(MonitoringDesiredState.write(target, desired = false))
+            target.stopService(Intent(target, BatteryInfoService::class.java))
+            if (Build.VERSION.SDK_INT >= 33 && !notificationManager.areNotificationsEnabled()) {
+                instrumentation.uiAutomation.grantRuntimePermission(
+                    target.packageName, Manifest.permission.POST_NOTIFICATIONS
+                )
+            }
+            notificationManager.createNotificationChannel(
+                NotificationChannel(
+                    channel, channel, NotificationManager.IMPORTANCE_DEFAULT
+                ).apply { setSound(null, null) })
             val version = PackageInfoCompat.getLongVersionCode(
                 target.packageManager.getPackageInfo(target.packageName, 0)
             )
@@ -306,7 +327,42 @@ class MonitoringRegressionInstrumentedTest {
             instrumentation.runOnMainSync {
                 assertEquals(SectionOwner.ALARMS, navigator(launched).selected)
             }
-            val notification = (call("alarmNotificationBuilder") as Notification.Builder).build()
+            val type = "fully_charged"
+            val snapshot = AlarmSnapshot(
+                rules = listOf(AlarmRule(1, true, type, "")),
+                shared = mapOf(type to AlarmConfiguration(channelId = channel))
+            )
+            val handleAlarms = BatteryInfoService::class.java.getDeclaredMethod(
+                "handleAlarms",
+                TargetAlarmResult::class.java,
+                ResolvedPredictionTargets::class.java,
+                AlarmSnapshot::class.java
+            ).apply { isAccessible = true }
+            instrumentation.runOnMainSync {
+                (field("info") as BatteryInfo).apply {
+                    plugged = BatteryInfo.PLUGGED_USB
+                    lastStatus = BatteryInfo.STATUS_CHARGING
+                    status = BatteryInfo.STATUS_FULLY_CHARGED
+                    percent = 100
+                }
+                handleAlarms.invoke(
+                    service, TargetAlarmResult(
+                        chargingLimitReached = false, dischargingLimitReached = false
+                    ), ResolvedPredictionTargets(
+                        ResolvedTarget(100, TargetSource.DEFAULT),
+                        ResolvedTarget(0, TargetSource.DEFAULT)
+                    ), snapshot
+                )
+            }
+            val postDeadline = SystemClock.elapsedRealtime() + 5_000L
+            var posted: Notification? = null
+            while (posted == null && SystemClock.elapsedRealtime() < postDeadline) {
+                posted =
+                    notificationManager.activeNotifications.singleOrNull { it.notification.channelId == channel }?.notification
+                if (posted == null) SystemClock.sleep(40)
+            }
+            val notification =
+                checkNotNull(posted) { "Fully charged alarm notification was not posted" }
             assertEquals(current, notification.contentIntent)
             notification.contentIntent.send()
             val deadline = SystemClock.elapsedRealtime() + 10_000L
@@ -321,6 +377,7 @@ class MonitoringRegressionInstrumentedTest {
         } finally {
             instrumentation.runOnMainSync { activity?.finish() }
             instrumentation.waitForIdleSync()
+            notificationManager.deleteNotificationChannel(channel)
             current.cancel()
             alarms.cancel()
             assertTrue(MonitoringDesiredState.write(target, desiredBefore))
@@ -504,8 +561,8 @@ class MonitoringRegressionInstrumentedTest {
             })
             val registration = currentClients().getValue(client)
             assertNull(
-                registration.javaClass.getDeclaredField("demand")
-                    .apply { isAccessible = true }.get(registration)
+                registration.javaClass.getDeclaredField("demand").apply { isAccessible = true }
+                    .get(registration)
             )
             service.onUnbind(null)
         }
@@ -529,8 +586,8 @@ class MonitoringRegressionInstrumentedTest {
             sendCurrentDemand(client, 1, 1, CurrentDemand(1_000, false))
             val registration = currentClients().getValue(client)
             assertNull(
-                registration.javaClass.getDeclaredField("demand")
-                    .apply { isAccessible = true }.get(registration)
+                registration.javaClass.getDeclaredField("demand").apply { isAccessible = true }
+                    .get(registration)
             )
             assertEquals(0, acquisitions)
             assertFalse(MonitoringDesiredState.read(context))

@@ -269,8 +269,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Setări de alarmă</string>
     <string name="alarm_settings" formatted="false">Alarme</string>
     <string name="alarm_settings_help" formatted="false">Puteți solicita Battery Monitor să vă anunțe când nivelul bateriei este atinge o anumită condiție (de exemplu, bateria se încarcă complet, nivelul bateriei scade sub 20% și multe altele).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Valorile dezactivate rămân în listă. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea sau dezactivarea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.\n
-    Deschide setările notificărilor Android pentru a permite sau bloca notificările și a configura sunetul, vibrațiile și livrarea pentru notificarea principală și fiecare tip de alarmă. Activarea unei reguli de alarmă nu anulează blocarea unui canal de notificări.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Valorile dezactivate rămân în listă. În mod implicit, pragurile folosesc setările de notificare ale tipului lor de alarmă. Din meniul cu trei puncte de lângă prag poți crea setări personalizate și gestiona un canal de notificări Android separat. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea sau dezactivarea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.\n
+    Deschide setările notificărilor Android pentru a permite sau bloca notificările și a configura sunetul, vibrațiile și livrarea pentru notificarea principală și fiecare canal de alarmă. Activarea unei reguli de alarmă nu anulează blocarea unui canal de notificări.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarmă activată</item>
         <item quantity="few">%1$d alarme activate</item>
@@ -303,7 +303,7 @@
     <string name="alarms_add_threshold">Adaugă prag</string>
     <string name="alarms_edit_threshold">Editează pragul</string>
     <string name="alarms_edit_existing">Editează pragul existent</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Atinge pictograma creionului de lângă valoarea pragului pentru a o edita. Editarea păstrează starea activată sau dezactivată. Pentru a șterge o alarmă, deschide editorul alarmei, alege „Sterge Alarma” și confirmă ștergerea. Toate copiile acestui prag vor fi eliminate.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Deschide meniul cu trei puncte de lângă prag și alege „Editează pragul”. Editarea păstrează starea activată sau dezactivată. Pentru a șterge o alarmă, deschide editorul alarmei, alege „Sterge Alarma” și confirmă ștergerea. Toate copiile acestui prag vor fi eliminate.</string>
     <string name="alarms_new_enabled">Alarma va fi activată când este adăugată.</string>
     <string name="alarms_edit_keeps_enabled">Editarea păstrează starea actuală, activată sau dezactivată.</string>
     <string name="alarms_enabled">Activată</string>
@@ -320,8 +320,25 @@
     <string name="alarms_notifications_disabled">Notificările sunt dezactivate. Activați-le în setările Android pentru a primi notificări de alarmă.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Ați dezactivat grupul de notificări de alarmă pentru această aplicație.  Activați-l în setările Android pentru a primi notificări de alarmă.</string>
     <string name="alarms_open_notification_settings">Deschideți setările de notificare Android</string>
-    <string name="alarm_chan_disabled" formatted="false">Ați dezactivat notificările pentru acest tip de alarmă.  Vă rugăm să le permiteți să utilizeze acest tip de alarmă.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Gestionați acest tip de alarmă</string>
+    <string name="alarm_chan_disabled" formatted="false">Notificările pentru canalul comun al acestui tip de alarmă sunt dezactivate.</string>
+    <string name="alarms_android_channel_settings">Setări de notificare Android</string>
+    <string name="alarms_custom_create">Creează setări personalizate</string>
+    <string name="alarms_custom_edit">Editează setările personalizate</string>
+    <string name="alarms_custom_remove">Elimină setările personalizate</string>
+    <string name="alarms_playback">Redarea sunetului</string>
+    <string name="alarms_playback_once">Redă o singură dată</string>
+    <string name="alarms_playback_repeat">Repetă</string>
+    <string name="alarms_playback_help">Repetarea se oprește când deschizi panoul de notificări sau închizi notificarea.</string>
+    <string name="alarms_volume_category">Categoria de volum</string>
+    <string name="alarms_volume_notifications" formatted="false">Notificări</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarme</string>
+    <string name="alarms_volume_media">Conținut media</string>
+    <string name="alarms_volume_help">Android folosește categoria de volum aleasă dacă dispozitivul o acceptă.</string>
+    <string name="alarms_replace_channel_title">Schimbi categoria de volum?</string>
+    <string name="alarms_replace_channel_message">Android necesită un canal de notificări nou. Aplicația copiază setările de sunet, vibrații și importanță în măsura în care permite Android. Celelalte opțiuni de notificare pot fi resetate.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (vechi)</string>
+    <string name="alarm_stop_action">Oprește alarma</string>
     <string name="alarms_options_title" formatted="false">Opțiuni pentru alarme</string>
     <string name="pref_dismiss_low_battery_on_recovery">Închide alarma de baterie descărcată după revenire</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Elimină notificarea de baterie descărcată când nivelul depășește pragul ei. Celelalte notificări de alarmă rămân</string>
@@ -338,6 +355,7 @@
     <string name="alarms_database_error">Baza de date a alarmelor nu a putut fi accesată. Încearcă din nou.</string>
     <string name="alarms_saved">Setările alarmei au fost salvate</string>
     <string name="alarms_saved_reload_failed">Salvat, dar monitorul nu a putut fi notificat. Verifică starea monitorizării.</string>
+    <string name="alarms_saved_channels_failed">Setările au fost salvate, dar canalele de notificări nu au putut fi actualizate. Verifică setările de notificare Android.</string>
 
     <string name="history_range">Intervalul istoricului</string>
     <string name="history_last_24h">Ultimele 24\u00A0de ore</string>
@@ -819,6 +837,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Selectează o copie de rezervă generală ZIP existentă și alege ce categorii disponibile dorești să restaurezi. Copiile de rezervă create cu versiuni mai noi ale aplicației pot fi incompatibile, iar restaurarea jurnalelor sau a datelor predictorului de pe alt dispozitiv poate duce la predicții incorecte. Dacă restaurarea este doar parțială, verifică categoriile raportate înainte de a încerca din nou. Categoriile selectate sunt restaurate; cele neselectate sunt păstrate. Restaurarea alarmelor înlocuiește alarmele actuale. Pentru jurnale, alege dacă să le adaugi sau să înlocuiești istoricul actual.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restaurați datele selectate dintr-un fișier ZIP de copiere de rezervă generală</string>
     <string name="general_backup_restore_message" formatted="false">Alegeți ce doriți să restaurați.</string>
+    <string name="alarm_restore_channel_changes_warning">Restaurarea alarmelor poate înlocui sau elimina canalele lor de notificare din Android. Este posibil să fie necesar să reaplicați unele setări de notificare.</string>
     <string name="general_backup_device_data_warning">Jurnalele și datele de predicție sunt specifice dispozitivului pe care au fost colectate. Importarea lor pe alt dispozitiv poate duce la predicții incorecte sau la un alt comportament neașteptat al aplicației.</string>
     <string name="general_backup_imported" formatted="false">Copia de rezervă generală a fost importată cu succes.</string>
     <string name="invalid_general_backup_file" formatted="false">Fișier de copiere de rezervă generală nevalid sau incompatibil.</string>

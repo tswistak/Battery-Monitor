@@ -15,14 +15,21 @@
 */
 package codes.swistak.batterymonitor.devicebackup
 
+import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
+import android.media.AudioAttributes
 import android.net.Uri
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.AlarmPlayback
 import codes.swistak.batterymonitor.alarms.AlarmRecord
+import codes.swistak.batterymonitor.alarms.AlarmSoundSettings
+import codes.swistak.batterymonitor.alarms.AlarmVolumeCategory
+import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
+import codes.swistak.batterymonitor.alarms.projectAlarms
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.monitoring.Predictor
@@ -33,6 +40,8 @@ import org.json.JSONObject
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
@@ -123,6 +132,75 @@ class GeneralBackupInstrumentedTest {
             1_700_000_125_000L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, -1)
         )
         assertTrue(preferences.getBoolean("test-local-only", false))
+    }
+
+    @Test
+    fun alarm_settings_round_trip_in_general_backup_without_transferring_channel_ids() {
+        val imported = """{
+            "version": 3,
+            "alarms": [
+                {"enabled":false,"type":"charge_drops","threshold":"17"},
+                {"enabled":true,"type":"charge_drops","threshold":"017"},
+                {"enabled":true,"type":"charge_drops","threshold":"21"}
+            ],
+            "sharedSettings": { "charge_drops": { "playback":"REPEAT" } },
+            "customSettings": [
+                {"type":"charge_drops","threshold":17,"volumeCategory":"MEDIA","channelId":"other-device"}
+            ]
+        }"""
+        val empty = """{"version":2,"alarms":[]}"""
+        val database = AlarmDatabase(context)
+        val manager = context.getSystemService(NotificationManager::class.java)
+        try {
+            assertEquals(3, AlarmBackup.importFromJson(context, database, imported))
+            val firstId = requireNotNull(database.getSnapshot().custom.values.single().channelId)
+            assertNotEquals("other-device", firstId)
+            val destination = Uri.fromFile(File(directory, "alarm-settings.zip"))
+            GeneralBackup.exportToUri(context, destination, preferences)
+            val archive = GeneralBackup.readFromUri(context, destination, preparedLogs())
+            val alarmJson = requireNotNull(archive.alarms).getOrThrow()
+            assertFalse(alarmJson.toString().contains(firstId))
+            val selection = setOf(GeneralBackupDataType.ALARMS)
+
+            GeneralBackup.restore(context, preferences, archive, selection, LogImportMode.REPLACE)
+            assertEquals(firstId, database.getSnapshot().custom.values.single().channelId)
+
+            assertThrows(IllegalStateException::class.java) {
+                AlarmBackup.importFromJson(context, database, empty)
+            }
+            assertEquals(firstId, database.getSnapshot().custom.values.single().channelId)
+            AlarmBackup.importFromJson(context, database, empty, allowChannelChanges = true)
+            assertNull(manager.getNotificationChannel(firstId))
+
+            GeneralBackup.restore(context, preferences, archive, selection, LogImportMode.REPLACE)
+            val snapshot = database.getSnapshot()
+            val thresholds = projectAlarms(snapshot.rules).types.single {
+                it.definition.type == "charge_drops"
+            }.alarms.associateBy { it.threshold }
+            val custom = thresholds.getValue(17)
+            assertEquals(2, custom.members.size)
+            assertEquals(
+                AlarmSoundSettings(AlarmPlayback.ONCE, AlarmVolumeCategory.MEDIA),
+                snapshot.effective(custom.type, custom.id).sound
+            )
+            val restoredId = requireNotNull(snapshot.custom.getValue(custom.id).channelId)
+            assertNotEquals(firstId, restoredId)
+            assertEquals(
+                AudioAttributes.USAGE_MEDIA,
+                manager.getNotificationChannel(restoredId)?.audioAttributes?.usage
+            )
+            val inherited = thresholds.getValue(21)
+            assertEquals(
+                AlarmSoundSettings(AlarmPlayback.REPEAT, AlarmVolumeCategory.NOTIFICATIONS),
+                snapshot.effective(inherited.type, inherited.id).sound
+            )
+        } finally {
+            try {
+                AlarmBackup.importFromJson(context, database, empty, allowChannelChanges = true)
+            } finally {
+                database.close()
+            }
+        }
     }
 
     @Test

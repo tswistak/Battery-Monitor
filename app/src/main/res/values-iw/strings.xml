@@ -269,8 +269,8 @@
     <string name="alarm_settings_subtitle" formatted="false">הגדרות התרעה</string>
     <string name="alarm_settings" formatted="false">התרעות</string>
     <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
-    <string name="alarms_overview_channels_help" formatted="false">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ערכים מושבתים נשארים ברשימה. הצליל והרטט משותפים לפי סוג בהגדרות התראות Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב משפיע על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.\n
-    יש לפתוח את הגדרות ההתראות של Android כדי לאפשר או לחסום התראות ולהגדיר צליל, רטט ואופן מסירה להתראה הראשית ולכל סוג התרעה. הפעלת כלל התרעה אינה עוקפת ערוץ התראות חסום.</string>
+    <string name="alarms_overview_channels_help" formatted="false">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ערכים מושבתים נשארים ברשימה. כברירת מחדל, ספים משתמשים בהגדרות ההתראות של סוג ההתרעה שלהם. בתפריט שלוש הנקודות ליד הסף אפשר ליצור הגדרות מותאמות אישית ולנהל ערוץ התראות נפרד ב-Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב משפיע על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.\n
+    יש לפתוח את הגדרות ההתראות של Android כדי לאפשר או לחסום התראות ולהגדיר צליל, רטט ואופן מסירה להתראה הראשית ולכל ערוץ התרעה. הפעלת כלל התרעה אינה עוקפת ערוץ התראות חסום.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d התרעה מופעלת</item>
         <item quantity="two">%1$d התרעות מופעלות</item>
@@ -303,7 +303,7 @@
     <string name="alarms_add_threshold">הוספת סף</string>
     <string name="alarms_edit_threshold">עריכת סף</string>
     <string name="alarms_edit_existing">עריכת סף קיים</string>
-    <string name="alarms_threshold_edit_help" formatted="false">הקישו על סמל העיפרון ליד ערך הסף כדי לערוך אותו. העריכה שומרת על מצב ההפעלה שלו. כדי למחוק התרעה, פתחו אותה לעריכה, בחרו ב״מחיקת התרעה״ ואשרו את המחיקה. כל העותקים של סף זה יוסרו.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">פתחו את תפריט שלוש הנקודות ליד הסף ובחרו ב״עריכת סף״. העריכה שומרת על מצב ההפעלה שלו. כדי למחוק התרעה, פתחו אותה לעריכה, בחרו ב״מחיקת התרעה״ ואשרו את המחיקה. כל העותקים של סף זה יוסרו.</string>
     <string name="alarms_new_enabled">ההתרעה תופעל בעת הוספתה.</string>
     <string name="alarms_edit_keeps_enabled">עריכה שומרת על מצב ההפעלה או הכיבוי הנוכחי.</string>
     <string name="alarms_enabled">מופעל</string>
@@ -320,8 +320,25 @@
     <string name="alarms_notifications_disabled">ההתראות מושבתות. יש להפעיל אותן בהגדרות Android כדי לקבל התראות על אזעקות.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">השבתת את קבוצת התראות האזעקה עבור אפליקציה זו.  יש להפעיל אותה בהגדרות Android כדי לקבל התראות על אזעקות.</string>
     <string name="alarms_open_notification_settings">פתיחת הגדרות ההתראות של Android</string>
-    <string name="alarm_chan_disabled" formatted="false">השבתת התראות עבור סוג התראה זה.  אנא אפשר להם להשתמש בסוג זה של אזעקה.</string>
-    <string name="alarm_chan_settings_b" formatted="false">נהל את סוג האזעקה הזה</string>
+    <string name="alarm_chan_disabled" formatted="false">ההתראות בערוץ המשותף לסוג התרעה זה כבויות.</string>
+    <string name="alarms_android_channel_settings">הגדרות התראות ב-Android</string>
+    <string name="alarms_custom_create">יצירת הגדרות מותאמות אישית</string>
+    <string name="alarms_custom_edit">עריכת הגדרות מותאמות אישית</string>
+    <string name="alarms_custom_remove">הסרת הגדרות מותאמות אישית</string>
+    <string name="alarms_playback">השמעת צליל</string>
+    <string name="alarms_playback_once">השמעה פעם אחת</string>
+    <string name="alarms_playback_repeat">השמעה חוזרת</string>
+    <string name="alarms_playback_help">ההשמעה החוזרת נפסקת כשפותחים את חלונית ההתראות או מסירים את ההתראה.</string>
+    <string name="alarms_volume_category">קטגוריית עוצמת הקול</string>
+    <string name="alarms_volume_notifications" formatted="false">התראות</string>
+    <string name="alarms_volume_alarms" formatted="false">התרעות</string>
+    <string name="alarms_volume_media">מדיה</string>
+    <string name="alarms_volume_help">Android משתמש בקטגוריית עוצמת הקול שנבחרה אם המכשיר תומך בה.</string>
+    <string name="alarms_replace_channel_title">לשנות את קטגוריית עוצמת הקול?</string>
+    <string name="alarms_replace_channel_message">נדרש ערוץ התראות חדש ב-Android. האפליקציה תעתיק את הגדרות הצליל, הרטט והחשיבות במידה שהמערכת מאפשרת זאת. ייתכן שאפשרויות אחרות של התראות יאופסו.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (ישן)</string>
+    <string name="alarm_stop_action">הפסקת התרעה</string>
     <string name="alarms_options_title" formatted="false">אפשרויות התרעה</string>
     <string name="pref_dismiss_low_battery_on_recovery">סגירת התרעת סוללה חלשה לאחר התאוששות</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">הסרת התראת הסוללה החלשה כאשר המטען עולה מעל הסף שלה. התראות התרעה אחרות נשארות</string>
@@ -338,6 +355,7 @@
     <string name="alarms_database_error">לא ניתן לגשת למסד נתוני ההתרעות. יש לנסות שוב.</string>
     <string name="alarms_saved">הגדרות ההתרעות נשמרו</string>
     <string name="alarms_saved_reload_failed">נשמר, אך לא ניתן להודיע לרכיב הניטור. יש לבדוק את מצב הניטור.</string>
+    <string name="alarms_saved_channels_failed">ההגדרות נשמרו, אך לא ניתן היה לעדכן את ערוצי ההתראות. בדקו את הגדרות ההתראות ב-Android.</string>
 
     <string name="history_range">טווח היסטוריה</string>
     <string name="history_last_24h">24\u00A0השעות האחרונות</string>
@@ -819,6 +837,7 @@
     <string name="pref_import_general_backup_help" formatted="false">בחרו קובץ ZIP קיים של גיבוי כללי ואת קטגוריות הנתונים הזמינות לשחזור. ייתכן שגיבויים מגרסאות חדשות יותר של היישום לא יהיו תואמים, ושחזור יומנים או נתוני חיזוי ממכשיר אחר עלול לגרום להערכות שגויות. אם השחזור הושלם באופן חלקי בלבד, בדקו את הקטגוריות שדווחו לפני ניסיון חוזר. הקטגוריות שנבחרו משוחזרות; קטגוריות שלא נבחרו נשמרות. שחזור התרעות מחליף את ההתרעות הנוכחיות. עבור היומנים, בחרו אם להוסיף אותם או להחליף את ההיסטוריה הנוכחית.</string>
     <string name="pref_import_general_backup_summary" formatted="false">שחזור הנתונים שנבחרו מקובץ ZIP של גיבוי כללי</string>
     <string name="general_backup_restore_message" formatted="false">יש לבחור מה לשחזר.</string>
+    <string name="alarm_restore_channel_changes_warning">שחזור התראות עשוי להחליף או להסיר את ערוצי ההתראות שלהן ב-Android. ייתכן שיהיה צורך להחיל מחדש חלק מהגדרות ההתראות.</string>
     <string name="general_backup_device_data_warning">היומנים ונתוני החיזוי ייחודיים למכשיר שבו נאספו. ייבוא שלהם למכשיר אחר עלול לגרום לתחזיות שגויות או להתנהגות בלתי צפויה אחרת של היישום.</string>
     <string name="general_backup_imported" formatted="false">הגיבוי הכללי יובא בהצלחה.</string>
     <string name="invalid_general_backup_file" formatted="false">קובץ גיבוי כללי לא תקין או לא תואם.</string>

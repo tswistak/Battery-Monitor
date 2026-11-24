@@ -23,10 +23,13 @@ import androidx.lifecycle.viewModelScope
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.ALARM_TYPES
 import codes.swistak.batterymonitor.alarms.AlarmCollisionException
+import codes.swistak.batterymonitor.alarms.AlarmConfiguration
 import codes.swistak.batterymonitor.alarms.AlarmConflictException
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmProjection
 import codes.swistak.batterymonitor.alarms.AlarmRule
+import codes.swistak.batterymonitor.alarms.AlarmSnapshot
+import codes.swistak.batterymonitor.alarms.AlarmSoundSettings
 import codes.swistak.batterymonitor.alarms.LogicalAlarm
 import codes.swistak.batterymonitor.alarms.projectAlarms
 import codes.swistak.batterymonitor.alarms.requireAlarmMembers
@@ -69,7 +72,8 @@ internal data class AlarmsState(
     val draftConflict: Boolean = false,
     val collisionId: Int? = null,
     val revealType: String? = null,
-    val revealId: Int? = null
+    val revealId: Int? = null,
+    val alarmSnapshot: AlarmSnapshot = AlarmSnapshot(emptyList())
 ) {
     val canMutate: Boolean get() = hasSnapshot && !loading && readError == null && !busy
     val enabledCount: Int? get() = if (hasSnapshot) projection.enabledCount else null
@@ -265,6 +269,37 @@ internal class AlarmsViewModel(
     fun reportSettingsFailure() =
         mutableState.update { it.copy(notice = R.string.alarms_settings_unavailable) }
 
+    private var channelSettingsJob: Job? = null
+
+    fun openAlarmChannel(type: String, alarmId: Int?, open: (String) -> Boolean) {
+        if (channelSettingsJob?.isActive == true) return
+        channelSettingsJob = viewModelScope.launch {
+            val channelId = withContext(Dispatchers.IO) {
+                runCatching {
+                    NotificationChannels.ensureAlarmChannel(getApplication(), type, alarmId)
+                }.getOrNull()
+            }
+            if (channelId == null || !open(channelId)) reportSettingsFailure()
+        }
+    }
+
+    fun saveAlarmSettings(
+        type: String,
+        alarm: LogicalAlarm?,
+        expected: AlarmConfiguration?,
+        sound: AlarmSoundSettings,
+        replacementConfirmed: Boolean,
+        onSaved: () -> Unit
+    ) = mutate(onSuccess = onSaved, syncChannels = false) { database ->
+        NotificationChannels.saveAlarmSettings(
+            getApplication(), database, type, alarm, expected, sound, replacementConfirmed
+        )
+    }
+
+    fun removeCustomSettings(
+        alarm: LogicalAlarm, expected: AlarmConfiguration, onChanged: () -> Unit
+    ) = mutate(onSuccess = onChanged) { it.saveCustomSettings(alarm, expected, null) }
+
     fun setDismissLowBatteryOnRecovery(enabled: Boolean, onChanged: () -> Unit) {
         if (state.value.busy) return
         mutableState.update { it.copy(busy = true) }
@@ -286,17 +321,26 @@ internal class AlarmsViewModel(
         }
     }
 
-    private fun mutate(onSuccess: () -> Unit, operation: (AlarmDatabase) -> Unit) {
+    private fun mutate(
+        onSuccess: () -> Unit, syncChannels: Boolean = true, operation: (AlarmDatabase) -> Unit
+    ) {
         if (!state.value.canMutate) return
         refreshJob?.cancel()
         mutableState.update { it.copy(busy = true, error = null) }
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) { runCatching { withDatabase(operation) } }
-            result.fold(onSuccess = {
+            val result = withContext(Dispatchers.IO) {
+                runCatching {
+                    withDatabase(operation)
+                    !syncChannels || runCatching {
+                        NotificationChannels.syncAlarmChannels(getApplication())
+                    }.isSuccess
+                }
+            }
+            result.fold(onSuccess = { channelsSynced ->
                 mutableState.update { it.copy(busy = false) }
-                val notice = runCatching(onSuccess).fold(
-                    onSuccess = { R.string.alarms_saved },
-                    onFailure = { R.string.alarms_saved_reload_failed })
+                val notice = runCatching(onSuccess).fold(onSuccess = {
+                    if (channelsSynced) R.string.alarms_saved else R.string.alarms_saved_channels_failed
+                }, onFailure = { R.string.alarms_saved_reload_failed })
                 mutableState.update { it.copy(notice = notice) }
                 refresh()
             }, onFailure = { failure ->
@@ -321,14 +365,18 @@ internal class AlarmsViewModel(
     private fun readState(): AlarmsState {
         val manager =
             getApplication<Application>().getSystemService(NotificationManager::class.java)
-        val rules = withDatabase { it.getAlarmRules() }
+        val snapshot = withDatabase { it.getSnapshot() }
+        val rules = snapshot.rules
         return AlarmsState(
             rules = rules,
             projection = projectAlarms(rules),
+            alarmSnapshot = snapshot,
             hasSnapshot = true,
             monitoringDesired = BackgroundServiceWatchdog.isServiceDesired(getApplication()),
             channels = AlarmDatabase.SUPPORTED_TYPES.associateWith { type ->
-                val channel = manager.getNotificationChannel(type)
+                val channel = manager.getNotificationChannel(
+                    NotificationChannels.alarmChannelId(type, snapshot.effective(type))
+                )
                 AlarmChannelInfo(
                     available = channel != null,
                     blocked = channel?.importance == NotificationManager.IMPORTANCE_NONE,

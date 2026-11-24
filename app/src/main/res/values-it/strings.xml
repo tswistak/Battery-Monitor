@@ -269,8 +269,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Impostazioni allarme</string>
     <string name="alarm_settings" formatted="false">Allarmi</string>
     <string name="alarm_settings_help" formatted="false">Puoi ottenere una notifica da Battery Monitor quando il livello della batteria raggiunge un certo punto (es., la batteria diventa completamente carica, la batteria scende sotto il 20%).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Tutti gli otto tipi di allarme sono sempre disponibili. Attiva direttamente gli eventi oppure usa «Aggiungi soglia» sotto un tipo di carica o temperatura. I valori disabilitati restano elencati. Suono e vibrazione sono condivisi per tipo nelle impostazioni delle notifiche di Android. I record duplicati esistenti appaiono come un unico allarme logico; l’attivazione o la disattivazione influisce su tutte le copie. Gli allarmi di carica e scarica seguono gli obiettivi delle stime e non controllano la ricarica. Un canale bloccato o il monitoraggio fermo non modifica gli interruttori salvati.\n
-    Apri le impostazioni delle notifiche di Android per consentire o bloccare le notifiche e configurare suono, vibrazione e consegna per la notifica principale e ogni tipo di allarme. Abilitare una regola di allarme non aggira un canale di notifica bloccato.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Tutti gli otto tipi di allarme sono sempre disponibili. Attiva direttamente gli eventi oppure usa «Aggiungi soglia» sotto un tipo di carica o temperatura. I valori disabilitati restano elencati. Per impostazione predefinita, le soglie usano le impostazioni di notifica del proprio tipo di allarme. Apri il menu con tre puntini accanto alla soglia per creare impostazioni personalizzate e gestire un canale di notifica di Android separato. I record duplicati esistenti appaiono come un unico allarme logico; l’attivazione o la disattivazione influisce su tutte le copie. Gli allarmi di carica e scarica seguono gli obiettivi delle stime e non controllano la ricarica. Un canale bloccato o il monitoraggio fermo non modifica gli interruttori salvati.\n
+    Apri le impostazioni delle notifiche di Android per consentire o bloccare le notifiche e configurare suono, vibrazione e consegna per la notifica principale e ogni canale di allarme. Abilitare una regola di allarme non aggira un canale di notifica bloccato.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d allarme abilitato</item>
         <item quantity="many">%1$d allarmi abilitati</item>
@@ -303,7 +303,7 @@
     <string name="alarms_add_threshold">Aggiungi soglia</string>
     <string name="alarms_edit_threshold">Modifica soglia</string>
     <string name="alarms_edit_existing">Modifica soglia esistente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tocca l’icona della matita accanto al valore della soglia per modificarlo. La modifica ne mantiene lo stato di attivazione. Per eliminare un allarme, apri il relativo editor, scegli «Elimina allarme» e conferma l’eliminazione. Saranno rimosse tutte le copie di questa soglia.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Apri il menu con tre puntini accanto alla soglia e scegli «Modifica soglia». La modifica ne mantiene lo stato di attivazione. Per eliminare un allarme, apri il relativo editor, scegli «Elimina allarme» e conferma l’eliminazione. Saranno rimosse tutte le copie di questa soglia.</string>
     <string name="alarms_new_enabled">L’allarme sarà abilitato quando viene aggiunto.</string>
     <string name="alarms_edit_keeps_enabled">La modifica mantiene l’attuale stato di attivazione.</string>
     <string name="alarms_enabled">Abilitato</string>
@@ -320,8 +320,25 @@
     <string name="alarms_notifications_disabled">Le notifiche sono disattivate. Attivale nelle impostazioni di Android per ricevere le notifiche degli allarmi.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Hai disabilitato il gruppo notifiche degli allarmi per questa app. Attivalo nelle impostazioni di Android per ricevere le notifiche degli allarmi.</string>
     <string name="alarms_open_notification_settings">Apri le impostazioni delle notifiche di Android</string>
-    <string name="alarm_chan_disabled" formatted="false">Hai disabilitato le notifiche per questo tipo di allarme. Abilitale per usare questo tipo di allarme.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Gestisci questo tipo di allarme</string>
+    <string name="alarm_chan_disabled" formatted="false">Le notifiche del canale condiviso di questo tipo di allarme sono disattivate.</string>
+    <string name="alarms_android_channel_settings">Impostazioni delle notifiche di Android</string>
+    <string name="alarms_custom_create">Crea impostazioni personalizzate</string>
+    <string name="alarms_custom_edit">Modifica impostazioni personalizzate</string>
+    <string name="alarms_custom_remove">Rimuovi impostazioni personalizzate</string>
+    <string name="alarms_playback">Riproduzione del suono</string>
+    <string name="alarms_playback_once">Riproduci una volta</string>
+    <string name="alarms_playback_repeat">Ripeti</string>
+    <string name="alarms_playback_help">La ripetizione si interrompe quando apri il pannello delle notifiche o ignori la notifica.</string>
+    <string name="alarms_volume_category">Categoria del volume</string>
+    <string name="alarms_volume_notifications" formatted="false">Notifiche</string>
+    <string name="alarms_volume_alarms" formatted="false">Allarmi</string>
+    <string name="alarms_volume_media">Contenuti multimediali</string>
+    <string name="alarms_volume_help">Android usa la categoria del volume scelta se il dispositivo la supporta.</string>
+    <string name="alarms_replace_channel_title">Modificare la categoria del volume?</string>
+    <string name="alarms_replace_channel_message">Android richiede un nuovo canale di notifica. L’app copia le impostazioni di suono, vibrazione e importanza dove consentito da Android. Le altre opzioni delle notifiche potrebbero essere ripristinate.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (precedente)</string>
+    <string name="alarm_stop_action">Interrompi allarme</string>
     <string name="alarms_options_title" formatted="false">Opzioni degli allarmi</string>
     <string name="pref_dismiss_low_battery_on_recovery">Rimuovi allarme batteria scarica dopo il recupero</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Rimuovi la notifica di batteria scarica quando la carica risale sopra la soglia. Le altre notifiche di allarme rimangono</string>
@@ -338,6 +355,7 @@
     <string name="alarms_database_error">Impossibile accedere al database degli allarmi. Riprova.</string>
     <string name="alarms_saved">Impostazioni allarmi salvate</string>
     <string name="alarms_saved_reload_failed">Salvato, ma non è stato possibile avvisare il monitoraggio. Controllane lo stato.</string>
+    <string name="alarms_saved_channels_failed">Impostazioni salvate, ma non è stato possibile aggiornare i canali di notifica. Controlla le impostazioni delle notifiche di Android.</string>
 
     <string name="history_range">Intervallo della cronologia</string>
     <string name="history_last_24h">Ultime 24\u00A0ore</string>
@@ -819,6 +837,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Seleziona un backup generale ZIP esistente e scegli quali categorie disponibili ripristinare. I backup creati con versioni più recenti dell’app possono essere incompatibili e il ripristino di registri o dati del predittore da un altro dispositivo può causare stime errate. Se il ripristino viene completato solo in parte, controlla le categorie segnalate prima di riprovare. Le categorie selezionate vengono ripristinate; quelle non selezionate vengono mantenute. Il ripristino degli allarmi sostituisce gli allarmi attuali. Per i registri, scegli se aggiungerli o sostituire la cronologia attuale.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Ripristina i dati selezionati da un file ZIP di backup generale</string>
     <string name="general_backup_restore_message" formatted="false">Scegli cosa vuoi ripristinare.</string>
+    <string name="alarm_restore_channel_changes_warning">Il ripristino degli allarmi potrebbe sostituire o rimuovere i relativi canali di notifica Android. Potrebbe essere necessario applicare nuovamente alcune impostazioni di notifica.</string>
     <string name="general_backup_device_data_warning">I registri e i dati di previsione sono specifici del dispositivo su cui sono stati raccolti. Importarli su un altro dispositivo può causare previsioni errate o altri comportamenti imprevisti dell’app.</string>
     <string name="general_backup_imported" formatted="false">Backup generale importato correttamente.</string>
     <string name="invalid_general_backup_file" formatted="false">File di backup generale non valido o incompatibile.</string>

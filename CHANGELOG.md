@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Unreleased
+
+### New
+
+- Possibility to configure separate alarm settings for each threshold (#181).
+
+### Improved
+
+- Alarms can now have a repeated sound, if specified (#96).
+- Configurable audio channel for alarms.
+
 ## 2.0.1
 
 ### Improved

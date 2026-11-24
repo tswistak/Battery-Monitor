@@ -36,6 +36,11 @@ internal data class LogicalAlarm(val members: List<AlarmRule>) {
     val id: Int get() = members.minOf(AlarmRule::id)
     val type: String get() = members.first().type
     val threshold: Int? get() = members.first().threshold.toIntOrNull()
+    val thresholdKey: AlarmThresholdKey?
+        get() = threshold?.takeIf { value ->
+            ALARM_TYPES.find { it.type == type }?.bounds?.contains(value) == true
+        }?.let { AlarmThresholdKey(type, it) }
+
     val enabled: Boolean get() = members.any(AlarmRule::enabled)
     val memberIds: List<Int> get() = members.map(AlarmRule::id)
 }

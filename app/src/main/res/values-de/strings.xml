@@ -266,8 +266,8 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarm Einstellungen</string>
     <string name="alarm_settings" formatted="false">Alarme</string>
     <string name="alarm_settings_help" formatted="false">Battery Monitor kann Sie benachrichtigen, wenn ein bestimmter Akkuzustand erreicht wird (z. B. vollständig geladen, unter 20% usw.).</string>
-    <string name="alarms_overview_channels_help" formatted="false">Alle acht Alarmtypen sind immer verfügbar. Schalten Sie Ereignisse direkt ein oder nutzen Sie „Schwellenwert hinzufügen“ unter einem Lade- oder Temperaturtyp. Deaktivierte Werte bleiben aufgeführt. Ton und Vibration werden pro Typ in den Android-Benachrichtigungseinstellungen gemeinsam festgelegt. Vorhandene doppelte Einträge erscheinen als ein logischer Alarm; Umschalten betrifft alle Kopien. Lade- und Entladealarme folgen den Schätzungszielen und steuern nicht das Laden. Ein blockierter Kanal oder eine gestoppte Überwachung ändert keine gespeicherten Schalter.\n
-    Öffnen Sie die Android-Benachrichtigungseinstellungen, um Benachrichtigungen zuzulassen oder zu blockieren und Ton, Vibration und Zustellung für die Hauptbenachrichtigung und jeden Alarmtyp festzulegen. Das Aktivieren einer Alarmregel hebt einen blockierten Benachrichtigungskanal nicht auf.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Alle acht Alarmtypen sind immer verfügbar. Schalten Sie Ereignisse direkt ein oder nutzen Sie „Schwellenwert hinzufügen“ unter einem Lade- oder Temperaturtyp. Deaktivierte Werte bleiben aufgeführt. Schwellenwerte verwenden standardmäßig die Benachrichtigungseinstellungen ihres Alarmtyps. Im Drei-Punkte-Menü neben einem Schwellenwert können Sie eigene Einstellungen erstellen und einen separaten Android-Benachrichtigungskanal verwalten. Vorhandene doppelte Einträge erscheinen als ein logischer Alarm; Umschalten betrifft alle Kopien. Lade- und Entladealarme folgen den Schätzungszielen und steuern nicht das Laden. Ein blockierter Kanal oder eine gestoppte Überwachung ändert keine gespeicherten Schalter.\n
+    Öffnen Sie die Android-Benachrichtigungseinstellungen, um Benachrichtigungen zuzulassen oder zu blockieren und Ton, Vibration und Zustellung für die Hauptbenachrichtigung und jeden Alarmkanal festzulegen. Das Aktivieren einer Alarmregel hebt einen blockierten Benachrichtigungskanal nicht auf.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d Alarm aktiviert</item>
         <item quantity="other">%1$d Alarme aktiviert</item>
@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">Schwellenwert hinzufügen</string>
     <string name="alarms_edit_threshold">Schwellenwert bearbeiten</string>
     <string name="alarms_edit_existing">Vorhandenen Schwellenwert bearbeiten</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Tippen Sie auf das Stiftsymbol neben einem Schwellenwert, um ihn zu bearbeiten. Sein Ein-/Aus-Zustand bleibt erhalten. Öffnen Sie zum Löschen eines Alarms den Editor, wählen Sie „Alarm löschen“ und bestätigen Sie das Löschen. Alle Kopien dieses Schwellenwerts werden entfernt.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Öffnen Sie das Drei-Punkte-Menü neben dem Schwellenwert und wählen Sie „Schwellenwert bearbeiten“. Sein Ein-/Aus-Zustand bleibt erhalten. Öffnen Sie zum Löschen eines Alarms den Editor, wählen Sie „Alarm löschen“ und bestätigen Sie das Löschen. Alle Kopien dieses Schwellenwerts werden entfernt.</string>
     <string name="alarms_new_enabled">Der Alarm wird beim Hinzufügen aktiviert.</string>
     <string name="alarms_edit_keeps_enabled">Beim Bearbeiten bleibt die aktuelle Ein-/Aus-Einstellung erhalten.</string>
     <string name="alarms_enabled">Aktiviert</string>
@@ -316,8 +316,25 @@
     <string name="alarms_notifications_disabled">Benachrichtigungen sind deaktiviert. Aktivieren Sie sie in den Android-Einstellungen, um Alarmbenachrichtigungen zu erhalten.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Sie haben die Alarm-Benachrichtigungsgruppe für diese App deaktiviert. Aktivieren Sie sie in den Android-Einstellungen, um Alarmbenachrichtigungen zu erhalten.</string>
     <string name="alarms_open_notification_settings">Android-Benachrichtigungseinstellungen öffnen</string>
-    <string name="alarm_chan_disabled" formatted="false">Sie haben Benachrichtigungen für diesen Alarmtyp deaktiviert. Bitte aktivieren Sie sie, um diesen Alarmtyp zu verwenden.</string>
-    <string name="alarm_chan_settings_b" formatted="false">Diesen Alarmtyp verwalten</string>
+    <string name="alarm_chan_disabled" formatted="false">Benachrichtigungen für den gemeinsamen Kanal dieses Alarmtyps sind deaktiviert.</string>
+    <string name="alarms_android_channel_settings">Android-Benachrichtigungseinstellungen</string>
+    <string name="alarms_custom_create">Eigene Einstellungen erstellen</string>
+    <string name="alarms_custom_edit">Eigene Einstellungen bearbeiten</string>
+    <string name="alarms_custom_remove">Eigene Einstellungen entfernen</string>
+    <string name="alarms_playback">Tonwiedergabe</string>
+    <string name="alarms_playback_once">Einmal abspielen</string>
+    <string name="alarms_playback_repeat">Wiederholen</string>
+    <string name="alarms_playback_help">Die Wiederholung endet, wenn Sie die Benachrichtigungsleiste öffnen oder die Benachrichtigung schließen.</string>
+    <string name="alarms_volume_category">Lautstärkekategorie</string>
+    <string name="alarms_volume_notifications" formatted="false">Benachrichtigungen</string>
+    <string name="alarms_volume_alarms" formatted="false">Alarme</string>
+    <string name="alarms_volume_media">Medien</string>
+    <string name="alarms_volume_help">Android verwendet die gewählte Lautstärkekategorie, sofern Ihr Gerät sie unterstützt.</string>
+    <string name="alarms_replace_channel_title">Lautstärkekategorie ändern?</string>
+    <string name="alarms_replace_channel_message">Android benötigt einen neuen Benachrichtigungskanal. Die App kopiert Ihre Einstellungen für Ton, Vibration und Wichtigkeit, soweit Android dies zulässt. Andere Benachrichtigungseinstellungen können zurückgesetzt werden.</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (alt)</string>
+    <string name="alarm_stop_action">Alarm stoppen</string>
     <string name="alarms_options_title" formatted="false">Alarmoptionen</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alarm bei niedrigem Akkustand nach Erholung schließen</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Die Benachrichtigung bei niedrigem Akkustand entfernen, wenn die Ladung über ihren Schwellenwert steigt. Andere Alarmbenachrichtigungen bleiben erhalten</string>
@@ -334,6 +351,7 @@
     <string name="alarms_database_error">Zugriff auf die Alarmdatenbank fehlgeschlagen. Versuchen Sie es erneut.</string>
     <string name="alarms_saved">Alarmeinstellungen gespeichert</string>
     <string name="alarms_saved_reload_failed">Gespeichert, aber die Überwachung konnte nicht benachrichtigt werden. Prüfen Sie den Überwachungsstatus.</string>
+    <string name="alarms_saved_channels_failed">Gespeichert, aber die Benachrichtigungskanäle konnten nicht aktualisiert werden. Prüfen Sie die Android-Benachrichtigungseinstellungen.</string>
 
     <string name="history_range">Verlaufszeitraum</string>
     <string name="history_last_24h">Letzte 24\u00A0Stunden</string>
@@ -814,6 +832,7 @@
     <string name="pref_import_general_backup_help" formatted="false">Wähle eine vorhandene allgemeine App-Sicherung im ZIP-Format und die verfügbaren Kategorien, die wiederhergestellt werden sollen. Sicherungen aus neueren App-Versionen können inkompatibel sein, und die Wiederherstellung von Protokollen oder Prognosedaten eines anderen Geräts kann zu falschen Schätzungen führen. Prüfe bei einer nur teilweise abgeschlossenen Wiederherstellung die gemeldeten Kategorien, bevor du es erneut versuchst. Ausgewählte Kategorien werden wiederhergestellt; nicht ausgewählte Kategorien bleiben erhalten. Das Wiederherstellen von Alarmen ersetzt die aktuellen Alarme. Wählen Sie bei Protokollen, ob diese hinzugefügt werden oder den aktuellen Verlauf ersetzen sollen.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Ausgewählte Daten aus einer ZIP-Datei mit allgemeiner Sicherung wiederherstellen</string>
     <string name="general_backup_restore_message" formatted="false">Wählen Sie aus, was wiederhergestellt werden soll.</string>
+    <string name="alarm_restore_channel_changes_warning">Beim Wiederherstellen von Alarmen können ihre Android-Benachrichtigungskanäle ersetzt oder entfernt werden. Möglicherweise müssen Sie einige Benachrichtigungseinstellungen erneut vornehmen.</string>
     <string name="general_backup_device_data_warning">Protokolle und Vorhersagedaten gehören zu dem Gerät, auf dem sie erfasst wurden. Der Import auf ein anderes Gerät kann zu falschen Vorhersagen oder anderem unerwartetem App-Verhalten führen.</string>
     <string name="general_backup_imported" formatted="false">Allgemeine Sicherung erfolgreich importiert.</string>
     <string name="invalid_general_backup_file" formatted="false">Ungültige oder inkompatible allgemeine Sicherungsdatei.</string>

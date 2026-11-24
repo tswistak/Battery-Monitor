@@ -266,8 +266,8 @@
     <string name="alarm_settings_subtitle" formatted="false">अलार्म सेटिंग्स</string>
     <string name="alarm_settings" formatted="false">एलार्म</string>
     <string name="alarm_settings_help" formatted="false">आपकी बैटरी का स्तर होने पर आप बैटरी मॉनिटर आपको सूचित कर सकते हैं एक निश्चित स्थिति तक पहुँच जाता है (उदाहरण के लिए, बैटरी पूरी तरह चार्ज हो जाती है, बैटरी का स्तर 20% से नीचे चला जाता है, और कई अन्य)।</string>
-    <string name="alarms_overview_channels_help" formatted="false">अलार्म के सभी आठ प्रकार हमेशा उपलब्ध हैं। घटनाएँ सीधे चालू करें या चार्ज व तापमान के प्रकार में “सीमा जोड़ें” चुनें। अक्षम मान सूची में रहते हैं। Android सूचना सेटिंग में ध्वनि व कंपन हर प्रकार के लिए साझा हैं। मौजूदा डुप्लिकेट रिकॉर्ड एक अलार्म की तरह दिखते हैं; स्विच बदलने से सभी प्रतियाँ प्रभावित होती हैं। चार्जिंग व डिस्चार्जिंग अलार्म अनुमान के लक्ष्य मानते हैं, चार्जिंग नियंत्रित नहीं करते। बंद चैनल या रुकी निगरानी सहेजे स्विच नहीं बदलते।\n
-    सूचनाएँ अनुमति देने या रोकने और मुख्य सूचना व हर अलार्म प्रकार के लिए ध्वनि, कंपन तथा सूचना वितरण सेट करने हेतु Android की सूचना सेटिंग खोलें। अलार्म नियम सक्षम करने से बंद सूचना चैनल चालू नहीं होता।</string>
+    <string name="alarms_overview_channels_help" formatted="false">अलार्म के सभी आठ प्रकार हमेशा उपलब्ध हैं। घटनाएँ सीधे चालू करें या चार्ज व तापमान के प्रकार में “सीमा जोड़ें” चुनें। अक्षम मान सूची में रहते हैं। डिफ़ॉल्ट रूप से सीमाएं अपने अलार्म प्रकार की सूचना सेटिंग का इस्तेमाल करती हैं। कस्टम सेटिंग बनाने और अलग Android सूचना चैनल को प्रबंधित करने के लिए सीमा के बगल में तीन बिंदुओं वाला मेन्यू खोलें। मौजूदा डुप्लिकेट रिकॉर्ड एक अलार्म की तरह दिखते हैं; स्विच बदलने से सभी प्रतियाँ प्रभावित होती हैं। चार्जिंग व डिस्चार्जिंग अलार्म अनुमान के लक्ष्य मानते हैं, चार्जिंग नियंत्रित नहीं करते। बंद चैनल या रुकी निगरानी सहेजे स्विच नहीं बदलते।\n
+    सूचनाएँ अनुमति देने या रोकने और मुख्य सूचना व हर अलार्म चैनल के लिए ध्वनि, कंपन तथा सूचना वितरण सेट करने हेतु Android की सूचना सेटिंग खोलें। अलार्म नियम सक्षम करने से बंद सूचना चैनल चालू नहीं होता।</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d अलार्म सक्षम</item>
         <item quantity="other">%1$d अलार्म सक्षम</item>
@@ -299,7 +299,7 @@
     <string name="alarms_add_threshold">सीमा जोड़ें</string>
     <string name="alarms_edit_threshold">सीमा बदलें</string>
     <string name="alarms_edit_existing">मौजूदा सीमा बदलें</string>
-    <string name="alarms_threshold_edit_help" formatted="false">सीमा का मान बदलने के लिए उसके बगल में पेंसिल के आइकन पर टैप करें। बदलने पर चालू/बंद स्थिति बनी रहती है। अलार्म हटाने के लिए उसका एडिटर खोलें, “अलार्म हटाएँ” चुनें और हटाने की पुष्टि करें। इस सीमा की सभी प्रतियाँ हट जाएँगी।</string>
+    <string name="alarms_threshold_edit_help" formatted="false">सीमा के बगल में तीन बिंदुओं वाला मेन्यू खोलें और “सीमा बदलें” चुनें। बदलने पर चालू/बंद स्थिति बनी रहती है। अलार्म हटाने के लिए उसका एडिटर खोलें, “अलार्म हटाएँ” चुनें और हटाने की पुष्टि करें। इस सीमा की सभी प्रतियाँ हट जाएँगी।</string>
     <string name="alarms_new_enabled">जोड़ते ही अलार्म सक्षम हो जाएगा।</string>
     <string name="alarms_edit_keeps_enabled">बदलने पर चालू/बंद की वर्तमान स्थिति बनी रहती है।</string>
     <string name="alarms_enabled">सक्षम</string>
@@ -316,8 +316,25 @@
     <string name="alarms_notifications_disabled">सूचनाएँ बंद हैं। अलार्म की सूचनाएँ पाने के लिए उन्हें Android की सेटिंग में चालू करें।</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए अलार्म अधिसूचना समूह को अक्षम कर दिया है।  अलार्म की सूचनाएँ पाने के लिए इसे Android की सेटिंग में चालू करें।</string>
     <string name="alarms_open_notification_settings">Android की सूचना सेटिंग खोलें</string>
-    <string name="alarm_chan_disabled" formatted="false">आपने इस अलार्म प्रकार के लिए सूचनाएं अक्षम कर दी हैं।  कृपया उन्हें इस प्रकार के अलार्म का उपयोग करने में सक्षम करें।</string>
-    <string name="alarm_chan_settings_b" formatted="false">इस अलार्म प्रकार को प्रबंधित करें</string>
+    <string name="alarm_chan_disabled" formatted="false">इस प्रकार के अलार्म के साझा चैनल की सूचनाएं बंद हैं।</string>
+    <string name="alarms_android_channel_settings">Android की सूचना सेटिंग</string>
+    <string name="alarms_custom_create">कस्टम सेटिंग बनाएं</string>
+    <string name="alarms_custom_edit">कस्टम सेटिंग बदलें</string>
+    <string name="alarms_custom_remove">कस्टम सेटिंग हटाएं</string>
+    <string name="alarms_playback">ध्वनि प्लेबैक</string>
+    <string name="alarms_playback_once">एक बार बजाएं</string>
+    <string name="alarms_playback_repeat">दोहराएं</string>
+    <string name="alarms_playback_help">सूचना पैनल खोलने या सूचना हटाने पर ध्वनि का दोहराव रुक जाता है।</string>
+    <string name="alarms_volume_category">वॉल्यूम की श्रेणी</string>
+    <string name="alarms_volume_notifications" formatted="false">सूचनाएँ</string>
+    <string name="alarms_volume_alarms" formatted="false">एलार्म</string>
+    <string name="alarms_volume_media">मीडिया</string>
+    <string name="alarms_volume_help">अगर आपका डिवाइस चुनी गई वॉल्यूम श्रेणी का समर्थन करता है, तो Android उसका इस्तेमाल करता है।</string>
+    <string name="alarms_replace_channel_title">वॉल्यूम की श्रेणी बदलें?</string>
+    <string name="alarms_replace_channel_message">Android को एक नया सूचना चैनल चाहिए। Android की अनुमति होने पर ऐप आपकी ध्वनि, कंपन और महत्व की सेटिंग की कॉपी बनाता है। सूचना के अन्य विकल्प रीसेट हो सकते हैं।</string>
+    <string name="alarm_custom_channel_name">%1$s %2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s (पुराना)</string>
+    <string name="alarm_stop_action">अलार्म रोकें</string>
     <string name="alarms_options_title" formatted="false">अलार्म विकल्प</string>
     <string name="pref_dismiss_low_battery_on_recovery">बैटरी बढ़ने पर कम बैटरी अलार्म हटाएँ</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">चार्ज अपनी सीमा से ऊपर जाने पर कम बैटरी की सूचना हटाएँ। अन्य अलार्म सूचनाएँ बनी रहेंगी</string>
@@ -334,6 +351,7 @@
     <string name="alarms_database_error">अलार्म डेटाबेस तक पहुँच नहीं मिली। फिर कोशिश करें।</string>
     <string name="alarms_saved">अलार्म सेटिंग सहेजी गई</string>
     <string name="alarms_saved_reload_failed">सहेजा गया, लेकिन निगरानी को सूचित नहीं किया जा सका। निगरानी की स्थिति जाँचें।</string>
+    <string name="alarms_saved_channels_failed">सेटिंग सेव हो गई, लेकिन सूचना चैनल अपडेट नहीं हो सके। Android की सूचना सेटिंग देखें।</string>
 
     <string name="history_range">इतिहास की अवधि</string>
     <string name="history_last_24h">पिछले 24\u00A0घंटे</string>
@@ -814,6 +832,7 @@
     <string name="pref_import_general_backup_help" formatted="false">मौजूदा सामान्य बैकअप ZIP चुनें और तय करें कि उपलब्ध श्रेणियों में से किन्हें पुनर्स्थापित करना है। ऐप के नए संस्करणों से बने बैकअप असंगत हो सकते हैं, और किसी दूसरे डिवाइस से लॉग या पूर्वानुमान डेटा पुनर्स्थापित करने से गलत अनुमान मिल सकते हैं। यदि पुनर्स्थापन केवल आंशिक रूप से पूरा हो, तो दोबारा कोशिश करने से पहले बताई गई श्रेणियाँ जाँचें। चुनी गई श्रेणियाँ बहाल की जाती हैं; नहीं चुनी गई श्रेणियाँ बनी रहती हैं। अलार्म बहाल करने से मौजूदा अलार्म बदल जाते हैं। लॉग के लिए चुनें कि उन्हें जोड़ना है या मौजूदा इतिहास बदलना है।</string>
     <string name="pref_import_general_backup_summary" formatted="false">सामान्य बैकअप ZIP फ़ाइल से चयनित डेटा पुनर्स्थापित करें</string>
     <string name="general_backup_restore_message" formatted="false">चुनें कि आप क्या पुनर्स्थापित करना चाहते हैं।</string>
+    <string name="alarm_restore_channel_changes_warning">अलार्म बहाल करने पर उनके Android सूचना चैनल बदले या हटाए जा सकते हैं। हो सकता है कि आपको कुछ सूचना सेटिंग फिर से लागू करनी पड़ें।</string>
     <string name="general_backup_device_data_warning">लॉग और पूर्वानुमान डेटा उस डिवाइस के हैं जिस पर उन्हें एकत्र किया गया था। इन्हें किसी दूसरे डिवाइस पर आयात करने से गलत पूर्वानुमान या ऐप का अन्य अनपेक्षित व्यवहार हो सकता है।</string>
     <string name="general_backup_imported" formatted="false">सामान्य बैकअप सफलतापूर्वक आयात किया गया।</string>
     <string name="invalid_general_backup_file" formatted="false">अमान्य या असंगत सामान्य बैकअप फ़ाइल।</string>

@@ -263,8 +263,8 @@
     <string name="alarm_settings_subtitle" formatted="false">警报设置</string>
     <string name="alarm_settings" formatted="false">警报</string>
     <string name="alarm_settings_help" formatted="false">您可以让 Battery Monitor 在电池达到某个条件时提醒您，例如充满电、电量低于 20% 等。</string>
-    <string name="alarms_overview_channels_help" formatted="false">八种警报类型始终可用。直接启用事件，或在电量与温度类型下使用“添加临界值”。禁用的数值仍列在列表中。声音与振动依类型共用 Android 通知设置。现有重复记录会显示为单一警报；切换开关会影响所有副本。充放电警报依照估算目标，不会控制充电。屏蔽渠道或停止监测不会改变已保存的开关。\n
-    打开 Android 通知设置以允许或屏蔽通知，并设置主要通知及各警报类型的声音、振动与送达方式。启用警报规则不会解除通知渠道的屏蔽。</string>
+    <string name="alarms_overview_channels_help" formatted="false">八种警报类型始终可用。直接启用事件，或在电量与温度类型下使用“添加临界值”。禁用的数值仍列在列表中。临界值默认使用所属警报类型的通知设置。你可以在临界值旁的三点菜单创建自定义设置，并管理独立的 Android 通知渠道。现有重复记录会显示为单一警报；切换开关会影响所有副本。充放电警报依照估算目标，不会控制充电。屏蔽渠道或停止监测不会改变已保存的开关。\n
+    打开 Android 通知设置以允许或屏蔽通知，并设置主要通知及各警报渠道的声音、振动与送达方式。启用警报规则不会解除通知渠道的屏蔽。</string>
     <plurals name="alarms_active_count">
         <item quantity="other">已启用 %1$d 个警报</item>
     </plurals>
@@ -295,7 +295,7 @@
     <string name="alarms_add_threshold">添加临界值</string>
     <string name="alarms_edit_threshold">编辑临界值</string>
     <string name="alarms_edit_existing">编辑现有临界值</string>
-    <string name="alarms_threshold_edit_help" formatted="false">点击临界值数值旁的铅笔图标即可编辑。编辑会保留开关状态。要删除警报，请打开其编辑界面，选择“删除警报”并确认删除。此临界值的所有副本都会移除。</string>
+    <string name="alarms_threshold_edit_help" formatted="false">打开临界值旁的三点菜单，然后选择“编辑临界值”。编辑会保留开关状态。要删除警报，请打开其编辑界面，选择“删除警报”并确认删除。此临界值的所有副本都会移除。</string>
     <string name="alarms_new_enabled">添加后会启用此警报。</string>
     <string name="alarms_edit_keeps_enabled">编辑会保留当前的开关状态。</string>
     <string name="alarms_enabled">已启用</string>
@@ -312,8 +312,25 @@
     <string name="alarms_notifications_disabled">通知已停用。请在 Android 设置中启用通知，以接收警报通知。</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">您已禁用此应用程序的警报通知组。  请在 Android 设置中启用此通知组，以接收警报通知。</string>
     <string name="alarms_open_notification_settings">打开 Android 通知设置</string>
-    <string name="alarm_chan_disabled" formatted="false">您已禁用此警报类型的通知。  请允许他们使用此类警报。</string>
-    <string name="alarm_chan_settings_b" formatted="false">管理此警报类型</string>
+    <string name="alarm_chan_disabled" formatted="false">此警报类型的共用渠道已关闭通知。</string>
+    <string name="alarms_android_channel_settings">Android 通知设置</string>
+    <string name="alarms_custom_create">创建自定义设置</string>
+    <string name="alarms_custom_edit">编辑自定义设置</string>
+    <string name="alarms_custom_remove">移除自定义设置</string>
+    <string name="alarms_playback">声音播放</string>
+    <string name="alarms_playback_once">播放一次</string>
+    <string name="alarms_playback_repeat">重复播放</string>
+    <string name="alarms_playback_help">打开通知面板或关闭通知后，声音会停止重复播放。</string>
+    <string name="alarms_volume_category">音量类别</string>
+    <string name="alarms_volume_notifications" formatted="false">通知</string>
+    <string name="alarms_volume_alarms" formatted="false">警报</string>
+    <string name="alarms_volume_media">媒体</string>
+    <string name="alarms_volume_help">如果设备支持，Android 会使用所选的音量类别。</string>
+    <string name="alarms_replace_channel_title">要更改音量类别吗？</string>
+    <string name="alarms_replace_channel_message">Android 需要新的通知渠道。应用会在 Android 允许的范围内复制声音、振动和重要程度设置。其他通知选项可能会重置。</string>
+    <string name="alarm_custom_channel_name">%1$s%2$s</string>
+    <string name="alarm_inactive_channel_name">%1$s（旧）</string>
+    <string name="alarm_stop_action">停止警报</string>
     <string name="alarms_options_title" formatted="false">警报选项</string>
     <string name="pref_dismiss_low_battery_on_recovery">电量回升后关闭低电量警报</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">电量高于临界值时移除低电量通知。其他警报通知会保留</string>
@@ -330,6 +347,7 @@
     <string name="alarms_database_error">无法访问警报数据库。请再试一次。</string>
     <string name="alarms_saved">警报设置已保存</string>
     <string name="alarms_saved_reload_failed">已保存，但无法通知监测服务。请检查监测状态。</string>
+    <string name="alarms_saved_channels_failed">设置已保存，但无法更新通知渠道。请检查 Android 通知设置。</string>
 
     <string name="history_range">历史记录范围</string>
     <string name="history_last_24h">最近 24\u00A0小时</string>
@@ -809,6 +827,7 @@
     <string name="pref_import_general_backup_help" formatted="false">选择现有的常规备份 ZIP，以及要恢复的可用数据类别。较新版本应用创建的备份可能不兼容，而恢复其他设备的记录或预测数据可能导致估计不准确。如果只完成部分恢复，请先检查报告的类别，再重试。 会还原所选类别，未选中的类别则会保留。还原警报会替换当前警报。对于日志，请选择添加日志或替换当前历史记录。</string>
     <string name="pref_import_general_backup_summary" formatted="false">从常规备份 ZIP 文件恢复所选数据</string>
     <string name="general_backup_restore_message" formatted="false">选择要恢复的内容。</string>
+    <string name="alarm_restore_channel_changes_warning">恢复警报时，可能会替换或移除相应的 Android 通知渠道。您可能需要重新应用部分通知设置。</string>
     <string name="general_backup_device_data_warning">日志和预测数据属于收集数据的设备。将其导入其他设备可能会导致错误的预测或应用出现其他意外行为。</string>
     <string name="general_backup_imported" formatted="false">常规备份已成功导入。</string>
     <string name="invalid_general_backup_file" formatted="false">无效或不兼容的常规备份文件。</string>

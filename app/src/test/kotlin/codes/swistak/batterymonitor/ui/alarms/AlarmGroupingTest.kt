@@ -74,7 +74,7 @@ class AlarmGroupingTest {
     }
 
     @Test
-    fun `sorting follows direction independently of enabled and preserves evaluator input order`() {
+    fun `sorting follows direction and crossing two enabled thresholds triggers both`() {
         val rules = listOf(
             AlarmRule(1, true, "charge_drops", "15"),
             AlarmRule(2, true, "charge_drops", "20"),
@@ -92,8 +92,9 @@ class AlarmGroupingTest {
             projection.types.single { it.definition.type == "temp_rises" }.alarms.map { it.threshold })
         assertEquals(before, rules)
         val evaluator = ThresholdAlarmEvaluator()
-        evaluator.evaluate(21, 250, rules)
-        assertEquals(listOf(rules.first()), evaluator.evaluate(14, 250, rules))
+        val logicalAlarms = projection.types.flatMap { it.alarms }
+        evaluator.evaluate(21, 250, logicalAlarms)
+        assertEquals(setOf(1, 2), evaluator.evaluate(14, 250, logicalAlarms).map { it.id }.toSet())
     }
 
     @Test
