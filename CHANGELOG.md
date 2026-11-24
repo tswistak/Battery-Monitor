@@ -11,6 +11,10 @@
 - Alarms can now have a repeated sound, if specified (#96).
 - Configurable audio channel for alarms.
 
+### Fixed
+
+- Dismissing low battery alarm now also works with discharging target alarm.
+
 ## 2.0.1
 
 ### Improved

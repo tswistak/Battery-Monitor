@@ -34,10 +34,10 @@ internal class ThresholdAlarmEvaluator {
         val reached = active.mapNotNull { (threshold, alarm) ->
             if (threshold !in previousThresholds) return@mapNotNull null
             val crossed = when (threshold.type) {
-                "charge_rises" -> previousPercent?.let { it < threshold.value && percent >= threshold.value }
-                "charge_drops" -> previousPercent?.let { it > threshold.value && percent <= threshold.value }
-                "temp_rises" -> previousTemperature?.let { it < threshold.value && temperature >= threshold.value }
-                "temp_drops" -> previousTemperature?.let { it > threshold.value && temperature <= threshold.value }
+                "charge_rises" -> previousPercent?.let { threshold.value in (it + 1)..percent }
+                "charge_drops" -> previousPercent?.let { threshold.value in percent..<it }
+                "temp_rises" -> previousTemperature?.let { threshold.value in (it + 1)..temperature }
+                "temp_drops" -> previousTemperature?.let { threshold.value in temperature..<it }
                 else -> false
             }
             alarm.takeIf { crossed == true }
@@ -62,15 +62,9 @@ internal fun shouldDismissAlarmAfterBatteryUpdate(
     return when (type) {
         "fully_charged" -> !plugged || (repeating && battery.status != BatteryInfo.STATUS_FULLY_CHARGED)
         "charge_rises" -> !plugged || (repeating && value != null && battery.percent < value)
-        "charge_drops" -> dismissLowBatteryOnRecovery && value != null &&
-                value in 0..100 && battery.percent > value
-
-        "charging_limit_met" -> !plugged || value != chargingTarget ||
-                (repeating && battery.percent < chargingTarget)
-
-        "discharging_limit_met" -> plugged || value != dischargingTarget ||
-                (repeating && battery.percent > dischargingTarget)
-
+        "charge_drops" -> dismissLowBatteryOnRecovery && value != null && value in 0..100 && battery.percent > value
+        "charging_limit_met" -> !plugged || value != chargingTarget || (repeating && battery.percent < chargingTarget)
+        "discharging_limit_met" -> plugged || value != dischargingTarget || ((repeating || dismissLowBatteryOnRecovery) && battery.percent > dischargingTarget)
         "temp_rises" -> repeating && value != null && battery.temperature < value
         "temp_drops" -> repeating && value != null && battery.temperature > value
         "health_failure" -> repeating && battery.health == BatteryInfo.HEALTH_GOOD

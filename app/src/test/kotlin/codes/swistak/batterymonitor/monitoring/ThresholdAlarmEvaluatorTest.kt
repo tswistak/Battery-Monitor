@@ -135,6 +135,30 @@ class ThresholdAlarmEvaluatorTest {
     }
 
     @Test
+    fun `discharging target recovery dismisses repeating alarms and opted-in one-shot alarms`() {
+        val battery = BatteryInfo().apply { plugged = BatteryInfo.PLUGGED_UNPLUGGED }
+        fun dismiss(optIn: Boolean, repeating: Boolean = false) =
+            shouldDismissAlarmAfterBatteryUpdate(
+                type = "discharging_limit_met",
+                value = 20,
+                repeating = repeating,
+                battery = battery,
+                chargingTarget = 80,
+                dischargingTarget = 20,
+                dismissLowBatteryOnRecovery = optIn
+            )
+
+        battery.percent = 19
+        assertFalse(dismiss(true))
+        battery.percent = 20
+        assertFalse(dismiss(true))
+        battery.percent = 21
+        assertFalse(dismiss(false))
+        assertTrue(dismiss(true))
+        assertTrue(dismiss(false, repeating = true))
+    }
+
+    @Test
     fun `session changes and recovery cancel only applicable alarms`() {
         val battery = BatteryInfo().apply {
             plugged = BatteryInfo.PLUGGED_UNPLUGGED
