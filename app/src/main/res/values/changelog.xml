@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="latest_release_changelog" translatable="false" formatted="false">Improved:\n\n- Added full privacy policy as a link to the website.\n- Moved FAQ to the website.\n\nFixed:\n\n- Settings highlights for target alarms (#179).\n- Point selection on comparison full-screen charts.\n- Default target screen for the history widget is now History.</string>
+    <string name="latest_release_changelog" translatable="false" formatted="false">New:\n\n- Possibility to configure separate alarm settings for each threshold (#181).\n\nImproved:\n\n- Alarms can now have a repeated sound, if specified (#96).\n- Configurable audio channel for alarms.\n\nFixed:\n\n- Dismissing low battery alarm now also works with discharging target alarm.</string>
 </resources>
