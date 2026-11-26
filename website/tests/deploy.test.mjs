@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
-import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -30,6 +30,8 @@ import { runPublish } from '../scripts/deploy/publish.mjs';
 const WEBSITE = 'a'.repeat(40);
 const APP = 'b'.repeat(40);
 const TAG = 'c'.repeat(40);
+const indexNowEndpoint = 'https://api.indexnow.org/indexnow';
+const testIndexNowKey = 'synthetic-test-key-1';
 const provenance = {
   mode: 'production',
   websiteCommit: WEBSITE,
@@ -106,6 +108,10 @@ function mockNetwork({
   stateFailure = false,
   pendingFailure = false,
   publicState = false,
+  websiteUrl = env.WEBSITE_URL,
+  indexNowStatus = 200,
+  indexNowHeaders,
+  publicPagePaths = [],
 } = {}) {
   const calls = [];
   const storage = new Map(initialStorage);
@@ -163,7 +169,9 @@ function mockNetwork({
     }
     if (url.hostname === 'api.bunny.net')
       return new Response(null, { status: purgeFailure ? 400 : 204 });
-    if (url.origin === new URL(env.WEBSITE_URL).origin) {
+    if (url.href === indexNowEndpoint)
+      return new Response(null, { status: indexNowStatus, headers: indexNowHeaders });
+    if (url.origin === new URL(websiteUrl).origin) {
       if (url.pathname.startsWith('/website-deploy-state/')) {
         assert.equal(options.headers?.AccessKey, undefined);
         const bytes = storage.get('/website-zone' + url.pathname);
@@ -176,6 +184,8 @@ function mockNetwork({
       const path =
         '/website-zone/battery' +
         (url.pathname.endsWith('/') ? url.pathname + 'index.html' : url.pathname);
+      if (publicPagePaths.includes(url.pathname) && !storage.has(path))
+        return new Response(null, { status: 404 });
       const bytes = storage.get(path) || Buffer.from('<h1>Battery Monitor 2.0.0</h1>');
       return new Response(bytes, {
         headers: {
@@ -262,6 +272,325 @@ async function history(t) {
   });
   return { ...f, previous: second, current };
 }
+
+async function indexNowSite(t, websiteUrl = env.WEBSITE_URL) {
+  const { root, dist } = await fixture(t);
+  const artifacts = join(root, '.artifacts');
+  await mkdir(artifacts);
+  const summaryPath = join(root, 'summary.md');
+  const absolute = (path) => new URL(path, websiteUrl).href;
+  async function page(path, title) {
+    const dir = join(dist, path);
+    await mkdir(dir, { recursive: true });
+    await writeFile(
+      join(dir, 'index.html'),
+      `<html><head><link rel="canonical" href="${absolute(path)}"></head><body><h1>${title}</h1></body></html>`,
+    );
+  }
+  async function sitemap(...paths) {
+    const urls = paths.map((path) => `<url><loc>${absolute(path)}</loc></url>`).join('');
+    await writeFile(join(dist, 'sitemap.xml'), `<urlset>${urls}</urlset>`);
+  }
+  async function deploy(network, overrides = {}, args = ['--publish']) {
+    const manifest = await createManifest(dist, provenance);
+    await writeFile(join(root, '.artifacts/deployment-manifest.json'), JSON.stringify(manifest));
+    return runPublish({
+      root,
+      args,
+      env: {
+        ...env,
+        WEBSITE_URL: websiteUrl,
+        GITHUB_ACTIONS: 'true',
+        WEBSITE_DEPLOY_AUTHORIZED: 'true',
+        INDEXNOW_KEY: testIndexNowKey,
+        GITHUB_STEP_SUMMARY: summaryPath,
+        ...overrides,
+      },
+      http: network,
+      validatePolicy: async () => {},
+    });
+  }
+  await page('/', 'Home');
+  await sitemap('/');
+  return { dist, deploy, page, sitemap, absolute, summaryPath, artifacts };
+}
+
+test('IndexNow migrates trusted pages, retries an unchanged deployment and waits for public removal', async (t) => {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-01-01T00:00:00Z') });
+  const site = await indexNowSite(t);
+  await site.page('/retired/', 'Old article');
+  await site.sitemap('/', '/retired/');
+  const initial = mockNetwork();
+  await site.deploy(initial, { GITHUB_ACTIONS: undefined, WEBSITE_DEPLOY_AUTHORIZED: undefined });
+  const statePath = new URL(stateUrl(config)).pathname;
+  const state = (network) => decodeState(network.storage.get(statePath), config);
+  const original = state(initial);
+  delete original.indexNow;
+  initial.storage.set(statePath, encodeState(original, config));
+  assert.ok(initial.calls.every((call) => call.url !== indexNowEndpoint));
+
+  await rm(join(site.dist, 'retired'), { recursive: true });
+  await site.page('/replacement/', 'Moved article');
+  await site.sitemap('/', '/replacement/');
+  const nextRun = (after, options = {}) =>
+    mockNetwork({
+      initialStorage: after.storage,
+      publicPagePaths: ['/retired/'],
+      ...options,
+    });
+  const submitted = (network) =>
+    network.calls
+      .filter((call) => call.url === indexNowEndpoint)
+      .map((call) => JSON.parse(call.body).urlList);
+  const replacement = site.absolute('/replacement/');
+  const retired = site.absolute('/retired/');
+
+  const rejected = nextRun(initial, { indexNowStatus: 422 });
+  const published = await site.deploy(rejected);
+  assert.equal(published.status, 'published');
+  assert.deepEqual(submitted(rejected), [[replacement]]);
+  assert.deepEqual(
+    state(rejected)
+      .indexNow.pending.map(({ url }) => url)
+      .sort(),
+    [replacement, retired],
+  );
+  assert.equal(published.indexNow.deferred, 1);
+  assert.match(await readFile(site.summaryPath, 'utf8'), /422/);
+  const firstPost = rejected.calls.findIndex((call) => call.url === indexNowEndpoint);
+  const priorCalls = rejected.calls.slice(0, firstPost);
+  const write = priorCalls.findLastIndex(
+    (call) => call.url === stateUrl(config) && call.method === 'PUT',
+  );
+  const verified = priorCalls.findLastIndex(
+    (call) => call.url === stateUrl(config) && call.method === 'GET',
+  );
+  const smoke = priorCalls.findIndex((call) => call.url.includes('__battery-monitor-smoke'));
+  assert.ok(smoke >= 0 && smoke < write && write < verified);
+
+  const retry = nextRun(rejected, { indexNowStatus: 202 });
+  await site.deploy(retry);
+  assert.deepEqual(submitted(retry), [[replacement]]);
+  assert.deepEqual(
+    state(retry).indexNow.pending.map(({ url }) => url),
+    [retired],
+  );
+  const unchanged = nextRun(retry);
+  await site.deploy(unchanged);
+  assert.deepEqual(submitted(unchanged), []);
+  assert.ok(unchanged.storage.has('/website-zone/battery/retired/index.html'));
+
+  t.mock.timers.setTime(Date.parse('2026-01-09T00:00:00Z'));
+  await writeFile(join(site.dist, '_astro/another.js'), 'another build');
+  const cleanup = nextRun(unchanged);
+  await site.deploy(cleanup);
+  assert.deepEqual(submitted(cleanup), [[retired]]);
+  assert.deepEqual(state(cleanup).indexNow.pending, []);
+  const deletion = cleanup.calls.findIndex(
+    (call) => call.method === 'DELETE' && call.url.endsWith('/retired/index.html'),
+  );
+  const purge = cleanup.calls.findLastIndex((call) =>
+    call.url.startsWith('https://api.bunny.net/'),
+  );
+  const probe = cleanup.calls.findLastIndex((call) => call.url === retired);
+  const post = cleanup.calls.findIndex((call) => call.url === indexNowEndpoint);
+  assert.ok(deletion >= 0 && deletion < purge && purge < probe && probe < post);
+});
+
+test('only a successful authorized production publication can send IndexNow requests', async (t) => {
+  const site = await indexNowSite(t);
+  for (const [overrides, args] of [
+    [{ WEBSITE_DEPLOY_ENABLED: 'false' }, ['--publish']],
+    [{ WEBSITE_DEPLOY_AUTHORIZED: 'false' }, ['--publish']],
+    [{ GITHUB_ACTIONS: undefined }, ['--publish']],
+    [{}, ['--dry-run']],
+  ]) {
+    const network = mockNetwork();
+    const result = await site.deploy(network, overrides, args);
+    assert.ok(network.calls.every((call) => call.url !== indexNowEndpoint));
+    assert.ok(network.calls.every((call) => !call.url.includes(testIndexNowKey)));
+    assert.ok(!(await readdir(site.dist)).includes(testIndexNowKey + '.txt'));
+    if (args.includes('--dry-run') || overrides.WEBSITE_DEPLOY_ENABLED === 'false')
+      assert.equal(network.calls.length, 0);
+    if (args.includes('--dry-run')) {
+      assert.equal(result.indexNow.mode, 'dry-run');
+      assert.deepEqual(result.indexNow.planned, [{ kind: 'update', url: site.absolute('/') }]);
+    }
+  }
+  for (const failure of [{ smokeFailure: true }, { stateFailure: true }]) {
+    const network = mockNetwork(failure);
+    await assert.rejects(site.deploy(network));
+    assert.ok(network.calls.every((call) => call.url !== indexNowEndpoint));
+  }
+  const previewOrigin = 'https://preview.example/';
+  const preview = await indexNowSite(t, previewOrigin);
+  const network = mockNetwork({ websiteUrl: previewOrigin });
+  assert.equal((await preview.deploy(network)).status, 'published');
+  assert.ok(
+    network.calls.every(
+      (call) => call.url !== indexNowEndpoint && !call.url.includes(testIndexNowKey),
+    ),
+  );
+});
+
+test('deployment-only keys rotate through verified uploads without leaking into artifacts or errors', async (t) => {
+  const site = await indexNowSite(t);
+  const rotatedKey = 'synthetic-test-key-2';
+  const keys = [testIndexNowKey, rotatedKey];
+  const logs = [];
+  for (const method of ['log', 'warn', 'error'])
+    t.mock.method(console, method, (...args) => logs.push(args.join(' ')));
+  async function assertKeyFreeOutputs() {
+    const entries = await readdir(site.artifacts, { recursive: true, withFileTypes: true });
+    const outputs = [logs.join('\n'), await readFile(site.summaryPath, 'utf8')];
+    for (const entry of entries) {
+      outputs.push(entry.name);
+      if (entry.isFile()) outputs.push(await readFile(join(entry.parentPath, entry.name), 'utf8'));
+    }
+    for (const key of keys) {
+      assert.ok(outputs.every((output) => !output.includes(key)));
+      assert.ok(!(await readdir(site.dist)).includes(key + '.txt'));
+    }
+    validateManifest(
+      JSON.parse(await readFile(join(site.artifacts, 'deployment-manifest.json'), 'utf8')),
+    );
+  }
+  const statePath = new URL(stateUrl(config)).pathname;
+  const home = site.absolute('/');
+  const first = mockNetwork();
+  await site.deploy(first);
+  assert.equal(
+    first.storage.get('/website-zone/battery/' + testIndexNowKey + '.txt').toString(),
+    testIndexNowKey,
+  );
+  await assertKeyFreeOutputs();
+
+  await site.page('/', 'Edited while no key was configured');
+  const missing = mockNetwork({ initialStorage: first.storage });
+  const skipped = await site.deploy(missing, { INDEXNOW_KEY: undefined });
+  assert.equal(skipped.status, 'published');
+  assert.match(skipped.indexNow.warnings.join(' '), /INDEXNOW_KEY/);
+  assert.ok(
+    missing.calls.every(
+      (call) => call.url !== indexNowEndpoint && !call.url.includes(testIndexNowKey),
+    ),
+  );
+  assert.deepEqual(decodeState(missing.storage.get(statePath), config).indexNow.pending, [
+    { url: home, kind: 'update' },
+  ]);
+
+  const failed = mockNetwork({
+    initialStorage: missing.storage,
+    failPut: (url) => url.pathname.endsWith('/' + rotatedKey + '.txt'),
+  });
+  await assert.rejects(
+    site.deploy(failed, { INDEXNOW_KEY: rotatedKey }),
+    (error) => error instanceof Error && keys.every((key) => !error.stack.includes(key)),
+  );
+  assert.ok(
+    failed.calls.some(
+      (call) => call.method === 'PUT' && call.url.endsWith('/' + rotatedKey + '.txt'),
+    ),
+  );
+  assert.ok(failed.calls.every((call) => call.url !== indexNowEndpoint));
+  assert.deepEqual(failed.storage.get(statePath), missing.storage.get(statePath));
+  await assertKeyFreeOutputs();
+
+  const retry = mockNetwork({ initialStorage: failed.storage });
+  await site.deploy(retry, { INDEXNOW_KEY: rotatedKey });
+  const filename = rotatedKey + '.txt';
+  const remotePath = '/website-zone/battery/' + filename;
+  const body = JSON.parse(retry.calls.find((call) => call.url === indexNowEndpoint).body);
+  assert.deepEqual(body, {
+    key: rotatedKey,
+    keyLocation: site.absolute('/' + filename),
+    host: new URL(home).host,
+    urlList: [home],
+  });
+  assert.equal(retry.storage.get(remotePath).toString(), rotatedKey);
+  const privateState = decodeState(retry.storage.get(statePath), config);
+  assert.equal(
+    privateState.files.find((file) => file.path === filename).sha256,
+    sha256(rotatedKey),
+  );
+  assert.deepEqual(privateState.indexNow.pending, []);
+  await assertKeyFreeOutputs();
+});
+
+test('unpersisted IndexNow acknowledgements survive a skipped run and can be retried', async (t) => {
+  const site = await indexNowSite(t);
+  const statePath = new URL(stateUrl(config)).pathname;
+  let stateWrites = 0;
+  const failedAck = mockNetwork({
+    failPut: (url) => url.pathname === statePath && ++stateWrites === 2,
+  });
+  const first = await site.deploy(failedAck);
+  const home = site.absolute('/');
+  assert.equal(first.status, 'published');
+  assert.deepEqual(first.indexNow.acceptedUrls, [home]);
+  assert.equal(first.indexNow.pending, 1);
+  assert.match(first.indexNow.warnings.join(' '), /acknowledgement/);
+  const persisted = decodeState(failedAck.storage.get(statePath), config);
+  assert.deepEqual(persisted.indexNow.pending, [{ kind: 'update', url: home }]);
+
+  const skipped = mockNetwork({ initialStorage: failedAck.storage });
+  await site.deploy(skipped, { WEBSITE_DEPLOY_AUTHORIZED: 'false' });
+  assert.ok(skipped.calls.every((call) => call.url !== indexNowEndpoint));
+  assert.deepEqual(
+    decodeState(skipped.storage.get(statePath), config).indexNow,
+    persisted.indexNow,
+  );
+  const retry = mockNetwork({ initialStorage: skipped.storage });
+  const next = await site.deploy(retry);
+  assert.deepEqual(next.indexNow.acceptedUrls, [home]);
+  assert.deepEqual(decodeState(retry.storage.get(statePath), config).indexNow.pending, []);
+});
+
+test('an unavailable historical page initializes a reported baseline and later edits still notify', async (t) => {
+  const site = await indexNowSite(t);
+  const legacy = mockNetwork();
+  await site.deploy(legacy, { WEBSITE_DEPLOY_AUTHORIZED: 'false' });
+  legacy.storage.set('/website-zone/battery/index.html', Buffer.from('interrupted upload'));
+  await site.page('/', 'New home page');
+  const rollout = mockNetwork({ initialStorage: legacy.storage });
+  const initial = await site.deploy(rollout);
+  assert.equal(initial.status, 'published');
+  assert.ok(rollout.calls.every((call) => call.url !== indexNowEndpoint));
+  assert.match(initial.indexNow.baseline, /initialized a baseline/i);
+  assert.match(initial.indexNow.warnings.join(' '), /checksum mismatch/i);
+  await site.page('/', 'Revised home page');
+  const next = mockNetwork({ initialStorage: rollout.storage });
+  assert.deepEqual((await site.deploy(next)).indexNow.acceptedUrls, [site.absolute('/')]);
+});
+
+test('an unchanged deployment honors the IndexNow Retry-After deadline from an earlier run', async (t) => {
+  const start = Date.parse('2026-01-01T00:00:00Z');
+  t.mock.timers.enable({ apis: ['Date'], now: start });
+  const site = await indexNowSite(t);
+  const limited = mockNetwork({ indexNowStatus: 429, indexNowHeaders: { 'Retry-After': '120' } });
+  const result = await site.deploy(limited);
+  assert.equal(result.status, 'published');
+  assert.equal(limited.calls.filter((call) => call.url === indexNowEndpoint).length, 1);
+  const deadline = new Date(start + 120_000).toISOString();
+  const statePath = new URL(stateUrl(config)).pathname;
+  assert.equal(
+    decodeState(limited.storage.get(statePath), config).indexNow.retryAfterUntil,
+    deadline,
+  );
+
+  t.mock.timers.setTime(start + 60_000);
+  const early = mockNetwork({ initialStorage: limited.storage });
+  assert.equal((await site.deploy(early)).indexNow.pending, 1);
+  assert.ok(early.calls.every((call) => call.url !== indexNowEndpoint));
+  assert.equal(
+    decodeState(early.storage.get(statePath), config).indexNow.retryAfterUntil,
+    deadline,
+  );
+  t.mock.timers.setTime(start + 121_000);
+  const retry = mockNetwork({ initialStorage: early.storage });
+  assert.deepEqual((await site.deploy(retry)).indexNow.acceptedUrls, [site.absolute('/')]);
+  assert.deepEqual(decodeState(retry.storage.get(statePath), config).indexNow.pending, []);
+});
 
 test('configuration is disabled by default and rejects unsafe destinations or ambiguous credentials', async () => {
   assert.equal(configFromEnv({}).enabled, false);

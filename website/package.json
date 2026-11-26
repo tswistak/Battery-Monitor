@@ -16,7 +16,7 @@
     "preview": "astro preview --host 127.0.0.1",
     "check": "npm run content:local && astro check",
     "typecheck": "npm run check",
-    "test": "node --test tests/content.test.mjs tests/deploy.test.mjs",
+    "test": "node --test tests/content.test.mjs tests/deploy.test.mjs tests/indexnow-cli.test.mjs tests/indexnow-delivery.test.mjs tests/indexnow-pages.test.mjs",
     "test:browser": "npm run build && playwright test",
     "audit:mobile": "node scripts/audit-mobile.mjs",
     "validate:publish": "node scripts/validate-config.mjs --publish",

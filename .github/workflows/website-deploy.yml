@@ -103,9 +103,11 @@ jobs:
         run:
           echo 'Website built and retained. Publishing skipped because WEBSITE_DEPLOY_ENABLED is not
           true.' >> "$GITHUB_STEP_SUMMARY"
-      - name: Publish, verify and clean up using durable successful deployment state
+      - name: Publish, verify, clean up and notify IndexNow
         if: steps.context.outputs.deploy == 'true' && env.WEBSITE_DEPLOY_ENABLED == 'true'
         env:
+          WEBSITE_DEPLOY_AUTHORIZED: ${{ steps.context.outputs.deploy }}
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           GITHUB_TOKEN: ${{ github.token }}
           BUNNY_STORAGE_ENDPOINT: ${{ vars.BUNNY_STORAGE_ENDPOINT }}
           BUNNY_STORAGE_ZONE: ${{ vars.BUNNY_STORAGE_ZONE }}

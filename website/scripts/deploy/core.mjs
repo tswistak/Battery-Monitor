@@ -7,9 +7,11 @@ import {
   randomBytes,
   timingSafeEqual,
 } from 'node:crypto';
-import { lstat, readdir, readFile, realpath } from 'node:fs/promises';
+import { lstat, open, readdir, readFile, realpath, unlink } from 'node:fs/promises';
 import { extname, relative, resolve, sep } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
+import { INDEXNOW_ORIGIN, planIndexNow, readIndexNowPages } from './indexnow-pages.mjs';
+import { deliverIndexNow, isIndexNowKey, skippedIndexNow } from './indexnow-delivery.mjs';
 import {
   API_URL,
   REPOSITORY,
@@ -55,6 +57,12 @@ const FORBIDDEN =
 const HASH = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 export const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+
+export function isIndexNowVerificationFile(file) {
+  if (!file.path.endsWith('.txt')) return false;
+  const key = file.path.slice(0, -4);
+  return isIndexNowKey(key) && file.sha256 === sha256(key);
+}
 
 export function safePath(value, { prefix = false } = {}) {
   // eslint-disable-next-line no-control-regex -- Control characters are invalid in publication paths.
@@ -103,6 +111,7 @@ export function configFromEnv(env = process.env, { publishing = false } = {}) {
     storageKey: env.BUNNY_STORAGE_ACCESS_KEY || null,
     apiKey: env.BUNNY_API_KEY || null,
     stateKey: env.WEBSITE_DEPLOY_STATE_KEY || null,
+    indexNowKey: env.INDEXNOW_KEY || null,
     bootstrap: env.WEBSITE_DEPLOY_BOOTSTRAP === 'true',
     githubToken: env.GITHUB_TOKEN || null,
   };
@@ -719,14 +728,17 @@ async function verifyInitialFiles(config, pending, http) {
         { headers: { AccessKey: config.storageKey } },
         http,
       );
-      if (!existing.ok) throw new Error(`Pending deployment file could not be verified: ${path}`);
+      const label = expected.some(isIndexNowVerificationFile)
+        ? '[IndexNow verification file]'
+        : path;
+      if (!existing.ok) throw new Error(`Pending deployment file could not be verified: ${label}`);
       const bytes = Buffer.from(await existing.arrayBuffer());
       const file = expected.find(
         (file) => file.size === bytes.length && file.sha256 === sha256(bytes),
       );
       if (!file)
         throw new Error(
-          `Pending deployment ownership could not be verified for ${path}; it was preserved`,
+          `Pending deployment ownership could not be verified for ${label}; it was preserved`,
         );
       verified.push(file);
     }
@@ -749,7 +761,64 @@ async function purgeSite(config, http) {
     throw new Error(`Site files uploaded, but CDN invalidation failed (${response.status})`);
 }
 
-export async function publishSite({ dist, manifest, config, http = {}, validatePolicy }) {
+async function prepareIndexNow(dist, manifest, previous, config, http) {
+  const local = (path) => readFile(resolve(dist, path));
+  let baseline = previous?.indexNow;
+  let baselineNote;
+  let baselineWarning;
+  if (previous && !baseline) {
+    const hashes = new Map(manifest.files.map((file) => [file.path, file.sha256]));
+    try {
+      const pages = await readIndexNowPages(previous, async (path, previousHash) => {
+        if (hashes.get(path) === previousHash) return local(path);
+        const response = await request(
+          storageUrl(config, path),
+          { headers: { AccessKey: config.storageKey } },
+          http,
+        );
+        if (response.status !== 200) {
+          await response.body?.cancel();
+          throw new Error(`Historical file ${path} returned HTTP ${response.status}`);
+        }
+        return Buffer.from(await response.arrayBuffer());
+      });
+      baseline = { pages, pending: [] };
+      baselineNote = 'Compared with the previous successful deployment.';
+    } catch (error) {
+      baselineWarning = `Previous IndexNow baseline could not be reconstructed: ${error.message}`;
+    }
+  }
+  try {
+    const pages = await readIndexNowPages(manifest, local, baseline?.pages);
+    if (baselineWarning) {
+      baseline = { pages, pending: [] };
+      baselineNote =
+        'Initialized a baseline from this publication. Existing URLs will be discovered through the sitemap.';
+    }
+    const state = planIndexNow(pages, baseline);
+    if (Date.parse(baseline?.retryAfterUntil) > Date.now())
+      state.retryAfterUntil = baseline.retryAfterUntil;
+    return { state, baselineNote, baselineWarning };
+  } catch (error) {
+    const reason = `IndexNow planning failed: ${error.message}. Retry after correcting the build or its sitemap.`;
+    const report = skippedIndexNow(reason, baseline?.pending.length ?? 0);
+    report.warnings.push(reason);
+    return {
+      state: baseline ?? (previous ? undefined : { pages: {}, pending: [] }),
+      report,
+      baselineWarning,
+    };
+  }
+}
+
+export async function publishSite({
+  dist,
+  manifest,
+  config,
+  http = {},
+  validatePolicy,
+  indexNowAuthorized = false,
+}) {
   if (!config.enabled) return { status: 'disabled', uploads: 0, deleted: 0 };
   validateManifest(manifest);
   validateProvenance(manifest.provenance, true);
@@ -765,6 +834,65 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
     )
   )
     throw new Error('dist no longer matches its deployment manifest');
+  const notify = indexNowAuthorized && config.websiteUrl === INDEXNOW_ORIGIN + '/';
+  const indexNowKey = notify && isIndexNowKey(config.indexNowKey) ? config.indexNowKey : null;
+  if (indexNowKey && secrets.some((secret) => secret && indexNowKey.includes(secret)))
+    throw new Error('INDEXNOW_KEY must be distinct from deployment credentials');
+  const keyFile = indexNowKey && resolve(dist, indexNowKey + '.txt');
+  let created = false;
+  try {
+    if (keyFile) {
+      const handle = await open(keyFile, 'wx', 0o600);
+      created = true;
+      try {
+        await handle.writeFile(indexNowKey);
+      } finally {
+        await handle.close();
+      }
+    }
+    return await publishVerifiedSite({
+      dist,
+      manifest,
+      config,
+      http,
+      notify,
+      indexNowAuthorized,
+      indexNowKey,
+      secrets,
+    });
+  } catch (error) {
+    if (indexNowKey && error.message.includes(indexNowKey))
+      // eslint-disable-next-line preserve-caught-error -- Node would print the secret path from the original cause.
+      throw new Error(
+        error.message
+          .replaceAll(indexNowKey + '.txt', '[IndexNow verification file]')
+          .replaceAll(indexNowKey, '[IndexNow key]'),
+      );
+    throw error;
+  } finally {
+    if (created) {
+      try {
+        await unlink(keyFile);
+      } catch (error) {
+        if (error.code !== 'ENOENT')
+          console.warn(
+            '::warning::Could not remove the temporary IndexNow verification file from the runner.',
+          );
+      }
+    }
+  }
+}
+
+async function publishVerifiedSite({
+  dist,
+  manifest,
+  config,
+  http,
+  notify,
+  indexNowAuthorized,
+  indexNowKey,
+  secrets,
+}) {
   const state = await readState(config, http);
   const previous = state?.manifest || null;
   let pending = null;
@@ -787,7 +915,22 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
       manifest.owned.push({ path: file.path, sha256: file.sha256, obsoleteSince: null });
   manifest.owned.sort((a, b) => a.path.localeCompare(b.path));
   const plan = planDeployment(manifest, { previous });
+  const verificationFiles = new Set(
+    previous?.owned.filter(isIndexNowVerificationFile).map((file) => file.path),
+  );
+  if (!indexNowKey) plan.cleanup = plan.cleanup.filter((path) => !verificationFiles.has(path));
   await assertCurrent(manifest.provenance, config, http);
+  const indexNowPlan = notify
+    ? await prepareIndexNow(dist, manifest, previous, config, http)
+    : {
+        state: previous?.indexNow,
+        report: skippedIndexNow(
+          indexNowAuthorized
+            ? 'Configured website URL is outside the canonical production origin.'
+            : 'IndexNow requires an authorized production workflow.',
+          previous?.indexNow?.pending.length ?? 0,
+        ),
+      };
   if (!previous) {
     const expected = new Map(
       [...recovered, ...manifest.files].map((file) => [
@@ -871,6 +1014,7 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
   }
   for (const path of plan.cleanup) {
     const owned = previous.owned.find((entry) => entry.path === path);
+    const label = verificationFiles.has(path) ? '[IndexNow verification file]' : path;
     const existing = await request(
       storageUrl(config, path),
       { headers: { AccessKey: config.storageKey } },
@@ -879,7 +1023,7 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
     if (existing.status === 404) continue;
     if (!existing.ok || sha256(Buffer.from(await existing.arrayBuffer())) !== owned.sha256)
       throw new Error(
-        `Site published, but obsolete-file ownership could not be verified for ${path}; it was retained`,
+        `Site published, but obsolete-file ownership could not be verified for ${label}; it was retained`,
       );
     const deleted = await request(
       storageUrl(config, path),
@@ -888,26 +1032,65 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
     );
     if (!deleted.ok && deleted.status !== 404)
       throw new Error(
-        `Site published, but controlled cleanup failed (${deleted.status}) for ${path}`,
+        `Site published, but controlled cleanup failed (${deleted.status}) for ${label}`,
       );
   }
   if (plan.cleanup.length) await purgeSite(config, http);
   const deleted = new Set(plan.cleanup);
   const publishedAt = new Date().toISOString();
-  const successful = {
+  let successful = {
     ...manifest,
     publishedAt,
     destination: destination(config),
     owned: publishedOwnership(manifest, publishedAt, deleted),
+    ...(indexNowPlan.state && { indexNow: indexNowPlan.state }),
   };
   const bytes = encodeState(successful, config);
   await assertUnchangedState(config, state, http);
-  await storeState(config, bytes, http);
+  const persisted = await storeState(config, bytes, http);
+  let report = indexNowPlan.report;
+  if (!report) {
+    const { pending, retryAfterUntil } = successful.indexNow;
+    try {
+      report = await deliverIndexNow({
+        ...successful.indexNow,
+        websiteUrl: config.websiteUrl,
+        indexNowKey,
+        http,
+      });
+      if (
+        report.acceptedUrls.length ||
+        (report.retryAfterUntil && report.retryAfterUntil !== retryAfterUntil)
+      ) {
+        const accepted = new Set(report.acceptedUrls);
+        const acknowledged = {
+          ...successful,
+          indexNow: {
+            pages: successful.indexNow.pages,
+            pending: pending.filter(({ url }) => !accepted.has(url)),
+            ...(report.retryAfterUntil && { retryAfterUntil: report.retryAfterUntil }),
+          },
+        };
+        await assertUnchangedState(config, persisted, http);
+        await storeState(config, encodeState(acknowledged, config), http);
+        successful = acknowledged;
+      }
+    } catch (error) {
+      report ??= skippedIndexNow(null, pending.length);
+      report.pending = pending.length;
+      const reason = `IndexNow delivery or acknowledgement could not be verified: ${error.message}. Pending URLs may be retried.`;
+      report.reasons.push(reason);
+      report.warnings.push(reason);
+    }
+  }
+  if (indexNowPlan.baselineNote) report.baseline = indexNowPlan.baselineNote;
+  if (indexNowPlan.baselineWarning) report.warnings.push(indexNowPlan.baselineWarning);
   // A verified successful state retires bootstrap authority; a leftover pending record is ignored.
   return {
     status: 'published',
     uploads: plan.uploads.length,
     deleted: deleted.size,
     manifest: successful,
+    indexNow: report,
   };
 }
