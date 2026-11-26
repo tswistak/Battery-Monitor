@@ -14,6 +14,22 @@ const routes = [
   '/privacy/',
   '/about/',
 ];
+test('the built sitemap index exposes canonical directory routes', async ({ request }) => {
+  const index = await request.get('/sitemap-index.xml');
+  expect(index.status()).toBe(200);
+  const children = [...(await index.text()).matchAll(/<loc>([^<]+)<\/loc>/g)];
+  expect(children.length).toBeGreaterThan(0);
+  const pagePaths: string[] = [];
+  for (const [, child] of children) {
+    const sitemap = await request.get(new URL(child).pathname);
+    expect(sitemap.status()).toBe(200);
+    for (const [, url] of (await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g))
+      pagePaths.push(new URL(url).pathname);
+  }
+  expect(pagePaths).toContain('/');
+  expect(pagePaths.every((path) => path.endsWith('/'))).toBe(true);
+  expect(pagePaths).not.toContain('/404/');
+});
 test('static routes, download navigation and essential images work without JavaScript', async ({
   browser,
 }) => {
