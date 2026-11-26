@@ -110,7 +110,7 @@ export async function readIndexNowPages(manifest, readFileBytes, previousPages =
   return pages;
 }
 
-export function planIndexNow(pages, previousState = null) {
+export function planIndexNow(pages, previousState = null, { submitAll = false } = {}) {
   const previousPages = previousState?.pages ?? {};
   const pendingUrls = new Set(previousState?.pending.map(({ url }) => url));
   const urls = new Set([...Object.keys(pages), ...Object.keys(previousPages), ...pendingUrls]);
@@ -119,7 +119,7 @@ export function planIndexNow(pages, previousState = null) {
     if (!isIndexNowPageUrl(url)) throw new Error('Invalid page URL in IndexNow state');
     const current = pages[url]?.comparisonSha256 ?? pages[url];
     const previous = previousPages[url]?.comparisonSha256 ?? previousPages[url];
-    if (current !== previous || pendingUrls.has(url))
+    if ((submitAll && Object.hasOwn(pages, url)) || current !== previous || pendingUrls.has(url))
       pending.push({ url, kind: Object.hasOwn(pages, url) ? 'update' : 'removal' });
   }
   return { pages, pending };

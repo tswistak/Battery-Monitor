@@ -95,7 +95,10 @@ export function publicUrl(value = 'https://batterymonitor.swistak.codes/') {
   return url.href;
 }
 
-export function configFromEnv(env = process.env, { publishing = false } = {}) {
+export function configFromEnv(
+  env = process.env,
+  { publishing = false, indexNowOnly = false } = {},
+) {
   if (env.WEBSITE_DEPLOY_ENABLED && !['true', 'false'].includes(env.WEBSITE_DEPLOY_ENABLED))
     throw new Error('WEBSITE_DEPLOY_ENABLED must be true or false');
   if (publishing && env.WEBSITE_DEPLOY_ENABLED !== 'true') return { enabled: false };
@@ -146,10 +149,10 @@ export function configFromEnv(env = process.env, { publishing = false } = {}) {
       ['BUNNY_STORAGE_ZONE', config.zone],
       ['BUNNY_PULL_ZONE_ID', config.pullZoneId],
       ['BUNNY_STORAGE_ACCESS_KEY', config.storageKey],
-      ['BUNNY_API_KEY', config.apiKey],
       ['WEBSITE_DEPLOY_STATE_KEY', config.stateKey],
     ])
       if (!value?.trim()) throw new Error(`Missing ${key}`);
+    if (!indexNowOnly && !config.apiKey?.trim()) throw new Error('Missing BUNNY_API_KEY');
     if (!config.prefix || config.prefix.split('/')[0] === STATE_DIRECTORY)
       throw new Error(
         'Publication requires a nonempty BUNNY_STORAGE_PREFIX outside deployment state',
@@ -483,13 +486,20 @@ function stateEncryptionKey(config) {
   );
 }
 
+function deploymentCredentials(config) {
+  return [config.storageKey, config.apiKey, config.githubToken, config.stateKey].filter(Boolean);
+}
+
+function configuredIndexNowKey(config) {
+  if (!isIndexNowKey(config.indexNowKey)) return null;
+  if (deploymentCredentials(config).some((secret) => config.indexNowKey.includes(secret)))
+    throw new Error('INDEXNOW_KEY must be distinct from deployment credentials');
+  return config.indexNowKey;
+}
+
 function encodeRecord(kind, value, config) {
   const payload = JSON.stringify(value);
-  if (
-    [config.storageKey, config.apiKey, config.githubToken, config.stateKey]
-      .filter(Boolean)
-      .some((secret) => payload.includes(secret))
-  )
+  if (deploymentCredentials(config).some((secret) => payload.includes(secret)))
     throw new Error('A deployment credential occurs in the deployment manifest');
   const signature = createHmac('sha256', config.stateKey)
     .update(`${kind}:${payload}`)
@@ -761,6 +771,19 @@ async function purgeSite(config, http) {
     throw new Error(`Site files uploaded, but CDN invalidation failed (${response.status})`);
 }
 
+async function readPublishedFile(config, path, http) {
+  const response = await request(
+    storageUrl(config, path),
+    { headers: { AccessKey: config.storageKey } },
+    http,
+  );
+  if (response.status !== 200) {
+    await response.body?.cancel();
+    throw new Error(`Published file ${path} returned HTTP ${response.status}`);
+  }
+  return Buffer.from(await response.arrayBuffer());
+}
+
 async function prepareIndexNow(dist, manifest, previous, config, http) {
   const local = (path) => readFile(resolve(dist, path));
   let baseline = previous?.indexNow;
@@ -771,16 +794,7 @@ async function prepareIndexNow(dist, manifest, previous, config, http) {
     try {
       const pages = await readIndexNowPages(previous, async (path, previousHash) => {
         if (hashes.get(path) === previousHash) return local(path);
-        const response = await request(
-          storageUrl(config, path),
-          { headers: { AccessKey: config.storageKey } },
-          http,
-        );
-        if (response.status !== 200) {
-          await response.body?.cancel();
-          throw new Error(`Historical file ${path} returned HTTP ${response.status}`);
-        }
-        return Buffer.from(await response.arrayBuffer());
+        return readPublishedFile(config, path, http);
       });
       baseline = { pages, pending: [] };
       baselineNote = 'Compared with the previous successful deployment.';
@@ -825,7 +839,7 @@ export async function publishSite({
   if (typeof validatePolicy !== 'function')
     throw new Error('A production privacy/configuration validator is required');
   await validatePolicy();
-  const secrets = [config.storageKey, config.apiKey, config.githubToken, config.stateKey];
+  const secrets = deploymentCredentials(config);
   const actual = await scanDist(dist, secrets);
   if (
     JSON.stringify(actual) !==
@@ -835,9 +849,7 @@ export async function publishSite({
   )
     throw new Error('dist no longer matches its deployment manifest');
   const notify = indexNowAuthorized && config.websiteUrl === INDEXNOW_ORIGIN + '/';
-  const indexNowKey = notify && isIndexNowKey(config.indexNowKey) ? config.indexNowKey : null;
-  if (indexNowKey && secrets.some((secret) => secret && indexNowKey.includes(secret)))
-    throw new Error('INDEXNOW_KEY must be distinct from deployment credentials');
+  const indexNowKey = notify ? configuredIndexNowKey(config) : null;
   const keyFile = indexNowKey && resolve(dist, indexNowKey + '.txt');
   let created = false;
   try {
@@ -1050,38 +1062,12 @@ async function publishVerifiedSite({
   const persisted = await storeState(config, bytes, http);
   let report = indexNowPlan.report;
   if (!report) {
-    const { pending, retryAfterUntil } = successful.indexNow;
-    try {
-      report = await deliverIndexNow({
-        ...successful.indexNow,
-        websiteUrl: config.websiteUrl,
-        indexNowKey,
-        http,
-      });
-      if (
-        report.acceptedUrls.length ||
-        (report.retryAfterUntil && report.retryAfterUntil !== retryAfterUntil)
-      ) {
-        const accepted = new Set(report.acceptedUrls);
-        const acknowledged = {
-          ...successful,
-          indexNow: {
-            pages: successful.indexNow.pages,
-            pending: pending.filter(({ url }) => !accepted.has(url)),
-            ...(report.retryAfterUntil && { retryAfterUntil: report.retryAfterUntil }),
-          },
-        };
-        await assertUnchangedState(config, persisted, http);
-        await storeState(config, encodeState(acknowledged, config), http);
-        successful = acknowledged;
-      }
-    } catch (error) {
-      report ??= skippedIndexNow(null, pending.length);
-      report.pending = pending.length;
-      const reason = `IndexNow delivery or acknowledgement could not be verified: ${error.message}. Pending URLs may be retried.`;
-      report.reasons.push(reason);
-      report.warnings.push(reason);
-    }
+    ({ manifest: successful, report } = await deliverSavedIndexNow(
+      persisted,
+      config,
+      indexNowKey,
+      http,
+    ));
   }
   if (indexNowPlan.baselineNote) report.baseline = indexNowPlan.baselineNote;
   if (indexNowPlan.baselineWarning) report.warnings.push(indexNowPlan.baselineWarning);
@@ -1093,4 +1079,79 @@ async function publishVerifiedSite({
     manifest: successful,
     indexNow: report,
   };
+}
+
+async function deliverSavedIndexNow(persisted, config, indexNowKey, http) {
+  let successful = persisted.manifest;
+  let report;
+  const { pending, retryAfterUntil } = successful.indexNow;
+  try {
+    report = await deliverIndexNow({
+      ...successful.indexNow,
+      websiteUrl: config.websiteUrl,
+      indexNowKey,
+      http,
+    });
+    if (
+      report.acceptedUrls.length ||
+      (report.retryAfterUntil && report.retryAfterUntil !== retryAfterUntil)
+    ) {
+      const accepted = new Set(report.acceptedUrls);
+      const acknowledged = {
+        ...successful,
+        indexNow: {
+          pages: successful.indexNow.pages,
+          pending: pending.filter(({ url }) => !accepted.has(url)),
+          ...(report.retryAfterUntil && { retryAfterUntil: report.retryAfterUntil }),
+        },
+      };
+      await assertUnchangedState(config, persisted, http);
+      await storeState(config, encodeState(acknowledged, config), http);
+      successful = acknowledged;
+    }
+  } catch (error) {
+    report ??= skippedIndexNow(null, pending.length);
+    report.pending = pending.length;
+    const reason = `IndexNow delivery or acknowledgement could not be verified: ${error.message}. Pending URLs may be retried.`;
+    report.reasons.push(reason);
+    report.warnings.push(reason);
+  }
+  return { manifest: successful, report };
+}
+
+export async function submitPublishedIndexNow({ config, http = {} }) {
+  if (
+    !config.enabled ||
+    config.repository !== REPOSITORY ||
+    config.websiteUrl !== INDEXNOW_ORIGIN + '/'
+  )
+    throw new Error(
+      'Manual IndexNow submission requires the enabled canonical production website.',
+    );
+  const indexNowKey = configuredIndexNowKey(config);
+  const state = await readState(config, http);
+  if (!state) throw new Error('No successful website deployment is available for IndexNow.');
+  await assertPrivateState(config, http);
+  validateProvenance(state.manifest.provenance, true);
+  const pages = await readIndexNowPages(state.manifest, (path) =>
+    readPublishedFile(config, path, http),
+  );
+  const requestedPages = Object.keys(pages).length;
+  if (!requestedPages)
+    throw new Error(
+      'The successful deployment has no canonical indexable sitemap pages to submit.',
+    );
+  const previous = state.manifest.indexNow;
+  const indexNow = planIndexNow(pages, previous, { submitAll: true });
+  if (Date.parse(previous?.retryAfterUntil) > Date.now())
+    indexNow.retryAfterUntil = previous.retryAfterUntil;
+  await assertUnchangedState(config, state, http);
+  const persisted = await storeState(
+    config,
+    encodeState({ ...state.manifest, indexNow }, config),
+    http,
+  );
+  const { manifest, report } = await deliverSavedIndexNow(persisted, config, indexNowKey, http);
+  const stillPending = manifest.indexNow.pending.filter(({ kind }) => kind === 'update').length;
+  return { ...report, requestedPages, confirmedPages: requestedPages - stillPending };
 }

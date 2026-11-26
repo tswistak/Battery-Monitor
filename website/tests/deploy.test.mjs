@@ -592,6 +592,118 @@ test('an unchanged deployment honors the IndexNow Retry-After deadline from an e
   assert.deepEqual(decodeState(retry.storage.get(statePath), config).indexNow.pending, []);
 });
 
+function manualIndexNow(root, http, overrides = {}) {
+  return runPublish({
+    root,
+    args: ['--indexnow-only'],
+    env: {
+      ...env,
+      GITHUB_ACTIONS: 'true',
+      GITHUB_EVENT_NAME: 'workflow_dispatch',
+      WEBSITE_DEPLOY_AUTHORIZED: 'true',
+      INDEXNOW_KEY: testIndexNowKey,
+      ...overrides,
+    },
+    http,
+  });
+}
+
+test('manual IndexNow sends the published inventory, retaining failed deliveries and deferred removals', async (t) => {
+  const site = await indexNowSite(t);
+  await site.page('/z-last/', 'Another page');
+  await site.page('/retired/', 'Previous page');
+  await site.sitemap('/z-last/', '/', '/retired/');
+  const initial = mockNetwork();
+  await site.deploy(initial);
+  await rm(join(site.dist, 'retired'), { recursive: true });
+  await site.sitemap('/z-last/', '/');
+  const published = mockNetwork({ initialStorage: initial.storage });
+  await site.deploy(published);
+  const urls = [site.absolute('/'), site.absolute('/z-last/')];
+  const removal = { url: site.absolute('/retired/'), kind: 'removal' };
+  const statePath = new URL(stateUrl(config)).pathname;
+  const readState = (network) => decodeState(network.storage.get(statePath), config);
+  const { indexNow, ...publication } = readState(published);
+  assert.deepEqual(indexNow.pending, [removal]);
+  const root = await mkdtemp(join(tmpdir(), 'manual-indexnow-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+
+  const alteredSite = mockNetwork({ initialStorage: published.storage });
+  alteredSite.storage.set('/website-zone/battery/z-last/index.html', Buffer.from('partial upload'));
+  await assert.rejects(manualIndexNow(root, alteredSite), /checksum/i);
+  assert.ok(
+    alteredSite.calls.every((call) => call.method === 'GET' && call.url !== indexNowEndpoint),
+  );
+
+  const rejected = mockNetwork({ initialStorage: published.storage, indexNowStatus: 422 });
+  await assert.rejects(manualIndexNow(root, rejected), /IndexNow|422/i);
+  const postIndex = rejected.calls.findIndex((call) => call.url === indexNowEndpoint);
+  assert.ok(postIndex >= 0);
+  const queueWrite = rejected.calls
+    .slice(0, postIndex)
+    .find((call) => call.url === stateUrl(config) && call.method === 'PUT');
+  assert.ok(queueWrite, 'Queue updates must be durable before submission');
+  const queued = decodeState(queueWrite.body, config).indexNow.pending;
+  assert.deepEqual(
+    queued
+      .filter(({ kind }) => kind === 'update')
+      .map(({ url }) => url)
+      .sort(),
+    urls,
+  );
+  assert.deepEqual(
+    queued.filter(({ kind }) => kind === 'removal'),
+    [removal],
+  );
+  assert.deepEqual(readState(rejected).indexNow.pending, queued);
+  assert.deepEqual(JSON.parse(rejected.calls[postIndex].body).urlList, urls);
+
+  const accepted = mockNetwork({ initialStorage: rejected.storage, indexNowStatus: 202 });
+  await manualIndexNow(root, accepted);
+  assert.deepEqual(
+    accepted.calls
+      .filter((call) => call.url === indexNowEndpoint)
+      .map((call) => JSON.parse(call.body).urlList),
+    [urls],
+  );
+  for (const network of [rejected, accepted]) {
+    assert.ok(network.calls.every((call) => !call.url.startsWith('https://api.bunny.net/')));
+    assert.ok(
+      network.calls.every(
+        (call) =>
+          !['DELETE', 'PUT'].includes(call.method) ||
+          (call.method === 'PUT' && call.url === stateUrl(config)),
+      ),
+    );
+    const { indexNow: bookkeeping, ...after } = readState(network);
+    assert.deepEqual(after, publication);
+    assert.deepEqual(bookkeeping.pages, indexNow.pages);
+  }
+  assert.deepEqual(readState(accepted).indexNow.pending, [removal]);
+  const next = mockNetwork({ initialStorage: accepted.storage });
+  await site.deploy(next);
+  assert.ok(next.calls.every((call) => call.url !== indexNowEndpoint));
+});
+
+test('manual IndexNow requires an authorized dispatch and trusted successful publication', async (t) => {
+  const root = await mkdtemp(join(tmpdir(), 'manual-indexnow-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  for (const rejectedContext of [
+    { GITHUB_EVENT_NAME: 'push' },
+    { WEBSITE_DEPLOY_AUTHORIZED: 'false' },
+    { GITHUB_ACTIONS: undefined },
+    { WEBSITE_DEPLOY_ENABLED: 'false' },
+    { WEBSITE_URL: 'https://preview.example/' },
+  ]) {
+    const network = mockNetwork();
+    await assert.rejects(manualIndexNow(root, network, rejectedContext));
+    assert.equal(network.calls.length, 0);
+  }
+  const empty = mockNetwork();
+  await assert.rejects(manualIndexNow(root, empty), /state|publication|deploy/i);
+  assert.ok(empty.calls.every((call) => call.method === 'GET' && call.url !== indexNowEndpoint));
+});
+
 test('configuration is disabled by default and rejects unsafe destinations or ambiguous credentials', async () => {
   assert.equal(configFromEnv({}).enabled, false);
   assert.equal(config.prefix, 'battery');

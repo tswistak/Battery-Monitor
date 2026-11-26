@@ -1,0 +1,64 @@
+name: Submit published pages to IndexNow
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:
+      group: website-production
+      queue: max
+      cancel-in-progress: false
+    defaults:
+      run:
+        working-directory: website
+    env:
+      WEBSITE_PRODUCTION_BRANCH:
+        ${{ vars.WEBSITE_PRODUCTION_BRANCH || github.event.repository.default_branch }}
+      WEBSITE_DEPLOY_ENABLED: ${{ vars.WEBSITE_DEPLOY_ENABLED || 'false' }}
+    steps:
+      - name: Require the enabled production branch
+        working-directory: .
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/$WEBSITE_PRODUCTION_BRANCH" ]; then
+            echo '::error::Manual IndexNow submission must use the production branch.'
+            exit 1
+          fi
+          if [ "$WEBSITE_DEPLOY_ENABLED" != 'true' ]; then
+            echo '::error::Manual IndexNow submission requires WEBSITE_DEPLOY_ENABLED=true.'
+            exit 1
+          fi
+      - name: Checkout current production implementation
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ format('refs/heads/{0}', env.WEBSITE_PRODUCTION_BRANCH) }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - name: Verify trigger and current production revision
+        id: context
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node ../.github/scripts/website-deploy-context.mjs
+      - name: Install website tooling
+        run: npm ci
+      - name: Submit published pages
+        env:
+          WEBSITE_DEPLOY_AUTHORIZED: ${{ steps.context.outputs.deploy }}
+          WEBSITE_URL: ${{ vars.WEBSITE_URL || 'https://batterymonitor.swistak.codes/' }}
+          BUNNY_STORAGE_ENDPOINT: ${{ vars.BUNNY_STORAGE_ENDPOINT }}
+          BUNNY_STORAGE_ZONE: ${{ vars.BUNNY_STORAGE_ZONE }}
+          BUNNY_STORAGE_PREFIX: ${{ vars.BUNNY_STORAGE_PREFIX }}
+          BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
+          BUNNY_STORAGE_ACCESS_KEY: ${{ secrets.BUNNY_STORAGE_ACCESS_KEY }}
+          WEBSITE_DEPLOY_STATE_KEY: ${{ secrets.WEBSITE_DEPLOY_STATE_KEY }}
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node scripts/deploy/publish.mjs --indexnow-only

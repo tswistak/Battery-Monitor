@@ -19,9 +19,10 @@ const sharedWebsiteSource = (path) =>
   /^app\/src\/main\/res\/values\/(strings|changelog)\.xml$/.test(path);
 
 export function classifyPaths(paths) {
+  const relevant = paths.filter((path) => path !== '.github/workflows/website-indexnow.yml');
   return {
-    android: paths.some((path) => !websiteOnly(path)),
-    website: paths.some((path) => websiteOnly(path) || sharedWebsiteSource(path)),
+    android: relevant.some((path) => !websiteOnly(path)),
+    website: relevant.some((path) => websiteOnly(path) || sharedWebsiteSource(path)),
   };
 }
 

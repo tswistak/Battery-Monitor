@@ -3,7 +3,7 @@ import { appendFile, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
-import { configFromEnv, planDeployment, publishSite } from './core.mjs';
+import { configFromEnv, planDeployment, publishSite, submitPublishedIndexNow } from './core.mjs';
 import { artifactManifest } from './manifest.mjs';
 import { skippedIndexNow } from './indexnow-delivery.mjs';
 import {
@@ -20,15 +20,24 @@ function warning(message) {
 
 async function reportIndexNow(report, env, artifactPath) {
   report.warnings.forEach(warning);
+  const manual = Object.hasOwn(report, 'requestedPages');
+  const selection = manual
+    ? report.requestedPages === null
+      ? 'published page count unavailable'
+      : `${report.requestedPages} published pages selected`
+    : `${report.updates} added or updated`;
   const counts = [
-    `${report.updates} added or updated`,
+    selection,
     `${report.removals} removals or redirects selected`,
     `${report.deferred} deferred`,
     `${report.acceptedUrls.length} accepted (HTTP 200: ${report.accepted200}, HTTP 202 awaiting key verification: ${report.accepted202})`,
     report.pending === null ? 'pending count unavailable' : `${report.pending} pending`,
   ].join(', ');
   const summary = [
-    `IndexNow ${report.mode} — ${counts}.`,
+    `${manual ? 'Manual IndexNow' : 'IndexNow'} ${report.mode} — ${counts}.`,
+    manual &&
+      report.requestedPages !== null &&
+      `${report.confirmedPages} current pages acknowledged in protected deployment state.`,
     report.baseline,
     ...new Set([...report.reasons, ...report.warnings]),
   ]
@@ -49,6 +58,45 @@ async function reportIndexNow(report, env, artifactPath) {
       warning('Could not append the IndexNow result to GITHUB_STEP_SUMMARY.');
     }
   }
+}
+
+async function runManualIndexNow(env, http) {
+  let report;
+  try {
+    if (
+      env.GITHUB_ACTIONS !== 'true' ||
+      env.WEBSITE_DEPLOY_AUTHORIZED !== 'true' ||
+      env.GITHUB_EVENT_NAME !== 'workflow_dispatch'
+    )
+      throw new Error(
+        'Manual IndexNow submission requires an authorized production workflow_dispatch.',
+      );
+    if (env.WEBSITE_DEPLOY_ENABLED !== 'true')
+      throw new Error('Manual IndexNow submission requires WEBSITE_DEPLOY_ENABLED=true.');
+    const config = configFromEnv(env, { publishing: true, indexNowOnly: true });
+    if (config.websiteUrl !== INDEXNOW_ORIGIN + '/')
+      throw new Error('Manual IndexNow submission requires the canonical production origin.');
+    report = await submitPublishedIndexNow({ config, http });
+  } catch (error) {
+    const reason = env.INDEXNOW_KEY
+      ? error.message.replaceAll(env.INDEXNOW_KEY, '[IndexNow key]')
+      : error.message;
+    await reportIndexNow({ ...skippedIndexNow(reason, null), requestedPages: null }, env);
+    // eslint-disable-next-line preserve-caught-error -- A nested network error can contain the verification URL.
+    throw new Error(reason);
+  }
+  await reportIndexNow(report, env);
+  if (
+    report.mode !== 'submitted' ||
+    !(report.requestedPages > 0) ||
+    report.confirmedPages !== report.requestedPages ||
+    report.acceptedUrls.length < report.requestedPages ||
+    report.pending > report.deferred
+  )
+    throw new Error(
+      'Manual IndexNow submission failed to confirm receipt and durable acknowledgement of all selected pages.',
+    );
+  return report;
 }
 
 async function previewIndexNow(dist, manifest, previous, websiteUrl) {
@@ -112,11 +160,19 @@ export async function runPublish({
     args,
     options: {
       publish: { type: 'boolean' },
+      'indexnow-only': { type: 'boolean' },
       'dry-run': { type: 'boolean' },
       'previous-manifest': { type: 'string' },
     },
     strict: true,
   });
+  if (values['indexnow-only']) {
+    if (values.publish || values['dry-run'] || values['previous-manifest'] !== undefined)
+      throw new Error(
+        '--indexnow-only cannot be combined with --publish, --dry-run or --previous-manifest.',
+      );
+    return runManualIndexNow(env, http);
+  }
   if (values.publish && values['dry-run']) throw new Error('Choose --publish or --dry-run');
   if (values.publish && values['previous-manifest'])
     throw new Error(

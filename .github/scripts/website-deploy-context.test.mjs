@@ -73,6 +73,15 @@ test('website media routes independently while imported app metadata remains sha
   );
 });
 
+test('a change to the manual IndexNow workflow alone triggers neither publication nor Android builds', () => {
+  const workflow = '.github/workflows/website-indexnow.yml';
+  assert.deepEqual(classifyPaths([workflow]), { android: false, website: false });
+  assert.deepEqual(classifyPaths([workflow, 'website/src/pages/index.astro']), {
+    android: false,
+    website: true,
+  });
+});
+
 test('only a successful trusted APK tag run with a published stable asset authorizes deployment', async () => {
   assert.equal((await authorizeDeployment(context, services)).deploy, true);
   for (const override of [
