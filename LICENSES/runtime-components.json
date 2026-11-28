@@ -805,17 +805,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-common-java8",
     "name": "AndroidX Lifecycle-Common for Java 8",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-java8/2.11.0/lifecycle-common-java8-2.11.0.jar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-java8/2.11.0/lifecycle-common-java8-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-java8/2.11.1/lifecycle-common-java8-2.11.1.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-java8/2.11.1/lifecycle-common-java8-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-common-java8:2.11.0"
+      "androidx.lifecycle:lifecycle-common-java8:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -824,17 +824,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-common-jvm",
     "name": "AndroidX Lifecycle-Common",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-jvm/2.11.0/lifecycle-common-jvm-2.11.0.jar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-jvm/2.11.0/lifecycle-common-jvm-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-jvm/2.11.1/lifecycle-common-jvm-2.11.1.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-jvm/2.11.1/lifecycle-common-jvm-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-common-jvm:2.11.0"
+      "androidx.lifecycle:lifecycle-common-jvm:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -843,17 +843,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-livedata-core-ktx",
     "name": "AndroidX LiveData Core Kotlin Extensions",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core-ktx/2.11.0/lifecycle-livedata-core-ktx-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core-ktx/2.11.0/lifecycle-livedata-core-ktx-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core-ktx/2.11.1/lifecycle-livedata-core-ktx-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core-ktx/2.11.1/lifecycle-livedata-core-ktx-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-livedata-core-ktx:2.11.0"
+      "androidx.lifecycle:lifecycle-livedata-core-ktx:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -862,17 +862,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-livedata-core",
     "name": "AndroidX Lifecycle LiveData Core",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2018 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.11.0/lifecycle-livedata-core-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.11.0/lifecycle-livedata-core-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.11.1/lifecycle-livedata-core-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.11.1/lifecycle-livedata-core-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-livedata-core:2.11.0"
+      "androidx.lifecycle:lifecycle-livedata-core:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -881,17 +881,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-livedata",
     "name": "AndroidX Lifecycle LiveData",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.11.0/lifecycle-livedata-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.11.0/lifecycle-livedata-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.11.1/lifecycle-livedata-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.11.1/lifecycle-livedata-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-livedata:2.11.0"
+      "androidx.lifecycle:lifecycle-livedata:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -900,17 +900,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-process",
     "name": "AndroidX Lifecycle Process",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2021 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-process/2.11.0/lifecycle-process-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-process/2.11.0/lifecycle-process-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-process/2.11.1/lifecycle-process-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-process/2.11.1/lifecycle-process-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-process:2.11.0"
+      "androidx.lifecycle:lifecycle-process:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -919,17 +919,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-runtime-android",
     "name": "AndroidX Lifecycle Runtime",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-android/2.11.0/lifecycle-runtime-android-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-android/2.11.0/lifecycle-runtime-android-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-android/2.11.1/lifecycle-runtime-android-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-android/2.11.1/lifecycle-runtime-android-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-runtime-android:2.11.0"
+      "androidx.lifecycle:lifecycle-runtime-android:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -938,17 +938,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-runtime-compose-android",
     "name": "AndroidX Lifecycle Runtime Compose",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose-android/2.11.0/lifecycle-runtime-compose-android-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose-android/2.11.0/lifecycle-runtime-compose-android-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose-android/2.11.1/lifecycle-runtime-compose-android-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose-android/2.11.1/lifecycle-runtime-compose-android-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-runtime-compose-android:2.11.0"
+      "androidx.lifecycle:lifecycle-runtime-compose-android:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -957,17 +957,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-runtime-ktx-android",
     "name": "AndroidX Lifecycle Kotlin Extensions",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx-android/2.11.0/lifecycle-runtime-ktx-android-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx-android/2.11.0/lifecycle-runtime-ktx-android-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx-android/2.11.1/lifecycle-runtime-ktx-android-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx-android/2.11.1/lifecycle-runtime-ktx-android-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-runtime-ktx-android:2.11.0"
+      "androidx.lifecycle:lifecycle-runtime-ktx-android:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -976,17 +976,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-viewmodel-android",
     "name": "AndroidX Lifecycle ViewModel",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright (C) 2024 The Android Open Source Project\nCopyright 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-android/2.11.0/lifecycle-viewmodel-android-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-android/2.11.0/lifecycle-viewmodel-android-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-android/2.11.1/lifecycle-viewmodel-android-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-android/2.11.1/lifecycle-viewmodel-android-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-viewmodel-android:2.11.0"
+      "androidx.lifecycle:lifecycle-viewmodel-android:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -995,17 +995,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-viewmodel-ktx",
     "name": "AndroidX Lifecycle ViewModel Kotlin Extensions",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-ktx/2.11.0/lifecycle-viewmodel-ktx-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-ktx/2.11.0/lifecycle-viewmodel-ktx-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-ktx/2.11.1/lifecycle-viewmodel-ktx-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-ktx/2.11.1/lifecycle-viewmodel-ktx-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-viewmodel-ktx:2.11.0"
+      "androidx.lifecycle:lifecycle-viewmodel-ktx:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -1014,17 +1014,17 @@
   {
     "id": "androidx-lifecycle-lifecycle-viewmodel-savedstate-android",
     "name": "AndroidX Lifecycle ViewModel with SavedState",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-savedstate-android/2.11.0/lifecycle-viewmodel-savedstate-android-2.11.0.aar",
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-savedstate-android/2.11.0/lifecycle-viewmodel-savedstate-android-2.11.0-sources.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-savedstate-android/2.11.1/lifecycle-viewmodel-savedstate-android-2.11.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-savedstate-android/2.11.1/lifecycle-viewmodel-savedstate-android-2.11.1-sources.jar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.11.0"
+      "androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
@@ -1033,16 +1033,16 @@
   {
     "id": "androidx-lifecycle-lifecycle-viewmodel",
     "name": "AndroidX Lifecycle ViewModel",
-    "version": "2.11.0",
+    "version": "2.11.1",
     "group": "libraries",
     "license": "Apache-2.0",
     "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
     "sources": [
-      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel/2.11.0/lifecycle-viewmodel-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel/2.11.1/lifecycle-viewmodel-2.11.1.aar",
       "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
     ],
     "artifacts": [
-      "androidx.lifecycle:lifecycle-viewmodel:2.11.0"
+      "androidx.lifecycle:lifecycle-viewmodel:2.11.1"
     ],
     "files": [
       "Apache-2.0.txt"
