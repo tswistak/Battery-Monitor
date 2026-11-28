@@ -50,8 +50,8 @@ def isE2eBuild = project.hasProperty('e2e')
 def robolectricSdkJars = files(['8.0.0_r4-robolectric-r1-i7', // API 26
                                 '9-robolectric-4913185-2-i7', // API 28
                                 '11-robolectric-6757853-i7', // API 30
-                                '15-robolectric-13954326-i7', // API 35
-                                '16-robolectric-13921718-i7' // API 36; also Robolectric 4.17's compile SDK
+                                '15-robolectric-14663667-2-i7', // API 35
+                                '16-robolectric-13921718-2-i7' // API 36
 ].collect { version -> configurations.detachedConfiguration(dependencies.create("org.robolectric:android-all-instrumented:${version}@jar"))
 })
 def robolectricSdkDirectory = layout.buildDirectory.dir('robolectric-sdks')
@@ -184,7 +184,7 @@ dependencies {
     implementation composeBom
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.activity:activity-compose:1.13.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.11.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.11.1'
     implementation 'androidx.compose.material3.adaptive:adaptive:1.3.0'
     implementation 'com.github.PhilJay.MPAndroidChart:MPChartCompose:v4.0.1'
 
@@ -193,7 +193,7 @@ dependencies {
     }
 
     testImplementation "junit:junit:4.13.2"
-    testImplementation 'org.robolectric:robolectric:4.17'
+    testImplementation 'org.robolectric:robolectric:4.18.1'
     androidTestImplementation "junit:junit:4.13.2"
     androidTestImplementation 'androidx.test:runner:1.7.0'
     androidTestImplementation 'androidx.test:core:1.7.0'
