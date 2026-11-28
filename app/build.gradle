@@ -47,6 +47,21 @@ def hasReleaseSigning = !isProfilingBuild && releaseStoreFileProp && releaseStor
 
 def isE2eBuild = project.hasProperty('e2e')
 
+if (providers.gradleProperty('robolectricSdkMirror').orNull == 'true') {
+    repositories {
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = uri('https://maven-central.storage-download.googleapis.com/maven2/')
+                }
+            }
+            filter {
+                includeModule('org.robolectric', 'android-all-instrumented')
+            }
+        }
+    }
+}
+
 def robolectricSdkJars = files(['8.0.0_r4-robolectric-r1-i7', // API 26
                                 '9-robolectric-4913185-2-i7', // API 28
                                 '11-robolectric-6757853-i7', // API 30

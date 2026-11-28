@@ -132,18 +132,23 @@ jobs:
       - name: Prepare Robolectric SDKs
         shell: bash
         run: |
+          prepare_sdks() {
+            ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:prepareRobolectricSdks
+          }
+
           log="$(mktemp)"
           trap 'rm -f "$log"' EXIT
-          for delay in 20 60 0; do
-            if ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:prepareRobolectricSdks 2>&1 | tee "$log"; then
-              exit 0
-            fi
-            if [ "$delay" -eq 0 ] || ! grep -Fq 'Received status code 429 from server:' "$log"; then
-              exit 1
-            fi
-            echo "Robolectric SDK download was rate-limited. Retrying in ${delay}s."
-            sleep "$delay"
-          done
+          if prepare_sdks 2>&1 | tee "$log"; then
+            exit 0
+          fi
+          if ! grep -Fq 'Received status code 429 from server:' "$log"; then
+            exit 1
+          fi
+
+          echo 'Maven Central rate-limited the Robolectric SDK download. Trying the Google Cloud mirror.'
+          export ORG_GRADLE_PROJECT_robolectricSdkMirror=true
+          prepare_sdks
+          echo 'ORG_GRADLE_PROJECT_robolectricSdkMirror=true' >> "$GITHUB_ENV"
 
       - name: Run unit tests
         run: ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:testDebugUnitTest
